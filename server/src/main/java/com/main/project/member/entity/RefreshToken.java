@@ -7,13 +7,14 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="member")
+@Table(name="refresh_token")
 @NoArgsConstructor
 @Setter
 @Getter
-public class member {
+public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
-    private Long name;
+    private Long id;
+    private Long memberId;
+    private String value;
 }
