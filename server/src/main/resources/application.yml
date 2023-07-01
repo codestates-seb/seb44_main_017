@@ -36,6 +36,21 @@ spring:
               - email
               - profile
 
+cloud:
+  aws:
+    s3:
+      bucket: imagebuckett
+    credentials:
+      accessKey: AKIARCK6KPKSOGHW3ET2
+      secretKey: 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
+  region:
+    static: ap-northeast-2
+    auto: false
+  stack:
+    auto: false
+
+
+
 mail:
   address:
     admin: admin@gmail.com
