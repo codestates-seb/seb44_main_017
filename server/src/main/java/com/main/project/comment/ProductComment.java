@@ -2,6 +2,9 @@ package com.main.project.comment;
 
 // Todo : Comment entity Implementation
 
+import com.main.project.helper.audit.Auditable;
+import com.main.project.member.entity.Member;
+import com.main.project.product.entity.Product;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -16,22 +19,20 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductComment {
+public class ProductComment extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productCommentId;
 
     private String content;
 
-    private Long memberId;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     // Todo : mapping needed
 //    @ManyToOne
-    @ColumnDefault("0")
-    private Long productId;
-
-    private LocalDateTime create_at;
-
-    private LocalDateTime modifyAt;
-
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

@@ -1,6 +1,7 @@
 package com.main.project.questionComment.entity;
 
 import com.main.project.helper.audit.Auditable;
+import com.main.project.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,5 +19,8 @@ public class Comment extends Auditable {
 
     @Column(nullable = false)
     private String content;
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 
 }

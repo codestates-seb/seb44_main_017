@@ -29,7 +29,7 @@ public class ProductDto {
         private Boolean issell;
         private LocalDate createAt;
         private LocalDate modifyAt;
-        private Integer condition_value;
+        private Integer conditionValue;
         private List<ProductComment> comments;
     }
 
@@ -52,7 +52,7 @@ public class ProductDto {
         private String imageLink;
 
         @Range(max = 10)
-        private Integer condition_value;
+        private Integer conditionValue;
     }
 
     @Getter
