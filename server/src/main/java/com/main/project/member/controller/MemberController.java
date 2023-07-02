@@ -7,6 +7,7 @@ import com.main.project.member.entity.Member;
 import com.main.project.member.mapper.MemberMapper;
 import com.main.project.member.service.MemberService;
 import com.main.project.member.service.RefreshTokenService;
+import com.main.project.s3.service.AwsS3Service;
 import com.main.project.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -50,6 +52,12 @@ public class MemberController {
                 memberService.updateMember(mapper.memberPatchToMember(requestBody));
 
         return ResponseEntity.ok(mapper.memberToMemberResponse(member));
+    }
+
+    @PatchMapping("/image/{member-id}")
+    public ResponseEntity imageupload(@PathVariable("member-id") @Positive long memberId,
+                                      @RequestPart List<MultipartFile> multipartFile){
+        return ResponseEntity.status(HttpStatus.OK).body(memberService.uploadImage(multipartFile,memberId));
     }
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId) {

@@ -21,6 +21,10 @@ spring:
         springframework:
           orm:
             jpa: DEBUG
+      com:
+        amazonaws:
+          util:
+            EC2MetadataUtils: ERROR
   server:
     servlet:
       encoding:
@@ -35,6 +39,21 @@ spring:
             scope:
               - email
               - profile
+
+cloud:
+  aws:
+    s3:
+      bucket: mainproject.bucket
+    credentials:
+      accessKey: x
+      secretKey: x
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
+
+
 
 mail:
   address:
