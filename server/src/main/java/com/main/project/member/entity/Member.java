@@ -23,6 +23,7 @@ public class Member {
     private String password;
     private String name;
     private String phone;
+    private String profile;
     @ColumnDefault("0")
     private int money;
     @ColumnDefault("false")
