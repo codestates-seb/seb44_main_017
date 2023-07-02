@@ -6,6 +6,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
+
 public class MemberDto {
     @Getter
     @AllArgsConstructor
@@ -19,6 +21,7 @@ public class MemberDto {
         private int money;
         private boolean isban;
     }
+
 
     @Getter
     @AllArgsConstructor
@@ -52,4 +55,18 @@ public class MemberDto {
         }
     }
 
+    public interface product{
+        Long getproduct_id();
+        String getcategory();
+        String getname();
+        String gettitle();
+        String getcontent();
+        String getimage_link();
+        LocalDateTime getmodify_at();
+        LocalDateTime getcreate_at();
+        Boolean getproductlike();
+        Integer getprice();
+        Integer getview();
+        Integer getcondition_value();
+    }
 }

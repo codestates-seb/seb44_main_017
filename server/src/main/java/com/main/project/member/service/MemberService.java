@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.main.project.auth.util.UserCustomAuthorityUtils;
 import com.main.project.exception.BusinessLogicException;
 import com.main.project.exception.ExceptionCode;
+import com.main.project.member.dto.MemberDto;
 import com.main.project.member.entity.Member;
 import com.main.project.member.repository.MemberRepository;
 import com.main.project.s3.service.AwsS3Service;
@@ -90,6 +91,12 @@ public class MemberService {
     public void deleteMember(long memberId) {
         Member findMember = findVerifiedMember(memberId);
         memberRepository.delete(findMember);
+    }
+
+    public List<MemberDto.product> searchMember(Long memberId){
+        String ID = memberId.toString();
+        List<MemberDto.product> searchdto = memberRepository.findUser(ID);
+        return searchdto;
     }
 
     public Member findMember(String email){

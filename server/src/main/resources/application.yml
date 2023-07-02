@@ -6,7 +6,7 @@ spring:
     password: 1234
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -45,8 +45,8 @@ cloud:
     s3:
       bucket: mainproject.bucket
     credentials:
-      accessKey: AKIARCK6KPKSFF26NVGI
-      secretKey: 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
+      accessKey: x
+      secretKey: x
     region:
       static: ap-northeast-2
       auto: false

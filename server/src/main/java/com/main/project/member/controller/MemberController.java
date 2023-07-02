@@ -2,9 +2,13 @@ package com.main.project.member.controller;
 
 import com.main.project.dto.MultiResponseDto;
 import com.main.project.dto.SingleResponseDto;
+import com.main.project.exception.BusinessLogicException;
+import com.main.project.exception.ExceptionCode;
 import com.main.project.member.dto.MemberDto;
 import com.main.project.member.entity.Member;
+import com.main.project.member.entity.RefreshToken;
 import com.main.project.member.mapper.MemberMapper;
+import com.main.project.member.repository.RefreshTokenRepository;
 import com.main.project.member.service.MemberService;
 import com.main.project.member.service.RefreshTokenService;
 import com.main.project.s3.service.AwsS3Service;
@@ -21,6 +25,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/members")
@@ -31,7 +36,7 @@ public class MemberController {
     private final MemberService memberService;
     private final RefreshTokenService refreshTokenService;
     private final MemberMapper mapper;
-
+    private final RefreshTokenRepository refreshTokenRepository;
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
         Member member = mapper.memberPostToMember(requestBody);
@@ -66,6 +71,13 @@ public class MemberController {
         return ResponseEntity.ok(new SingleResponseDto<>(response));
     }
 
+    @GetMapping("/productst")
+    public ResponseEntity userproduct(@RequestHeader(name = "Refresh") String token){
+        Long memberId = findmemberId(token);
+        List<MemberDto.product> ss = memberService.searchMember(memberId);
+        return ResponseEntity.ok(new SingleResponseDto<>(ss));
+    }
+
     @GetMapping
     public ResponseEntity getMembers(@Positive @RequestParam int page,
                                      @Positive @RequestParam int size) {
@@ -87,5 +99,11 @@ public class MemberController {
         log.info(refreshtoken);
         refreshTokenService.deleteRefreshToken(refreshtoken);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    public Long findmemberId(String token) {
+        Optional<RefreshToken> refresht = refreshTokenRepository.findByValue(token);
+        RefreshToken findtoken = refresht.orElseThrow(()-> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        return findtoken.getMemberId();
     }
 }
