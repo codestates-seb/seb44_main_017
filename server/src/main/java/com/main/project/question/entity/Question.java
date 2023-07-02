@@ -1,6 +1,7 @@
 package com.main.project.question.entity;
 
 import com.main.project.helper.audit.Auditable;
+import com.main.project.member.entity.Member;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,4 +22,8 @@ public class Question extends Auditable {
     private String content;
     @Column(columnDefinition = "integer default 0")
     private int view;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
 }

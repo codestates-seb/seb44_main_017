@@ -45,8 +45,8 @@ cloud:
     s3:
       bucket: mainproject.bucket
     credentials:
-      accessKey: x
-      secretKey: x
+      accessKey: AKIARCK6KPKSFF26NVGI
+      secretKey: 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
     region:
       static: ap-northeast-2
       auto: false
