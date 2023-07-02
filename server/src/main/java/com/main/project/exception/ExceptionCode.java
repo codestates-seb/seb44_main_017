@@ -8,7 +8,8 @@ public enum ExceptionCode {
     MEMBER_EXISTS(409, "Member exists"),
     MEMBER_EMAIL_EXISTS(409, "Email exists"),
     ADMIN_NOT_FOUND(404,"Admin not found"),
-    ADMIN_EXISTS(409,"Admin exists");
+    ADMIN_EXISTS(409,"Admin exists"),
+    NOTIFY_NOT_FOUND(404, "Notify not found");
     private final int status;
     private final String message;
 

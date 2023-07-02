@@ -23,7 +23,6 @@ public class NotifyDto {
     @Getter
     @Setter
     public static class Patch{
-        private long boardId;
         @NotSpace
         private String title;
         @NotSpace
@@ -39,7 +38,7 @@ public class NotifyDto {
         private String title;
         private String content;
         private LocalDateTime createAt;
-
+        private LocalDateTime modifyAt;
     }
 
 }

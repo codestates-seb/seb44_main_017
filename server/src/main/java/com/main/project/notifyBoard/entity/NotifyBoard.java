@@ -20,6 +20,6 @@ public class NotifyBoard extends Auditable {
     @Column(nullable = false)
     private String content;
     @Column(columnDefinition = "integer default 0")
-    private int views;
+    private int view;
 
 }
