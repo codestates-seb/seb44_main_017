@@ -12,7 +12,8 @@ public class MemberDto {
     public static class Response{
         private Long memberId;
         private String email;
-        private String password;
+
+        private String profile;
         private String name;
         private String phone;
         private int money;
@@ -50,4 +51,5 @@ public class MemberDto {
             this.memberId = memberId;
         }
     }
+
 }

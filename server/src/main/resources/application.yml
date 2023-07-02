@@ -21,6 +21,10 @@ spring:
         springframework:
           orm:
             jpa: DEBUG
+      com:
+        amazonaws:
+          util:
+            EC2MetadataUtils: ERROR
   server:
     servlet:
       encoding:
@@ -39,15 +43,15 @@ spring:
 cloud:
   aws:
     s3:
-      bucket: imagebuckett
+      bucket: mainproject.bucket
     credentials:
-      accessKey: AKIARCK6KPKSOGHW3ET2
-      secretKey: 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
-  region:
-    static: ap-northeast-2
-    auto: false
-  stack:
-    auto: false
+      accessKey: x
+      secretKey: x
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
 
 
 
