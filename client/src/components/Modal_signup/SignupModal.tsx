@@ -1,9 +1,18 @@
-import React from 'react'
+import React from "react";
+import * as S from "./style";
 
 const SignupModal = () => {
   return (
-    <div>SignupModal</div>
-  )
-}
+    <S.Container>
+      <S.Content>
+        <S.CloseButton>
+          <S.Close />
+        </S.CloseButton>
 
-export default SignupModal
+        <h1>SignupMod</h1>
+      </S.Content>
+    </S.Container>
+  );
+};
+
+export default SignupModal;
