@@ -6,6 +6,7 @@ import com.main.project.product.mapper.ProductMapper;
 import com.main.project.product.service.ProductService;
 import com.main.project.response.ListResponseDto;
 import com.main.project.response.SingleResponseDto;
+import com.main.project.utils.UriCreator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.net.URI;
 import java.util.List;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -33,11 +35,12 @@ public class ProductController {
     }
 
     // admin can post their product.
-//    @PostMapping
-//    public ResponseEntity postProduct(@Valid @RequestBody ProductDto.Post productPostDto){
-//        Product product = productService.createProduct(productMapper.productPostDtoToProduct(productPostDto));
-//        return null;
-//    }
+    @PostMapping
+    public Product postProduct(@Valid @RequestBody ProductDto.Post productPostDto){
+        Product product = productService.createProduct(productMapper.productPostDtoToProduct(productPostDto));
+        URI location = UriCreator.createUri(PRODUCT_DEF_URL, product.getProductId());
+        return product;
+    }
 
     // members can get products list
     @GetMapping
@@ -59,5 +62,25 @@ public class ProductController {
                         productMapper.productToProductResponse(product)),
                 HttpStatus.OK
         );
+    }
+
+    // admins can modify their product
+    @PatchMapping("/{product-id}")
+    public ResponseEntity patchProducts(@PathVariable("answer-id") @Positive Long productId,
+                                        @RequestBody @Valid ProductDto.Patch productPatchDto){
+
+        Product product = productService.updateProduct(productId, productMapper.productPatchDtotoProduct(productPatchDto));
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(
+                        productMapper.productToProductResponse(product)),
+                HttpStatus.OK
+        );
+    }
+
+    // admins can delete their product
+    @DeleteMapping("/{product-id}")
+    public ResponseEntity deleteProduct(@PathVariable("answer-id") @Positive Long productId){
+        productService.deleteProduct(productId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
