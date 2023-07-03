@@ -21,6 +21,10 @@ spring:
         springframework:
           orm:
             jpa: DEBUG
+      com:
+        amazonaws:
+          util:
+            EC2MetadataUtils: ERROR
   server:
     servlet:
       encoding:
@@ -30,11 +34,26 @@ spring:
       client:
         registration:
           google:
-            clientId: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            clientSecret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+            clientId: 66561363712-6s7cornk38rh5egbje9ofes9241c0o83.apps.googleusercontent.com
+            clientSecret: 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
             scope:
               - email
               - profile
+
+cloud:
+  aws:
+    s3:
+      bucket: mainproject.bucket
+    credentials:
+      accessKey: x
+      secretKey: x
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
+
+
 
 mail:
   address:

@@ -1,5 +1,7 @@
 package com.main.project.admin.entity;
 
+import com.main.project.notifyBoard.entity.NotifyBoard;
+import com.main.project.product.entity.Product;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -29,6 +31,12 @@ public class Admin {
         this.password = password;
     }
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.LAZY)
     private List<String> roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "admin", cascade = CascadeType.REMOVE)
+    private List<Product> products = new ArrayList<>();
+
+    @OneToMany(mappedBy = "admin", cascade = CascadeType.REMOVE)
+    private List<NotifyBoard> NotifyBoards = new ArrayList<>();
 }
