@@ -114,14 +114,12 @@ export const AdminLabel = styled.label`
 export const LoginButton = styled.button`
   width: 130px;
   height: 50px;
-  background-color: rgba(247, 247, 247, 0.7);
+  background-color: var(--color-darkgreen);
   border-radius: 40px;
-  border-style: solid;
-  border-width: 3px;
-  border-color: var(--color-darkblue);
+  border: none;
   font-size: 16px;
   font-weight: 700;
-  color: var(--color-darkblue);
+  color: var(--color-white);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `;
 

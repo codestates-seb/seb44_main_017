@@ -106,7 +106,7 @@ const LoginModal = ({ closeModal }: Props) => {
           />
           관리자로 로그인하기
         </S.AdminLabel>
-        <S.LoginButton onClick={handleLogin}>SIGNUP</S.LoginButton>
+        <S.LoginButton onClick={handleLogin}>LOGIN</S.LoginButton>
       </S.Content>
     </S.Container>
   );
