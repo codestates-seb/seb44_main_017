@@ -60,9 +60,18 @@ public class ProductController {
     }
 
     // members can get products list
+    // Todo : pagination, sort operation needed
     @GetMapping
-    public ResponseEntity getProducts(@Positive @RequestParam int page,
+    public ResponseEntity getProducts(@RequestHeader("Authorization") String tokenstr,
+                                      @Positive @RequestParam int page,
                                       @Positive @RequestParam int size){
+        Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshToken(tokenstr);
+        Long memberId = refreshToken
+                .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
+                .getMemberId();
+
+        /* Todo : verify member and find if their liked product */
+
         Page<Product> pageProducts = productService.findProducts(page-1, size);
         List<Product> products = pageProducts.getContent();
         return new ResponseEntity<>(
@@ -73,11 +82,16 @@ public class ProductController {
     }
 
     // members can get product information
-    // Todo : pagenation, sort operation needed
     @GetMapping("/{product-id}")
-    public ResponseEntity getProduct(
-            @PathVariable("answer-id") @Positive Long productId){
+    public ResponseEntity getProduct(@RequestHeader("Authorization") String tokenstr,
+                                     @PathVariable("product-id") @Positive Long productId){
+        Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshToken(tokenstr);
+        Long memberId = refreshToken
+                .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
+                .getMemberId();
+
         Product product = productService.findProduct(productId);
+        /* Todo : verify member and find if their liked product */
         return new ResponseEntity<>(
                 new SingleResponseDto<>(
                         productMapper.productToProductResponseWithComment(product)),
@@ -85,9 +99,9 @@ public class ProductController {
         );
     }
 
-    // admins and members can modify their product
+    // admins can modify their product
     @PatchMapping("/{product-id}")
-    public ResponseEntity patchProducts(@PathVariable("answer-id") @Positive Long productId,
+    public ResponseEntity patchProducts(@PathVariable("product-id") @Positive Long productId,
                                         @RequestBody @Valid ProductDto.Patch productPatchDto){
 
         Product product = productService.updateProduct(productId, productMapper.productPatchDtotoProduct(productPatchDto));
@@ -98,9 +112,11 @@ public class ProductController {
         );
     }
 
+    // admins can modify their product description
+
     // admins can delete their product
     @DeleteMapping("/{product-id}")
-    public ResponseEntity deleteProduct(@PathVariable("answer-id") @Positive Long productId){
+    public ResponseEntity deleteProduct(@PathVariable("product-id") @Positive Long productId){
         productService.deleteProduct(productId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
