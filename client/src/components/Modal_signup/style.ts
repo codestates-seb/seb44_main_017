@@ -44,7 +44,7 @@ export const SignupTitleContainer = styled.div`
 export const SignupTitle = styled.span`
   font-size: var(--font-size-36);
   font-weight: var(--font-weight-700);
-  color: var(--color-darkgreen);
+  color: var(--color-darkblue);
 `;
 
 export const Explanation = styled.div`
