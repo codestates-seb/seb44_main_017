@@ -1,4 +1,4 @@
-package com.main.project.comment;
+package com.main.project.productComment;
 
 // Todo : Comment entity Implementation
 
@@ -6,11 +6,8 @@ import com.main.project.helper.audit.Auditable;
 import com.main.project.member.entity.Member;
 import com.main.project.product.entity.Product;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ProductComment")
@@ -31,7 +28,6 @@ public class ProductComment extends Auditable {
     private Member member;
 
     // Todo : mapping needed
-//    @ManyToOne
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;

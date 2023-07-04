@@ -1,12 +1,11 @@
 package com.main.project.product.entity;
 import com.main.project.admin.entity.Admin;
-import com.main.project.comment.ProductComment;
+import com.main.project.productComment.ProductComment;
 import com.main.project.member.entity.Member;
+import com.main.project.productlike.ProductLike;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,11 +39,10 @@ public class Product {
 
     private String category;
 
-//    @ColumnDefault("0")
     private Integer view = 0;
 
-//    @ColumnDefault("false")
-    private Boolean productlike = false;
+    @OneToMany // one product has many productLike entities
+    private List<ProductLike> productLikeList = new ArrayList<>();
 
 //    Todo: image deployment
     private String imageLink;

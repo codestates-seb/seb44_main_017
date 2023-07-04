@@ -1,14 +1,14 @@
 package com.main.project.member.entity;
 
-import com.main.project.comment.ProductComment;
+import com.main.project.productComment.ProductComment;
 import com.main.project.product.entity.Product;
+import com.main.project.productlike.ProductLike;
 import com.main.project.question.entity.Question;
 import com.main.project.questionComment.entity.Comment;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
@@ -46,6 +46,9 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<ProductComment> productComments = new ArrayList<>();
+
+    @OneToMany(mappedBy =  "member", cascade = CascadeType.REMOVE)
+    private List<ProductLike> productLikes = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Comment> questionComments = new ArrayList<>();

@@ -1,14 +1,12 @@
 package com.main.project.product.dto;
 
-import com.main.project.comment.ProductComment;
+import com.main.project.productComment.ProductComment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,6 +15,22 @@ public class ProductDto {
     @Getter
     @AllArgsConstructor
     public static class Response{
+        private String name;
+        private String title;
+        private String content;
+        private Integer price;
+        private String category;
+        private Long memberId;
+        private Integer view;
+        private Boolean productlike;
+        private String imageLink;
+        private Boolean issell;
+        private LocalDate createAt;
+        private LocalDate modifyAt;
+        private Integer conditionValue;
+    }
+
+    public static class ResponseWithComments{
         private String name;
         private String title;
         private String content;
@@ -77,4 +91,5 @@ public class ProductDto {
         @Range(max = 10)
         private Integer condition_value;
     }
+
 }

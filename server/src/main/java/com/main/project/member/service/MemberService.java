@@ -29,7 +29,7 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    private final AwsS3Service awsS3Service;
+//    private final AwsS3Service awsS3Service;
     private final UserCustomAuthorityUtils authorityUtils;
     private final PasswordEncoder passwordEncoder;
 
@@ -60,7 +60,7 @@ public class MemberService {
         Member fm = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         List<String> fileName = new ArrayList<>();
-        fileName = awsS3Service.uploadImage(multipartFile);
+//        fileName = awsS3Service.uploadImage(multipartFile);
         fileName.forEach(file ->{
             Optional.ofNullable(file).ifPresent(profile -> fm.setProfile(file));
             memberRepository.save(fm);

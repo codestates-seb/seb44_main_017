@@ -3,6 +3,8 @@ package com.main.project.product.mapper;
 
 import com.main.project.product.dto.ProductDto;
 import com.main.project.product.entity.Product;
+import com.main.project.productComment.ProductComment;
+import com.main.project.productComment.dto.ProductCommentDto;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -17,4 +19,8 @@ public interface ProductMapper {
     Product productPostDtoToProduct(ProductDto.Post productPostDto);
 
     Product productPatchDtotoProduct(ProductDto.Patch productPatchDto);
+
+    ProductDto.ResponseWithComments productToProductResponseWithComment(Product product);
+
+    ProductComment productCommentDtoToProductComment(ProductCommentDto.Post productCommentDto);
 }

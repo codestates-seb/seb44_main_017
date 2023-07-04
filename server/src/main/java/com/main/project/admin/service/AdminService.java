@@ -49,4 +49,10 @@ public class AdminService {
 
         return findAdmin;
     }
+
+    public Admin findVerifiedAdmin(Long adminId){
+        return adminRepository
+                .findById(adminId)
+                .orElseThrow(()->new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND));
+    }
 }

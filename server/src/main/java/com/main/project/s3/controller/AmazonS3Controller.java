@@ -22,17 +22,17 @@ public class AmazonS3Controller {
     /**
      * Amazon S3에 이미지 업로드
      */
-    @PostMapping("/image")
-    public ResponseEntity<List<String>> uploadImage(@RequestPart List<MultipartFile> multipartFile) {
-        return ResponseEntity.status(HttpStatus.OK).body(awsS3Service.uploadImage(multipartFile));
-    }
+//    @PostMapping("/image")
+//    public ResponseEntity<List<String>> uploadImage(@RequestPart List<MultipartFile> multipartFile) {
+//        return ResponseEntity.status(HttpStatus.OK).body(awsS3Service.uploadImage(multipartFile));
+//    }
 
     /**
      * Amazon S3에 이미지 업로드 된 파일을 삭제
      */
     @DeleteMapping("/image")
     public ResponseEntity<Void> deleteImage(@RequestParam String fileName) {
-        awsS3Service.deleteImage(fileName);
+//        awsS3Service.deleteImage(fileName);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 

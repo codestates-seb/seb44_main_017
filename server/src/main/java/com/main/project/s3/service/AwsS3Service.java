@@ -24,33 +24,33 @@ public class AwsS3Service {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    private final AmazonS3 amazonS3;
+//    private final AmazonS3 amazonS3;
+//
+//    public List<String> uploadImage(List<MultipartFile> multipartFile) {
+//        List<String> fileNameList = new ArrayList<>();
+//
+//        multipartFile.forEach(file -> {
+//            String fileName = createFileName(file.getOriginalFilename());
+//            ObjectMetadata objectMetadata = new ObjectMetadata();
+//            objectMetadata.setContentLength(file.getSize());
+//            objectMetadata.setContentType(file.getContentType());
+//
+//            try(InputStream inputStream = file.getInputStream()) {
+//                amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
+//                        .withCannedAcl(CannedAccessControlList.PublicRead));
+//            } catch(IOException e) {
+//                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
+//            }
+//
+//            fileNameList.add(fileName);
+//        });
+//
+//        return fileNameList;
+//    }
 
-    public List<String> uploadImage(List<MultipartFile> multipartFile) {
-        List<String> fileNameList = new ArrayList<>();
-
-        multipartFile.forEach(file -> {
-            String fileName = createFileName(file.getOriginalFilename());
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentLength(file.getSize());
-            objectMetadata.setContentType(file.getContentType());
-
-            try(InputStream inputStream = file.getInputStream()) {
-                amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata)
-                        .withCannedAcl(CannedAccessControlList.PublicRead));
-            } catch(IOException e) {
-                throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 업로드에 실패했습니다.");
-            }
-
-            fileNameList.add(fileName);
-        });
-
-        return fileNameList;
-    }
-
-    public void deleteImage(String fileName) {
-        amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
-    }
+//    public void deleteImage(String fileName) {
+//        amazonS3.deleteObject(new DeleteObjectRequest(bucket, fileName));
+//    }
 
     public String createFileName(String fileName) {
         return UUID.randomUUID().toString().concat(getFileExtension(fileName));
