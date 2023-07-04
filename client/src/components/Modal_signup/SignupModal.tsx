@@ -4,7 +4,10 @@ import axios from "axios";
 import * as S from "./style";
 import { Logo } from "./Logo";
 
-const SignupModal = () => {
+interface Props {
+  closeModal: any;
+}
+const SignupModal = ({ closeModal }: Props) => {
   // 인풋 값
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
@@ -82,9 +85,9 @@ const SignupModal = () => {
     }
   };
   return (
-    <S.Container>
+    <S.Container onClick={closeModal}>
       <S.Content>
-        <S.CloseButton />
+        <S.CloseButton onClick={closeModal} />
         <S.SignupTitleContainer>
           <Logo width="40px" height="24px" />
           <S.SignupTitle>SIGNUP</S.SignupTitle>

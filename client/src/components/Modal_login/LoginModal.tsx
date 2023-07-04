@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
-const LoginModal = () => {
-  return (
-    <div>LoginModal</div>
-  )
+interface Props {
+  closeModal: any;
 }
 
-export default LoginModal
+const LoginModal = ({ closeModal }: Props) => {
+  return <div>LoginModal</div>;
+};
+
+export default LoginModal;
