@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import * as S from "./style";
@@ -85,7 +85,7 @@ const SignupModal = ({ closeModal }: Props) => {
     }
   };
   return (
-    <S.Container onClick={closeModal}>
+    <S.Container>
       <S.Content>
         <S.CloseButton onClick={closeModal} />
         <S.SignupTitleContainer>

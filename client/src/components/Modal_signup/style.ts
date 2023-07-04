@@ -8,7 +8,6 @@ export const Container = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,10 +17,12 @@ export const Content = styled.div`
   width: 360px;
   height: 500px;
   background-color: rgba(247, 247, 247, 0.7);
+  backdrop-filter: 10px;
   box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.25);
   border-radius: 16px;
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
   position: relative;
 `;
@@ -56,8 +57,6 @@ export const Explanation = styled.div`
 export const InputBox = styled.input`
   width: 280px;
   height: 24px;
-  margin-left: auto;
-  margin-right: auto;
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 0;
@@ -90,7 +89,7 @@ export const DuplicateCheck = styled.button`
   border-radius: 16px;
   position: absolute;
   top: 4px;
-  right: 38px;
+  right: 0px;
 `;
 
 export const PasswordLabel = styled.label`
@@ -103,13 +102,11 @@ export const VisibilityButton = styled(VisibilityIcon)`
   color: var(--color-darkblue);
   position: absolute;
   top: 0px;
-  right: 40px;
+  right: 0px;
   cursor: pointer;
 `;
 
 export const AdminLabel = styled.label`
-  margin-left: auto;
-  margin-right: auto;
   font-weight: var(--font-weight-700);
   font-size: var(--font-size-12);
   color: var(--color-darkblue);
@@ -126,8 +123,6 @@ export const SignupButton = styled.button`
   border-style: solid;
   border-width: 3px;
   border-color: var(--color-darkblue);
-  margin-left: auto;
-  margin-right: auto;
   font-size: 16px;
   font-weight: 700;
   color: var(--color-darkblue);
@@ -137,6 +132,4 @@ export const SignupButton = styled.button`
 export const ErrorMsg = styled.div`
   color: red;
   font-size: 12px;
-  margin-right: auto;
-  margin-left: auto;
 `;

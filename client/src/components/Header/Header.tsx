@@ -38,18 +38,12 @@ const Header = () => {
             setLoginModalOpen(true);
           }}
         >
-          {/* <a href="/login" style={{ color: "inherit" }}> */}
           LOGIN
-          {/* </a> */}
         </LoginBtn>
         {loginModalOpen && (
           <LoginModal closeModal={() => setLoginModalOpen(false)} />
         )}
-        <SignupBtn onClick={() => setSignupModalOpen(true)}>
-          {/* <a href="/signup" style={{ color: "inherit" }}> */}
-          SIGN UP
-          {/* </a> */}
-        </SignupBtn>
+        <SignupBtn onClick={() => setSignupModalOpen(true)}>SIGN UP</SignupBtn>
         {signupModallOpen && (
           <SignupModal closeModal={() => setSignupModalOpen(false)} />
         )}
