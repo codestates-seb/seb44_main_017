@@ -50,7 +50,13 @@ const SignupModal = ({ closeModal }: Props) => {
       : setCheckPasswordError(false);
     !phoneReg.test(phone) ? setPhoneError(true) : setPhoneError(false);
     console.log(isAdmin);
-    if (!emailError && !nameError && !passwordError && !phoneError && isAdmin) {
+    if (
+      !emailError &&
+      !nameError &&
+      !passwordError &&
+      !phoneError &&
+      !isAdmin
+    ) {
       const data = { email, name, password, phone };
       console.log(data);
       axios
@@ -68,7 +74,7 @@ const SignupModal = ({ closeModal }: Props) => {
       !nameError &&
       !passwordError &&
       !phoneError &&
-      !isAdmin
+      isAdmin
     ) {
       const data = { email, name, password, phone };
       console.log(data);
