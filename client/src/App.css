@@ -29,7 +29,9 @@
   --gray-title-hover: var(--black-600);
   --gray-title-selected: var(--black-700);
 }
-
+body {
+  margin:0;
+}
 a {
   text-decoration: none;
 }
