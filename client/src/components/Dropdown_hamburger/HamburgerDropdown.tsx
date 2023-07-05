@@ -10,7 +10,7 @@ import magnifier from "../../assets/magnifier.svg";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import Backdrop from "./backdrop";
+import Backdrop from "./Backdrop";
 
 // TODO: 로그인, 회원가입 버튼 중앙으로 옮기기
 // TODO: nav list 글자 정렬(Q&A)
