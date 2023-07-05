@@ -1,12 +1,20 @@
+import HamburgerDropdown from "../Dropdown_hamburger/HamburgerDropdown";
+import ProfileDropdown from "../Dropdown_profile/ProfileDropdown";
 import "./header.css";
 import { Logo } from "./Logo";
 import { LoginBtn, NavBtn, SignupBtn } from "./styled";
+import { useState, useRef } from "react";
 
 const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const headerRef = useRef<HTMLDivElement | null>(null);
+
   function toggleMenu() {
     const menuButton = document.querySelector(".menu-button");
     menuButton?.classList.toggle("open");
+    setIsOpen(!isOpen);
   }
+
   return (
     <div id="haeder_box">
       <div id="logo_pc">
@@ -20,6 +28,7 @@ const Header = () => {
         <NavBtn href="/products">상품보기</NavBtn>
         <NavBtn href="/notice">공지사항</NavBtn>
         <NavBtn href="/">Q&A</NavBtn>
+        <ProfileDropdown />
         <LoginBtn>
           <a href="/login" style={{ color: "inherit" }}>
             LOGIN
@@ -31,10 +40,17 @@ const Header = () => {
           </a>
         </SignupBtn>
       </div>
-      <div className="menu-button" onClick={toggleMenu}>
-        <div className="menu-bar" />
-        <div className="menu-bar" />
-        <div className="menu-bar" />
+      <div className="side-wrapper" ref={headerRef}>
+        <div className="menu-button" onClick={toggleMenu}>
+          <div className="menu-bar" />
+          <div className="menu-bar" />
+          <div className="menu-bar" />
+        </div>
+        <HamburgerDropdown
+          isOpen={isOpen}
+          toggleMenu={toggleMenu}
+          headerRef={headerRef}
+        />
       </div>
     </div>
   );
