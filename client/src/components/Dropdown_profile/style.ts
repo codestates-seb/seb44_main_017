@@ -16,6 +16,13 @@ export const ProfileContainer = styled.div`
     height: 40px;
     cursor: pointer;
   }
+
+  & .profile_nickname {
+    @media (max-width: 260px) {
+      visibility: hidden;
+      align-items: flex-start;
+    }
+  }
 `;
 
 export const DropDownContainer = styled.div<{ isDropped: boolean }>`

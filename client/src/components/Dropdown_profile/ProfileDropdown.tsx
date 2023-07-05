@@ -10,7 +10,7 @@ const ProfileDropdown = () => {
     <>
       <S.ProfileContainer>
         <div ref={Ref} onClick={DropdownHandler}>
-          <div>고양이 귀여워 님</div>
+          <div className="profile_nickname">고양이 귀여워 님</div>
           <img src={defaultImage} />
         </div>
         <S.DropDownContainer isDropped={DropdownIsOpen ? true : false}>

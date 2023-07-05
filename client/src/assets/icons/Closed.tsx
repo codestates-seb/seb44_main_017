@@ -1,6 +1,10 @@
-import SvgTagProps from "../../types/SvgTagProps";
+import { HamburgerProps } from "./Hamburger";
 
-const Closed = ({ width = 32, height = 32 }: SvgTagProps) => {
+const Closed = ({
+  width = 32,
+  height = 32,
+  DropdownHandler,
+}: HamburgerProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -12,6 +16,7 @@ const Closed = ({ width = 32, height = 32 }: SvgTagProps) => {
       fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"
+      onClick={DropdownHandler}
     >
       <path stroke="none" d="M0 0h24v24H0z" />
       <line x1="18" y1="6" x2="6" y2="18" />

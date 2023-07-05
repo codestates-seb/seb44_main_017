@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const Container = styled.div`
   margin: 0 auto;
@@ -7,8 +7,6 @@ export const Container = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: 999;
-  color: var(--color-darkblue);
   width: 180px;
 
   & img {
@@ -20,7 +18,8 @@ export const Container = styled.div`
     cursor: pointer;
   }
 
-  .hamburger-icon {
+  .hamburger-icon,
+  .close-icon {
     display: flex;
     justify-content: flex-end;
 
@@ -36,6 +35,8 @@ export const SideBar = styled.nav`
   height: 100vh;
   gap: 20px;
   box-shadow: -3px 0px 5px -2px var(--color-gray200);
+  color: var(--color-darkblue);
+  z-index: 999;
 
   .logout-icon {
     position: relative;

@@ -26,13 +26,13 @@ const HamburgerDropdown = () => {
       <S.Container>
         <>
           {!DropdownIsOpen ? (
-            <div className="hamburger-icon" ref={Ref} onClick={DropdownHandler}>
-              <Hamburger />
+            <div className="hamburger-icon" ref={Ref}>
+              <Hamburger DropdownHandler={DropdownHandler} />
             </div>
           ) : (
             <>
-              <div className="hamburger-icon" onClick={DropdownHandler}>
-                <Closed />
+              <div className="close-icon">
+                <Closed DropdownHandler={DropdownHandler} />
               </div>
               <S.SideBar>
                 <S.Profile>
@@ -49,6 +49,7 @@ const HamburgerDropdown = () => {
                     <>
                       <img src={defaultImage} />
                       <div className="profile_text">고양이 귀여워 님</div>
+                      <div></div>
                     </>
                   )}
                 </S.Profile>
@@ -80,11 +81,8 @@ const HamburgerDropdown = () => {
                         </li>
                       </S.Menu>
                     </S.MenuBox>
-                    <div
-                      className="logout-icon"
-                      onClick={() => setIsLogin(false)}
-                    >
-                      <Logout />
+                    <div className="logout-icon">
+                      <Logout setIsLogin={setIsLogin} />
                     </div>
                   </>
                 )}
