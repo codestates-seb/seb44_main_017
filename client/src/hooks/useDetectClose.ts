@@ -9,7 +9,7 @@ type useDetect = [
 
 const useDetectClose = (): useDetect => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const ref = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLDivElement | HTMLInputElement | null>(null);
 
   const toggleHandler = () => setIsOpen(!isOpen);
 
