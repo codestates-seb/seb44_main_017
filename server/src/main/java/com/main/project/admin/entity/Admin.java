@@ -1,5 +1,6 @@
 package com.main.project.admin.entity;
 
+import com.main.project.notifyBoard.entity.NotifyBoard;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -31,4 +32,12 @@ public class Admin {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "admin",cascade = CascadeType.REMOVE)
+    private List<NotifyBoard> notifies = new ArrayList<>();
+
+    public void setNotifies(NotifyBoard notifyBoard){
+        this.notifies.add(notifyBoard);
+        if(notifyBoard.getAdmin() != this) notifyBoard.setAdmin(this);
+    }
 }

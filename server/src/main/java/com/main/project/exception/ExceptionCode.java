@@ -10,6 +10,9 @@ public enum ExceptionCode {
     PRODUCT_NOT_FOUND(404, "Product not found"),
     ADMIN_NOT_FOUND(404,"Admin not found"),
     ADMIN_EXISTS(409,"Admin exists"),
+    REFRESH_NOT_FOUND(404,"RefreshToken not found"),
+    QUESTION_NOT_FOUND(404, "Question not found"),
+    INVALID_SORT_PARAMETER(400, "Invalid parameter named 'sort'"),
     NOTIFY_NOT_FOUND(404, "Notify not found");
 
     private final int status;

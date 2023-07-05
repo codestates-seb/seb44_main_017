@@ -2,6 +2,7 @@ package com.main.project.comment;
 
 // Todo : Comment entity Implementation
 
+import com.main.project.helper.audit.Auditable;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProductComment {
+public class ProductComment extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productCommentId;
@@ -30,8 +31,5 @@ public class ProductComment {
     @ColumnDefault("0")
     private Long productId;
 
-    private LocalDateTime create_at;
-
-    private LocalDateTime modifyAt;
 
 }

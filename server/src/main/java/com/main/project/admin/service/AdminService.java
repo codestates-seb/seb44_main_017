@@ -5,6 +5,7 @@ import com.main.project.admin.repository.AdminRepository;
 import com.main.project.auth.util.AdminCustomAuthorityUtils;
 import com.main.project.exception.BusinessLogicException;
 import com.main.project.exception.ExceptionCode;
+import com.main.project.notifyBoard.entity.NotifyBoard;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -48,5 +49,10 @@ public class AdminService {
         }
 
         return findAdmin;
+    }
+
+    public Admin findAdminById(long adminId){
+        Optional<Admin> optionalAdmin = adminRepository.findById(adminId);
+        return optionalAdmin.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND));
     }
 }

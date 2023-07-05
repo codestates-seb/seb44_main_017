@@ -1,10 +1,10 @@
 package com.main.project.member.entity;
 
+import com.main.project.notifyView.entity.NotifyView;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
@@ -29,12 +29,23 @@ public class Member {
     @ColumnDefault("false")
     private boolean isban;
 
+    @OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE)
+    private List<NotifyView> views = new ArrayList<>();
+
+    public void setViews(NotifyView views){
+        this.views.add(views);
+    }
+
+
     public Member(String email, String name, String password) {
         this.email = email;
         this.name = name;
         this.password = password;
     }
 
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+
+
 }
