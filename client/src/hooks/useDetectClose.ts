@@ -11,8 +11,6 @@ const useDetectClose = (): useDetect => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement | HTMLInputElement | null>(null);
 
-  console.log(isOpen);
-
   const toggleHandler = () => setIsOpen(!isOpen);
 
   const handleClickOutside = (e: React.BaseSyntheticEvent | MouseEvent) => {

@@ -1,13 +1,27 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const Container = styled.div`
-  margin: 0 auto;
+export const SideBar = styled.nav<{ isOpen: boolean }>`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  gap: 20px;
+  color: var(--color-darkblue);
+  width: 230px;
+  z-index: 99;
   position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
+  top: 40px;
   right: 0;
-  width: 180px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease;
+  background-color: var(--color-white);
+
+  ${props =>
+    props.isOpen &&
+    css`
+      opacity: 1;
+      visibility: visible;
+    `};
 
   & img {
     width: 40px;
@@ -18,30 +32,20 @@ export const Container = styled.div`
     cursor: pointer;
   }
 
-  .hamburger-icon,
-  .close-icon {
-    display: flex;
-    justify-content: flex-end;
-
-    @media (max-width: 179px) {
-      justify-content: start;
-    }
-  }
-`;
-
-export const SideBar = styled.nav`
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  gap: 20px;
-  box-shadow: -3px 0px 5px -2px var(--color-gray200);
-  color: var(--color-darkblue);
-  z-index: 999;
-
   .logout-icon {
     position: relative;
-    left: 5px;
-    top: 5px;
+    left: 15px;
+
+    & svg {
+      @media (max-width: 229px) {
+        position: absolute;
+        right: 15px;
+      }
+    }
+  }
+
+  @media (min-width: 1023px) {
+    visibility: hidden;
   }
 `;
 
@@ -56,27 +60,26 @@ export const Profile = styled.div`
 
   .auth_btn {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
   }
 
   & .profile_text {
-    @media (max-width: 179px) {
+    @media (max-width: 229px) {
       visibility: hidden;
     }
   }
 
-  @media (max-width: 179px) {
-    margin: 20px 0;
-    align-items: flex-start;
+  @media (max-width: 229px) {
+    margin: 0;
+    align-items: end;
   }
 `;
 
 export const MenuBox = styled.div`
   display: flex;
   justify-content: center;
-
-  @media (max-width: 179px) {
-    justify-content: start;
-  }
 `;
 
 export const Menu = styled.ul`
@@ -88,12 +91,19 @@ export const Menu = styled.ul`
   font-size: var(--font-size-16);
 
   & img {
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
 
-    @media (max-width: 179px) {
+    @media (max-width: 768px) {
+      width: 16px;
+      height: 16px;
+    }
+
+    @media (max-width: 229px) {
       width: 32px;
       height: 32px;
+      position: absolute;
+      right: 0;
     }
   }
 
@@ -112,7 +122,13 @@ export const Menu = styled.ul`
   }
 
   & .nav_text {
-    @media (max-width: 179px) {
+    margin: 0;
+
+    @media (max-width: 768px) {
+      font-size: var(--font-size-16);
+    }
+
+    @media (max-width: 229px) {
       visibility: hidden;
     }
   }
