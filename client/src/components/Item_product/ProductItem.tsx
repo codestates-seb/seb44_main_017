@@ -1,4 +1,4 @@
-import * as S from "./styled.tsx";
+import * as S from "./styled";
 import React, { useState } from "react";
 
 interface ProductInfo {
