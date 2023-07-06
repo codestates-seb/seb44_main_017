@@ -6,6 +6,7 @@ export const Container = styled.article`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 10px;
 `;
 
 export const InputLayout = styled.form`
@@ -43,5 +44,39 @@ export const InputLayout = styled.form`
     &:hover {
       background-color: #507c9d;
     }
+  }
+`;
+
+export const CommentsLayout = styled.div`
+  display: flex;
+  width: 65%;
+  flex-direction: column;
+  border: 1px solid var(--color-lightivory);
+  padding: 24px;
+  border-radius: 5px;
+  gap: 10px;
+`;
+
+export const CommentBox = styled.div`
+  display: flex;
+  border-bottom: 1px solid var(--color-lightivory);
+
+  & .comment_info {
+    font-size: 12px;
+    display: flex;
+    gap: 20px;
+  }
+
+  & > .comment_update_btn {
+    display: flex;
+    align-items: center;
+
+    & svg {
+      cursor: pointer;
+    }
+  }
+
+  & .comment_content {
+    padding: 12px 50px 12px 0;
   }
 `;

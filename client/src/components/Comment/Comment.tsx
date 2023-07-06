@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import useInput from "../../hooks/useInput";
 import axios from "axios";
 import * as S from "./style";
+import EditButton from "../../assets/icons/EditButton";
+import DeleteButton from "../../assets/icons/DeleteButton";
 
 interface CommentProps {
   commentId: string;
@@ -56,25 +58,24 @@ const Comment = () => {
         />
         <button>댓글 쓰기</button>
       </S.InputLayout>
-      <div>
+      <S.CommentsLayout>
         {commentList.length > 0 &&
           commentList.map(e => (
-            <>
-              <div key={e.commentId}>
-                <div>
-                  <span>{e.writer.name}</span>
-                  <span>{e.createAt}</span>
+            <S.CommentBox>
+              <div className="comment_info_box" key={e.commentId}>
+                <div className="comment_info">
+                  <span>작성자 : {e.writer.name}</span>
+                  <span>작성일 : {e.createAt}</span>
                 </div>
-                <div>{e.content}</div>
+                <div className="comment_content">{e.content}</div>
               </div>
-              // 오른쪽
-              <div>
-                <button>수정</button>
-                <button>삭제</button>
+              <div className="comment_update_btn">
+                <EditButton />
+                <DeleteButton />
               </div>
-            </>
+            </S.CommentBox>
           ))}
-      </div>
+      </S.CommentsLayout>
     </S.Container>
   );
 };
