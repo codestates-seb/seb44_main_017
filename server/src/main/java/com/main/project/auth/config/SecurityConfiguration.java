@@ -110,7 +110,7 @@ public class SecurityConfiguration implements WebMvcConfigurer{
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            UserJwtAuthenticationFilter jwtAuthenticationFilter = new UserJwtAuthenticationFilter(authenticationManager, jwtTokenizer, refreshTokenService);
+            UserJwtAuthenticationFilter jwtAuthenticationFilter = new UserJwtAuthenticationFilter(authenticationManager, jwtTokenizer, refreshTokenService, memberService);
             jwtAuthenticationFilter.setFilterProcessesUrl("/user/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());

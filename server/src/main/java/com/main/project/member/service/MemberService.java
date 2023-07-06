@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.main.project.auth.util.UserCustomAuthorityUtils;
+import com.main.project.dto.queryget;
 import com.main.project.exception.BusinessLogicException;
 import com.main.project.exception.ExceptionCode;
 import com.main.project.member.dto.MemberDto;
@@ -34,6 +35,24 @@ public class MemberService {
     private final UserCustomAuthorityUtils authorityUtils;
     private final PasswordEncoder passwordEncoder;
 
+    public boolean verifyExistname(String name){
+        return memberRepository.existsByName(name);
+    }
+    public Member memberban(Long memberId){
+        Optional<Member> optionalMember = memberRepository.findById(memberId);
+        Member fm = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        if(fm.getisban() == false)
+            fm.setIsban(true);
+        else{
+            fm.setIsban(false);
+        }
+        return memberRepository.save(fm);
+    }
+
+    public void checkisban(Member member){
+        if(member.getisban() == true)
+            throw new BusinessLogicException(ExceptionCode.MEMBER_IS_BAN);
+    }
     private void verifyExistEmail(String email) {
         Optional<Member> member = memberRepository.findByEmail(email);
         if (member.isPresent())
@@ -93,10 +112,28 @@ public class MemberService {
         memberRepository.delete(findMember);
     }
 
-    public List<MemberDto.product> searchMember(Long memberId){
-        String ID = memberId.toString();
-        List<MemberDto.product> searchdto = memberRepository.findUser(ID);
-        return searchdto;
+    public Page<queryget.product> searchMemberProdcut(Long memberId, int page, int size, String keyword, boolean issell){
+        if(keyword.equals("oldest")){
+            return memberRepository.findUserProductOld(memberId, issell, PageRequest.of(page, size));
+        } else if(keyword.equals("mostlike")){
+            //return memberRepository.findUserProductLike(memberId, issell, PageRequest.of(page, size));
+        } else if(keyword.equals("mostview")){
+            return memberRepository.findUserProductView(memberId, PageRequest.of(page, size));
+        } else if(keyword.equals("pricedesc")){
+            return memberRepository.findUserProductpricedesc(memberId, issell, PageRequest.of(page, size));
+        } else if(keyword.equals("priceasc")){
+            return memberRepository.findUserProductpriceasc(memberId, issell, PageRequest.of(page, size));
+        }
+        return memberRepository.findUserProductNew(memberId, issell, PageRequest.of(page, size));
+    }
+
+    public Page<queryget.product> searchMemberProdcutwait(Long memberId, int page, int size){
+
+        return memberRepository.findUserProductwait(memberId, PageRequest.of(page, size));
+    }
+
+    public Page<queryget.question> searchMemberQuestion(Long memberId, int page, int size){
+        return memberRepository.findUserQuestion(memberId, PageRequest.of(page, size));
     }
 
     public Member findMember(String email){

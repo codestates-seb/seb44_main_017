@@ -55,18 +55,4 @@ public class MemberDto {
         }
     }
 
-    public interface product{
-        Long getproduct_id();
-        String getcategory();
-        String getname();
-        String gettitle();
-        String getcontent();
-        String getimage_link();
-        LocalDateTime getmodify_at();
-        LocalDateTime getcreate_at();
-        Boolean getproductlike();
-        Integer getprice();
-        Integer getview();
-        Integer getcondition_value();
-    }
 }
