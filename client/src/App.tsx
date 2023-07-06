@@ -14,7 +14,6 @@ function App() {
     <Routes>
       <Route element={<Header />} path="/header" />
       <Route element={<Footer />} path="/footer" />
-      <Route element={<ProductItem />} path="/item_product" />
       <Route element={<NotifyItem />} path="/item_notify" />
       <Route element={<Comment />} path="/comment" />
       <Route element={<CustomAutocomplete />} path="/autocomplete" />
