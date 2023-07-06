@@ -7,7 +7,6 @@ import com.main.project.member.entity.Member;
 import com.main.project.member.mapper.MemberMapper;
 import com.main.project.member.service.MemberService;
 import com.main.project.member.service.RefreshTokenService;
-import com.main.project.s3.service.AwsS3Service;
 import com.main.project.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

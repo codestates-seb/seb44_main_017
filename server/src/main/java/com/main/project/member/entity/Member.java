@@ -2,7 +2,6 @@ package com.main.project.member.entity;
 
 import com.main.project.productComment.ProductComment;
 import com.main.project.product.entity.Product;
-import com.main.project.productlike.ProductLike;
 import com.main.project.question.entity.Question;
 import com.main.project.questionComment.entity.Comment;
 import lombok.*;
@@ -47,11 +46,25 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<ProductComment> productComments = new ArrayList<>();
 
-    @OneToMany(mappedBy =  "member", cascade = CascadeType.REMOVE)
-    private List<ProductLike> productLikes = new ArrayList<>();
+    @ManyToMany
+//            (mappedBy =  "member", cascade = CascadeType.REMOVE)
+    @JoinTable(name = "MemberProductLike",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> likedProducts = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Comment> questionComments = new ArrayList<>();
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+
+    public void addLikedProducts(Product product){
+        if(!this.likedProducts.contains(product))
+            this.likedProducts.add(product);
+    }
+
+    public void removeLikedProducts(Product product){
+        if(this.likedProducts.contains(product))
+            this.likedProducts.remove(product);
+    }
 }

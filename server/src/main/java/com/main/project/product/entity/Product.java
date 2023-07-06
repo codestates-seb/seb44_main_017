@@ -2,7 +2,6 @@ package com.main.project.product.entity;
 import com.main.project.admin.entity.Admin;
 import com.main.project.productComment.ProductComment;
 import com.main.project.member.entity.Member;
-import com.main.project.productlike.ProductLike;
 import lombok.*;
 
 import javax.persistence.*;
@@ -41,21 +40,36 @@ public class Product {
 
     private Integer view = 0;
 
-    @OneToMany // one product has many productLike entities
-    private List<ProductLike> productLikeList = new ArrayList<>();
-
 //    Todo: image deployment
     private String imageLink;
 
-//    @ColumnDefault("false")
     private Boolean issell = false;
 
     private LocalDateTime createAt;
 
     private LocalDateTime modifyAt;
 
-    private Integer condition_value = 5;
+    private Integer conditionValue = 5;
+
+    private Integer pointValue = 0;
+
+    @ManyToMany(mappedBy = "likedProducts")
+    private List<Member> likedByMembers = new ArrayList<>();
 
     @OneToMany
     private List<ProductComment> comments = new ArrayList<>();
+
+    public void addLikeByMembers(Member member){
+        if(!this.likedByMembers.contains(member))
+            this.likedByMembers.add(member);
+    }
+
+    public void removeLikeByMembers(Member member){
+        if(this.likedByMembers.contains(member))
+            this.likedByMembers.remove(member);
+    }
+
+    public int getLikeCount() {
+        return likedByMembers.size();
+    }
 }

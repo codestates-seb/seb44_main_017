@@ -16,6 +16,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 // Service Layer Implementation
@@ -56,10 +58,12 @@ public class ProductService {
         Optional.ofNullable(product.getContent()).ifPresent(findProduct::setContent);
         Optional.ofNullable(product.getPrice()).ifPresent(findProduct::setPrice);
         Optional.ofNullable(product.getImageLink()).ifPresent(findProduct::setImageLink);
-        Optional.ofNullable(product.getCondition_value()).ifPresent(findProduct::setCondition_value);
+        Optional.ofNullable(product.getConditionValue()).ifPresent(findProduct::setConditionValue);
         Optional.ofNullable(product.getCategory()).ifPresent(findProduct::setCategory);
         Optional.ofNullable(product.getIssell()).ifPresent(findProduct::setIssell);
+        Optional.ofNullable(product.getPointValue()).ifPresent(findProduct::setPointValue);
 
+        findProduct.setModifyAt(LocalDateTime.now());
         return productRepository.save(findProduct);
     }
 
@@ -74,4 +78,44 @@ public class ProductService {
         productComment.setMember(findMember);
         productCommentRepository.save(productComment);
     }
+
+    public void deleteProductComment(Product product, Long memberId, Long productCommentId) {
+        Member findMember = memberService.findVerifiedMember(memberId);
+        ProductComment productComment = productCommentRepository.findById(productCommentId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
+        productCommentRepository.delete(productComment);
+    }
+
+    public Page<Product> findProducts(int page, int size,
+                                      Boolean issell, String sortProperty, Sort.Direction sortDirection) {
+        Sort sort = Sort.by(sortDirection, sortProperty);
+        if (issell != null) {
+            return productRepository.findByIssell(issell, PageRequest.of(page, size, sort));
+        } else {
+            return productRepository.findAll(PageRequest.of(page, size, sort));
+        }
+    }
+
+    public Page<Product> findProducts(int page, int size,
+                                     String sortProperty, Sort.Direction sortDirection) {
+        Sort sort = Sort.by(sortDirection, sortProperty);
+        return productRepository.findAll(PageRequest.of(page, size, sort));
+    }
+
+    public Product updateProductLike(Product product, Long memberId) {
+        Member findMember = memberService.findVerifiedMember(memberId);
+
+        if(product.getLikedByMembers().contains(findMember)){
+            product.removeLikeByMembers(findMember);
+            findMember.removeLikedProducts(product);
+        }else{
+            product.addLikeByMembers(findMember);
+            findMember.addLikedProducts(product);
+        }
+        memberService.updateMember(findMember);
+
+        return productRepository.save(product);
+    }
+
+
 }

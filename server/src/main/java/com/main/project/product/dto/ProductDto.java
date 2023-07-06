@@ -7,14 +7,18 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.List;
 
 public class ProductDto {
+    /* Todo : verify member and find their liked product - issell
+    *   Count productLike property - issellcount*/
 
     @Getter
     @AllArgsConstructor
     public static class Response{
+        private Long productId;
         private String name;
         private String title;
         private String content;
@@ -28,9 +32,13 @@ public class ProductDto {
         private LocalDate createAt;
         private LocalDate modifyAt;
         private Integer conditionValue;
+        private Integer pointValue;
     }
 
+    @Getter
+    @AllArgsConstructor
     public static class ResponseWithComments{
+        private Long productId;
         private String name;
         private String title;
         private String content;
@@ -38,12 +46,13 @@ public class ProductDto {
         private String category;
         private Long memberId;
         private Integer view;
-        private Boolean productlike;
+        private Boolean productLike;
         private String imageLink;
         private Boolean issell;
         private LocalDate createAt;
         private LocalDate modifyAt;
         private Integer conditionValue;
+        private Integer pointValue;
         private List<ProductComment> comments;
     }
 
@@ -67,6 +76,9 @@ public class ProductDto {
 
         @Range(max = 10)
         private Integer conditionValue;
+
+        @Range(min = 0, message = "포인트는 0 혹은 양수만 가능합니다.")
+        private Integer pointValue;
     }
 
     @Getter
@@ -89,7 +101,10 @@ public class ProductDto {
         private String imageLink;
 
         @Range(max = 10)
-        private Integer condition_value;
+        private Integer conditionValue;
+
+        @Range(min = 0, message = "포인트는 0 혹은 양수만 가능합니다.")
+        private Integer pointValue;
     }
 
 }
