@@ -17,6 +17,9 @@ interface CommentProps {
   };
 }
 
+// TODO: 수정, 삭제 기능 구현
+// TODO:
+
 const Comment = () => {
   const initialValue: CommentProps = {
     commentId: "",
@@ -34,13 +37,19 @@ const Comment = () => {
     initialValue,
   ]);
 
-  console.log("list = ", commentList);
-
   useEffect(() => {
     axios
       .get("http://localhost:5173/src/moks/comment.json")
       .then(res => setCommentList(res.data));
   }, []);
+
+  const handleEditComment = () => {
+    alert("수정 기능 구현 예정");
+  };
+
+  const handleDeleteComment = () => {
+    alert("삭제 기능 구현 예정");
+  };
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -60,9 +69,11 @@ const Comment = () => {
         <button>댓글 쓰기</button>
       </S.InputLayout>
       <S.CommentsLayout>
-        {commentList.length > 0 &&
+        {commentList.length === 1 && commentList[0].commentId === "" ? (
+          <div className="none_comment">작성된 댓글이 없습니다.</div>
+        ) : (
           commentList.map(e => (
-            <S.CommentBox>
+            <S.CommentBox key={e.commentId}>
               <div className="comment_info_box" key={e.commentId}>
                 <div className="comment_info">
                   <span>작성자 : {e.writer.name}</span>
@@ -71,11 +82,16 @@ const Comment = () => {
                 <div className="comment_content">{e.content}</div>
               </div>
               <div className="comment_update_btn">
-                <EditButton />
-                <DeleteButton />
+                <button onClick={handleEditComment}>
+                  <EditButton />
+                </button>
+                <button onClick={handleDeleteComment}>
+                  <DeleteButton />
+                </button>
               </div>
             </S.CommentBox>
-          ))}
+          ))
+        )}
       </S.CommentsLayout>
     </S.Container>
   );

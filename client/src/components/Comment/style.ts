@@ -7,6 +7,7 @@ export const Container = styled.article`
   justify-content: center;
   align-items: center;
   gap: 10px;
+  margin-top: 20px;
 `;
 
 export const InputLayout = styled.form`
@@ -55,6 +56,10 @@ export const CommentsLayout = styled.div`
   padding: 24px;
   border-radius: 5px;
   gap: 10px;
+
+  & .none_comment {
+    text-align: center;
+  }
 `;
 
 export const CommentBox = styled.div`
@@ -74,8 +79,9 @@ export const CommentBox = styled.div`
     align-items: center;
     gap: 5px;
 
-    & svg {
-      cursor: pointer;
+    & button {
+      background: none;
+      border: none;
     }
   }
 
