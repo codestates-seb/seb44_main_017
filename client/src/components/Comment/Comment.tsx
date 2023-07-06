@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import useInput from "../../hooks/useInput";
 import axios from "axios";
+import * as S from "./style";
 
 interface CommentProps {
   commentId: string;
@@ -45,16 +46,16 @@ const Comment = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={submitHandler}>
+    <S.Container>
+      <S.InputLayout onSubmit={submitHandler}>
         <input
           type="text"
           onChange={changeHandler}
           value={commentValue}
           placeholder="Add Comment..."
         />
-        <button>작성</button>
-      </form>
+        <button>댓글 쓰기</button>
+      </S.InputLayout>
       <div>
         {commentList.length > 0 &&
           commentList.map(e => (
@@ -74,7 +75,7 @@ const Comment = () => {
             </>
           ))}
       </div>
-    </div>
+    </S.Container>
   );
 };
 
