@@ -4,6 +4,7 @@ import axios from "axios";
 import * as S from "./style";
 import EditButton from "../../assets/icons/EditButton";
 import DeleteButton from "../../assets/icons/DeleteButton";
+import elapsedTime from "../../utils/elapsedTime";
 
 interface CommentProps {
   commentId: string;
@@ -65,7 +66,7 @@ const Comment = () => {
               <div className="comment_info_box" key={e.commentId}>
                 <div className="comment_info">
                   <span>작성자 : {e.writer.name}</span>
-                  <span>{e.createAt}</span>
+                  <span>{elapsedTime(new Date(e.createAt))}</span>
                 </div>
                 <div className="comment_content">{e.content}</div>
               </div>
