@@ -8,12 +8,13 @@ export const Container = styled.article`
   align-items: center;
   gap: 10px;
   margin-top: 20px;
+  min-width: 320px;
 `;
 
 export const InputLayout = styled.form`
   display: flex;
   border: 1px solid var(--color-lightivory);
-  min-width: 65%;
+  width: 65%;
   padding: 24px;
   background-color: #fff;
   color: var(--color-black);
@@ -72,6 +73,10 @@ export const CommentBox = styled.div`
     display: flex;
     gap: 20px;
     line-height: 10px;
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+    }
   }
 
   & > .comment_update_btn {
@@ -87,5 +92,13 @@ export const CommentBox = styled.div`
 
   & .comment_content {
     padding: 12px 30px 12px 0;
+
+    @media (max-width: 767px) {
+      font-size: var(--font-size-12);
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      font-size: 14px;
+    }
   }
 `;
