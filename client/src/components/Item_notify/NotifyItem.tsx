@@ -1,4 +1,3 @@
-import React from "react";
 import {
   NewBadge,
   NotifyContents,
@@ -10,7 +9,6 @@ import {
 } from "./NotifyItem.styles";
 import View from "../../../public/images/view.svg";
 import Post from "../../../public/images/Post.svg";
-import Header from "../Header/Header";
 
 const NotifyItem = () => {
   return (
