@@ -37,6 +37,7 @@ public class Member {
         this.password = password;
     }
 
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Product> products = new ArrayList<>();
 

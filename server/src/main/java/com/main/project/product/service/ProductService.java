@@ -6,6 +6,7 @@ import com.main.project.exception.BusinessLogicException;
 import com.main.project.exception.ExceptionCode;
 import com.main.project.member.entity.Member;
 import com.main.project.member.service.MemberService;
+import com.main.project.product.dto.ProductDto;
 import com.main.project.product.entity.Product;
 import com.main.project.product.repository.ProductRepository;
 import com.main.project.productComment.ProductComment;
@@ -95,14 +96,13 @@ public class ProductService {
         }
     }
 
-    public Page<Product> findProducts(int page, int size,
-                                      Boolean issell, String sortProperty, Sort.Direction sortDirection) {
+    public Page<ProductDto.Response> findProducts(int page, int size,
+                                         Boolean issell, String sortProperty, Sort.Direction sortDirection) {
         Sort sort = Sort.by(sortDirection, sortProperty);
         if (issell != null) {
             return productRepository.findByIssell(issell, PageRequest.of(page, size, sort));
-        } else {
-            return productRepository.findAll(PageRequest.of(page, size, sort));
         }
+        return null;
     }
 
     public Page<Product> findProducts(int page, int size,

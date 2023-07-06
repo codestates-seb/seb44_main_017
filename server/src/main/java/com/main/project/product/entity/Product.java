@@ -1,4 +1,5 @@
 package com.main.project.product.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.main.project.admin.entity.Admin;
 import com.main.project.helper.audit.Auditable;
 import com.main.project.productComment.ProductComment;

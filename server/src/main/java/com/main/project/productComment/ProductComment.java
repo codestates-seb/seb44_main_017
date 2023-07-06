@@ -2,6 +2,7 @@ package com.main.project.productComment;
 
 // Todo : Comment entity Implementation
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.main.project.helper.audit.Auditable;
 import com.main.project.member.entity.Member;
 import com.main.project.product.entity.Product;
@@ -29,6 +30,7 @@ public class ProductComment extends Auditable {
 
     // Todo : mapping needed
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "product_id")
     private Product product;
 }

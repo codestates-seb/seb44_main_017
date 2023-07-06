@@ -110,7 +110,7 @@ public class ProductController {
                 throw new IllegalArgumentException("Invalid sort option: " + sort);
         }
 
-        Page<Product> pageProducts;
+        Page<ProductDto.Response> pageProducts;
         if (issell != null) {
             // when issell is not null...
 
@@ -121,16 +121,11 @@ public class ProductController {
             // when issell property is not given
 
             pageProducts = productService
-                    .findProducts(page-1, size, sortProperty, sortDirection);
+                    .findProducts(page-1, size, issell, sortProperty, sortDirection);
         }
 
-        List<Product> products = pageProducts.getContent();
-        return new ResponseEntity<>(
-                new ListResponseDto<>(
-                        productMapper.productsToProductResponses(products, findMemberId)
-                ),
-                HttpStatus.OK
-        );
+        List<ProductDto.Response> products = pageProducts.getContent();
+        return ResponseEntity.ok(new MultiResponseDto(products,pageProducts));
 
     }
 
