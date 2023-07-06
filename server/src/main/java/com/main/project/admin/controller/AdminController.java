@@ -8,11 +8,18 @@ import com.main.project.admin.service.AdminService;
 import com.main.project.auth.dto.AdminLoginDto;
 import com.main.project.auth.dto.TokenResponseDto;
 import com.main.project.auth.jwt.JwtTokenizer;
+import com.main.project.dto.MultiResponseDto;
 import com.main.project.dto.SingleResponseDto;
+import com.main.project.dto.queryget;
+import com.main.project.exception.BusinessLogicException;
+import com.main.project.exception.ExceptionCode;
+import com.main.project.member.entity.RefreshToken;
+import com.main.project.member.repository.RefreshTokenRepository;
 import com.main.project.member.service.RefreshTokenService;
 import com.main.project.utils.UriCreator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +29,9 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/admin")
@@ -34,6 +43,7 @@ public class AdminController {
     private final JwtTokenizer jwtTokenizer;
     private final RefreshTokenService refreshTokenService;
     private final AdminMapper mapper;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
     @PostMapping("/login")
@@ -69,4 +79,43 @@ public class AdminController {
         refreshTokenService.deleteRefreshToken(refreshtoken);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    @GetMapping("/productst")
+    public ResponseEntity userproduct(@RequestHeader(name = "Refresh") String token,
+                                      @Positive @RequestParam int page,
+                                      @Positive @RequestParam int size,
+                                      @RequestParam(required = false) String sort){
+        Long adminId = findAdminId(token);
+        Page<queryget.product> ss = adminService.searchAdminProdcut(adminId,page-1,size,sort, true);
+        List<queryget.product> productList = ss.getContent();
+        return ResponseEntity.ok(new MultiResponseDto(productList,ss));
+    }
+
+    @GetMapping("/productsf")
+    public ResponseEntity userproductns(@RequestHeader(name = "Refresh") String token,
+                                        @Positive @RequestParam int page,
+                                        @Positive @RequestParam int size,
+                                        @RequestParam(required = false) String sort){
+        Long adminId = findAdminId(token);
+        Page<queryget.product> ss = adminService.searchAdminProdcut(adminId,page-1,size,sort, false);
+        List<queryget.product> productList = ss.getContent();
+        return ResponseEntity.ok(new MultiResponseDto(productList,ss));
+    }
+
+    @GetMapping("/productwait")
+    public ResponseEntity getproductwait(@Positive @RequestParam int page,
+                                         @Positive @RequestParam int size,
+                                         @RequestParam(required = false) String sort){
+        Page<queryget.product> ss = adminService.searchProdcutwait(page-1,size,sort);
+        List<queryget.product> productList = ss.getContent();
+        return ResponseEntity.ok(new MultiResponseDto(productList,ss));
+    }
+
+    public Long findAdminId(String token) {
+        Optional<RefreshToken> refresht = refreshTokenRepository.findByValue(token);
+        RefreshToken findtoken = refresht.orElseThrow(()-> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND));
+        return findtoken.getAdminId();
+    }
+
+
 }
