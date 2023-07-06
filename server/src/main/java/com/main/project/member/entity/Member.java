@@ -51,4 +51,8 @@ public class Member {
     private List<Comment> questionComments = new ArrayList<>();
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+
+    public boolean getisban() {
+        return isban;
+    }
 }

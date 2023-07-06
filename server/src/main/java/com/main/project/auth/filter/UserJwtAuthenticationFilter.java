@@ -5,6 +5,7 @@ import com.main.project.auth.jwt.JwtTokenizer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.main.project.member.entity.Member;
 import com.main.project.member.entity.RefreshToken;
+import com.main.project.member.service.MemberService;
 import com.main.project.member.service.RefreshTokenService;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,11 +24,12 @@ public class UserJwtAuthenticationFilter extends UsernamePasswordAuthenticationF
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
     private final RefreshTokenService refreshTokenService;
-
-    public UserJwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer, RefreshTokenService refreshTokenService){
+    private final MemberService memberService;
+    public UserJwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer, RefreshTokenService refreshTokenService, MemberService memberService){
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
         this.refreshTokenService = refreshTokenService;
+        this.memberService = memberService;
     }
     @SneakyThrows
     @Override
@@ -35,7 +37,8 @@ public class UserJwtAuthenticationFilter extends UsernamePasswordAuthenticationF
 
         ObjectMapper objectMapper = new ObjectMapper();
         UserLoginDto loginDto = objectMapper.readValue(request.getInputStream(), UserLoginDto.class);
-
+        Member findmember = memberService.findMember(loginDto.getUsername());
+        memberService.checkisban(findmember);
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
