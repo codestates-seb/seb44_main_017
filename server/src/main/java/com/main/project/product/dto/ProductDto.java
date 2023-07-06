@@ -1,9 +1,11 @@
 package com.main.project.product.dto;
 
+import com.main.project.product.entity.Product;
 import com.main.project.productComment.ProductComment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
@@ -15,6 +17,7 @@ public class ProductDto {
     /* Todo : verify member and find their liked product - issell
     *   Count productLike property - issellcount*/
 
+    @Setter
     @Getter
     @AllArgsConstructor
     public static class Response{
@@ -26,15 +29,17 @@ public class ProductDto {
         private String category;
         private Long memberId;
         private Integer view;
-        private Boolean productlike;
+        private Boolean productLike;
         private String imageLink;
         private Boolean issell;
         private LocalDate createAt;
         private LocalDate modifyAt;
         private Integer conditionValue;
         private Integer pointValue;
+
     }
 
+    @Setter
     @Getter
     @AllArgsConstructor
     public static class ResponseWithComments{
@@ -54,6 +59,7 @@ public class ProductDto {
         private Integer conditionValue;
         private Integer pointValue;
         private List<ProductComment> comments;
+
     }
 
     @Getter
@@ -66,6 +72,8 @@ public class ProductDto {
         private String title;
 
         private String content;
+
+        private Long memberId;
 
         @Range(min = 0, message = "가격은 0 혹은 양수만 가능합니다.")
         private Integer price;

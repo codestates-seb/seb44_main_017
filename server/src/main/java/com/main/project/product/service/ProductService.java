@@ -13,6 +13,7 @@ import com.main.project.productComment.repository.ProductCommentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,7 +64,6 @@ public class ProductService {
         Optional.ofNullable(product.getIssell()).ifPresent(findProduct::setIssell);
         Optional.ofNullable(product.getPointValue()).ifPresent(findProduct::setPointValue);
 
-        findProduct.setModifyAt(LocalDateTime.now());
         return productRepository.save(findProduct);
     }
 
@@ -77,13 +77,22 @@ public class ProductService {
         productComment.setProduct(product);
         productComment.setMember(findMember);
         productCommentRepository.save(productComment);
+
+        findMember.addProductComments(productComment);
+        memberService.updateMember(findMember);
     }
 
     public void deleteProductComment(Product product, Long memberId, Long productCommentId) {
         Member findMember = memberService.findVerifiedMember(memberId);
+
         ProductComment productComment = productCommentRepository.findById(productCommentId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
-        productCommentRepository.delete(productComment);
+
+        if (findMember.hasProductComment(productComment)){
+            findMember.removeProductComments(productComment);
+            productCommentRepository.delete(productComment);
+            memberService.updateMember(findMember);
+        }
     }
 
     public Page<Product> findProducts(int page, int size,

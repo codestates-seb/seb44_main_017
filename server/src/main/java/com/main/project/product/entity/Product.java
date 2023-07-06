@@ -1,5 +1,6 @@
 package com.main.project.product.entity;
 import com.main.project.admin.entity.Admin;
+import com.main.project.helper.audit.Auditable;
 import com.main.project.productComment.ProductComment;
 import com.main.project.member.entity.Member;
 import lombok.*;
@@ -14,8 +15,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Product {
+//@Builder
+public class Product extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
@@ -45,10 +46,6 @@ public class Product {
 
     private Boolean issell = false;
 
-    private LocalDateTime createAt;
-
-    private LocalDateTime modifyAt;
-
     private Integer conditionValue = 5;
 
     private Integer pointValue = 0;
@@ -72,4 +69,10 @@ public class Product {
     public int getLikeCount() {
         return likedByMembers.size();
     }
+
+    public boolean isLikedByMember(Long memberId) {
+        return likedByMembers.stream()
+                .anyMatch(member -> member.getMemberId().equals(memberId));
+    }
+
 }

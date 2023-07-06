@@ -67,4 +67,16 @@ public class Member {
         if(this.likedProducts.contains(product))
             this.likedProducts.remove(product);
     }
+
+    public void addProductComments(ProductComment productComment){
+        this.productComments.add(productComment);
+    }
+
+    public void removeProductComments(ProductComment productComment){
+        this.productComments.remove(productComment);
+    }
+
+    public boolean hasProductComment(ProductComment productComment) {
+        return this.productComments.contains(productComment);
+    }
 }
