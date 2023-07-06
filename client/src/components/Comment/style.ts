@@ -22,7 +22,7 @@ export const InputLayout = styled.form`
 
   & > input {
     width: 100%;
-    padding: 7px;
+    padding: 7px 10px;
     border: 1px solid var(--color-gray100);
     border-radius: 5px;
 
@@ -60,16 +60,19 @@ export const CommentsLayout = styled.div`
 export const CommentBox = styled.div`
   display: flex;
   border-bottom: 1px solid var(--color-lightivory);
+  justify-content: space-between;
 
   & .comment_info {
     font-size: 12px;
     display: flex;
     gap: 20px;
+    line-height: 10px;
   }
 
   & > .comment_update_btn {
     display: flex;
     align-items: center;
+    gap: 5px;
 
     & svg {
       cursor: pointer;
@@ -77,6 +80,6 @@ export const CommentBox = styled.div`
   }
 
   & .comment_content {
-    padding: 12px 50px 12px 0;
+    padding: 12px 30px 12px 0;
   }
 `;

@@ -32,7 +32,7 @@ const Comment = () => {
   const [commentList, setCommentList] = useState<CommentProps[]>([
     initialValue,
   ]);
-  console.log("commentValue = ", commentValue);
+
   console.log("list = ", commentList);
 
   useEffect(() => {
@@ -65,7 +65,7 @@ const Comment = () => {
               <div className="comment_info_box" key={e.commentId}>
                 <div className="comment_info">
                   <span>작성자 : {e.writer.name}</span>
-                  <span>작성일 : {e.createAt}</span>
+                  <span>{e.createAt}</span>
                 </div>
                 <div className="comment_content">{e.content}</div>
               </div>
