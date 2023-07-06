@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import * as S from "./style";
 import { Logo } from "./Logo";
 
-const SignupModal = () => {
+interface Props {
+  closeModal: any;
+}
+const SignupModal = ({ closeModal }: Props) => {
   // 인풋 값
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
@@ -47,20 +50,7 @@ const SignupModal = () => {
       : setCheckPasswordError(false);
     !phoneReg.test(phone) ? setPhoneError(true) : setPhoneError(false);
     console.log(isAdmin);
-    if (!emailError && !nameError && !passwordError && !phoneError && isAdmin) {
-      const data = { email, name, password, phone };
-      console.log(data);
-      axios
-        .post("url", {
-          data,
-        })
-        .then(function (response) {
-          navigate("/modal_login");
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    } else if (
+    if (
       !emailError &&
       !nameError &&
       !passwordError &&
@@ -79,12 +69,31 @@ const SignupModal = () => {
         .catch(function (error) {
           console.log(error);
         });
+    } else if (
+      !emailError &&
+      !nameError &&
+      !passwordError &&
+      !phoneError &&
+      isAdmin
+    ) {
+      const data = { email, name, password, phone };
+      console.log(data);
+      axios
+        .post("url", {
+          data,
+        })
+        .then(function (response) {
+          navigate("/modal_login");
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   };
   return (
     <S.Container>
       <S.Content>
-        <S.CloseButton />
+        <S.CloseButton onClick={closeModal} />
         <S.SignupTitleContainer>
           <Logo width="40px" height="24px" />
           <S.SignupTitle>SIGNUP</S.SignupTitle>
