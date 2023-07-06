@@ -10,6 +10,7 @@ import Comment from "./components/Comment/Comment";
 import CustomPagination from "./components/Pagination/CustomPagination";
 import CustomAutocomplete from "./components/Autocomplete/CustomAutocomplete";
 import TitleBackground from "./components/TItleBackground/TitleBackground";
+import SelectBox from "./components/SelectBox/SelectBox";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route element={<CustomAutocomplete />} path="/autocomplete" />
       <Route element={<CustomPagination />} path="/pagination" />
       <Route element={<TitleBackground />} path="/title_background" />
+      <Route element={<SelectBox />} path="/select_box" />
     </Routes>
   );
 }
