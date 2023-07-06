@@ -1,6 +1,6 @@
 import SvgTagProps from "./../../types/SvgTagProps";
 
-const SelectArrow = ({ width = 24, height = 24 }: SvgTagProps) => {
+const SelectArrow = ({ width = 20, height = 20 }: SvgTagProps) => {
   return (
     <svg
       width={width}

@@ -19,10 +19,32 @@ export const SelectBox = styled.div`
   display: flex;
   align-items: center;
   font-size: var(--font-size-12);
+  font-weight: 700;
+  left: 10px;
+  top: 10px;
 
   & svg {
     position: absolute;
     right: 3px;
+
+    @media (max-width: 767px) {
+      right: 0;
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    width: 80px;
+    height: 20px;
+    border: 2px solid var(--color-darkblue);
+    font-weight: 500;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 90px;
+    height: 22px;
+    border: 2px solid var(--color-darkblue);
   }
 `;
 
@@ -50,6 +72,7 @@ export const SelectOptions = styled.ul<{ isOpen: boolean }>`
   );
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: #111;
+  appearance: none;
 `;
 
 export const Option = styled.li`

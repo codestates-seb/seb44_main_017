@@ -1,30 +1,52 @@
 import { useState } from "react";
 import * as S from "./style";
 import SelectArrow from "../../assets/icons/SelectArrow";
+import useDetectClose from "../../hooks/useDetectClose";
 
-const SelectBox = () => {
-  const [value, setValue] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
+interface Props {
+  options: string[];
+  setOption: React.Dispatch<React.SetStateAction<string>>;
+}
 
-  console.log(value);
+const SelectBox = ({ options, setOption }: Props) => {
+  const [isSelected, selectRef, selectHandler] = useDetectClose();
+  const [viewValue, setViewValue] = useState("정렬");
 
   const handleSelectValue = (e: any) => {
-    setValue(e.target.getAttribute("value"));
+    const current = e.target.getAttribute("value");
+    setViewValue(current);
+
+    switch (current) {
+      case "최신순":
+        setOption("newest");
+        break;
+      case "오래된순":
+        setOption("oldest");
+        break;
+      case "좋아요순":
+        setOption("mostlike");
+        break;
+      case "조회수순":
+        setOption("mostview");
+        break;
+      case "가격낮은순":
+        setOption("priceasc");
+        break;
+      case "가격높은순":
+        setOption("pricedesc");
+        break;
+    }
   };
 
   return (
-    <S.SelectBox onClick={() => setIsOpen(!isOpen)}>
-      <S.Label>{value}</S.Label>
-      <S.SelectOptions isOpen={isOpen}>
-        <S.Option value="최신순" onClick={handleSelectValue}>
-          최신순
-        </S.Option>
-        <S.Option value="좋아요순" onClick={handleSelectValue}>
-          좋아요순
-        </S.Option>
-        <S.Option value="컨디션순" onClick={handleSelectValue}>
-          컨디션순
-        </S.Option>
+    <S.SelectBox ref={selectRef} onClick={selectHandler}>
+      <S.Label>{viewValue}</S.Label>
+      <S.SelectOptions isOpen={isSelected}>
+        {options.map(option => (
+          <S.Option key={option} value={option} onClick={handleSelectValue}>
+            {option}
+          </S.Option>
+        ))}
       </S.SelectOptions>
       <SelectArrow />
     </S.SelectBox>
