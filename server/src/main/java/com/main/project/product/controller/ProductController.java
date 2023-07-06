@@ -1,6 +1,7 @@
 package com.main.project.product.controller;
 
 import com.main.project.dto.MultiResponseDto;
+import com.main.project.dto.queryget;
 import com.main.project.exception.BusinessLogicException;
 import com.main.project.exception.ExceptionCode;
 import com.main.project.member.entity.Member;
@@ -84,11 +85,11 @@ public class ProductController {
             case "newest":
             case "":
                 sortDirection = Sort.Direction.DESC;
-                sortProperty = "createAt";
+                sortProperty = "create_at";
                 break;
             case "oldest":
                 sortDirection = Sort.Direction.ASC;
-                sortProperty = "createAt";
+                sortProperty = "create_at";
                 break;
             case "mostlike":
                 sortDirection = Sort.Direction.DESC;
@@ -110,7 +111,7 @@ public class ProductController {
                 throw new IllegalArgumentException("Invalid sort option: " + sort);
         }
 
-        Page<ProductDto.Response> pageProducts;
+        Page<queryget.product> pageProducts;
         if (issell != null) {
             // when issell is not null...
 
@@ -124,7 +125,7 @@ public class ProductController {
                     .findProducts(page-1, size, issell, sortProperty, sortDirection);
         }
 
-        List<ProductDto.Response> products = pageProducts.getContent();
+        List<queryget.product> products = pageProducts.getContent();
         return ResponseEntity.ok(new MultiResponseDto(products,pageProducts));
 
     }

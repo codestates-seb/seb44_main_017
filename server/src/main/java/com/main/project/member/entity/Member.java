@@ -79,6 +79,7 @@ public class Member {
 
     public boolean hasProductComment(ProductComment productComment) {
         return this.productComments.contains(productComment);
+    }
     public boolean getisban() {
         return isban;
     }

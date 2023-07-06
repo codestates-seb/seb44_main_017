@@ -2,6 +2,7 @@ package com.main.project.product.service;
 
 import com.main.project.admin.entity.Admin;
 import com.main.project.admin.service.AdminService;
+import com.main.project.dto.queryget;
 import com.main.project.exception.BusinessLogicException;
 import com.main.project.exception.ExceptionCode;
 import com.main.project.member.entity.Member;
@@ -96,8 +97,8 @@ public class ProductService {
         }
     }
 
-    public Page<ProductDto.Response> findProducts(int page, int size,
-                                         Boolean issell, String sortProperty, Sort.Direction sortDirection) {
+    public Page<queryget.product> findProducts(int page, int size,
+                                               Boolean issell, String sortProperty, Sort.Direction sortDirection) {
         Sort sort = Sort.by(sortDirection, sortProperty);
         if (issell != null) {
             return productRepository.findByIssell(issell, PageRequest.of(page, size, sort));
