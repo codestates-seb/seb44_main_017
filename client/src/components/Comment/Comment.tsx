@@ -18,7 +18,7 @@ interface CommentProps {
 }
 
 // TODO: 수정, 삭제 기능 구현
-// TODO:
+// TODO: API 연동하기
 
 const Comment = () => {
   const initialValue: CommentProps = {
