@@ -14,9 +14,9 @@ import java.util.Optional;
 public interface AdminRepository extends JpaRepository<Admin, Long> {
     Optional<Admin> findByEmail(String email);
 
-    @Query(value = "select product_id,member_id,category,name,title,content,image_link,modify_at,create_at,price,productlike,view,condition_value from product where price is null order by create_at desc", nativeQuery = true)
+    @Query(value = "select p.product_id,p.member_id,p.category,p.name,p.title,p.content,p.image_link,p.modify_at,p.create_at,p.price,p.productlike,p.view,p.condition_value from product p left outer join productdeny d on(p.product_id = d.product_id) where p.price is null and d.product_id is null order by p.create_at desc", nativeQuery = true)
     Page<queryget.product> findProductdescwait(Pageable pageable);
-    @Query(value = "select product_id,member_id,category,name,title,content,image_link,modify_at,create_at,price,productlike,view,condition_value from product where price is null order by create_at asc", nativeQuery = true)
+    @Query(value = "select p.product_id,p.member_id,p.category,p.name,p.title,p.content,p.image_link,p.modify_at,p.create_at,p.price,p.productlike,p.view,p.condition_value from product p left outer join productdeny d on(p.product_id = d.product_id) where p.price is null and d.product_id is null order by p.create_at asc", nativeQuery = true)
     Page<queryget.product> findProductascwait(Pageable pageable);
 
     @Query(value = "select P.product_id,P.member_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from admin a join product P ON a.admin_id = P.admin_id where P.issell=:issell and a.admin_id=:ID order by P.create_at desc", nativeQuery = true)

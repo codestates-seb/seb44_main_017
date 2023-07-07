@@ -135,6 +135,11 @@ public class MemberService {
         return memberRepository.findUserProductwait(memberId, PageRequest.of(page, size));
     }
 
+    public Page<queryget.product> searchMemberProdcutdeny(Long memberId, int page, int size){
+
+        return memberRepository.findUserProductdeny(memberId, PageRequest.of(page, size));
+    }
+
     public Page<queryget.question> searchMemberQuestion(Long memberId, int page, int size){
         return memberRepository.findUserQuestion(memberId, PageRequest.of(page, size));
     }

@@ -2,8 +2,10 @@ package com.main.project.product.service;
 
 import com.main.project.exception.BusinessLogicException;
 import com.main.project.exception.ExceptionCode;
+import com.main.project.member.entity.RefreshToken;
 import com.main.project.member.service.MemberService;
 import com.main.project.product.entity.Product;
+import com.main.project.product.entity.Productdeny;
 import com.main.project.product.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,10 +19,12 @@ import java.util.Optional;
 public class ProductService {
     private final ProductRepository productRepository;
     private final MemberService memberService;
+    private final ProductdenyService productdenyService;
 
-    public ProductService(ProductRepository productRepository, MemberService memberService) {
+    public ProductService(ProductRepository productRepository, MemberService memberService, ProductdenyService productdenyService) {
         this.productRepository = productRepository;
         this.memberService = memberService;
+        this.productdenyService = productdenyService;
     }
 
     public List<Product> findProducts() {
@@ -53,5 +57,18 @@ public class ProductService {
     public void deleteProduct(Long productId) {
         Product findProduct = findProduct(productId);
         productRepository.delete(findProduct);
+    }
+
+    public void denyProduct(Long productId, String content){
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        Product findproduct = optionalProduct.orElseThrow(()->new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
+        if(productdenyService.findByproductId(findproduct) == true) {
+            throw new BusinessLogicException(ExceptionCode.PRODUCTDENY_EXISTS);
+        }
+        Productdeny productdeny = new Productdeny();
+        productdeny.setContent(content);
+        productdeny.setProduct(findproduct);
+        productdeny.setMember(findproduct.getMember());
+        productdenyService.addProductdeny(productdeny);
     }
 }

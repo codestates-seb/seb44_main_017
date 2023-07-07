@@ -77,4 +77,22 @@ public class ProductDto {
         @Range(max = 10)
         private Integer condition_value;
     }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class UserPP{
+        @NotBlank(message = "공백이 아니어야 합니다.")
+        private String name;
+
+        @NotBlank(message = "공백이 아니어야 합니다.")
+        private String title;
+
+        private String content;
+
+        private String category;
+
+        private String imageLink;
+
+    }
 }
