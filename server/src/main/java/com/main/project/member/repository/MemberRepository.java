@@ -15,6 +15,9 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByEmail(String email);
     boolean existsByName(String name);
+
+    Page<Member> findByNameContaining(String keyword, Pageable pageable);
+
     @Query(value = "select P.product_id,P.member_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from member m join product P ON m.member_id = P.member_id where P.issell=:issell and m.member_id=:ID order by P.create_at desc", nativeQuery = true)
     Page<queryget.product> findUserProductNew(@Param(value = "ID") Long ID, @Param(value= "issell") boolean issell, Pageable pageable);
     @Query(value = "select P.product_id,P.member_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from member m join product P ON m.member_id = P.member_id where P.issell=:issell and m.member_id=:ID order by P.create_at asc", nativeQuery = true)

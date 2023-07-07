@@ -45,8 +45,8 @@ cloud:
     s3:
       bucket: mainproject.bucket
     credentials:
-      accessKey: x
-      secretKey: x
+      accessKey: ${Access_key}
+      secretKey: ${Secret_access_key}
     region:
       static: ap-northeast-2
       auto: false

@@ -70,6 +70,14 @@ public class MemberController {
         Member member = memberService.memberban(memberId);
         return ResponseEntity.ok(mapper.memberToMemberResponse(member));
     }
+    @GetMapping("/search")
+    public ResponseEntity searchMemberlist(@RequestParam String keyword,
+                                           @Positive @RequestParam int page,
+                                           @Positive @RequestParam int size){
+        Page<Member> members = memberService.searchMemberlist(keyword,page-1,size);
+        List<Member> memberList = members.getContent();
+        return ResponseEntity.ok(new MultiResponseDto(mapper.membersToMemberResponses(memberList),members));
+    }
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId) {
         Member member = memberService.findVerifiedMember(memberId);
