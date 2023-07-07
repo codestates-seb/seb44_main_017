@@ -6,14 +6,15 @@ export const SideBar = styled.nav<{ isOpen: boolean }>`
   height: 100vh;
   gap: 20px;
   color: var(--color-darkblue);
-  width: 230px;
+  width: 20%;
   z-index: 99;
   position: fixed;
-  top: 40px;
+  top: 43px;
   right: 0;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.4s ease;
+  transform: translate(50%, 0);
+  transition: all 0.2s ease;
   background-color: var(--color-white);
 
   ${props =>
@@ -21,6 +22,7 @@ export const SideBar = styled.nav<{ isOpen: boolean }>`
     css`
       opacity: 1;
       visibility: visible;
+      transform: translate(0, 0);
     `};
 
   & img {
@@ -36,16 +38,23 @@ export const SideBar = styled.nav<{ isOpen: boolean }>`
     position: relative;
     left: 15px;
 
-    & svg {
-      @media (max-width: 229px) {
-        position: absolute;
-        right: 15px;
+    & > svg {
+      &:hover {
+        transform: scale(1.1);
       }
     }
-  }
 
-  @media (min-width: 1023px) {
-    visibility: hidden;
+    @media (max-width: 767px) {
+      & > svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      left: 0px;
+      align-self: center;
+    }
   }
 `;
 
@@ -54,7 +63,7 @@ export const Profile = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  margin: 20px auto 10px;
+  margin: 50px 0 10px 0;
   font-weight: var(--font-weight-700);
   font-size: var(--font-size-12);
 
@@ -62,18 +71,16 @@ export const Profile = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
-    margin: 0;
-  }
 
-  & .profile_text {
-    @media (max-width: 229px) {
-      visibility: hidden;
+    & > button {
+      margin: 0;
     }
   }
 
-  @media (max-width: 229px) {
-    margin: 0;
-    align-items: end;
+  & .profile_name {
+    @media (max-width: 600px) {
+      display: none;
+    }
   }
 `;
 
@@ -90,23 +97,6 @@ export const Menu = styled.ul`
   margin-bottom: 100px;
   font-size: var(--font-size-16);
 
-  & img {
-    width: 24px;
-    height: 24px;
-
-    @media (max-width: 768px) {
-      width: 16px;
-      height: 16px;
-    }
-
-    @media (max-width: 229px) {
-      width: 32px;
-      height: 32px;
-      position: absolute;
-      right: 0;
-    }
-  }
-
   & li {
     cursor: pointer;
     display: flex;
@@ -119,17 +109,52 @@ export const Menu = styled.ul`
       background-color: var(--color-darkgreen);
       color: var(--color-white);
     }
+
+    @media (max-width: 600px) {
+      &:hover > .nav_description {
+        display: block;
+      }
+    }
+
+    & > img {
+      width: 24px;
+      height: 24px;
+
+      @media (max-width: 767px) {
+        width: 16px;
+        height: 16px;
+      }
+
+      @media (max-width: 600px) {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    & .nav_description {
+      padding: 5px;
+      background-color: #444444;
+      border-radius: 5px;
+      color: #fff;
+      position: absolute;
+      display: none;
+      width: max-content;
+      right: 0;
+      font-size: var(--font-size-12);
+    }
   }
 
   & .nav_text {
     margin: 0;
+    width: 100%;
+    text-align: center;
 
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       font-size: var(--font-size-16);
     }
 
-    @media (max-width: 229px) {
-      visibility: hidden;
+    @media (max-width: 600px) {
+      display: none;
     }
   }
 `;

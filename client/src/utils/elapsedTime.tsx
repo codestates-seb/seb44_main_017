@@ -1,25 +1,33 @@
+interface TimesProps {
+  name: Intl.RelativeTimeFormatUnit;
+  milliSeconds: number;
+}
+
 const elapsedTime = (date: Date) => {
   const start = new Date(date);
   const end = new Date();
 
-  const diff = (+end - +start) / 1000;
+  const diff = (end.getTime() - start.getTime()) / 1000;
 
-  const times = [
-    { name: "년", milliSeconds: 60 * 60 * 24 * 365 },
-    { name: "개월", milliSeconds: 60 * 60 * 24 * 30 },
-    { name: "일", milliSeconds: 60 * 60 * 24 },
-    { name: "시간", milliSeconds: 60 * 60 },
-    { name: "분", milliSeconds: 60 },
+  const formatter = new Intl.RelativeTimeFormat("ko", {
+    numeric: "always",
+  });
+
+  const times: TimesProps[] = [
+    { name: "year", milliSeconds: 60 * 60 * 24 * 365 },
+    { name: "month", milliSeconds: 60 * 60 * 24 * 30 },
+    { name: "day", milliSeconds: 60 * 60 * 24 },
+    { name: "hour", milliSeconds: 60 * 60 },
+    { name: "minute", milliSeconds: 60 },
   ];
 
   for (const value of times) {
     const betweenTime = Math.floor(diff / value.milliSeconds);
 
     if (betweenTime > 0) {
-      return `${betweenTime}${value.name} 전`;
+      return formatter.format(-betweenTime, value.name);
     }
   }
-
   return "방금 전";
 };
 

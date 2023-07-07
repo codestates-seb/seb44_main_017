@@ -12,9 +12,7 @@ import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import Backdrop from "./Backdrop";
 
-// TODO: 로그인, 회원가입 버튼 중앙으로 옮기기
-// TODO: nav list 글자 정렬(Q&A)
-// TODO: 드롭다운 UI 손보기
+// TODO: 햄버거 메뉴를 클릭한 상태로 width가 1024px을 넘어가도 백드롭과 사이드바가 유지되는 문제
 
 interface Props {
   isOpen: boolean;
@@ -67,7 +65,7 @@ const HamburgerDropdown = ({ isOpen, toggleMenu, headerRef }: Props) => {
               ) : (
                 <>
                   <img src={defaultImage} />
-                  <div className="profile_text">고양이 귀여워 님</div>
+                  <div className="profile_name">고양이 귀여워 님</div>
                   <div></div>
                 </>
               )}
@@ -77,26 +75,29 @@ const HamburgerDropdown = ({ isOpen, toggleMenu, headerRef }: Props) => {
                 <S.MenuBox>
                   <S.Menu>
                     <li onClick={() => navigate("#")}>
-                      <img src={product} />
+                      <img src={product} title="상품 보기" />
                       <h3 className="nav_text">상품 보기</h3>
+                      <div className="nav_description">상품 보기</div>
                     </li>
                     <li onClick={() => navigate("#")}>
-                      <img src={clothes} />
+                      <img src={clothes} title="수거 요청" />
                       <h3 className="nav_text">수거 요청</h3>
+                      <div className="nav_description">수거 요청</div>
                     </li>
                     <li onClick={() => navigate("#")}>
-                      <img src={notice} />
+                      <img src={notice} title="공지사항" />
                       <h3 className="nav_text">공지사항</h3>
+                      <div className="nav_description">공지사항</div>
                     </li>
                     <li onClick={() => navigate("#")}>
-                      <img src={askQuestion} />
-                      <div>
-                        <h3 className="nav_text">Q & A</h3>
-                      </div>
+                      <img src={askQuestion} title="Q&A" />
+                      <h3 className="nav_text">Q & A</h3>
+                      <div className="nav_description">Q&A</div>
                     </li>
                     <li onClick={() => navigate("#")}>
-                      <img src={magnifier} />
+                      <img src={magnifier} title="마이페이지" />
                       <h3 className="nav_text">마이페이지</h3>
+                      <div className="nav_description">마이페이지</div>
                     </li>
                   </S.Menu>
                 </S.MenuBox>
