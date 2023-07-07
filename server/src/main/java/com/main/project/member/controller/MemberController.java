@@ -117,6 +117,16 @@ public class MemberController {
         return ResponseEntity.ok(new MultiResponseDto(productList,ss));
     }
 
+    @GetMapping("/productdeny")
+    public ResponseEntity userproductdeny(@RequestHeader(name = "Refresh") String token,
+                                          @Positive @RequestParam int page,
+                                          @Positive @RequestParam int size){
+        Long memberId = findmemberId(token);
+        Page<queryget.product> ss = memberService.searchMemberProdcutdeny(memberId,page-1,size);
+        List<queryget.product> productList = ss.getContent();
+        return ResponseEntity.ok(new MultiResponseDto(productList,ss));
+    }
+
     @GetMapping("namecheck/{name}")
     public ResponseEntity<Boolean> usercheckname(@PathVariable String name){
 

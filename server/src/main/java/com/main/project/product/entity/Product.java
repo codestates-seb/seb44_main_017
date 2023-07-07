@@ -60,4 +60,7 @@ public class Product {
 
     @OneToMany
     private List<ProductComment> comments = new ArrayList<>();
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private Productdeny productdeny;
 }

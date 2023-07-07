@@ -2,6 +2,7 @@ package com.main.project.member.entity;
 
 import com.main.project.comment.ProductComment;
 import com.main.project.product.entity.Product;
+import com.main.project.product.entity.Productdeny;
 import com.main.project.question.entity.Question;
 import com.main.project.questionComment.entity.Comment;
 import lombok.*;
@@ -49,8 +50,13 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Comment> questionComments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Productdeny> productdenies = new ArrayList<>();
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+
+
 
     public boolean getisban() {
         return isban;
