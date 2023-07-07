@@ -66,7 +66,7 @@ public class ProductService {
             throw new BusinessLogicException(ExceptionCode.PRODUCTDENY_EXISTS);
         }
         Productdeny productdeny = new Productdeny();
-        productdeny.setContent(content);
+        productdeny.setDenycontent(content);
         productdeny.setProduct(findproduct);
         productdeny.setMember(findproduct.getMember());
         productdenyService.addProductdeny(productdeny);

@@ -40,6 +40,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query(value = "select Q.question_id,P.member_id,Q.view,Q.title,Q.content,Q.create_at,Q.modify_at from member M join question Q ON M.member_id = Q.member_id where M.member_id=:ID", nativeQuery = true)
     Page<queryget.question> findUserQuestion(@Param(value = "ID") Long ID, Pageable pageable);
 
-    @Query(value = "select P.product_id,P.member_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from product p join productdeny d where price is null and p.product_id = d.product_id and p.member_id=:ID",nativeQuery = true)
-    Page<queryget.product> findUserProductdeny(@Param(value = "ID") Long ID, Pageable pageable);
+    @Query(value = "select P.product_id,P.member_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,d.denycontent from product p join productdeny d where price is null and p.product_id = d.product_id and p.member_id=:ID",nativeQuery = true)
+    Page<queryget.denyproduct> findUserProductdeny(@Param(value = "ID") Long ID, Pageable pageable);
 }
