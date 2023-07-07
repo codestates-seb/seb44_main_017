@@ -1,4 +1,4 @@
-package com.main.project.exception;
+package com.main.project.exception.businessLogicException;
 
 import lombok.Getter;
 
@@ -10,8 +10,10 @@ public enum ExceptionCode {
     PRODUCT_NOT_FOUND(404, "Product not found"),
     ADMIN_NOT_FOUND(404,"Admin not found"),
     ADMIN_EXISTS(409,"Admin exists"),
+    NOT_WRITER(403,"Not writer"),
     REFRESH_NOT_FOUND(404,"RefreshToken not found"),
     QUESTION_NOT_FOUND(404, "Question not found"),
+    QUESTION_COMMENT_NOT_FOUND(404,"Question Comment not found"),
     INVALID_SORT_PARAMETER(400, "Invalid parameter named 'sort'"),
     NOTIFY_NOT_FOUND(404, "Notify not found");
 
