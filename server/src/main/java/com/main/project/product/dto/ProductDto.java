@@ -4,6 +4,7 @@ import com.main.project.comment.ProductComment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Range;
 
@@ -103,5 +104,11 @@ public class ProductDto {
         @NotBlank(message = "공백이 아니어야 합니다.")
         private String denycontent;
 
+    }
+
+    @Getter
+    @Setter
+    public static class Postlist{
+        List<UserPP> productlist;
     }
 }

@@ -1,5 +1,9 @@
 package com.main.project.product.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.main.project.product.dto.ProductDto;
 import com.main.project.product.entity.Product;
 import com.main.project.product.entity.Productdeny;
@@ -15,10 +19,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -54,11 +60,24 @@ public class ProductController {
         productService.denyProduct(productId,requestbody.getDenycontent());
         return new ResponseEntity(HttpStatus.OK);
     }
-/*
-    @PostMapping("/postlist")
-    public Product postProductlist(@Valid @RequestBody )
 
- */
+    @PostMapping("/postlist")
+    public ResponseEntity postProductlist(@RequestPart("files") List<MultipartFile> files,
+                                          @RequestParam("productlist") String productlist) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper().registerModule(new SimpleModule());
+        List<ProductDto.UserPP> productlists = objectMapper.readValue(productlist, new TypeReference<>() {});
+        for(int i = 0; i < productlists.size(); i++){
+            Product pp = productMapper.NproductPatchDtotoProduct(productlists.get(i));
+            productService.createProducts(pp);
+            productService.uploadImage(files.get(i),pp.getProductId());
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+
+
+
+
 
 
 
