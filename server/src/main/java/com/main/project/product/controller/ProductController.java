@@ -50,16 +50,18 @@ public class ProductController {
 
     @PostMapping("/deny/{product-id}")
     public ResponseEntity productdeny(@PathVariable("product-id") @Positive Long productId,
-                                      @Valid @RequestBody String content){
-        productService.denyProduct(productId,content);
+                                      @Valid @RequestBody ProductDto.Postdeny requestbody){
+        productService.denyProduct(productId,requestbody.getDenycontent());
         return new ResponseEntity(HttpStatus.OK);
     }
-    /*
+/*
     @PostMapping("/postlist")
-    public Product postProduct(@Valid @RequestBody )
+    public Product postProductlist(@Valid @RequestBody )
+
+ */
 
 
-     */
+
     // members can get products list
     @GetMapping
     public ResponseEntity getProducts(){

@@ -25,5 +25,5 @@ public class Productdeny {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private String content;
+    private String denycontent;
 }
