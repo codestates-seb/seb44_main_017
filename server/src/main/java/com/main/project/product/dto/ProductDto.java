@@ -2,6 +2,7 @@ package com.main.project.product.dto;
 
 import com.main.project.product.entity.Product;
 import com.main.project.productComment.ProductComment;
+import com.main.project.productComment.dto.ProductCommentDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import org.hibernate.validator.constraints.Range;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ProductDto {
@@ -32,8 +34,8 @@ public class ProductDto {
         private Boolean productLike;
         private String imageLink;
         private Boolean issell;
-        private LocalDate createAt;
-        private LocalDate modifyAt;
+        private LocalDateTime createAt;
+        private LocalDateTime modifyAt;
         private Integer conditionValue;
         private Integer pointValue;
 
@@ -54,11 +56,11 @@ public class ProductDto {
         private Boolean productLike;
         private String imageLink;
         private Boolean issell;
-        private LocalDate createAt;
-        private LocalDate modifyAt;
+        private LocalDateTime createAt;
+        private LocalDateTime modifyAt;
         private Integer conditionValue;
         private Integer pointValue;
-        private List<ProductComment> comments;
+        private List<ProductCommentDto.Response> comments;
 
     }
 

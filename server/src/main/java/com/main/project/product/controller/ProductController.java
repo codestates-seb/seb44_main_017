@@ -4,7 +4,6 @@ import com.main.project.dto.MultiResponseDto;
 import com.main.project.dto.queryget;
 import com.main.project.exception.BusinessLogicException;
 import com.main.project.exception.ExceptionCode;
-import com.main.project.member.entity.Member;
 import com.main.project.member.entity.RefreshToken;
 import com.main.project.member.service.MemberService;
 import com.main.project.member.service.RefreshTokenService;
@@ -14,7 +13,7 @@ import com.main.project.product.mapper.ProductMapper;
 import com.main.project.product.service.ProductService;
 import com.main.project.productComment.ProductComment;
 import com.main.project.productComment.dto.ProductCommentDto;
-import com.main.project.response.ListResponseDto;
+import com.main.project.productComment.repository.ProductCommentRepository;
 import com.main.project.response.SingleResponseDto;
 import com.main.project.utils.UriCreator;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +29,7 @@ import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -42,11 +42,13 @@ public class ProductController {
     private final ProductService productService;
     private final ProductMapper productMapper;
     private final RefreshTokenService refreshTokenService;
+    private final ProductCommentRepository productCommentRepository;
 
-    public ProductController(ProductService productService, ProductMapper productMapper, MemberService memberService, RefreshTokenService refreshTokenService) {
+    public ProductController(ProductService productService, ProductMapper productMapper, MemberService memberService, RefreshTokenService refreshTokenService, ProductCommentRepository productCommentRepository) {
         this.productService = productService;
         this.productMapper = productMapper;
         this.refreshTokenService = refreshTokenService;
+        this.productCommentRepository = productCommentRepository;
     }
 
     // admin can post their product.
@@ -111,22 +113,24 @@ public class ProductController {
                 throw new IllegalArgumentException("Invalid sort option: " + sort);
         }
 
-        Page<queryget.product> pageProducts;
         if (issell != null) {
             // when issell is not null...
 
-            pageProducts = productService
+            Page<queryget.product> pageProducts = productService
                     .findProducts(page-1, size, issell, sortProperty, sortDirection);
+            List<queryget.product> products = pageProducts.getContent();
+            return ResponseEntity.ok(new MultiResponseDto(products, pageProducts));
 
         } else {
             // when issell property is not given
 
-            pageProducts = productService
-                    .findProducts(page-1, size, issell, sortProperty, sortDirection);
+            Page<Product> pageProducts = productService
+                    .findProducts(page-1, size, sortProperty, sortDirection);
+            List<Product> products = pageProducts.getContent();
+
+            return ResponseEntity.ok(new MultiResponseDto<>(products, pageProducts));
         }
 
-        List<queryget.product> products = pageProducts.getContent();
-        return ResponseEntity.ok(new MultiResponseDto(products,pageProducts));
 
     }
 
@@ -144,9 +148,23 @@ public class ProductController {
 
         Product product = productService.findProduct(productId);
 
+        List<ProductComment> comments = productCommentRepository.findByProductProductId(productId);
+
+        List<ProductCommentDto.Response> commentResponses = comments.stream()
+                .map(comment -> new ProductCommentDto.Response(
+                        comment.getContent(),
+                        comment.getMember().getMemberId(),
+                        comment.getCreateAt(),
+                        comment.getModifyAt()
+                ))
+                .collect(Collectors.toList());
+
+        ProductDto.ResponseWithComments response = productMapper.productToProductResponseWithComment(product, memberId);
+        response.setComments(commentResponses);
+
         return new ResponseEntity<>(
                 new SingleResponseDto<>(
-                        productMapper.productToProductResponseWithComment(product, memberId)),
+                        response),
                 HttpStatus.OK
         );
     }

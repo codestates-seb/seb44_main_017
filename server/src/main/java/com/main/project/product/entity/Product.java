@@ -54,7 +54,7 @@ public class Product extends Auditable {
     @ManyToMany(mappedBy = "likedProducts")
     private List<Member> likedByMembers = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<ProductComment> comments = new ArrayList<>();
 
     public void addLikeByMembers(Member member){

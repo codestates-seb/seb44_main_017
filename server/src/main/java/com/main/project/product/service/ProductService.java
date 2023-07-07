@@ -103,7 +103,8 @@ public class ProductService {
         if (issell != null) {
             return productRepository.findByIssell(issell, PageRequest.of(page, size, sort));
         }
-        return null;
+
+        throw new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND);
     }
 
     public Page<Product> findProducts(int page, int size,

@@ -28,7 +28,6 @@ public class ProductComment extends Auditable {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    // Todo : mapping needed
     @ManyToOne
     @JsonManagedReference
     @JoinColumn(name = "product_id")
