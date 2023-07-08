@@ -1,6 +1,7 @@
 package com.main.project.product.entity;
 import com.main.project.admin.entity.Admin;
 import com.main.project.comment.ProductComment;
+import com.main.project.helper.audit.Auditable;
 import com.main.project.member.entity.Member;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -17,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Product {
+public class Product extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
@@ -51,10 +52,6 @@ public class Product {
 
 //    @ColumnDefault("false")
     private Boolean issell = false;
-
-    private LocalDateTime createAt;
-
-    private LocalDateTime modifyAt;
 
     private Integer condition_value = 5;
 
