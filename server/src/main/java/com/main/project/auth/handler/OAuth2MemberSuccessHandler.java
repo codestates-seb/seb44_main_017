@@ -121,12 +121,14 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         queryParams.add("Authorization", accessToken);
         queryParams.add("Refresh", refreshToken);
 
+        // 추후 프론트 준비 왼료시 바꿈
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("http")
                 .host("localhost")
-                .port(3000)
-                .path("/")
+                .port(80)
+                //.port(3000)
+                .path("/receive-token.html")
                 .queryParams(queryParams)
                 .build()
                 .toUri();
