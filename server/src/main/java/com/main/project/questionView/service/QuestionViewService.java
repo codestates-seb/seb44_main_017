@@ -43,10 +43,10 @@ public class QuestionViewService {
         questionViewRepository.save(questionView);
     }
 
-    public boolean isViewId(String refreshToken){
+    public boolean isViewId(String refreshToken,long questionId){
         RefreshToken token= refreshTokenService.findRefreshToken(refreshToken);
 
-        return questionViewRepository.findByMemberId(token.getMemberId()).isPresent();
+        return questionViewRepository.findByMemberIdAndQuestionId(token.getMemberId(),questionId).isPresent();
 
     }
 

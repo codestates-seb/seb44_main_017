@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface NotifyViewRepository extends JpaRepository<NotifyView,Long> {
 
-    @Query(value = "select * from notify_view v where v.member_id = :memberId",nativeQuery = true)
-    Optional<NotifyView> findByMemberId(Long memberId);
+    @Query(value = "select * from notify_view v where v.member_id = :memberId AND v.board_id = :boardId",nativeQuery = true)
+    Optional<NotifyView> findByMemberIdAndBoardId(Long memberId,Long boardId);
 }

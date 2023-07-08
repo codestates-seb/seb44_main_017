@@ -41,10 +41,10 @@ public class NotifyViewService {
         notifyViewRepository.save(notifyView);
     }
 
-    public boolean isViewId(String refreshToken){
+    public boolean isViewId(String refreshToken,long boardId){
         RefreshToken token= refreshTokenService.findRefreshToken(refreshToken);
 
-        return notifyViewRepository.findByMemberId(token.getMemberId()).isPresent();
+        return notifyViewRepository.findByMemberIdAndBoardId(token.getMemberId(),boardId).isPresent();
 
     }
 

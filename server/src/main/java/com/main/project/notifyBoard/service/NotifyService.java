@@ -72,7 +72,7 @@ public class NotifyService {
             // 멤버인지 관리자 인지 구분
             if(refreshTokenService.MemberBool(refreshToken)== true) {
                 // 조회 여부 확인 false일 시 조회수 증가
-                if (notifyViewService.isViewId(refreshToken) == false) {
+                if (notifyViewService.isViewId(refreshToken,boardId) == false) {
                     board.setView();
                     notifyViewService.createView(board, refreshToken);
                 }

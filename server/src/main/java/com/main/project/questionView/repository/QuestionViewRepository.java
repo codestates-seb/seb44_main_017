@@ -9,6 +9,6 @@ import java.util.Optional;
 
 public interface QuestionViewRepository extends JpaRepository<QuestionView,Long> {
 
-    @Query(value = "select * from question_view v where v.member_id = :memberId",nativeQuery = true)
-    Optional<NotifyView> findByMemberId(Long memberId);
+    @Query(value = "select * from question_view v where v.member_id = :memberId AND v.question_id = :questionId",nativeQuery = true)
+    Optional<NotifyView> findByMemberIdAndQuestionId(Long memberId,Long questionId);
 }
