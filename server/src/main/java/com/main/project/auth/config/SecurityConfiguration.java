@@ -1,10 +1,5 @@
 package com.main.project.auth.config;
 
-
-import com.main.project.auth.filter.AdminJwtAuthenticationFilter;
-import com.main.project.auth.filter.AdminJwtVerificationFilter;
-import com.main.project.auth.filter.UserJwtAuthenticationFilter;
-import com.main.project.auth.filter.AdminJwtVerificationFilter;
 import com.main.project.auth.filter.UserJwtAuthenticationFilter;
 import com.main.project.auth.filter.UserJwtVerificationFilter;
 import com.main.project.auth.handler.*;
@@ -32,6 +27,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 
 import java.util.Arrays;
 
