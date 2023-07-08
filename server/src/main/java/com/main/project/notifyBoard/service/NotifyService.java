@@ -3,8 +3,8 @@ package com.main.project.notifyBoard.service;
 
 import com.main.project.admin.entity.Admin;
 import com.main.project.admin.service.AdminService;
-import com.main.project.exception.BusinessLogicException;
-import com.main.project.exception.ExceptionCode;
+import com.main.project.exception.businessLogicException.BusinessLogicException;
+import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.entity.RefreshToken;
 import com.main.project.member.service.RefreshTokenService;
 import com.main.project.notifyBoard.dto.NotifyDto;
@@ -67,11 +67,17 @@ public class NotifyService {
     // 상세 공지 찾기
     public NotifyDto.Response getNotify(long boardId,String refreshToken){
         NotifyBoard board =findExistsNotify(boardId);
-        if(notifyViewService.isViewId(refreshToken) == true){
-            board.setView();
-            notifyViewService.createView(board,refreshToken);
+        // 로그인 /비로그인 여부 확인
+        if(refreshToken!=null){
+            // 멤버인지 관리자 인지 구분
+            if(refreshTokenService.MemberBool(refreshToken)== true) {
+                // 조회 여부 확인 false일 시 조회수 증가
+                if (notifyViewService.isViewId(refreshToken) == false) {
+                    board.setView();
+                    notifyViewService.createView(board, refreshToken);
+                }
+            }
         }
-
         NotifyDto.Response response = mapper.notifyBoardToNotifyResponse(board);
         return response;
     }
@@ -107,13 +113,15 @@ public class NotifyService {
 
     //공지 삭제
     public void removeNotify(long boardId){
+
         findExistsNotify(boardId);
         notifyRepository.deleteById(boardId);
     }
 
     // 공지 존재 여부 밑 id로 찾기
-    public NotifyBoard findExistsNotify(long questionId) {
-        Optional<NotifyBoard> optionalNotifyBoard = notifyRepository.findById(questionId);
+    public NotifyBoard findExistsNotify(long boardId) {
+        Optional<NotifyBoard> optionalNotifyBoard = notifyRepository.findById(boardId);
         return optionalNotifyBoard.orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOTIFY_NOT_FOUND));
     }
+
 }

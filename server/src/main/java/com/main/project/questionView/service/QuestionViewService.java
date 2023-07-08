@@ -1,5 +1,4 @@
-package com.main.project.notifyView.service;
-
+package com.main.project.questionView.service;
 
 import com.main.project.member.entity.Member;
 import com.main.project.member.entity.RefreshToken;
@@ -8,43 +7,46 @@ import com.main.project.member.service.RefreshTokenService;
 import com.main.project.notifyBoard.entity.NotifyBoard;
 import com.main.project.notifyView.entity.NotifyView;
 import com.main.project.notifyView.repository.NotifyViewRepository;
+import com.main.project.questionBorad.entity.Question;
+import com.main.project.questionView.entity.QuestionView;
+import com.main.project.questionView.repository.QuestionViewRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class NotifyViewService {
+public class QuestionViewService {
     private final MemberService memberService;
     private final RefreshTokenService refreshTokenService;
 
-    private final NotifyViewRepository notifyViewRepository;
+    private final QuestionViewRepository questionViewRepository;
 
-    public NotifyViewService(MemberService memberService, RefreshTokenService refreshTokenService
-            , NotifyViewRepository notifyViewRepository) {
+    public QuestionViewService(MemberService memberService, RefreshTokenService refreshTokenService
+            , QuestionViewRepository questionViewRepository) {
         this.memberService = memberService;
         this.refreshTokenService = refreshTokenService;
 
-        this.notifyViewRepository = notifyViewRepository;
+        this.questionViewRepository = questionViewRepository;
     }
 
-    public void createView(NotifyBoard board,String refreshToken){
+    public void createView(Question question, String refreshToken){
         RefreshToken token= refreshTokenService.findRefreshToken(refreshToken);
         Member user = memberService.findVerifiedMember(token.getMemberId());
 
-        NotifyView notifyView = new NotifyView();
-        notifyView.setBoard(board);
-        notifyView.setUsers(user);
+        QuestionView questionView = new QuestionView();
+        questionView.setQuestion(question);
+        questionView.setUsers(user);
 
-        user.setNViews(notifyView);
-        board.setNViews(notifyView);
+        user.setQViews(questionView);
+        question.setQViews(questionView);
 
-        notifyViewRepository.save(notifyView);
+        questionViewRepository.save(questionView);
     }
 
     public boolean isViewId(String refreshToken){
         RefreshToken token= refreshTokenService.findRefreshToken(refreshToken);
 
-        return notifyViewRepository.findByMemberId(token.getMemberId()).isPresent();
+        return questionViewRepository.findByMemberId(token.getMemberId()).isPresent();
 
     }
 

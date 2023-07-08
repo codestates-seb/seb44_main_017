@@ -29,18 +29,20 @@ public class NotifyController {
 
     // 공지 등록
     @PostMapping
-    public ResponseEntity postNotify(@RequestBody @Valid NotifyDto.Post requestBody, @RequestHeader("refresh")String refreshToken){
+    public ResponseEntity postNotify(@RequestBody @Valid NotifyDto.Post requestBody,
+                                     @RequestHeader("refresh")String refreshToken){
         service.createNotify(requestBody,refreshToken);
 
         return new ResponseEntity(HttpStatus.CREATED);
     }
+
     //공지 수정
     @PatchMapping("/{board-id}")
     public ResponseEntity patchNotify(@RequestBody @Valid NotifyDto.Patch requestBody,
                                       @PathVariable("board-id") @Positive long boardId){
-        service.updateNotify(boardId,requestBody);
+        NotifyDto.Response response = service.updateNotify(boardId,requestBody);
 
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(response,HttpStatus.OK);
     }
 
     // 공지 전체페이지 조회
@@ -57,7 +59,7 @@ public class NotifyController {
     // 상세 공지 조회
     @GetMapping("/{board-id}")
     public ResponseEntity getNotify(@PathVariable("board-id") @Positive long boardId,
-                                    @RequestHeader("refresh")String refreshToken){
+                                    @RequestHeader(value = "refresh",required = false)String refreshToken){
 
         return new ResponseEntity(service.getNotify(boardId,refreshToken),HttpStatus.OK);
     }

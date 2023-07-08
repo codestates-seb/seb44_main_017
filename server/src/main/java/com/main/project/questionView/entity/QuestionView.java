@@ -1,7 +1,7 @@
-package com.main.project.notifyView.entity;
+package com.main.project.questionView.entity;
 
 import com.main.project.member.entity.Member;
-import com.main.project.notifyBoard.entity.NotifyBoard;
+import com.main.project.questionBorad.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class NotifyView {
+public class QuestionView {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,7 @@ public class NotifyView {
     private Member users;
 
     @OneToOne
-    @JoinColumn(name = "board_id")
-    private NotifyBoard board;
+    @JoinColumn(name = "question_id")
+    private Question question;
 
 }

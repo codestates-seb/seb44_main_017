@@ -1,5 +1,7 @@
 package com.main.project.member.service;
 
+import com.main.project.exception.businessLogicException.BusinessLogicException;
+import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.entity.RefreshToken;
 import com.main.project.member.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +31,20 @@ public class RefreshTokenService {
     }
 
     @Transactional
-    public Optional<RefreshToken> findRefreshToken(String refreshToken) {
-        return refreshTokenRepository.findByValue(refreshToken);
+    public RefreshToken findRefreshToken(String refreshToken) {
+        RefreshToken token = refreshTokenRepository.findByValue(refreshToken)
+                .orElseThrow(()->new BusinessLogicException(ExceptionCode.REFRESH_NOT_FOUND));
+
+        return token;
+    }
+
+    //멤버이면 true 반환 관리자면 false 반환
+    public boolean MemberBool(String refreshToken){
+        RefreshToken token = findRefreshToken(refreshToken);
+        if(token.getAdminId()==null){
+            return true;
+        }else {
+            return false;
+        }
     }
 }

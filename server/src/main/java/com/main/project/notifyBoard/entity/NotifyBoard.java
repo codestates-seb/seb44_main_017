@@ -32,6 +32,6 @@ public class NotifyBoard extends Auditable {
     @JoinColumn(name = "admin_id",nullable = false)
     private Admin admin;
 
-    @OneToOne(mappedBy ="notifyBoard")
-    private NotifyView views;
+    @OneToOne(mappedBy ="board")
+    private NotifyView NViews;
 }

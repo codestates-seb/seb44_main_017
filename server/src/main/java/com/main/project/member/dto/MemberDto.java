@@ -20,6 +20,9 @@ public class MemberDto {
         private boolean isban;
     }
 
+    @Getter
+    @Setter
+    @Builder
     public static class WriterResponse{
         private  long memberId;
         private String name;

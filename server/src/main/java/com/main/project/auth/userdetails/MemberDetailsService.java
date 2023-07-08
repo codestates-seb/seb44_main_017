@@ -1,10 +1,9 @@
 package com.main.project.auth.userdetails;
 
-import com.main.project.admin.entity.Admin;
 import com.main.project.admin.repository.AdminRepository;
 import com.main.project.auth.util.UserCustomAuthorityUtils;
-import com.main.project.exception.BusinessLogicException;
-import com.main.project.exception.ExceptionCode;
+import com.main.project.exception.businessLogicException.BusinessLogicException;
+import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.entity.Member;
 import com.main.project.member.repository.MemberRepository;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package com.main.project.product.service;
 
-import com.main.project.exception.BusinessLogicException;
-import com.main.project.exception.ExceptionCode;
+import com.main.project.exception.businessLogicException.BusinessLogicException;
+import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.product.entity.Product;
 import com.main.project.product.repository.ProductRepository;
 import org.springframework.stereotype.Service;

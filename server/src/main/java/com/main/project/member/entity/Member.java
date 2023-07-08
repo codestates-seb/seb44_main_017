@@ -1,6 +1,9 @@
 package com.main.project.member.entity;
 
 import com.main.project.notifyView.entity.NotifyView;
+import com.main.project.questionBorad.entity.Question;
+import com.main.project.questionComment.entity.QComment;
+import com.main.project.questionView.entity.QuestionView;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -30,10 +33,28 @@ public class Member {
     private boolean isban;
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE)
-    private List<NotifyView> views = new ArrayList<>();
+    private List<NotifyView> NViews = new ArrayList<>();
 
-    public void setViews(NotifyView views){
-        this.views.add(views);
+    @OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE)
+    private List<QuestionView> QViews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "writer",cascade = CascadeType.REMOVE)
+    private List<Question> questions = new ArrayList<>();
+
+
+    public void setNViews(NotifyView view){
+        this.NViews.add(view);
+    }
+
+    public void setQViews(QuestionView view){
+        this.QViews.add(view);
+    }
+
+    public void setQuestions(Question question){
+        this.questions.add(question);
+        if(question.getWriter() != this){
+            question.setWriter(this);
+        }
     }
 
 
@@ -46,6 +67,5 @@ public class Member {
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
-
 
 }
