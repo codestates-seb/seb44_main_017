@@ -4,6 +4,7 @@ import com.main.project.comment.ProductComment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Range;
 
@@ -29,7 +30,7 @@ public class ProductDto {
         private Boolean issell;
         private LocalDate createAt;
         private LocalDate modifyAt;
-        private Integer condition_value;
+        private Integer conditionValue;
         private List<ProductComment> comments;
     }
 
@@ -52,7 +53,7 @@ public class ProductDto {
         private String imageLink;
 
         @Range(max = 10)
-        private Integer condition_value;
+        private Integer conditionValue;
     }
 
     @Getter
@@ -76,5 +77,38 @@ public class ProductDto {
 
         @Range(max = 10)
         private Integer condition_value;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class UserPP{
+        @NotBlank(message = "공백이 아니어야 합니다.")
+        private String name;
+
+        @NotBlank(message = "공백이 아니어야 합니다.")
+        private String title;
+
+        private String content;
+
+        private String category;
+
+        private String imageLink;
+
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Postdeny{
+        @NotBlank(message = "공백이 아니어야 합니다.")
+        private String denycontent;
+
+    }
+
+    @Getter
+    @Setter
+    public static class Postlist{
+        List<UserPP> productlist;
     }
 }

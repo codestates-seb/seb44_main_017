@@ -5,7 +5,12 @@ import com.main.project.admin.repository.AdminRepository;
 import com.main.project.auth.util.AdminCustomAuthorityUtils;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
+import com.main.project.dto.queryget;
+import com.main.project.exception.BusinessLogicException;
+import com.main.project.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +46,27 @@ public class AdminService {
         return adminRepository.save(admin);
     }
 
+    public Page<queryget.product> searchProdcutwait(int page, int size, String keyword){
+        if(keyword.equals("oldest")){
+            return adminRepository.findProductascwait(PageRequest.of(page, size));
+        }
+        return adminRepository.findProductdescwait(PageRequest.of(page, size));
+    }
+
+    public Page<queryget.product> searchAdminProdcut(Long memberId, int page, int size, String keyword, boolean issell){
+        if(keyword.equals("oldest")){
+            return adminRepository.findAdminProductOld(memberId, issell, PageRequest.of(page, size));
+        } else if(keyword.equals("mostlike")){
+            //return adminRepository.findAdminProductLike(memberId, issell, PageRequest.of(page, size));
+        } else if(keyword.equals("mostview")){
+            return adminRepository.findAdminProductView(memberId, PageRequest.of(page, size));
+        } else if(keyword.equals("pricedesc")){
+            return adminRepository.findAdminProductpricedesc(memberId, issell, PageRequest.of(page, size));
+        } else if(keyword.equals("priceasc")){
+            return adminRepository.findAdminProductpriceasc(memberId, issell, PageRequest.of(page, size));
+        }
+        return adminRepository.findAdminProductNew(memberId, issell, PageRequest.of(page, size));
+    }
     public Admin loginAdmin(Admin admin){
         Admin findAdmin = adminRepository.findByEmail(admin.getEmail()).orElseThrow(()->new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND));
         if(!passwordEncoder.matches(admin.getPassword(), findAdmin.getPassword())){

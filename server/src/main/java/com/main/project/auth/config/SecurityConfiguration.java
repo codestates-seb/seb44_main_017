@@ -1,10 +1,5 @@
 package com.main.project.auth.config;
 
-
-import com.main.project.auth.filter.AdminJwtAuthenticationFilter;
-import com.main.project.auth.filter.AdminJwtVerificationFilter;
-import com.main.project.auth.filter.UserJwtAuthenticationFilter;
-import com.main.project.auth.filter.AdminJwtVerificationFilter;
 import com.main.project.auth.filter.UserJwtAuthenticationFilter;
 import com.main.project.auth.filter.UserJwtVerificationFilter;
 import com.main.project.auth.handler.*;
@@ -32,6 +27,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 
 import java.util.Arrays;
 
@@ -110,7 +106,7 @@ public class SecurityConfiguration implements WebMvcConfigurer{
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
 
-            UserJwtAuthenticationFilter jwtAuthenticationFilter = new UserJwtAuthenticationFilter(authenticationManager, jwtTokenizer, refreshTokenService);
+            UserJwtAuthenticationFilter jwtAuthenticationFilter = new UserJwtAuthenticationFilter(authenticationManager, jwtTokenizer, refreshTokenService, memberService);
             jwtAuthenticationFilter.setFilterProcessesUrl("/user/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
             jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());

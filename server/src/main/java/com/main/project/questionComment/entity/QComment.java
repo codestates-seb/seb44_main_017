@@ -3,6 +3,7 @@ package com.main.project.questionComment.entity;
 import com.main.project.admin.entity.Admin;
 import com.main.project.helper.audit.Auditable;
 import com.main.project.member.entity.Member;
+import com.main.project.member.entity.Member;
 import com.main.project.questionBorad.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -4,6 +4,11 @@ import com.main.project.notifyView.entity.NotifyView;
 import com.main.project.questionBorad.entity.Question;
 import com.main.project.questionComment.entity.QComment;
 import com.main.project.questionView.entity.QuestionView;
+import com.main.project.comment.ProductComment;
+import com.main.project.product.entity.Product;
+import com.main.project.product.entity.Productdeny;
+import com.main.project.question.entity.Question;
+import com.main.project.questionComment.entity.Comment;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -11,7 +16,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 @Entity
-@Table(name = "Member")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -64,8 +68,28 @@ public class Member {
         this.password = password;
     }
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Product> products = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Question> questions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<ProductComment> productComments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Comment> questionComments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Productdeny> productdenies = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
+
+
+
+    public boolean getisban() {
+        return isban;
+    }
 
 }

@@ -34,19 +34,35 @@ spring:
       client:
         registration:
           google:
-            clientId: x
-            clientSecret: x
+            clientId: ${Google_clientid}
+            clientSecret: ${Google_clientsecret}
             scope:
               - email
               - profile
+          kakao:
+            client-id: ${K_CLIENT_ID}
+            client-secret: ${K_CLIENT_SECRET}
+            client-name: Kakao
+            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            authorization-grant-type: authorization_code
+            client-authentication-method: POST
+            scope:
+              - profile_nickname
+              - account_email
+        provider:
+          kakao:
+            authorizationUri: https://kauth.kakao.com/oauth/authorize
+            tokenUri: https://kauth.kakao.com/oauth/token
+            userInfoUri: https://kapi.kakao.com/v2/user/me
+            userNameAttribute: id
 
 cloud:
   aws:
     s3:
       bucket: mainproject.bucket
     credentials:
-      accessKey: x
-      secretKey: x
+      accessKey: ${Access_key}
+      secretKey: ${Secret_access_key}
     region:
       static: ap-northeast-2
       auto: false

@@ -14,5 +14,9 @@ public interface ProductMapper {
 
     ProductDto.Response productToProductResponse(Product product);
 
-//    Product productPostDtoToProduct(ProductDto.Post productPostDto);
+    Product productPostDtoToProduct(ProductDto.Post productPostDto);
+
+    Product productPatchDtotoProduct(ProductDto.Patch productPatchDto);
+
+    Product NproductPatchDtotoProduct(ProductDto.UserPP requestbody);
 }

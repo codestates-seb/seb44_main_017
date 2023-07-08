@@ -1,6 +1,8 @@
 package com.main.project.admin.entity;
 
 import com.main.project.notifyBoard.entity.NotifyBoard;
+import com.main.project.product.entity.Product;
+import com.main.project.notifyBoard.entity.NotifyBoard;
 import com.main.project.questionComment.entity.QComment;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -49,4 +51,10 @@ public class Admin {
         this.qComments.add(qComment);
         if (qComment.getAdmin() != this) qComment.setAdmin(this);
     }
+
+    @OneToMany(mappedBy = "admin", cascade = CascadeType.REMOVE)
+    private List<Product> products = new ArrayList<>();
+
+    @OneToMany(mappedBy = "admin", cascade = CascadeType.REMOVE)
+    private List<NotifyBoard> NotifyBoards = new ArrayList<>();
 }

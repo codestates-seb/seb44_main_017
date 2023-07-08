@@ -1,6 +1,8 @@
 package com.main.project.product.entity;
+import com.main.project.admin.entity.Admin;
 import com.main.project.comment.ProductComment;
 import com.main.project.helper.audit.Auditable;
+import com.main.project.member.entity.Member;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -20,6 +22,14 @@ public class Product extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long productId;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "admin_id")
+    private Admin admin;
 
     private String name;
 
@@ -43,12 +53,11 @@ public class Product extends Auditable {
 //    @ColumnDefault("false")
     private Boolean issell = false;
 
-    private Long adminId;
-
-    private Long memberId;
-
     private Integer condition_value = 5;
 
     @OneToMany
     private List<ProductComment> comments = new ArrayList<>();
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private Productdeny productdeny;
 }
