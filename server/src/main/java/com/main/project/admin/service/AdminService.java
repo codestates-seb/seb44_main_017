@@ -6,8 +6,6 @@ import com.main.project.auth.util.AdminCustomAuthorityUtils;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.dto.queryget;
-import com.main.project.exception.BusinessLogicException;
-import com.main.project.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

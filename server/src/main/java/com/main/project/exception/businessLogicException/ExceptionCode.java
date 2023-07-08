@@ -15,7 +15,6 @@ public enum ExceptionCode {
     QUESTION_NOT_FOUND(404, "Question not found"),
     QUESTION_COMMENT_NOT_FOUND(404,"Question Comment not found"),
     INVALID_SORT_PARAMETER(400, "Invalid parameter named 'sort'"),
-    NOTIFY_NOT_FOUND(404, "Notify not found");
     NOTIFY_NOT_FOUND(404, "Notify not found"),
     PRODUCTDENY_EXISTS(409,"Productdeny exists"),
     MEMBER_IS_BAN(409, "Member is ban");

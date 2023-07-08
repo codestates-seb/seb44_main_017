@@ -2,13 +2,10 @@ package com.main.project.member.entity;
 
 import com.main.project.notifyView.entity.NotifyView;
 import com.main.project.questionBorad.entity.Question;
-import com.main.project.questionComment.entity.QComment;
 import com.main.project.questionView.entity.QuestionView;
 import com.main.project.comment.ProductComment;
 import com.main.project.product.entity.Product;
 import com.main.project.product.entity.Productdeny;
-import com.main.project.question.entity.Question;
-import com.main.project.questionComment.entity.Comment;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -72,13 +69,7 @@ public class Member {
     private List<Product> products = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<Question> questions = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<ProductComment> productComments = new ArrayList<>();
-
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<Comment> questionComments = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Productdeny> productdenies = new ArrayList<>();

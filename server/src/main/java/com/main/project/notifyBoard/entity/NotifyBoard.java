@@ -25,10 +25,6 @@ public class NotifyBoard extends Auditable {
     @Column(columnDefinition = "integer default 0")
     private int view;
 
-    @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private Admin admin;
-
     public void setView(){
         this.view++;
     }
