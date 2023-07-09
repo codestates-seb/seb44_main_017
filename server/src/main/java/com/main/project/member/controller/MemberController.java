@@ -69,6 +69,14 @@ public class MemberController {
         Member member = memberService.memberban(memberId);
         return ResponseEntity.ok(mapper.memberToMemberResponse(member));
     }
+    @GetMapping("/search")
+    public ResponseEntity searchMemberlist(@RequestParam String keyword,
+                                           @Positive @RequestParam int page,
+                                           @Positive @RequestParam int size){
+        Page<Member> members = memberService.searchMemberlist(keyword,page-1,size);
+        List<Member> memberList = members.getContent();
+        return ResponseEntity.ok(new MultiResponseDto(mapper.membersToMemberResponses(memberList),members));
+    }
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId) {
         Member member = memberService.findVerifiedMember(memberId);
@@ -105,6 +113,16 @@ public class MemberController {
         Long memberId = findmemberId(token);
         Page<queryget.product> ss = memberService.searchMemberProdcutwait(memberId,page-1,size);
         List<queryget.product> productList = ss.getContent();
+        return ResponseEntity.ok(new MultiResponseDto(productList,ss));
+    }
+
+    @GetMapping("/productdeny")
+    public ResponseEntity userproductdeny(@RequestHeader(name = "Refresh") String token,
+                                          @Positive @RequestParam int page,
+                                          @Positive @RequestParam int size){
+        Long memberId = findmemberId(token);
+        Page<queryget.denyproduct> ss = memberService.searchMemberProdcutdeny(memberId,page-1,size);
+        List<queryget.denyproduct> productList = ss.getContent();
         return ResponseEntity.ok(new MultiResponseDto(productList,ss));
     }
 
