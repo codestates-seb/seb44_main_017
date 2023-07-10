@@ -2,8 +2,7 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import * as S from "./style";
-import { Logo } from "./Logo";
-import { responseInterceptor } from "http-proxy-middleware";
+import { Logo } from "../../assets/logoSimple";
 
 interface Props {
   closeModal: any;
