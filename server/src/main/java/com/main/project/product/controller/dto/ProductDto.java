@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
@@ -16,9 +17,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class ProductDto {
-    /* Todo : verify member and find their liked product - issell
-    *   Count productLike property - issellcount*/
-
     @Setter
     @Getter
     @AllArgsConstructor
@@ -115,6 +113,39 @@ public class ProductDto {
 
         @Range(min = 0, message = "포인트는 0 혹은 양수만 가능합니다.")
         private Integer pointValue;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class UserPP{
+        @NotBlank(message = "공백이 아니어야 합니다.")
+        private String name;
+
+        @NotBlank(message = "공백이 아니어야 합니다.")
+        private String title;
+
+        private String content;
+
+        private String category;
+
+        private String imageLink;
+
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Postdeny{
+        @NotBlank(message = "공백이 아니어야 합니다.")
+        private String denycontent;
+
+    }
+
+    @Getter
+    @Setter
+    public static class Postlist{
+        List<UserPP> productlist;
     }
 
 }
