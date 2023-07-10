@@ -60,7 +60,7 @@ export const InputBox = styled.input`
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 0;
-  border-bottom-width: 4px;
+  border-bottom-width: 2px;
   border-color: var(--color-darkblue);
   outline: none;
   background-color: rgba(247, 247, 247, 0.7);
@@ -87,6 +87,7 @@ export const DuplicateCheck = styled.button`
   background-color: var(--color-darkblue);
   color: var(--color-white);
   border-radius: 16px;
+  border: none;
   position: absolute;
   top: 4px;
   right: 0px;
