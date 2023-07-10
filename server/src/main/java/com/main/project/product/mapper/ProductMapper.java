@@ -1,7 +1,7 @@
 package com.main.project.product.mapper;
 // mapper interface implementation
 
-import com.main.project.product.dto.ProductDto;
+import com.main.project.product.controller.dto.ProductDto;
 import com.main.project.product.entity.Product;
 import com.main.project.productComment.ProductComment;
 import com.main.project.productComment.dto.ProductCommentDto;
@@ -9,7 +9,6 @@ import com.main.project.response.ListResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Mapper(componentModel = "spring")

@@ -2,12 +2,16 @@ package com.main.project.product.controller;
 
 import com.main.project.dto.MultiResponseDto;
 import com.main.project.dto.queryget;
-import com.main.project.exception.BusinessLogicException;
-import com.main.project.exception.ExceptionCode;
+import com.main.project.exception.businessLogicException.BusinessLogicException;
+import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.entity.RefreshToken;
 import com.main.project.member.service.MemberService;
 import com.main.project.member.service.RefreshTokenService;
-import com.main.project.product.dto.ProductDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.main.project.product.controller.dto.ProductDto;
 import com.main.project.product.entity.Product;
 import com.main.project.product.mapper.ProductMapper;
 import com.main.project.product.service.ProductService;
@@ -18,11 +22,11 @@ import com.main.project.response.SingleResponseDto;
 import com.main.project.utils.UriCreator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
@@ -54,8 +58,8 @@ public class ProductController {
     // admin can post their product.
     @PostMapping
     public ResponseEntity postProduct(@RequestHeader("Refresh") String tokenstr,
-            @Valid @RequestBody ProductDto.Post productPostDto){
-        Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshToken(tokenstr);
+                                      @Valid @RequestBody ProductDto.Post productPostDto){
+        Optional<RefreshToken> refreshToken = Optional.ofNullable(refreshTokenService.findRefreshToken(tokenstr));
         Long adminId = refreshToken
                 .orElseThrow( () -> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND))
                 .getAdminId();
@@ -65,68 +69,61 @@ public class ProductController {
         return ResponseEntity.created(location).build();
     }
 
+    @PostMapping("/deny/{product-id}")
+    public ResponseEntity productdeny(@PathVariable("product-id") @Positive Long productId,
+                                      @Valid @RequestBody ProductDto.Postdeny requestbody){
+        productService.denyProduct(productId,requestbody.getDenycontent());
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping("/postlist")
+    public ResponseEntity postProductlist(@RequestPart("files") List<MultipartFile> files,
+                                          @RequestParam("productlist") String productlist) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper().registerModule(new SimpleModule());
+        List<ProductDto.UserPP> productlists = objectMapper.readValue(productlist, new TypeReference<>() {});
+        for(int i = 0; i < productlists.size(); i++){
+            Product pp = productMapper.NproductPatchDtotoProduct(productlists.get(i));
+            productService.createProducts(pp);
+            productService.uploadImage(files.get(i),pp.getProductId());
+        }
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     // members can get products list
     @GetMapping
     public ResponseEntity getProducts(
             @RequestHeader(value = "Refresh", required = false) String tokenstr,
-                                      @Positive @RequestParam int page,
-                                      @Positive @RequestParam int size,
-                                      @RequestParam(required = false, defaultValue = "") String sort,
-                                      @RequestParam(required = false) Boolean issell){
-        Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshToken(tokenstr);
+            @Positive @RequestParam int page,
+            @Positive @RequestParam int size,
+            @RequestParam(required = false, defaultValue = "") String sort,
+            @RequestParam(required = false) Boolean issell){
+        Optional<RefreshToken> refreshToken = Optional.ofNullable(refreshTokenService.findtok(tokenstr));
+        RefreshToken RT = refreshToken.get();
 
         // Todo : Can view products as admin, unregistered user
-        Long findMemberId = refreshToken
-                .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
-                .getMemberId();
+        if(RT.getMemberId() != null){
 
-        Sort.Direction sortDirection;
-        String sortProperty;
+        }else if(RT.getAdminId() != null){
 
-        switch (sort) {
-            case "newest":
-            case "":
-                sortDirection = Sort.Direction.DESC;
-                sortProperty = "create_at";
-                break;
-            case "oldest":
-                sortDirection = Sort.Direction.ASC;
-                sortProperty = "create_at";
-                break;
-            case "mostlike":
-                sortDirection = Sort.Direction.DESC;
-                sortProperty = "likeCount";
-                break;
-            case "mostview":
-                sortDirection = Sort.Direction.DESC;
-                sortProperty = "view";
-                break;
-            case "priceasc":
-                sortDirection = Sort.Direction.ASC;
-                sortProperty = "price";
-                break;
-            case "pricedesc":
-                sortDirection = Sort.Direction.DESC;
-                sortProperty = "price";
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid sort option: " + sort);
+        }else{
+//            throw new BusinessLogicException(ExceptionCode.REFRESH_NOT_FOUND);
         }
+
 
         if (issell != null) {
             // when issell is not null...
 
             Page<queryget.product> pageProducts = productService
-                    .findProducts(page-1, size, issell, sortProperty, sortDirection);
+                    .findProducts(page-1, size, issell, sort);
             List<queryget.product> products = pageProducts.getContent();
             return ResponseEntity.ok(new MultiResponseDto(products, pageProducts));
 
         } else {
             // when issell property is not given
 
-            Page<Product> pageProducts = productService
-                    .findProducts(page-1, size, sortProperty, sortDirection);
-            List<Product> products = pageProducts.getContent();
+            Page<queryget.product> pageProducts = productService
+                    .findProducts(page-1, size, sort);
+            List<queryget.product> products = pageProducts.getContent();
 
             return ResponseEntity.ok(new MultiResponseDto<>(products, pageProducts));
         }
@@ -137,14 +134,10 @@ public class ProductController {
     // members can get product information
     @GetMapping("/{product-id}")
     public ResponseEntity getProduct(@RequestHeader(value = "Refresh", required = false)
-                                         String tokenstr,
+                                     String tokenstr,
                                      @PathVariable("product-id") @Positive Long productId){
-        Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshToken(tokenstr);
-        Long memberId = refreshToken
-                .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
-                .getMemberId();
-
-        // Todo : view implementation needed : only registered member can increase view value.
+        Optional<RefreshToken> refreshToken = Optional.ofNullable(refreshTokenService.findRefreshToken(tokenstr));
+        RefreshToken RT = refreshToken.get();
 
         Product product = productService.findProduct(productId);
 
@@ -159,7 +152,24 @@ public class ProductController {
                 ))
                 .collect(Collectors.toList());
 
-        ProductDto.ResponseWithComments response = productMapper.productToProductResponseWithComment(product, memberId);
+        ProductDto.ResponseWithComments response;
+
+        if (RT.getMemberId() != null) {
+            Long memberId = refreshToken
+                    .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
+                    .getMemberId();
+            product.addView();
+            response = productMapper.productToProductResponseWithComment(product, memberId);
+
+        }else if(RT.getAdminId() != null){
+            Long AdminId = refreshToken
+                    .orElseThrow( () -> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND))
+                    .getAdminId();
+            response = productMapper.productToProductResponseWithComment(product);
+        }else{
+            response = productMapper.productToProductResponseWithComment(product);
+        }
+
         response.setComments(commentResponses);
 
         return new ResponseEntity<>(
@@ -175,26 +185,54 @@ public class ProductController {
                                         @PathVariable("product-id") @Positive Long productId,
                                         @RequestBody @Valid ProductDto.Patch productPatchDto){
 
-        Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshToken(tokenstr);
-        Long adminId = refreshToken
-                .orElseThrow( () -> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND))
-                .getAdminId();
+        Optional<RefreshToken> refreshToken = Optional.ofNullable(refreshTokenService.findRefreshToken(tokenstr));
+        RefreshToken RT = refreshToken.get();
 
-        Product product = productService.updateProduct(productId, productMapper.productPatchDtotoProduct(productPatchDto));
+        List<ProductComment> comments = productCommentRepository.findByProductProductId(productId);
+
+        List<ProductCommentDto.Response> commentResponses = comments.stream()
+                .map(comment -> new ProductCommentDto.Response(
+                        comment.getContent(),
+                        comment.getMember().getMemberId(),
+                        comment.getCreateAt(),
+                        comment.getModifyAt()
+                ))
+                .collect(Collectors.toList());
+
+        ProductDto.ResponseWithComments response;
+
+        if (RT.getMemberId() != null) {
+            // members can modify their product description
+            Long memberId = refreshToken
+                    .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
+                    .getMemberId();
+            if(productService.findProduct(productId).getMember().getMemberId() == memberId) {
+                Product product = productService.updateProduct(productId, productMapper.productPatchDtotoProduct(productPatchDto));
+                response = productMapper.productToProductResponseWithComment(product, memberId);
+            }
+            throw new BusinessLogicException(ExceptionCode.NOT_WRITER);
+        }else if(RT.getAdminId() != null){
+            Long AdminId = refreshToken
+                    .orElseThrow( () -> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND))
+                    .getAdminId();
+            Product product = productService.updateProduct(productId, productMapper.productPatchDtotoProduct(productPatchDto));
+            response = productMapper.productToProductResponseWithComment(product);
+        }else{
+            throw new BusinessLogicException(ExceptionCode.REFRESH_NOT_FOUND);
+        }
+
+        response.setComments(commentResponses);
         return new ResponseEntity<>(
-                new SingleResponseDto<>(
-                        productMapper.productToProductResponse(product)),
-                HttpStatus.OK
+                new SingleResponseDto<>(response), HttpStatus.OK
         );
     }
 
-    // Todo : members can modify their product description
 
     // admins can delete their product
     @DeleteMapping("/{product-id}")
     public ResponseEntity deleteProduct(@PathVariable("product-id") @Positive Long productId,
                                         @RequestHeader("Refresh") String tokenstr){
-        Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshToken(tokenstr);
+        Optional<RefreshToken> refreshToken = Optional.ofNullable(refreshTokenService.findRefreshToken(tokenstr));
         Long adminId = refreshToken
                 .orElseThrow( () -> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND))
                 .getAdminId();
@@ -222,7 +260,7 @@ public class ProductController {
                                              @PathVariable("product-id") @Positive Long productId,
                                              @RequestBody @Valid ProductCommentDto.Post productCommentDto){
         Product product = productService.findProduct(productId);
-        Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshToken(tokenstr);
+        Optional<RefreshToken> refreshToken = Optional.ofNullable(refreshTokenService.findRefreshToken(tokenstr));
         Long memberId = refreshToken
                 .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
                 .getMemberId();
@@ -236,11 +274,11 @@ public class ProductController {
 
     @DeleteMapping("/{product-id}/comments/{product-comment-id}")
     public ResponseEntity deleteProductComment(@RequestHeader("Refresh") String tokenstr,
-                                             @PathVariable("product-id") @Positive Long productId,
+                                               @PathVariable("product-id") @Positive Long productId,
                                                @PathVariable("product-comment-id")
-                                                   @Positive Long productCommentId){
+                                               @Positive Long productCommentId){
         Product product = productService.findProduct(productId);
-        Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshToken(tokenstr);
+        Optional<RefreshToken> refreshToken = Optional.ofNullable(refreshTokenService.findRefreshToken(tokenstr));
         Long memberId = refreshToken
                 .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
                 .getMemberId();
@@ -256,7 +294,7 @@ public class ProductController {
     public ResponseEntity postProductLike(@RequestHeader("Refresh") String tokenstr,
                                           @PathVariable("product-id") @Positive Long productId){
         Product product = productService.findProduct(productId);
-        Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshToken(tokenstr);
+        Optional<RefreshToken> refreshToken = Optional.ofNullable(refreshTokenService.findRefreshToken(tokenstr));
         Long memberId = refreshToken
                 .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
                 .getMemberId();

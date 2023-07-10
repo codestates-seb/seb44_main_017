@@ -2,6 +2,7 @@ package com.main.project.product.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.main.project.admin.entity.Admin;
 import com.main.project.helper.audit.Auditable;
+import com.main.project.notifyView.entity.NotifyView;
 import com.main.project.productComment.ProductComment;
 import com.main.project.member.entity.Member;
 import lombok.*;
@@ -56,6 +57,13 @@ public class Product extends Auditable {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<ProductComment> comments = new ArrayList<>();
+
+    public void addView(){
+        this.view++;
+    }
+
+//    @OneToOne(mappedBy = "product")
+//    private ProductView productView;
 
     public void addLikeByMembers(Member member){
         if(!this.likedByMembers.contains(member))

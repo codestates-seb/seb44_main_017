@@ -1,4 +1,4 @@
-package com.main.project.product.dto;
+package com.main.project.product.controller.dto;
 
 import com.main.project.product.entity.Product;
 import com.main.project.productComment.ProductComment;
