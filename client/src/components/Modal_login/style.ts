@@ -60,7 +60,7 @@ export const InputBox = styled.input`
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 0;
-  border-bottom-width: 4px;
+  border-bottom-width: 2px;
   border-color: var(--color-darkblue);
   outline: none;
   background-color: rgba(247, 247, 247, 0.7);
