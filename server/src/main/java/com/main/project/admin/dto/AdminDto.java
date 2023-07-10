@@ -21,6 +21,13 @@ public class AdminDto {
 
     @Getter
     @AllArgsConstructor
+    public static class NotifyResponse{
+        private long adminId;
+        private String name;
+    }
+
+    @Getter
+    @AllArgsConstructor
     public static class Post{
         @NotBlank(message = "공백이 아니어야 합니다.")
         @Size(min=1, max=30, message = "이름 길이는 최대 30입니다.")

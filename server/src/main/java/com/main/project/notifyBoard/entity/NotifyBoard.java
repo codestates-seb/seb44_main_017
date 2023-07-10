@@ -3,6 +3,7 @@ package com.main.project.notifyBoard.entity;
 import com.main.project.admin.entity.Admin;
 import com.main.project.helper.audit.Auditable;
 import com.main.project.product.entity.Product;
+import com.main.project.notifyView.entity.NotifyView;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,8 +25,14 @@ public class NotifyBoard extends Auditable {
     @Column(columnDefinition = "integer default 0")
     private int view;
 
+    public void setView(){
+        this.view++;
+    }
+
     @ManyToOne
-    @JoinColumn(name = "admin_id")
+    @JoinColumn(name = "admin_id",nullable = false)
     private Admin admin;
 
+    @OneToOne(mappedBy ="board")
+    private NotifyView NViews;
 }

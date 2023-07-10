@@ -43,7 +43,10 @@ public interface ProductMapper {
             (Product product, Long findMemberId);
 
 
+    @Mapping(target = "memberId", source = "product.member.memberId")
     ProductDto.ResponseWithComments productToProductResponseWithComment(Product product);
 
     ProductComment productCommentDtoToProductComment(ProductCommentDto.Post productCommentDto);
+
+    Product NproductPatchDtotoProduct(ProductDto.UserPP requestbody);
 }

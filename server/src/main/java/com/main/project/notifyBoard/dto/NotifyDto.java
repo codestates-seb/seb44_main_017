@@ -1,5 +1,6 @@
 package com.main.project.notifyBoard.dto;
 
+import com.main.project.admin.dto.AdminDto;
 import com.main.project.helper.validator.NotSpace;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,6 +40,8 @@ public class NotifyDto {
         private String content;
         private LocalDateTime createAt;
         private LocalDateTime modifyAt;
+        private int view;
+        private AdminDto.NotifyResponse admin;
     }
 
 }
