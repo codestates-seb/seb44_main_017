@@ -24,6 +24,14 @@ public class MemberDto {
 
 
     @Getter
+    @Setter
+    @Builder
+    public static class WriterResponse{
+        private  long memberId;
+        private String name;
+    }
+
+    @Getter
     @AllArgsConstructor
     public static class Post{
         @NotBlank(message = "공백이 아니어야 합니다.")

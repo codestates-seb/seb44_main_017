@@ -1,46 +1,42 @@
-package com.main.project.notifyBoard.dto;
+package com.main.project.questionComment.dto;
 
 import com.main.project.admin.dto.AdminDto;
 import com.main.project.helper.validator.NotSpace;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.main.project.member.dto.MemberDto;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-public class NotifyDto {
+public class QCommentDto {
 
-    @Builder
     @Getter
     @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Post{
         @NotSpace
-        private String title;
-        @NotSpace
         private String content;
     }
 
-    @Builder
     @Getter
     @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Patch{
         @NotSpace
-        private String title;
-        @NotSpace
         private String content;
-
     }
 
-    @Builder
     @Getter
     @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Response{
-        private long boardId;
-        private String title;
+        private long commentId;
         private String content;
         private LocalDateTime createAt;
         private LocalDateTime modifyAt;
-        private int view;
+
         private AdminDto.NotifyResponse admin;
     }
 

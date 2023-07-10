@@ -3,9 +3,9 @@ package com.main.project.admin.service;
 import com.main.project.admin.entity.Admin;
 import com.main.project.admin.repository.AdminRepository;
 import com.main.project.auth.util.AdminCustomAuthorityUtils;
+import com.main.project.exception.businessLogicException.BusinessLogicException;
+import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.dto.queryget;
-import com.main.project.exception.BusinessLogicException;
-import com.main.project.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -72,5 +72,10 @@ public class AdminService {
         }
 
         return findAdmin;
+    }
+
+    public Admin findAdminById(long adminId){
+        Optional<Admin> optionalAdmin = adminRepository.findById(adminId);
+        return optionalAdmin.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND));
     }
 }

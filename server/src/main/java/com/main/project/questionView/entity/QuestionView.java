@@ -1,7 +1,7 @@
-package com.main.project.questionComment.entity;
+package com.main.project.questionView.entity;
 
-import com.main.project.helper.audit.Auditable;
 import com.main.project.member.entity.Member;
+import com.main.project.questionBorad.entity.Question;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,15 +12,18 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Comment extends Auditable {
+public class QuestionView {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long commentId;
+    private long viewsId;
 
-    @Column(nullable = false)
-    private String content;
     @ManyToOne
     @JoinColumn(name = "member_id")
-    private Member member;
+    private Member users;
+
+    @OneToOne
+    @JoinColumn(name = "question_id")
+    private Question question;
 
 }

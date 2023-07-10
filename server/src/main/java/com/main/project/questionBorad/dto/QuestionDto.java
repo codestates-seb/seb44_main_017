@@ -1,18 +1,19 @@
-package com.main.project.notifyBoard.dto;
+package com.main.project.questionBorad.dto;
 
-import com.main.project.admin.dto.AdminDto;
 import com.main.project.helper.validator.NotSpace;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.main.project.member.dto.MemberDto;
+import com.main.project.questionComment.dto.QCommentDto;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-public class NotifyDto {
+public class QuestionDto {
 
-    @Builder
     @Getter
     @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Post{
         @NotSpace
         private String title;
@@ -20,28 +21,34 @@ public class NotifyDto {
         private String content;
     }
 
-    @Builder
     @Getter
     @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Patch{
         @NotSpace
         private String title;
         @NotSpace
         private String content;
-
     }
 
-    @Builder
     @Getter
     @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Response{
-        private long boardId;
+        private long questionId;
         private String title;
         private String content;
         private LocalDateTime createAt;
         private LocalDateTime modifyAt;
         private int view;
-        private AdminDto.NotifyResponse admin;
+
+        private MemberDto.WriterResponse writer;
+        private List<QCommentDto.Response> qComments;
+
+
+
     }
 
 }

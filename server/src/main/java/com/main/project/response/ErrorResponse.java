@@ -1,6 +1,6 @@
 package com.main.project.response;
 
-import com.main.project.exception.ExceptionCode;
+import com.main.project.exception.businessLogicException.ExceptionCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

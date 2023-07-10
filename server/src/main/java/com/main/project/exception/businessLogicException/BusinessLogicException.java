@@ -1,4 +1,4 @@
-package com.main.project.exception;
+package com.main.project.exception.businessLogicException;
 
 import lombok.Getter;
 
