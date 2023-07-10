@@ -1,8 +1,8 @@
 package com.main.project.order.service;
 
 import com.main.project.dto.queryget;
-import com.main.project.exception.BusinessLogicException;
-import com.main.project.exception.ExceptionCode;
+import com.main.project.exception.businessLogicException.BusinessLogicException;
+import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.entity.Member;
 import com.main.project.member.service.MemberService;
 import com.main.project.order.entity.Orderproduct;

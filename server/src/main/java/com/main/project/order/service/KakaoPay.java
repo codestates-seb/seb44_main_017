@@ -2,8 +2,8 @@ package com.main.project.order.service;
 
 
 import com.main.project.dto.queryget;
-import com.main.project.exception.BusinessLogicException;
-import com.main.project.exception.ExceptionCode;
+import com.main.project.exception.businessLogicException.BusinessLogicException;
+import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.order.dto.KakaoPayApprovalVO;
 import com.main.project.order.dto.KakaoPayReadyVO;
 import com.main.project.order.entity.Order;
