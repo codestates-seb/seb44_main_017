@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 // import axios from "axios";
 import * as S from "./style";
-import { Logo } from "../../components/Modal_signup/Logo";
+import { Logo } from "../../assets/logoSimple";
 import axios from "axios";
 
 interface Props {
