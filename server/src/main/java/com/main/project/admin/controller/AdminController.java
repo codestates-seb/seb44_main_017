@@ -49,6 +49,11 @@ public class AdminController {
     @PostMapping("/login")
     public ResponseEntity login(@Valid @RequestBody AdminLoginDto loginDto) throws JsonProcessingException{
         Admin admin = mapper.loginDtoToAdmin(loginDto);
+        Admin fd = adminService.findAdminByEmail(loginDto.getEmail());
+
+        if(refreshTokenRepository.existsByAdminId(fd.getAdminId()) == true){
+            throw new BusinessLogicException(ExceptionCode.ALREADY_LOGGED_IN);
+        }
         Admin authorizedAdmin = adminService.loginAdmin(admin);
         AdminDto.Response responseDto = mapper.adminToAdminResponseDto(authorizedAdmin);
 
