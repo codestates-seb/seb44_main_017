@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import * as S from "./style";
-import Logo from "./logo_footer.svg";
+import Logo from "../../assets/logo_footer.svg";
 import { Modal, Box } from "@mui/material";
 
 const Footer = () => {
