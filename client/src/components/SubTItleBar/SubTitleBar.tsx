@@ -14,7 +14,6 @@ const SubTitleBar: React.FC<SubTitleProps> = ({
   btnTitle,
   btnLink,
 }) => {
-  console.log(title, isButton, btnTitle, btnLink);
   const location = useLocation();
   const shouldRenderDiv = location.pathname.startsWith("/admin");
   const navButtonList = [
