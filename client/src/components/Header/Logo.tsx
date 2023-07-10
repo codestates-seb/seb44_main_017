@@ -1,13 +1,8 @@
-interface LogoProps {
-  width: string;
-  height: string;
-}
-
-const Logo: React.FC<LogoProps> = ({ width, height }) => {
+const Logo = () => {
   return (
     <svg
-      width={width}
-      height={height}
+      width={"48px"}
+      height={"20px"}
       viewBox="0 0 58 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

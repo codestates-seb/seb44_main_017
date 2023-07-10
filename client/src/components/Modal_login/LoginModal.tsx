@@ -102,7 +102,7 @@ const LoginModal = ({ closeModal }: Props) => {
             type="checkbox"
             checked={isAdmin}
             onChange={(e) => setIsAdmin(e.target.checked)}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", marginRight: "8px" }}
           />
           관리자로 로그인하기
         </S.AdminLabel>
