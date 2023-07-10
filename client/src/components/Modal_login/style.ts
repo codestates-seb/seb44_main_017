@@ -127,3 +127,8 @@ export const ErrorMsg = styled.div`
   color: red;
   font-size: 12px;
 `;
+
+export const ButtonTest = styled.button`
+  width: 120px;
+  height: 48px;
+`;
