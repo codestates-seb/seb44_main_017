@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import * as S from "./style";
 import { Logo } from "./Logo";
+import { responseInterceptor } from "http-proxy-middleware";
 
 interface Props {
   closeModal: any;
@@ -36,7 +37,7 @@ const SignupModal = ({ closeModal }: Props) => {
     setCheckShowPassword(!showCheckPassword);
   };
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,40}$/;
     const phoneReg = /^010-\d{4}-\d{4}$/;
 
@@ -49,7 +50,7 @@ const SignupModal = ({ closeModal }: Props) => {
       ? setCheckPasswordError(true)
       : setCheckPasswordError(false);
     !phoneReg.test(phone) ? setPhoneError(true) : setPhoneError(false);
-    console.log(isAdmin);
+
     if (
       !emailError &&
       !nameError &&
@@ -57,18 +58,21 @@ const SignupModal = ({ closeModal }: Props) => {
       !phoneError &&
       !isAdmin
     ) {
-      const data = { email, name, password, phone };
-      console.log(data);
-      axios
-        .post("url", {
-          data,
-        })
-        .then(function (response) {
-          navigate("/modal_login");
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      try {
+        const data = { email, name, password, phone };
+
+        const response = await axios.post(
+          "https://e087-221-148-162-66.ngrok-free.app/members",
+          data
+        );
+        if (response.status === 201) {
+          alert("회원가입을 축하합니다!");
+        }
+      } catch (error: any) {
+        if (error.response.status === 409) {
+          alert("이미 가입된 회원입니다.");
+        }
+      }
     } else if (
       !emailError &&
       !nameError &&
@@ -76,23 +80,26 @@ const SignupModal = ({ closeModal }: Props) => {
       !phoneError &&
       isAdmin
     ) {
-      const data = { email, name, password, phone };
-      console.log(data);
-      axios
-        .post("url", {
-          data,
-        })
-        .then(function (response) {
-          navigate("/modal_login");
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      try {
+        const data = { email, name, password, phone };
+
+        const response = await axios.post(
+          "https://e087-221-148-162-66.ngrok-free.app/admin",
+          data
+        );
+        if (response.status === 201) {
+          alert("회원가입을 축하합니다!");
+        }
+      } catch (error: any) {
+        if (error.response.status === 409) {
+          alert("이미 가입된 회원입니다.");
+        }
+      }
     }
   };
   return (
-    <S.Container>
-      <S.Content>
+    <S.Container onClick={closeModal}>
+      <S.Content onClick={(e) => e.stopPropagation()}>
         <S.CloseButton onClick={closeModal} />
         <S.SignupTitleContainer>
           <Logo width="40px" height="24px" />
