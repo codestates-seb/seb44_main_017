@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { MainPage } from "./pages/mainPage/mainPage";
-import { NoticePage } from "./pages/noticePage/noticePage";
+import NoticePage from "./pages/noticePage/noticePage";
 import { ProductInfoPage } from "./pages/productInfoPage/productInfoPage";
 import { ProductListPage } from "./pages/productListPage/productListPage";
 import CollectionPage from "./pages/collectionPage/collectionPage";
