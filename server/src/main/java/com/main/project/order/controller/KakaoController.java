@@ -6,6 +6,7 @@ import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.dto.MemberDto;
 import com.main.project.member.entity.Member;
 import com.main.project.member.entity.RefreshToken;
+import com.main.project.member.repository.MemberRepository;
 import com.main.project.member.repository.RefreshTokenRepository;
 import com.main.project.member.service.MemberService;
 import com.main.project.order.dto.KakaoPayApprovalVO;
@@ -48,6 +49,7 @@ public class KakaoController {
     private final RefreshTokenRepository refreshTokenRepository;
     private final OrderproductRepository orderproductRepository;
     private final OrderproductService orderproductService;
+    private final MemberRepository memberRepository;
 
     private final ProductRepository productRepository;
     @Setter(onMethod_ = @Autowired)
@@ -110,6 +112,9 @@ public class KakaoController {
             Product product = productService.findProduct(productId.getproduct_id());
             product.setIssell(true);
             productRepository.save(product);
+            Member seller = memberService.findVerifiedMember(product.getMember().getMemberId());
+            seller.setMoney(seller.getMoney() + product.getPrice()*10/100);
+            memberRepository.save(seller);
             List<queryget.findbyorderpid> orderproductIdList = orderproductService.findOrderproductdelete(member.getMemberId(),product.getProductId());
             orderproductIdList.forEach(orderproductId -> {
                 Orderproduct orderproduct = orderproductService.findorderproduct(orderproductId.getorderproduct_id());

@@ -4,6 +4,9 @@ package com.main.project.order.service;
 import com.main.project.dto.queryget;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
+import com.main.project.member.entity.Member;
+import com.main.project.member.repository.MemberRepository;
+import com.main.project.member.service.MemberService;
 import com.main.project.order.dto.KakaoPayApprovalVO;
 import com.main.project.order.dto.KakaoPayReadyVO;
 import com.main.project.order.entity.Order;
@@ -39,12 +42,21 @@ public class KakaoPay {
     private KakaoPayReadyVO kakaoPayReadyVO;
     private KakaoPayApprovalVO kakaoPayApprovalVO;
     private final OrderRepository orderRepository;
+    private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     public String kakaoPayReadybucket(List<queryget.orderproductlist> productList, Order order) {
         String productname;
         if(productList.size() == 0){
             throw new BusinessLogicException(ExceptionCode.NO_PRODUCTS);
         }
+        if(order.getMember().getMoney() < order.getPointspend()){
+            throw new BusinessLogicException(ExceptionCode.NOT_ENOUGH_POINT);
+        }
+        Member member = memberService.findVerifiedMember(order.getMember().getMemberId());
+        member.setMoney(member.getMoney() - order.getPointspend());
+        memberRepository.save(member);
+
         productname = productList.get(0).getname() + " 외" + (productList.size()-1);
         RestTemplate restTemplate = new RestTemplate();
 
