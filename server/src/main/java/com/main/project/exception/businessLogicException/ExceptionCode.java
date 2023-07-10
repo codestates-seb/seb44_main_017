@@ -23,6 +23,7 @@ public enum ExceptionCode {
     PAY_CANCEL(404,"Pay_cancel"),
     PAY_FAILED(404,"Pay_failed"),
     SOLD_OUT(404, "Product_Sold_Out"),
+    NOT_ENOUGH_POINT(409,"point_is_not_enough"),
     MEMBER_IS_BAN(409, "Member is ban");
 
     private final int status;
