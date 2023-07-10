@@ -14,4 +14,7 @@ const BackDrop = styled.div`
   left: 0;
   top: 0;
   z-index: 10;
+  @media (min-width: 1024px) {
+    display: none;
+  }
 `;

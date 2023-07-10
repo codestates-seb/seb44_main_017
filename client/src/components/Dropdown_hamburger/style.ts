@@ -17,7 +17,7 @@ export const SideBar = styled.nav<{ isOpen: boolean }>`
   transition: all 0.2s ease;
   background-color: var(--color-white);
 
-  ${props =>
+  ${(props) =>
     props.isOpen &&
     css`
       opacity: 1;
@@ -55,6 +55,9 @@ export const SideBar = styled.nav<{ isOpen: boolean }>`
       left: 0px;
       align-self: center;
     }
+  }
+  @media (min-width: 1024px) {
+    display: none;
   }
 `;
 

@@ -2,65 +2,72 @@ import HamburgerDropdown from "../Dropdown_hamburger/HamburgerDropdown";
 import ProfileDropdown from "../Dropdown_profile/ProfileDropdown";
 import LoginModal from "../Modal_login/LoginModal";
 import SignupModal from "../Modal_signup/SignupModal";
-import "./header.css";
+import * as S from "./styled";
 import { Logo } from "./Logo";
 import { LoginBtn, NavBtn, SignupBtn } from "./styled";
 import { useState, useRef } from "react";
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const headerRef = useRef<HTMLDivElement | null>(null);
+  const isLogin = false;
+  const [isActive, setIsActive] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [signupModallOpen, setSignupModalOpen] = useState(false);
-
-  function toggleMenu() {
-    const menuButton = document.querySelector(".menu-button");
-    menuButton?.classList.toggle("open");
-    setIsOpen(!isOpen);
-  }
-
+  const handleClick = () => {
+    setIsActive(!isActive);
+  };
   return (
-    <div id="haeder_box">
-      <div id="logo_pc">
-        <Logo width="48px" height="20px" />
-        <span className="logo_font">RECLOSET</span>
-      </div>
-      <div id="logo_mobile">
-        <span className="logo_font">RECLOSET</span>
-      </div>
-      <div id="navBar">
+    <S.HeaderContainer>
+      <S.Spacing />
+      <S.LogoContainer href="/">
+        <S.LogoIcon>
+          <Logo />
+        </S.LogoIcon>
+        <S.LogoText>RECLOSET</S.LogoText>
+      </S.LogoContainer>
+      <S.NavBarContainer>
         <NavBtn href="/products">상품보기</NavBtn>
         <NavBtn href="/notice">공지사항</NavBtn>
         <NavBtn href="/">Q&A</NavBtn>
-        <ProfileDropdown />
-        <LoginBtn
-          onClick={() => {
-            setLoginModalOpen(true);
-          }}
+        {isLogin ? (
+          <ProfileDropdown />
+        ) : (
+          <>
+            <LoginBtn
+              onClick={() => {
+                setLoginModalOpen(true);
+              }}
+            >
+              LOGIN
+            </LoginBtn>
+            <SignupBtn onClick={() => setSignupModalOpen(true)}>
+              SIGN UP
+            </SignupBtn>
+          </>
+        )}
+      </S.NavBarContainer>
+      <S.DrawerContainer ref={headerRef}>
+        <S.HamburgerButton
+          className={isActive ? "active" : ""}
+          onClick={handleClick}
         >
-          LOGIN
-        </LoginBtn>
-        {loginModalOpen && (
-          <LoginModal closeModal={() => setLoginModalOpen(false)} />
-        )}
-        <SignupBtn onClick={() => setSignupModalOpen(true)}>SIGN UP</SignupBtn>
-        {signupModallOpen && (
-          <SignupModal closeModal={() => setSignupModalOpen(false)} />
-        )}
-      </div>
-      <div className="side-wrapper" ref={headerRef}>
-        <div className="menu-button" onClick={toggleMenu}>
-          <div className="menu-bar" />
-          <div className="menu-bar" />
-          <div className="menu-bar" />
-        </div>
+          <span className="bar"></span>
+          <span className="bar"></span>
+          <span className="bar"></span>
+        </S.HamburgerButton>
         <HamburgerDropdown
-          isOpen={isOpen}
-          toggleMenu={toggleMenu}
+          isOpen={isActive}
+          toggleMenu={handleClick}
           headerRef={headerRef}
         />
-      </div>
-    </div>
+      </S.DrawerContainer>
+      {loginModalOpen && (
+        <LoginModal closeModal={() => setLoginModalOpen(false)} />
+      )}
+      {signupModallOpen && (
+        <SignupModal closeModal={() => setSignupModalOpen(false)} />
+      )}
+    </S.HeaderContainer>
   );
 };
 
