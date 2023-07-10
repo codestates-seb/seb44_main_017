@@ -78,6 +78,13 @@ public class MemberController {
         List<Member> memberList = members.getContent();
         return ResponseEntity.ok(new MultiResponseDto(mapper.membersToMemberResponses(memberList),members));
     }
+
+    @GetMapping("/point")
+    public ResponseEntity getpoint(@RequestHeader(name = "Refresh") String token){
+        Long memberId = findmemberId(token);
+        Member member = memberService.findVerifiedMember(memberId);
+        return ResponseEntity.ok(new SingleResponseDto<>(member.getMoney()));
+    }
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId) {
         Member member = memberService.findVerifiedMember(memberId);

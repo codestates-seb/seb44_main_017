@@ -1,6 +1,8 @@
 package com.main.project.member.entity;
 
 import com.main.project.comment.ProductComment;
+import com.main.project.order.entity.Order;
+import com.main.project.order.entity.Orderproduct;
 import com.main.project.product.entity.Product;
 import com.main.project.product.entity.Productdeny;
 import com.main.project.question.entity.Question;
@@ -53,6 +55,13 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Productdeny> productdenies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Orderproduct> orderproducts = new ArrayList<>();
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private Order order;
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 

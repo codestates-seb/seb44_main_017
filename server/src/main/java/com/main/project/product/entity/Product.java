@@ -2,6 +2,7 @@ package com.main.project.product.entity;
 import com.main.project.admin.entity.Admin;
 import com.main.project.comment.ProductComment;
 import com.main.project.member.entity.Member;
+import com.main.project.order.entity.Orderproduct;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -63,4 +64,7 @@ public class Product {
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
     private Productdeny productdeny;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private List<Orderproduct> orderproducts = new ArrayList<>();
 }
