@@ -61,7 +61,7 @@ const SignupModal = ({ closeModal }: Props) => {
         const data = { email, name, password, phone };
 
         const response = await axios.post(
-          "https://5510-221-148-162-66.ngrok-free.app/members",
+          "https://faf9-221-148-162-66.ngrok-free.app/members",
           data
         );
         if (response.status === 201) {
@@ -83,7 +83,7 @@ const SignupModal = ({ closeModal }: Props) => {
         const data = { email, name, password, phone };
 
         const response = await axios.post(
-          "https://5510-221-148-162-66.ngrok-free.app/admin",
+          "https://faf9-221-148-162-66.ngrok-free.app/admin",
           data
         );
         if (response.status === 201) {
