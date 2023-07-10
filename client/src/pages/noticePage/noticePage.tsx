@@ -1,5 +1,65 @@
-import React from "react";
+import axios from "axios";
+import NotifyItem from "../../components/Item_notify/NotifyItem";
+import { useEffect, useState } from "react";
 
-export const NoticePage = () => {
-  return <div>noticePage</div>;
+const NoticePage = () => {
+  const [data, setData] = useState<any>();
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  async function getUser() {
+    try {
+      const response =
+        await axios.get(`https://www.아직안열림/notify/board?page=${num}
+          &szie={num}&sort={sort-option}`);
+      console.log(response);
+      setData(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  return (
+    <div>
+      {/* <NotifyItem
+        title={data.title}
+        contents={data.content}
+        isNew={true}
+        regDt={data.createAt}
+        viewCount={data.view}
+      /> */}
+      <NotifyItem
+        title=""
+        contents="내용222dlaksdkasdkaksdakdaksdkasdsak"
+        isNew={false}
+        regDt="2023-07-09"
+        viewCount={1320}
+      />
+      <NotifyItem
+        title="제목2"
+        contents="내용222dlaksdkasdkaksdakdaksdkasdsak"
+        isNew={false}
+        regDt="2023-07-09"
+        viewCount={1320}
+      />
+      <NotifyItem
+        title="제목2"
+        contents="내용222dlaksdkasdkaksdakdaksdkasdsak"
+        isNew={false}
+        regDt="2023-07-09"
+        viewCount={1320}
+      />
+      <NotifyItem
+        title="제목2"
+        contents="내용222dlaksdkasdkaksdakdaksdkasdsak"
+        isNew={false}
+        regDt="2023-07-09"
+        viewCount={1320}
+      />
+    </div>
+  );
 };
+
+export default NoticePage;

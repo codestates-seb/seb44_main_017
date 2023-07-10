@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const Notifyitemcard = styled.button`
   display: flex;
   flex-direction: column;
-  width: 294px;
+  max-width: 294px;
+  width: 100%;
   height: 180px;
   padding: 12px;
   border: 0;
