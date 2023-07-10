@@ -1,11 +1,16 @@
 package com.main.project.auth.filter;
 
 import com.main.project.auth.dto.AdminLoginDto;
+import com.main.project.auth.handler.MemberAccessDeniedHandler;
 import com.main.project.auth.jwt.JwtTokenizer;
 import com.main.project.admin.entity.Admin;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.main.project.exception.businessLogicException.BusinessLogicException;
+import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.entity.Member;
 import com.main.project.member.entity.RefreshToken;
+import com.main.project.member.repository.RefreshTokenRepository;
+import com.main.project.member.service.MemberService;
 import com.main.project.member.service.RefreshTokenService;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,11 +29,15 @@ public class AdminJwtAuthenticationFilter extends UsernamePasswordAuthentication
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
     private final RefreshTokenService refreshTokenService;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final MemberService memberService;
 
-    public AdminJwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer, RefreshTokenService refreshTokenService){
+    public AdminJwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer, RefreshTokenService refreshTokenService, RefreshTokenRepository refreshTokenRepository, MemberService memberService){
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
         this.refreshTokenService = refreshTokenService;
+        this.refreshTokenRepository = refreshTokenRepository;
+        this.memberService = memberService;
     }
     @SneakyThrows
     @Override
@@ -36,7 +45,6 @@ public class AdminJwtAuthenticationFilter extends UsernamePasswordAuthentication
 
         ObjectMapper objectMapper = new ObjectMapper();
         AdminLoginDto loginDto = objectMapper.readValue(request.getInputStream(), AdminLoginDto.class);
-
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());

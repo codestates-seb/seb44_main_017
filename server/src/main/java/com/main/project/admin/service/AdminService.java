@@ -78,4 +78,9 @@ public class AdminService {
         Optional<Admin> optionalAdmin = adminRepository.findById(adminId);
         return optionalAdmin.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND));
     }
+
+    public Admin findAdminByEmail(String email){
+        Optional<Admin> optionalAdmin = adminRepository.findByEmail(email);
+        return optionalAdmin.orElseThrow(() -> new BusinessLogicException(ExceptionCode.UNAUTHORIZED));
+    }
 }
