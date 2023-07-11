@@ -1,5 +1,12 @@
-import React from "react";
-
+import * as S from "./styled";
+import BannerContainerPc from "./bannerContainerPc";
+import BannerContainerMobile from "./bannerContainerMobile";
 export const MainPage = () => {
-  return <div>mainPage</div>;
+  return (
+    <S.MainPageContainer>
+      <BannerContainerPc />
+      <BannerContainerMobile />
+      <div>의류 리스트</div>
+    </S.MainPageContainer>
+  );
 };

@@ -18,7 +18,7 @@ export const HeaderContainer = styled.div`
   background-color: var(--color-white);
   z-index: 99;
   @media (max-width: 1023px) {
-    padding: 12px 32px 12px 56px;
+    padding: 12px 32px;
   }
 `;
 export const LogoContainer = styled.a<{ href: string }>`
