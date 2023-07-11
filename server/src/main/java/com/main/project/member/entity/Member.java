@@ -1,13 +1,13 @@
 package com.main.project.member.entity;
 
+import com.main.project.productComment.ProductComment;
 import com.main.project.notifyView.entity.NotifyView;
 import com.main.project.questionBorad.entity.Question;
+import com.main.project.questionComment.entity.QComment;
 import com.main.project.questionView.entity.QuestionView;
-import com.main.project.comment.ProductComment;
 import com.main.project.order.entity.Order;
 import com.main.project.order.entity.Orderproduct;
 import com.main.project.product.entity.Product;
-import com.main.project.product.entity.Productdeny;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -35,6 +35,36 @@ public class Member {
     @ColumnDefault("false")
     private boolean isban;
 
+    public Member(String email, String name, String password) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+    }
+
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Product> products = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<ProductComment> productComments = new ArrayList<>();
+
+    @ManyToMany
+//            (mappedBy =  "member", cascade = CascadeType.REMOVE)
+    @JoinTable(name = "MemberProductLike",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> likedProducts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Orderproduct> orderproducts = new ArrayList<>();
+
+    @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private Order order;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
+
     @OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE)
     private List<NotifyView> NViews = new ArrayList<>();
 
@@ -60,35 +90,28 @@ public class Member {
         }
     }
 
-
-    public Member(String email, String name, String password) {
-        this.email = email;
-        this.name = name;
-        this.password = password;
+    public void addLikedProducts(Product product){
+        if(!this.likedProducts.contains(product))
+            this.likedProducts.add(product);
     }
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<Product> products = new ArrayList<>();
+    public void removeLikedProducts(Product product){
+        if(this.likedProducts.contains(product))
+            this.likedProducts.remove(product);
+    }
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<ProductComment> productComments = new ArrayList<>();
+    public void addProductComments(ProductComment productComment){
+        this.productComments.add(productComment);
+    }
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<Productdeny> productdenies = new ArrayList<>();
+    public void removeProductComments(ProductComment productComment){
+        this.productComments.remove(productComment);
+    }
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<Orderproduct> orderproducts = new ArrayList<>();
-
-    @OneToOne(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private Order order;
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles = new ArrayList<>();
-
-
-
+    public boolean hasProductComment(ProductComment productComment) {
+        return this.productComments.contains(productComment);
+    }
     public boolean getisban() {
         return isban;
     }
-
 }

@@ -6,7 +6,6 @@ import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.dto.queryget;
 import com.main.project.member.entity.Member;
 import com.main.project.member.repository.MemberRepository;
-import com.main.project.s3.service.AwsS3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,7 +22,6 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    private final AwsS3Service awsS3Service;
     private final UserCustomAuthorityUtils authorityUtils;
     private final PasswordEncoder passwordEncoder;
 
@@ -72,7 +70,6 @@ public class MemberService {
         Member fm = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         List<String> fileName = new ArrayList<>();
-        fileName = awsS3Service.uploadImage(multipartFile);
         fileName.forEach(file ->{
             Optional.ofNullable(file).ifPresent(profile -> fm.setProfile(file));
             memberRepository.save(fm);
