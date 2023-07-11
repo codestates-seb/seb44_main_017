@@ -2,6 +2,8 @@ import CollectionForm from "../../components/Collection_form/CollectionForm";
 import { useState } from "react";
 import axios from "axios";
 import * as S from "./style";
+import { BASE_URL } from "../../constants/constants";
+import { useNavigate } from "react-router-dom";
 
 export interface ItemProps {
   name: string;
@@ -25,6 +27,8 @@ const CollectionPage = () => {
 
   const [contents, setContents] = useState<ContentsProps[]>([initialValue]);
   const [itemNumber, setItemNumber] = useState(1);
+
+  const navigate = useNavigate();
 
   const deleteHandler = (id: number) => {
     confirm("정말 삭제하시겠습니까?");
@@ -60,21 +64,21 @@ const CollectionPage = () => {
 
     formData.append("productlist", JSON.stringify(contentList));
 
-    const res = await axios.post(
-      "https://faf9-221-148-162-66.ngrok-free.app/products/postlist",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "ngrok-skip-browser-warning": true,
-          Authorization:
-            "Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiYWRtaW4xQGdtYWlsLmNvbSIsInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2ODkwNDA1MDcsImV4cCI6MTY4OTA0MjMwN30.S0GFZcr2SaYCVaEDkhQIt27vEC65dz6bThYodfQFyPm3RhWxsVVlYtHDfvdjlPh2",
-          Refresh:
-            "eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZW1iZXIiLCJzdWIiOiJhZG1pbjFAZ21haWwuY29tIiwiaWF0IjoxNjg5MDQwNTA3LCJleHAiOjE2ODkwNjU3MDd9.EJZ6Bl5TtibdXkikbLZlhZBeSBnreF63IH3TgujrOPp_sxsHw-BmhK89s1kgg83V",
-        },
-      }
-    );
-    console.log(res.data);
+    const res = await axios.post(BASE_URL + "/products/postlist", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "ngrok-skip-browser-warning": true,
+        Authorization:
+          "Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiYWRtaW4xQGdtYWlsLmNvbSIsInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2ODkwNDA1MDcsImV4cCI6MTY4OTA0MjMwN30.S0GFZcr2SaYCVaEDkhQIt27vEC65dz6bThYodfQFyPm3RhWxsVVlYtHDfvdjlPh2",
+        Refresh:
+          "eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZW1iZXIiLCJzdWIiOiJhZG1pbjFAZ21haWwuY29tIiwiaWF0IjoxNjg5MDQwNTA3LCJleHAiOjE2ODkwNjU3MDd9.EJZ6Bl5TtibdXkikbLZlhZBeSBnreF63IH3TgujrOPp_sxsHw-BmhK89s1kgg83V",
+      },
+    });
+
+    if (res.status === 200) {
+      alert("정상적으로 요청되었습니다.");
+      navigate("/");
+    }
   };
 
   return (
