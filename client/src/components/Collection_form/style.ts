@@ -10,6 +10,7 @@ export const FormContainer = styled.article`
 
 export const ContentContainer = styled.div`
   display: flex;
+  gap: 50px;
 `;
 
 export const Imagebox = styled.div`
@@ -60,4 +61,52 @@ export const Imagebox = styled.div`
 export const ContentBox = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 16px;
+  width: 400px;
+
+  & > input {
+    padding: 7px 10px;
+    border: 2px solid var(--color-darkblue);
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+    background: radial-gradient(
+      190.97% 141.42% at 100% 100%,
+      rgba(247, 247, 247, 0.7) 0%,
+      rgba(247, 247, 247, 0.7) 100%
+    );
+
+    &:focus {
+      outline: 1px solid var(--color-darkblue);
+    }
+  }
+  & > textarea {
+    border-radius: 12px;
+    border: 2px solid var(--color-darkblue);
+    background: radial-gradient(
+      190.97% 141.42% at 100% 100%,
+      rgba(247, 247, 247, 0.7) 0%,
+      rgba(247, 247, 247, 0.7) 100%
+    );
+    backdrop-filter: blur(5px);
+    resize: none;
+    padding: 8px 12px;
+    height: 200px;
+
+    &:focus {
+      outline: 1px solid var(--color-darkblue);
+    }
+
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--color-darkblue);
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: grey;
+      border-radius: 5px;
+      box-shadow: inset 0px 0px 5px white;
+    }
+  }
 `;
