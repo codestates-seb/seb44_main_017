@@ -1,9 +1,19 @@
 import axios from "axios";
-import NotifyItem from "../../components/Item_notify/NotifyItem";
+import NotifyItem from "@/components/Item_notify/NotifyItem";
 import { useEffect, useState } from "react";
 
+type ItemType = {
+  title: string;
+  content: string;
+  createAt: string;
+  view: number;
+  admin: { adminId: number; name: string };
+  boardId: number;
+  modifyAt: string;
+};
+
 const NoticePage = () => {
-  const [data, setData] = useState<any>();
+  const [notifyList, setNotifyList] = useState([]);
 
   useEffect(() => {
     getUser();
@@ -11,11 +21,11 @@ const NoticePage = () => {
 
   async function getUser() {
     try {
-      const response =
-        await axios.get(`https://www.아직안열림/notify/board?page=${num}
-          &szie={num}&sort={sort-option}`);
-      console.log(response);
-      setData(response);
+      const response = await axios.get(
+        `http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/notify/board?page=1&size=10&sort=newest`
+      );
+      console.log(response.data.data);
+      setNotifyList(response.data.data);
     } catch (error) {
       console.error(error);
     }
@@ -23,41 +33,16 @@ const NoticePage = () => {
 
   return (
     <div>
-      {/* <NotifyItem
-        title={data.title}
-        contents={data.content}
-        isNew={true}
-        regDt={data.createAt}
-        viewCount={data.view}
-      /> */}
-      <NotifyItem
-        title=""
-        contents="내용222dlaksdkasdkaksdakdaksdkasdsak"
-        isNew={false}
-        regDt="2023-07-09"
-        viewCount={1320}
-      />
-      <NotifyItem
-        title="제목2"
-        contents="내용222dlaksdkasdkaksdakdaksdkasdsak"
-        isNew={false}
-        regDt="2023-07-09"
-        viewCount={1320}
-      />
-      <NotifyItem
-        title="제목2"
-        contents="내용222dlaksdkasdkaksdakdaksdkasdsak"
-        isNew={false}
-        regDt="2023-07-09"
-        viewCount={1320}
-      />
-      <NotifyItem
-        title="제목2"
-        contents="내용222dlaksdkasdkaksdakdaksdkasdsak"
-        isNew={false}
-        regDt="2023-07-09"
-        viewCount={1320}
-      />
+      {notifyList.map((e: ItemType) => (
+        <NotifyItem
+          key={e.boardId}
+          title={e.title}
+          contents={e.content}
+          isNew={true}
+          regDt={e.createAt}
+          viewCount={e.view}
+        />
+      ))}
     </div>
   );
 };
