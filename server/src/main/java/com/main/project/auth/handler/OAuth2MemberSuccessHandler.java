@@ -5,8 +5,11 @@ import com.main.project.auth.userinfo.GoogleUserInfo;
 import com.main.project.auth.userinfo.KakaoUserInfo;
 import com.main.project.auth.userinfo.OAuth2UserInfo;
 import com.main.project.auth.util.UserCustomAuthorityUtils;
+import com.main.project.exception.businessLogicException.BusinessLogicException;
+import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.entity.Member;
 import com.main.project.member.entity.RefreshToken;
+import com.main.project.member.repository.RefreshTokenRepository;
 import com.main.project.member.service.MemberService;
 import com.main.project.member.service.RefreshTokenService;
 import org.springframework.security.core.Authentication;
@@ -28,13 +31,14 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     private final JwtTokenizer jwtTokenizer;
     private final UserCustomAuthorityUtils authorityUtils;
     private final MemberService memberService;
-
+    private final RefreshTokenRepository refreshTokenRepository;
     private final RefreshTokenService refreshTokenService;
 
-    public OAuth2MemberSuccessHandler (JwtTokenizer jwtTokenizer, UserCustomAuthorityUtils authorityUtils, MemberService memberService, RefreshTokenService refreshTokenService){
+    public OAuth2MemberSuccessHandler (JwtTokenizer jwtTokenizer, UserCustomAuthorityUtils authorityUtils, MemberService memberService, RefreshTokenRepository refreshTokenRepository, RefreshTokenService refreshTokenService){
         this.jwtTokenizer = jwtTokenizer;
         this.authorityUtils = authorityUtils;
         this.memberService = memberService;
+        this.refreshTokenRepository = refreshTokenRepository;
         this.refreshTokenService = refreshTokenService;
     }
 
@@ -74,6 +78,12 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
     }
 
     public void redirect(HttpServletRequest request, HttpServletResponse response, Member member, List<String> authorities) throws IOException {
+
+        if(refreshTokenRepository.existsByMemberId(member.getMemberId()) == true){
+
+            throw new BusinessLogicException(ExceptionCode.ALREADY_LOGGED_IN);
+        }
+
         String accessToken = delegateAccessToken(member, authorities);
         String refreshToken = delegateRefreshToken(member.getEmail());
         String addedAccessToken = "Bearer " + accessToken;
@@ -126,9 +136,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
                 .newInstance()
                 .scheme("http")
                 .host("localhost")
-                .port(80)
-                //.port(3000)
-                .path("/receive-token.html")
+                .port(5173)
+                .path("/")
                 .queryParams(queryParams)
                 .build()
                 .toUri();
