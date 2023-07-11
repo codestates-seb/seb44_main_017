@@ -60,7 +60,7 @@ export const InputBox = styled.input`
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 0;
-  border-bottom-width: 4px;
+  border-bottom-width: 2px;
   border-color: var(--color-darkblue);
   outline: none;
   background-color: rgba(247, 247, 247, 0.7);
@@ -126,4 +126,9 @@ export const LoginButton = styled.button`
 export const ErrorMsg = styled.div`
   color: red;
   font-size: 12px;
+`;
+
+export const ButtonTest = styled.button`
+  width: 120px;
+  height: 48px;
 `;
