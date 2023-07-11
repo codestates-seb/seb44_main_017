@@ -27,6 +27,14 @@ const LoginModal = ({ closeModal }: Props) => {
     setShowPassword(!showPassword);
   };
 
+  const googleLoginRequestHandler = () => {
+    window.location.assign("http://localhost:8080/oauth2/authorization/google");
+  };
+
+  const kakaoLoginRequestHandler = () => {
+    window.location.assign("http://localhost:8080/oauth2/authorization/kakao");
+  };
+
   const handleLogin = async () => {
     const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,40}$/;
 
@@ -40,7 +48,7 @@ const LoginModal = ({ closeModal }: Props) => {
         const data = { username: userName, password };
 
         const response: any = await axios.post(
-          "https://5510-221-148-162-66.ngrok-free.app/user/login",
+          "https://faf9-221-148-162-66.ngrok-free.app/user/login",
           data
         );
         if (response.status === 200) {
@@ -60,7 +68,7 @@ const LoginModal = ({ closeModal }: Props) => {
       try {
         const data = { email: userName, password };
         const response: any = await axios.post(
-          "https://5510-221-148-162-66.ngrok-free.app/admin/login",
+          "https://faf9-221-148-162-66.ngrok-free.app/admin/login",
           data
         );
         if (response.status === 200) {
@@ -124,6 +132,8 @@ const LoginModal = ({ closeModal }: Props) => {
           관리자로 로그인하기
         </S.AdminLabel>
         <S.LoginButton onClick={handleLogin}>LOGIN</S.LoginButton>
+        <S.ButtonTest onClick={googleLoginRequestHandler}>구글</S.ButtonTest>
+        <S.ButtonTest onClick={kakaoLoginRequestHandler}>카카오</S.ButtonTest>
       </S.Content>
     </S.Container>
   );
