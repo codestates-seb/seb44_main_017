@@ -1,14 +1,13 @@
 package com.main.project.product.entity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.main.project.admin.entity.Admin;
-import com.main.project.comment.ProductComment;
 import com.main.project.helper.audit.Auditable;
+import com.main.project.notifyView.entity.NotifyView;
+import com.main.project.productComment.ProductComment;
 import com.main.project.member.entity.Member;
-import com.main.project.order.entity.Orderproduct;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+//@Builder
 public class Product extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,26 +41,47 @@ public class Product extends Auditable {
 
     private String category;
 
-//    @ColumnDefault("0")
     private Integer view = 0;
-
-//    @ColumnDefault("false")
-    private Boolean productlike = false;
 
 //    Todo: image deployment
     private String imageLink;
 
-//    @ColumnDefault("false")
     private Boolean issell = false;
 
-    private Integer condition_value = 5;
+    private Integer conditionValue = 5;
 
-    @OneToMany
-    private List<ProductComment> comments = new ArrayList<>();
+    private Integer pointValue = 0;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
-    private Productdeny productdeny;
+    @ManyToMany(mappedBy = "likedProducts")
+    private List<Member> likedByMembers = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
-    private List<Orderproduct> orderproducts = new ArrayList<>();
+    private List<ProductComment> comments = new ArrayList<>();
+
+    public void addView(){
+        this.view++;
+    }
+
+//    @OneToOne(mappedBy = "product")
+//    private ProductView productView;
+
+    public void addLikeByMembers(Member member){
+        if(!this.likedByMembers.contains(member))
+            this.likedByMembers.add(member);
+    }
+
+    public void removeLikeByMembers(Member member){
+        if(this.likedByMembers.contains(member))
+            this.likedByMembers.remove(member);
+    }
+
+    public int getLikeCount() {
+        return likedByMembers.size();
+    }
+
+    public boolean isLikedByMember(Long memberId) {
+        return likedByMembers.stream()
+                .anyMatch(member -> member.getMemberId().equals(memberId));
+    }
+
 }

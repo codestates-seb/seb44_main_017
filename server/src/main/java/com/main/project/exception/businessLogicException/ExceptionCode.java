@@ -8,6 +8,7 @@ public enum ExceptionCode {
     MEMBER_EXISTS(409, "Member exists"),
     MEMBER_EMAIL_EXISTS(409, "Email exists"),
     PRODUCT_NOT_FOUND(404, "Product not found"),
+    COMMENT_NOT_FOUND(404, "Comment not found"),
     ADMIN_NOT_FOUND(404,"Admin not found"),
     ADMIN_EXISTS(409,"Admin exists"),
     NOT_WRITER(403,"Not writer"),
