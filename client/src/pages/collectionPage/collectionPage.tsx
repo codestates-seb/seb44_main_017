@@ -46,7 +46,7 @@ const CollectionPage = () => {
         alert("필수 항목을 모두 작성해주세요.");
         return;
       } else {
-        if (contents[i].itemImage === null) {
+        if (contents[i].itemImage === undefined) {
           alert("이미지를 등록해주세요.");
           return;
         }
@@ -69,9 +69,9 @@ const CollectionPage = () => {
         "Content-Type": "multipart/form-data",
         "ngrok-skip-browser-warning": true,
         Authorization:
-          "Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiYWRtaW4xQGdtYWlsLmNvbSIsInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2ODkwNDA1MDcsImV4cCI6MTY4OTA0MjMwN30.S0GFZcr2SaYCVaEDkhQIt27vEC65dz6bThYodfQFyPm3RhWxsVVlYtHDfvdjlPh2",
+          "Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiYWRtaW4xQGdtYWlsLmNvbSIsInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2ODkxMDUzNjQsImV4cCI6MTY4OTEwNzE2NH0.rcy4ZVnCH6CsXbAA1IKsQpLwnm4thgCaLxywtWODnK6miVZfJvvYGPKbOA51Y3QC",
         Refresh:
-          "eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZW1iZXIiLCJzdWIiOiJhZG1pbjFAZ21haWwuY29tIiwiaWF0IjoxNjg5MDQwNTA3LCJleHAiOjE2ODkwNjU3MDd9.EJZ6Bl5TtibdXkikbLZlhZBeSBnreF63IH3TgujrOPp_sxsHw-BmhK89s1kgg83V",
+          "eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZW1iZXIiLCJzdWIiOiJhZG1pbjFAZ21haWwuY29tIiwiaWF0IjoxNjg5MTA1MzY0LCJleHAiOjE2ODkxMzA1NjR9.dJGVM3jkD1sTn3zdXXOZjhKb6A3Gln45-uNH2FYuNcakYMEDiTvPcT6pLMuDUagI",
       },
     });
 

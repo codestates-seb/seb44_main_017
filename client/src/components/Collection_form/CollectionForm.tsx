@@ -13,8 +13,8 @@ interface Props {
 
 const CollectionForm = ({ contents, setContents, itemNumber }: Props) => {
   const [preview, setPreview] = useState<string>();
-  const [titleValue, titleHandler, titleReset] = useInput("");
-  const [contentValue, contentHandler, contentReset] = useInput("");
+  const [titleValue, titleHandler] = useInput("");
+  const [contentValue, contentHandler] = useInput("");
   const [categoryValue, setCategoryValue] = useState("");
   const [imageFile, setImageFile] = useState<File>();
   const categoryOptions = ["상의", "하의", "아우터", "기타"];
@@ -84,18 +84,6 @@ const CollectionForm = ({ contents, setContents, itemNumber }: Props) => {
             options={categoryOptions}
             setOption={setCategoryValue}
           />
-          {/* <select
-            name="category"
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              setCategoryValue(e.target.value)
-            }
-          >
-            <option value="">카테고리</option>
-            <option value="상의">상의</option>
-            <option value="하의">하의</option>
-            <option value="아우터">아우터</option>
-            <option value="기타">기타</option>
-          </select> */}
           <input
             type="text"
             placeholder="상품명을 입력해주세요."
