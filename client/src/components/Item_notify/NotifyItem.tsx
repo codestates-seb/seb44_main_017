@@ -1,7 +1,7 @@
 import * as S from "./NotifyItem.styles";
 import { NotifyProps } from "./NotifyItem.type";
-import View from "../../../public/images/view.svg";
-import Post from "../../../public/images/Post.svg";
+import View from "@/assets/icons/view.svg";
+import Post from "@/assets/icons/Post.svg";
 
 const NotifyItem = (props: NotifyProps) => {
   const { title, contents, isNew, regDt, viewCount } = props;
