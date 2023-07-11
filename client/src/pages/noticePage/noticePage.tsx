@@ -1,5 +1,5 @@
 import axios from "axios";
-import NotifyItem from "../../components/Item_notify/NotifyItem";
+import NotifyItem from "@/components/Item_notify/NotifyItem";
 import { useEffect, useState } from "react";
 
 const NoticePage = () => {
@@ -12,8 +12,8 @@ const NoticePage = () => {
   async function getUser() {
     try {
       const response =
-        await axios.get(`https://www.아직안열림/notify/board?page=${num}
-          &szie={num}&sort={sort-option}`);
+        await axios.get(`http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/notify/board?page ={num}
+        &szie={num}&sort={sort-option}`);
       console.log(response);
       setData(response);
     } catch (error) {
