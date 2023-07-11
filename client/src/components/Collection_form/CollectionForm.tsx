@@ -5,39 +5,31 @@ import { ContentsProps } from "../../pages/collectionPage/collectionPage";
 import useInput from "../../hooks/useInput";
 
 interface Props {
-  images: File[];
-  setImages: React.Dispatch<React.SetStateAction<File[]>>;
   contents: ContentsProps[];
   setContents: React.Dispatch<React.SetStateAction<ContentsProps[]>>;
-  itemIndex: number;
+  itemNumber: number;
 }
 
-const CollectionForm = ({
-  images,
-  setImages,
-  contents,
-  setContents,
-  itemIndex,
-}: Props) => {
+const CollectionForm = ({ contents, setContents, itemNumber }: Props) => {
   const [preview, setPreview] = useState<string>();
   const [titleValue, titleHandler, titleReset] = useInput("");
   const [contentValue, contentHandler, contentReset] = useInput("");
   const [categoryValue, setCategoryValue] = useState("");
-
-  console.log("itemIndex = ", itemIndex);
+  const [imageFile, setImageFile] = useState<File>();
 
   useEffect(() => {
     setContents(
       contents.map(item =>
-        item.itemId === itemIndex
+        item.itemId === itemNumber
           ? {
               ...item,
-              itemId: item.itemId,
+              itemId: itemNumber,
               itemInfo: {
                 name: titleValue,
                 content: contentValue,
                 category: categoryValue,
               },
+              itemImage: imageFile,
             }
           : item
       )
@@ -47,7 +39,7 @@ const CollectionForm = ({
   /**
    * [이미지 업로드]
    * setPreview : 미리보기 이미지 저장
-   * setImages : 전송할 배열에 이미지 담기
+   * setImageFile : Item 객체에 이미지 파일 저장
    */
   const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imageFile = e.target.files;
@@ -57,7 +49,7 @@ const CollectionForm = ({
       setPreview(url);
     }
 
-    imageFile && setImages([...images, imageFile[0]]);
+    imageFile && setImageFile(imageFile[0]);
   };
 
   return (
