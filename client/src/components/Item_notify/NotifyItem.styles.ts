@@ -23,11 +23,11 @@ export const NotifyTitle = styled.h2`
 `;
 
 export const PostIt = styled.img`
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 28px;
+  height: 28px;
   position: absolute;
-  top: 10px;
-  left: 256px;
+  top: 12px;
+  right: 16px;
 `;
 export const NotifyContents = styled.p`
   font-size: var(--font-size-12);
