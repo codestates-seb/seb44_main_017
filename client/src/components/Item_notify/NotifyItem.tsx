@@ -1,34 +1,26 @@
-import {
-  NewBadge,
-  NotifyContents,
-  NotifyTitle,
-  Notifyitemcard,
-  PostIt,
-  RegInfoWrapper,
-  ViewImg,
-} from "./NotifyItem.styles";
+import * as S from "./NotifyItem.styles";
+import { NotifyProps } from "./NotifyItem.type";
 import View from "../../../public/images/view.svg";
 import Post from "../../../public/images/Post.svg";
 
-const NotifyItem = () => {
+const NotifyItem = (props: NotifyProps) => {
+  const { title, contents, isNew, regDt, viewCount } = props;
   return (
-    <Notifyitemcard>
-      <NotifyTitle>(이벤트) 의류 등록 시 지급되는 포인트 UP!</NotifyTitle>
+    <S.Notifyitemcard>
+      <S.NotifyTitle>{title}</S.NotifyTitle>
       <div>
-        <PostIt src={Post} alt="" />
+        <S.PostIt src={Post} alt="" />
       </div>
-      <NotifyContents>
-        해당 이벤트는 2주간 진행되며....이러쿵저러쿵 어쩌구 저쩌구 블라블라블라
-      </NotifyContents>
-      <NewBadge>NEW</NewBadge>
-      <RegInfoWrapper>
-        <small>2023-07-05</small>
+      <S.NotifyContents>{contents}</S.NotifyContents>
+      {isNew && <S.NewBadge>NEW</S.NewBadge>}
+      <S.RegInfoWrapper>
+        <small>{regDt}</small>
         <div>
-          <ViewImg src={View} alt="조회수" />
-          <small>1887</small>
+          <S.ViewImg src={View} alt="조회수" />
+          <small>{viewCount}</small>
         </div>
-      </RegInfoWrapper>
-    </Notifyitemcard>
+      </S.RegInfoWrapper>
+    </S.Notifyitemcard>
   );
 };
 

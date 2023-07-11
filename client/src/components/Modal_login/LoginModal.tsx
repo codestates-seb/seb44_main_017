@@ -27,7 +27,7 @@ const LoginModal = ({ closeModal }: Props) => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,40}$/;
 
     !userName.includes("@") ? setUserNameError(true) : setUserNameError(false);
@@ -36,34 +36,51 @@ const LoginModal = ({ closeModal }: Props) => {
       : setPasswordError(false);
 
     if (!userNameError && !passwordError && !isAdmin) {
-      const data = { userName, password };
-      console.log(data);
-      axios
-        .post("url/user/login", {
-          data,
-        })
-        .then(function (response) {
-          navigate("/modal_login");
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      try {
+        const data = { username: userName, password };
+
+        const response: any = await axios.post(
+          "https://5510-221-148-162-66.ngrok-free.app/user/login",
+          data
+        );
+        if (response.status === 200) {
+          navigate("/");
+          closeModal(false);
+          const authorization = response.headers.get("authorization");
+          const refresh = response.headers.get("refresh");
+          document.cookie = `authorization=${authorization}; path=/;`;
+          document.cookie = `refresh=${refresh}; path=/; SameSite=none; Secure`;
+        }
+      } catch (error: any) {
+        if (error.response.status === 404 || error.response.status === 500) {
+          alert("회원 정보를 확인해주세요.");
+        }
+      }
     } else if (!userNameError && !passwordError && isAdmin) {
-      const data = { userName, password };
-      console.log(data);
-      axios
-        .post("url/admin/login", {
-          data,
-        })
-        .then(function (response) {})
-        .catch(function (error) {
-          console.log(error);
-        });
+      try {
+        const data = { email: userName, password };
+        const response: any = await axios.post(
+          "https://5510-221-148-162-66.ngrok-free.app/admin/login",
+          data
+        );
+        if (response.status === 200) {
+          navigate("/");
+          closeModal(false);
+          const authorization = response.headers.get("authorization");
+          const refresh = response.headers.get("refresh");
+          document.cookie = `authorization=${authorization}; path=/;`;
+          document.cookie = `refresh=${refresh}; path=/; SameSite=none; Secure`;
+        }
+      } catch (error: any) {
+        if (error.response.status === 404 || error.response.status === 500) {
+          alert("회원 정보를 확인해주세요.");
+        }
+      }
     }
   };
   return (
-    <S.Container>
-      <S.Content>
+    <S.Container onClick={closeModal}>
+      <S.Content onClick={(e) => e.stopPropagation()}>
         <S.CloseButton onClick={closeModal} />
         <S.LoginTitleContainer>
           <Logo width="40px" height="24px" />

@@ -2,7 +2,9 @@ import { ChangeEvent, useCallback, useState } from "react";
 
 type UseInputProps<T> = [
   value: T,
-  changeHandler: (e: ChangeEvent<HTMLInputElement>) => void,
+  changeHandler: (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => void,
   reset: () => void
 ];
 
