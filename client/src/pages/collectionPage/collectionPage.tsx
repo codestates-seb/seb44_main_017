@@ -1,27 +1,53 @@
 import CollectionForm from "../../components/Collection_form/CollectionForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
-export interface ContentsProps {
+export interface ItemProps {
   name: string;
   content: string;
   category: string;
 }
 
+export interface ContentsProps {
+  itemId: number;
+  itemInfo: ItemProps;
+}
+
 const CollectionPage = () => {
   const initialValue = {
-    name: "",
-    content: "",
-    category: "",
+    itemId: 0,
+    itemInfo: { name: "", content: "", category: "" },
   };
 
-  const [formCount, setFormCount] = useState(1);
   const [images, setImages] = useState<File[]>([]);
   const [contents, setContents] = useState<ContentsProps[]>([initialValue]);
+  const [itemNumber, setItemNumber] = useState(1);
+
+  const deleteHandler = (id: number) => {
+    console.log(id);
+    setContents(contents.filter(item => item.itemId !== id));
+    // setImages(images.filter(item => item.itemId !== id));
+  };
 
   const submitHandler = async () => {
     console.log("images = ", images);
     console.log("contents = ", contents);
+
+    if (images.length < contents.length) {
+      alert("이미지를 등록해주세요");
+      return;
+    }
+
+    for (let i = 0; i < contents.length; i++) {
+      if (
+        contents[i].itemInfo.name === "" ||
+        contents[i].itemInfo.content === "" ||
+        contents[i].itemInfo.category === ""
+      ) {
+        alert("필수 항목을 모두 작성해주세요.");
+        return;
+      }
+    }
 
     const formData = new FormData();
     formData.append("productlist", JSON.stringify(contents));
@@ -53,25 +79,35 @@ const CollectionPage = () => {
         <h1>수거 신청하기</h1>
         <h4>의류를 보내서 포인트도 얻고 친환경도 실천해보세요!</h4>
       </div>
-      {Array(formCount)
-        .fill(0)
-        .map((_, index) => (
-          <div key={index}>
-            <button onClick={() => setFormCount(formCount - 1)}>삭제</button>
-            <CollectionForm
-              images={images}
-              setImages={setImages}
-              contents={contents}
-              setContents={setContents}
-              index={index++}
-            />
-          </div>
-        ))}
+      {contents.map(item => (
+        <div key={item.itemId}>
+          <button
+            onClick={() => {
+              deleteHandler(item.itemId);
+            }}
+          >
+            삭제
+          </button>
+          <CollectionForm
+            images={images}
+            setImages={setImages}
+            contents={contents}
+            setContents={setContents}
+            itemIndex={item.itemId}
+          />
+        </div>
+      ))}
       <div>
         <button
           onClick={() => {
-            setFormCount(formCount + 1);
-            setContents([...contents, initialValue]);
+            setContents([
+              ...contents,
+              {
+                itemId: itemNumber,
+                itemInfo: { name: "", content: "", category: "" },
+              },
+            ]);
+            setItemNumber(itemNumber + 1);
           }}
         >
           상품 추가

@@ -9,7 +9,7 @@ interface Props {
   setImages: React.Dispatch<React.SetStateAction<File[]>>;
   contents: ContentsProps[];
   setContents: React.Dispatch<React.SetStateAction<ContentsProps[]>>;
-  index: number;
+  itemIndex: number;
 }
 
 const CollectionForm = ({
@@ -17,22 +17,27 @@ const CollectionForm = ({
   setImages,
   contents,
   setContents,
-  index,
+  itemIndex,
 }: Props) => {
   const [preview, setPreview] = useState<string>();
   const [titleValue, titleHandler, titleReset] = useInput("");
   const [contentValue, contentHandler, contentReset] = useInput("");
   const [categoryValue, setCategoryValue] = useState("");
 
+  console.log("itemIndex = ", itemIndex);
+
   useEffect(() => {
     setContents(
-      contents.map((item, idx) =>
-        index === idx
+      contents.map(item =>
+        item.itemId === itemIndex
           ? {
               ...item,
-              name: titleValue,
-              content: contentValue,
-              category: categoryValue,
+              itemId: item.itemId,
+              itemInfo: {
+                name: titleValue,
+                content: contentValue,
+                category: categoryValue,
+              },
             }
           : item
       )
