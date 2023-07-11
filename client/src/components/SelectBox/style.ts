@@ -5,14 +5,14 @@ export const SelectBox = styled.div`
   width: 100px;
   height: 24px;
   flex-shrink: 0;
-  border: 3px solid var(--color-darkblue);
+  border: 2px solid var(--color-darkblue);
   border-radius: 40px;
   background: radial-gradient(
     190.97% 141.42% at 100% 100%,
     rgba(247, 247, 247, 0.7) 0%,
     rgba(247, 247, 247, 0.7) 100%
   );
-  margin: 0 10px 12px 0;
+  /* margin: 0 10px 12px 0; */
   backdrop-filter: blur(5px);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
@@ -20,8 +20,8 @@ export const SelectBox = styled.div`
   align-items: center;
   font-size: var(--font-size-12);
   font-weight: 700;
-  left: 10px;
-  top: 10px;
+  /* left: 10px;
+  top: 10px; */
 
   & svg {
     position: absolute;
@@ -67,12 +67,13 @@ export const SelectOptions = styled.ul<{ isOpen: boolean }>`
   border-radius: 8px;
   background: radial-gradient(
     190.97% 141.42% at 100% 100%,
-    rgba(247, 247, 247, 0.7) 0%,
-    rgba(247, 247, 247, 0.7) 100%
+    rgba(247, 247, 247, 1) 0%,
+    rgba(247, 247, 247, 1) 100%
   );
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: #111;
   appearance: none;
+  z-index: 10;
 `;
 
 export const Option = styled.li`

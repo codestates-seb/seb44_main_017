@@ -85,7 +85,7 @@ const CollectionPage = () => {
       </S.PageTitle>
       <S.ContentsContainer>
         {contents.map((item, index) => (
-          <S.ContentBox key={item.itemId}>
+          <div key={item.itemId}>
             <S.ContentHeader>
               <div className="product_no">상품 번호 : {index + 1}</div>
               <S.DeleteBtn
@@ -101,7 +101,7 @@ const CollectionPage = () => {
               setContents={setContents}
               itemNumber={item.itemId}
             />
-          </S.ContentBox>
+          </div>
         ))}
       </S.ContentsContainer>
       <S.AddBtnBox>

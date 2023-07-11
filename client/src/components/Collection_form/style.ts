@@ -11,6 +11,11 @@ export const FormContainer = styled.article`
 export const ContentContainer = styled.div`
   display: flex;
   gap: 50px;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const Imagebox = styled.div`
@@ -21,7 +26,6 @@ export const Imagebox = styled.div`
   align-items: center;
 
   & > .image_background {
-    padding: 4px;
     border-radius: 20px;
     border: 2px solid var(--dark-blue, #2b475c);
     background: #d9d9d9;
@@ -32,12 +36,18 @@ export const Imagebox = styled.div`
     align-items: center;
     backdrop-filter: blur(5px);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      width: 200px;
+      height: 200px;
+    }
   }
 
   & img {
     width: 292px;
     height: 292px;
     object-fit: cover;
+    border-radius: 20px;
   }
 
   & > .upload_btn {
@@ -55,6 +65,13 @@ export const Imagebox = styled.div`
     color: var(--color-darkblue);
     font-size: 16px;
     font-weight: 700;
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      width: 120px;
+      height: 30px;
+      font-size: 14px;
+      font-weight: 600;
+    }
   }
 `;
 
@@ -64,21 +81,31 @@ export const ContentBox = styled.div`
   gap: 16px;
   width: 400px;
 
+  @media (max-width: 767px) {
+    width: 100%;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 380px;
+    font-size: 12px;
+  }
+
   & > input {
     padding: 7px 10px;
     border: 2px solid var(--color-darkblue);
     border-radius: 12px;
-    backdrop-filter: blur(5px);
     background: radial-gradient(
       190.97% 141.42% at 100% 100%,
       rgba(247, 247, 247, 0.7) 0%,
       rgba(247, 247, 247, 0.7) 100%
     );
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
     &:focus {
       outline: 1px solid var(--color-darkblue);
     }
   }
+
   & > textarea {
     border-radius: 12px;
     border: 2px solid var(--color-darkblue);
@@ -87,10 +114,14 @@ export const ContentBox = styled.div`
       rgba(247, 247, 247, 0.7) 0%,
       rgba(247, 247, 247, 0.7) 100%
     );
-    backdrop-filter: blur(5px);
     resize: none;
     padding: 8px 12px;
-    height: 200px;
+    height: 180px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      height: 150px;
+    }
 
     &:focus {
       outline: 1px solid var(--color-darkblue);

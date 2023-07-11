@@ -3,39 +3,49 @@ import * as S from "./style";
 import SelectArrow from "../../assets/icons/SelectArrow";
 import useDetectClose from "../../hooks/useDetectClose";
 
+/**
+ * @usage: "정렬" or "카테고리"
+ * @options: 정렬 = ["최신순", "오래된순", "좋아요순", "조회수순", "가격낮은순", "가격높은순"], 카테고리 = 제한없음
+ * @setOption: state의 set 함수
+ */
 interface Props {
+  usage: string;
   options: string[];
   setOption: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const SelectBox = ({ options, setOption }: Props) => {
+const SelectBox = ({ usage, options, setOption }: Props) => {
   const [isSelected, selectRef, selectHandler] = useDetectClose();
-  const [viewValue, setViewValue] = useState("정렬");
+  const [viewValue, setViewValue] = useState(usage);
 
   const handleSelectValue = (e: any) => {
     const current = e.target.getAttribute("value");
     setViewValue(current);
 
-    switch (current) {
-      case "최신순":
-        setOption("newest");
-        break;
-      case "오래된순":
-        setOption("oldest");
-        break;
-      case "좋아요순":
-        setOption("mostlike");
-        break;
-      case "조회수순":
-        setOption("mostview");
-        break;
-      case "가격낮은순":
-        setOption("priceasc");
-        break;
-      case "가격높은순":
-        setOption("pricedesc");
-        break;
+    if (usage === "정렬") {
+      switch (current) {
+        case "최신순":
+          setOption("newest");
+          break;
+        case "오래된순":
+          setOption("oldest");
+          break;
+        case "좋아요순":
+          setOption("mostlike");
+          break;
+        case "조회수순":
+          setOption("mostview");
+          break;
+        case "가격낮은순":
+          setOption("priceasc");
+          break;
+        case "가격높은순":
+          setOption("pricedesc");
+          break;
+      }
     }
+
+    setOption(current);
   };
 
   return (
