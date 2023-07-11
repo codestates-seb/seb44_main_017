@@ -7,7 +7,7 @@
 </g>
 <defs>
 <filter id="filter0_d_382_1516" x="0.0981445" y="1" width="15.9727" height="29" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-<feFlood floodOpacity="0" result="BackgroundImageFix"/>
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dy="4"/>
 <feGaussianBlur stdDeviation="2"/>
