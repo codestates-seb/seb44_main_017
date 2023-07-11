@@ -11,14 +11,18 @@ import Footer from "./components/Footer/Footer";
 function App() {
   return (
     <>
-      <Header />
-      <Routes>
-        <Route element={<MainPage />} path="/" />
-        <Route element={<NoticePage />} path="/notice" />
-        <Route element={<ProductInfoPage />} path="/productinfo" />
-        <Route element={<ProductListPage />} path="/productlist" />
-        <Route element={<CollectionPage />} path="/collection" />
-      </Routes>
+      <div
+        style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+      >
+        <Header />
+        <Routes>
+          <Route element={<MainPage />} path="/" />
+          <Route element={<NoticePage />} path="/notice" />
+          <Route element={<ProductInfoPage />} path="/productinfo" />
+          <Route element={<ProductListPage />} path="/productlist" />
+          <Route element={<CollectionPage />} path="/collection" />
+        </Routes>
+      </div>
       <Footer />
     </>
   );

@@ -3,11 +3,9 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 
 export const FooterContainer = styled.footer`
   background-color: var(--color-darkblue);
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: fixed;
   bottom: 0px;
   padding: 36px 60px 24px 60px;
 `;
