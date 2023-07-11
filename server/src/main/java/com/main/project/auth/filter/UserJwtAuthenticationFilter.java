@@ -3,8 +3,11 @@ package com.main.project.auth.filter;
 import com.main.project.auth.dto.UserLoginDto;
 import com.main.project.auth.jwt.JwtTokenizer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.main.project.exception.businessLogicException.BusinessLogicException;
+import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.entity.Member;
 import com.main.project.member.entity.RefreshToken;
+import com.main.project.member.repository.RefreshTokenRepository;
 import com.main.project.member.service.MemberService;
 import com.main.project.member.service.RefreshTokenService;
 import lombok.SneakyThrows;
@@ -24,11 +27,13 @@ public class UserJwtAuthenticationFilter extends UsernamePasswordAuthenticationF
     private final AuthenticationManager authenticationManager;
     private final JwtTokenizer jwtTokenizer;
     private final RefreshTokenService refreshTokenService;
+    private final RefreshTokenRepository refreshTokenRepository;
     private final MemberService memberService;
-    public UserJwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer, RefreshTokenService refreshTokenService, MemberService memberService){
+    public UserJwtAuthenticationFilter(AuthenticationManager authenticationManager, JwtTokenizer jwtTokenizer, RefreshTokenService refreshTokenService, RefreshTokenRepository refreshTokenRepository, MemberService memberService){
         this.authenticationManager = authenticationManager;
         this.jwtTokenizer = jwtTokenizer;
         this.refreshTokenService = refreshTokenService;
+        this.refreshTokenRepository = refreshTokenRepository;
         this.memberService = memberService;
     }
     @SneakyThrows
@@ -39,6 +44,10 @@ public class UserJwtAuthenticationFilter extends UsernamePasswordAuthenticationF
         UserLoginDto loginDto = objectMapper.readValue(request.getInputStream(), UserLoginDto.class);
         Member findmember = memberService.findMember(loginDto.getUsername());
         memberService.checkisban(findmember);
+
+        if(refreshTokenRepository.existsByMemberId(findmember.getMemberId()) == true){
+            throw new BusinessLogicException(ExceptionCode.ALREADY_LOGGED_IN);
+        }
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
