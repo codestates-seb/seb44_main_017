@@ -4,6 +4,8 @@ export const FormContainer = styled.article`
   display: flex;
   flex-direction: column;
   gap: 4px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-gray100);
 `;
 
 export const ContentContainer = styled.div`
