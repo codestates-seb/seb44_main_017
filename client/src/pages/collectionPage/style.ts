@@ -21,12 +21,20 @@ export const PageTitle = styled.div`
   & > h1 {
     font-size: 36px;
     font-weight: 700;
+
+    @media (max-width: 767px) {
+      font-size: 24px;
+    }
   }
 
   & > h4 {
     font-size: 18px;
     font-weight: 700;
     color: var(--color-gray200);
+
+    @media (max-width: 767px) {
+      display: none;
+    }
   }
 `;
 
@@ -37,13 +45,15 @@ export const ContentsContainer = styled.article`
   margin: 36px 0;
 `;
 
-export const ContentBox = styled.div``;
-
 export const ContentHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
+
+  @media (max-width: 767px) {
+    justify-content: space-around;
+  }
 
   & > .product_no {
     font-size: 14px;
@@ -90,6 +100,10 @@ export const SubmitBox = styled.div`
     font-size: 14px;
     font-weight: 700;
     color: var(--color-darkblue);
+
+    @media (max-width: 767px) {
+      font-size: var(--font-size-12);
+    }
   }
 `;
 

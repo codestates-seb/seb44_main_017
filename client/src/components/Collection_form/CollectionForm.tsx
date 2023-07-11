@@ -3,6 +3,7 @@ import ImageIcon from "../../assets/icons/ImageIcon";
 import * as S from "./style";
 import { ContentsProps } from "../../pages/collectionPage/collectionPage";
 import useInput from "../../hooks/useInput";
+import SelectBox from "../SelectBox/SelectBox";
 
 interface Props {
   contents: ContentsProps[];
@@ -16,6 +17,7 @@ const CollectionForm = ({ contents, setContents, itemNumber }: Props) => {
   const [contentValue, contentHandler, contentReset] = useInput("");
   const [categoryValue, setCategoryValue] = useState("");
   const [imageFile, setImageFile] = useState<File>();
+  const categoryOptions = ["상의", "하의", "아우터", "기타"];
 
   const imgInput = useRef<HTMLInputElement>(null);
 
@@ -77,7 +79,12 @@ const CollectionForm = ({ contents, setContents, itemNumber }: Props) => {
           </button>
         </S.Imagebox>
         <S.ContentBox>
-          <select
+          <SelectBox
+            usage={"카테고리"}
+            options={categoryOptions}
+            setOption={setCategoryValue}
+          />
+          {/* <select
             name="category"
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
               setCategoryValue(e.target.value)
@@ -88,7 +95,7 @@ const CollectionForm = ({ contents, setContents, itemNumber }: Props) => {
             <option value="하의">하의</option>
             <option value="아우터">아우터</option>
             <option value="기타">기타</option>
-          </select>
+          </select> */}
           <input
             type="text"
             placeholder="상품명을 입력해주세요."
