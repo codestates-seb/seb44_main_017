@@ -55,7 +55,7 @@ public class SecurityConfiguration implements WebMvcConfigurer{
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .oauth2Login()
-                .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, userauthorityUtils, memberService, refreshTokenService))
+                .successHandler(new OAuth2MemberSuccessHandler(jwtTokenizer, userauthorityUtils, memberService, refreshTokenRepository, refreshTokenService))
                 .and()
                 .csrf().disable()
                 .cors().configurationSource(corsConfigurationSource())
