@@ -1,38 +1,39 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ImageIcon from "../../assets/icons/ImageIcon";
 import * as S from "./style";
 import { ContentsProps } from "../../pages/collectionPage/collectionPage";
 import useInput from "../../hooks/useInput";
+import SelectBox from "../SelectBox/SelectBox";
 
 interface Props {
-  images: File[];
-  setImages: React.Dispatch<React.SetStateAction<File[]>>;
   contents: ContentsProps[];
   setContents: React.Dispatch<React.SetStateAction<ContentsProps[]>>;
-  index: number;
+  itemNumber: number;
 }
 
-const CollectionForm = ({
-  images,
-  setImages,
-  contents,
-  setContents,
-  index,
-}: Props) => {
+const CollectionForm = ({ contents, setContents, itemNumber }: Props) => {
   const [preview, setPreview] = useState<string>();
   const [titleValue, titleHandler, titleReset] = useInput("");
   const [contentValue, contentHandler, contentReset] = useInput("");
   const [categoryValue, setCategoryValue] = useState("");
+  const [imageFile, setImageFile] = useState<File>();
+  const categoryOptions = ["상의", "하의", "아우터", "기타"];
+
+  const imgInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setContents(
-      contents.map((item, idx) =>
-        index === idx
+      contents.map(item =>
+        item.itemId === itemNumber
           ? {
               ...item,
-              name: titleValue,
-              content: contentValue,
-              category: categoryValue,
+              itemId: itemNumber,
+              itemInfo: {
+                name: titleValue,
+                content: contentValue,
+                category: categoryValue,
+              },
+              itemImage: imageFile,
             }
           : item
       )
@@ -42,7 +43,7 @@ const CollectionForm = ({
   /**
    * [이미지 업로드]
    * setPreview : 미리보기 이미지 저장
-   * setImages : 전송할 배열에 이미지 담기
+   * setImageFile : 객체에 이미지 파일 저장
    */
   const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imageFile = e.target.files;
@@ -52,7 +53,11 @@ const CollectionForm = ({
       setPreview(url);
     }
 
-    imageFile && setImages([...images, imageFile[0]]);
+    imageFile && setImageFile(imageFile[0]);
+  };
+
+  const uploadBtnClickHandler = () => {
+    imgInput.current && imgInput.current.click();
   };
 
   return (
@@ -62,10 +67,24 @@ const CollectionForm = ({
           <div className="image_background">
             {preview ? <img src={preview} /> : <ImageIcon />}
           </div>
-          <input type="file" accept="image/*" onChange={uploadImage} />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={uploadImage}
+            ref={imgInput}
+            style={{ display: "none" }}
+          />
+          <button className="upload_btn" onClick={uploadBtnClickHandler}>
+            이미지 등록
+          </button>
         </S.Imagebox>
         <S.ContentBox>
-          <select
+          <SelectBox
+            usage={"카테고리"}
+            options={categoryOptions}
+            setOption={setCategoryValue}
+          />
+          {/* <select
             name="category"
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
               setCategoryValue(e.target.value)
@@ -76,7 +95,7 @@ const CollectionForm = ({
             <option value="하의">하의</option>
             <option value="아우터">아우터</option>
             <option value="기타">기타</option>
-          </select>
+          </select> */}
           <input
             type="text"
             placeholder="상품명을 입력해주세요."
