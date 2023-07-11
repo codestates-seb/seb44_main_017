@@ -39,7 +39,7 @@ const CollectionForm = ({ contents, setContents, itemNumber }: Props) => {
   /**
    * [이미지 업로드]
    * setPreview : 미리보기 이미지 저장
-   * setImageFile : Item 객체에 이미지 파일 저장
+   * setImageFile : 객체에 이미지 파일 저장
    */
   const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const imageFile = e.target.files;
