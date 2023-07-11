@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ImageIcon from "../../assets/icons/ImageIcon";
 import * as S from "./style";
 import { ContentsProps } from "../../pages/collectionPage/collectionPage";
@@ -16,6 +16,8 @@ const CollectionForm = ({ contents, setContents, itemNumber }: Props) => {
   const [contentValue, contentHandler, contentReset] = useInput("");
   const [categoryValue, setCategoryValue] = useState("");
   const [imageFile, setImageFile] = useState<File>();
+
+  const imgInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setContents(
@@ -52,6 +54,10 @@ const CollectionForm = ({ contents, setContents, itemNumber }: Props) => {
     imageFile && setImageFile(imageFile[0]);
   };
 
+  const uploadBtnClickHandler = () => {
+    imgInput.current && imgInput.current.click();
+  };
+
   return (
     <S.FormContainer>
       <S.ContentContainer>
@@ -59,7 +65,16 @@ const CollectionForm = ({ contents, setContents, itemNumber }: Props) => {
           <div className="image_background">
             {preview ? <img src={preview} /> : <ImageIcon />}
           </div>
-          <input type="file" accept="image/*" onChange={uploadImage} />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={uploadImage}
+            ref={imgInput}
+            style={{ display: "none" }}
+          />
+          <button className="upload_btn" onClick={uploadBtnClickHandler}>
+            이미지 등록
+          </button>
         </S.Imagebox>
         <S.ContentBox>
           <select

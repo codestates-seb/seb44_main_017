@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { LoginBtn } from "../../components/Header/styled";
 
 export const Section = styled.section`
   display: flex;
@@ -29,9 +30,72 @@ export const PageTitle = styled.div`
   }
 `;
 
-export const ContentsBox = styled.div`
+export const ContentsContainer = styled.article`
   display: flex;
   flex-direction: column;
   gap: 12px;
   margin: 36px 0;
+`;
+
+export const ContentBox = styled.div``;
+
+export const ContentHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+
+  & > .product_no {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-darkblue);
+  }
+`;
+
+export const DeleteBtn = styled(LoginBtn)`
+  margin: 0;
+  width: 75px;
+  height: 27px;
+  background-color: var(--color-lightred);
+
+  &:hover {
+    background-color: #e35757;
+  }
+`;
+
+export const AddFormBtn = styled(LoginBtn)`
+  margin: 0;
+  width: 150px;
+  height: 50px;
+  border-radius: 40px;
+
+  &:hover {
+    background-color: #355873;
+  }
+`;
+
+export const AddBtnBox = styled.div`
+  padding: 60px 0;
+`;
+
+export const SubmitBox = styled.div`
+  display: flex;
+  margin-bottom: 40px;
+  align-items: center;
+  width: 67%;
+  justify-content: end;
+  gap: 12px;
+
+  & > .total_product {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--color-darkblue);
+  }
+`;
+
+export const SubmitBtn = styled(LoginBtn)`
+  margin: 0;
+  &:hover {
+    background-color: #355873;
+  }
 `;

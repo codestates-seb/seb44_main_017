@@ -83,29 +83,29 @@ const CollectionPage = () => {
         <h1>수거 신청하기</h1>
         <h4>의류를 보내서 포인트도 얻고 친환경도 실천해보세요!</h4>
       </S.PageTitle>
-      <S.ContentsBox>
+      <S.ContentsContainer>
         {contents.map((item, index) => (
-          <div key={item.itemId}>
-            <div>
-              <div>상품 번호 : {index + 1}</div>
-              <button
+          <S.ContentBox key={item.itemId}>
+            <S.ContentHeader>
+              <div className="product_no">상품 번호 : {index + 1}</div>
+              <S.DeleteBtn
                 onClick={() => {
                   deleteHandler(item.itemId);
                 }}
               >
                 삭제
-              </button>
-            </div>
+              </S.DeleteBtn>
+            </S.ContentHeader>
             <CollectionForm
               contents={contents}
               setContents={setContents}
               itemNumber={item.itemId}
             />
-          </div>
+          </S.ContentBox>
         ))}
-      </S.ContentsBox>
-      <div>
-        <button
+      </S.ContentsContainer>
+      <S.AddBtnBox>
+        <S.AddFormBtn
           onClick={() => {
             setContents([
               ...contents,
@@ -119,12 +119,12 @@ const CollectionPage = () => {
           }}
         >
           상품 추가
-        </button>
-      </div>
-      <div>
-        <div>TOTAL : {contents.length}개의 상품</div>
-        <button onClick={() => submitHandler()}>보내기</button>
-      </div>
+        </S.AddFormBtn>
+      </S.AddBtnBox>
+      <S.SubmitBox>
+        <div className="total_product">TOTAL : {contents.length}개의 물품</div>
+        <S.SubmitBtn onClick={() => submitHandler()}>보내기</S.SubmitBtn>
+      </S.SubmitBox>
     </S.Section>
   );
 };
