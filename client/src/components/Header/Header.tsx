@@ -8,7 +8,7 @@ import { LoginBtn, NavBtn, SignupBtn } from "./styled";
 import { useState, useRef } from "react";
 
 const Header = () => {
-  const headerRef = useRef<HTMLDivElement | null>(null);
+  const headerRef = useRef<HTMLButtonElement | null>(null);
   const isLogin = false;
   const [isActive, setIsActive] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
@@ -46,10 +46,11 @@ const Header = () => {
           </>
         )}
       </S.NavBarContainer>
-      <S.DrawerContainer ref={headerRef}>
+      <S.DrawerContainer>
         <S.HamburgerButton
           className={isActive ? "active" : ""}
           onClick={handleClick}
+          ref={headerRef}
         >
           <span className="bar"></span>
           <span className="bar"></span>
@@ -57,6 +58,7 @@ const Header = () => {
         </S.HamburgerButton>
         <HamburgerDropdown
           isOpen={isActive}
+          setIsOpen={setIsActive}
           toggleMenu={handleClick}
           headerRef={headerRef}
         />

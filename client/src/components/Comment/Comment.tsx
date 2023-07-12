@@ -54,7 +54,7 @@ const Comment = () => {
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("commentValue = ", commentValue);
-    reset();
+    reset && reset();
   };
 
   return (
