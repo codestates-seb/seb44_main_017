@@ -8,7 +8,6 @@ import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.service.MemberService;
 import com.main.project.product.entity.Product;
-import com.main.project.product.entity.ProductLikeCount;
 import com.main.project.product.entity.Productdeny;
 import com.main.project.product.repository.ProductLikeCountRepository;
 import com.main.project.product.repository.ProductRepository;
@@ -35,10 +34,11 @@ public class ProductService {
     private final ProductdenyService productdenyService;
     private final AwsS3Service awsS3Service;
     private final ProductLikeCountService productLikeCountService;
+    private final ProductLikeCountRepository productLikeCountRepository;
 
     public ProductService(ProductRepository productRepository, MemberService memberService, ProductCommentRepository productCommentRepository
             , AdminService adminService, ProductdenyService productdenyService, AwsS3Service awsS3Service
-            , ProductLikeCountService productLikeCountService) {
+            , ProductLikeCountService productLikeCountService, ProductLikeCountRepository productLikeCountRepository) {
         this.productRepository = productRepository;
         this.memberService = memberService;
         this.productCommentRepository = productCommentRepository;
@@ -46,6 +46,7 @@ public class ProductService {
         this.productdenyService = productdenyService;
         this.awsS3Service = awsS3Service;
         this.productLikeCountService = productLikeCountService;
+        this.productLikeCountRepository = productLikeCountRepository;
     }
 
     public Page<Product> findProducts(int page, int size) {
@@ -61,12 +62,16 @@ public class ProductService {
         Admin findAdmin = adminService.findAdminById(adminId);
         product.setAdmin(findAdmin);
         productLikeCountService.createProductLikeCount(product);
+        product.setProductLikeCountVal(0);
+
         return productRepository.save(product);
     }
 
     public void createProducts(Product product) {
-        productRepository.save(product);
         productLikeCountService.createProductLikeCount(product);
+        product.setProductLikeCountVal(0);
+
+        productRepository.save(product);
     }
 
     public Product updateProduct(Long productId, Product product) {
@@ -165,6 +170,7 @@ public class ProductService {
         if(product.getLikedByMembers().contains(findMember)){
             product.removeLikeByMembers(findMember);
             findMember.removeLikedProducts(product);
+
             productLikeCountService.updateProductLikeCount(product, -1);
         }else{
             product.addLikeByMembers(findMember);
@@ -172,8 +178,13 @@ public class ProductService {
 
             productLikeCountService.updateProductLikeCount(product, +1);
         }
-        memberService.updateMember(findMember);
 
+        Integer productLikeCountVal = productLikeCountService
+                .findVerifiedProductLikeCount(product)
+                .getLikeCount();
+        product.setProductLikeCountVal(productLikeCountVal);
+
+        memberService.updateMember(findMember);
         return productRepository.save(product);
     }
 

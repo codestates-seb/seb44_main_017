@@ -13,4 +13,6 @@ public interface ProductLikeCountRepository extends JpaRepository<ProductLikeCou
     Optional<ProductLikeCount> findByProduct(Product product);
 
     Optional<ProductLikeCount> findByProductProductId(Long productId);
+
+    Integer getLikeCountByProductProductId(Long productId);
 }

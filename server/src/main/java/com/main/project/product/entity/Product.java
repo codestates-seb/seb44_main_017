@@ -4,14 +4,18 @@ import com.main.project.admin.entity.Admin;
 import com.main.project.helper.audit.Auditable;
 import com.main.project.notifyView.entity.NotifyView;
 import com.main.project.order.entity.Orderproduct;
+import com.main.project.product.repository.ProductLikeCountRepository;
 import com.main.project.productComment.ProductComment;
 import com.main.project.member.entity.Member;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Entity
 @Table(name = "Product")
 @Getter
@@ -53,7 +57,7 @@ public class Product extends Auditable {
 
     private Integer pointValue = 0;
 
-//    private Integer productLikeCount = 0;
+    private Integer productLikeCountVal = 0;
 
     @ManyToMany(mappedBy = "likedProducts")
     private List<Member> likedByMembers = new ArrayList<>();
@@ -75,9 +79,6 @@ public class Product extends Auditable {
         this.view++;
     }
 
-//    @OneToOne(mappedBy = "product")
-//    private ProductView productView;
-
     public void addLikeByMembers(Member member){
         if(!this.likedByMembers.contains(member))
             this.likedByMembers.add(member);
@@ -96,5 +97,4 @@ public class Product extends Auditable {
         return likedByMembers.stream()
                 .anyMatch(member -> member.getMemberId().equals(memberId));
     }
-
 }
