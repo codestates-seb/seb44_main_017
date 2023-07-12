@@ -5,6 +5,8 @@ import * as S from "./style";
 import EditButton from "../../assets/icons/EditButton";
 import DeleteButton from "../../assets/icons/DeleteButton";
 import elapsedTime from "../../utils/elapsedTime";
+import { useNavigate, useParams } from "react-router-dom";
+import { BASE_URL } from "@/constants/constants";
 
 interface CommentProps {
   commentId: string;
@@ -36,6 +38,8 @@ const Comment = () => {
   const [commentList, setCommentList] = useState<CommentProps[]>([
     initialValue,
   ]);
+  const navigate = useNavigate();
+  const { questionId } = useParams();
 
   useEffect(() => {
     axios
@@ -47,8 +51,17 @@ const Comment = () => {
     alert("수정 기능 구현 예정");
   };
 
-  const handleDeleteComment = () => {
-    alert("삭제 기능 구현 예정");
+  const handleDeleteComment = (commentId: string) => {
+    if (confirm("정말 삭제하시겠습니까?")) {
+      try {
+        axios.delete(
+          BASE_URL + `/questions/${questionId}/comments/${commentId}`
+        );
+        navigate(`/questions/${questionId}`);
+      } catch {
+        console.log("error!");
+      }
+    }
   };
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
@@ -74,7 +87,7 @@ const Comment = () => {
         ) : (
           commentList.map(e => (
             <S.CommentBox key={e.commentId}>
-              <div className="comment_info_box" key={e.commentId}>
+              <div className="comment_info_box">
                 <div className="comment_info">
                   <span>작성자 : {e.writer.name}</span>
                   <span>{elapsedTime(new Date(e.createAt))}</span>
@@ -85,7 +98,7 @@ const Comment = () => {
                 <button onClick={handleEditComment}>
                   <EditButton />
                 </button>
-                <button onClick={handleDeleteComment}>
+                <button onClick={() => handleDeleteComment(e.commentId)}>
                   <DeleteButton />
                 </button>
               </div>

@@ -62,3 +62,13 @@ export const BoardContainer = styled.table`
     }
   }
 `;
+
+export const ViewBox = styled.td`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & svg {
+    margin-right: 8px;
+  }
+`;

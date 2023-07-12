@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const HeaderContainer = styled.article`
+export const DetailContainer = styled.article`
   width: 100%;
 `;
 
@@ -20,7 +20,7 @@ export const HeaderBox = styled.div`
 
   & .detail_info {
     display: flex;
-    gap: 12px;
+    gap: 24px;
     align-self: flex-end;
     color: #727272;
   }
@@ -33,4 +33,16 @@ export const HeaderBox = styled.div`
   & .detail_view > svg {
     margin-right: 8px;
   }
+`;
+
+export const ContentBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  margin: 0 auto;
+  max-width: 1264px;
+  min-height: 512px;
+  padding: 16px 20px;
+  border-bottom: 2px solid var(--color-black);
 `;

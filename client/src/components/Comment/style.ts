@@ -7,7 +7,7 @@ export const Container = styled.article`
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 20px;
+  margin: 40px 0;
   min-width: 320px;
 `;
 
