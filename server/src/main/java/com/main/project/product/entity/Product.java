@@ -7,6 +7,7 @@ import com.main.project.order.entity.Orderproduct;
 import com.main.project.productComment.ProductComment;
 import com.main.project.member.entity.Member;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -37,23 +38,24 @@ public class Product extends Auditable {
     private String title;
 
     private String content;
-
-    private Integer price = 0;
+    @ColumnDefault("0")
+    private Integer price;
 
     private String category;
-
-    private Integer view = 0;
+    @ColumnDefault("0")
+    private Integer view;
 
 //    Todo: image deployment
     private String imageLink;
+    @ColumnDefault("false")
+    private Boolean issell;
+    @ColumnDefault("5")
+    private Integer conditionValue;
+    @ColumnDefault("0")
+    private Integer pointValue;
 
-    private Boolean issell = false;
-
-    private Integer conditionValue = 5;
-
-    private Integer pointValue = 0;
-
-    private Integer productLikeCountVal = 0;
+    @ColumnDefault("0")
+    private Integer productlike;
 
     @ManyToMany(mappedBy = "likedProducts")
     private List<Member> likedByMembers = new ArrayList<>();
