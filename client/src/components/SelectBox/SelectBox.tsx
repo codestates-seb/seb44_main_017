@@ -18,9 +18,13 @@ const SelectBox = ({ usage, options, setOption }: Props) => {
   const [isSelected, selectRef, selectHandler] = useDetectClose();
   const [viewValue, setViewValue] = useState(usage);
 
+  console.log("usage = ", usage);
+
   const handleSelectValue = (e: any) => {
     const current = e.target.getAttribute("value");
     setViewValue(current);
+
+    console.log("current = ", current);
 
     if (usage === "정렬") {
       switch (current) {
@@ -43,9 +47,9 @@ const SelectBox = ({ usage, options, setOption }: Props) => {
           setOption("pricedesc");
           break;
       }
+    } else {
+      setOption(current);
     }
-
-    setOption(current);
   };
 
   return (

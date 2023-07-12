@@ -4,7 +4,7 @@ import { BASE_URL } from "@/constants/constants";
 import { CommentTypes, WriterTypes } from "@/types/shared";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import View from "@/assets/icons/view.svg";
+import * as S from "./style";
 
 interface QnaProps {
   questionId: number;
@@ -23,6 +23,8 @@ const QnaListPage = () => {
   const [sortOption, setSortOption] = useState("newest");
   const [qnaList, setQnaList] = useState<QnaProps[]>([]);
 
+  console.log(sortOption);
+
   useEffect(() => {
     axios
       .get(BASE_URL + `/questions/board?page=1&size=10&sort=${sortOption}`, {
@@ -34,37 +36,49 @@ const QnaListPage = () => {
         },
       })
       .then(res => setQnaList(res.data.data));
-  });
+  }, [, sortOption]);
 
   return (
     <>
-      <div>
-        <SubTitleBar title={title} isButton={false} />
-        <button>질문하기</button>
-      </div>
-      <SelectBox usage={"정렬"} options={options} setOption={setSortOption} />
-      <table>
-        <thead>
-          <tr>
-            <td>No</td>
-            <td>제목</td>
-            <td>조회수</td>
-            <td>등록일</td>
-            <td>작성자</td>
-          </tr>
-        </thead>
-        <tbody>
-          {qnaList.map((item, index) => (
-            <tr>
-              <td>{index + 1}</td>
-              <td>{item.title}</td>
-              <td>{item.view}</td>
-              <td>{item.createAt.slice(0, 10)}</td>
-              <td>{item.writer.name}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <SubTitleBar
+        title={title}
+        isButton={true}
+        btnTitle={"질문하기"}
+        btnLink={"/questions"}
+      />
+      <S.Section>
+        <S.QnaContainer>
+          <S.SortBox>
+            <SelectBox
+              usage={"정렬"}
+              options={options}
+              setOption={setSortOption}
+            />
+          </S.SortBox>
+          <S.BoardContainer>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>제목</th>
+                <th>조회수</th>
+                <th>등록일</th>
+                <th>작성자</th>
+              </tr>
+            </thead>
+            <tbody>
+              {qnaList.map(item => (
+                <tr key={item.questionId}>
+                  <td>{item.questionId}</td>
+                  <td>{item.title}</td>
+                  <td>{item.view}</td>
+                  <td>{item.createAt.slice(0, 10)}</td>
+                  <td>{item.writer.name}</td>
+                </tr>
+              ))}
+            </tbody>
+          </S.BoardContainer>
+        </S.QnaContainer>
+      </S.Section>
     </>
   );
 };
