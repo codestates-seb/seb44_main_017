@@ -5,6 +5,7 @@ import { CommentTypes, WriterTypes } from "@/types/shared";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import * as S from "./style";
+import { Link } from "react-router-dom";
 
 interface QnaProps {
   questionId: number;
@@ -69,7 +70,11 @@ const QnaListPage = () => {
               {qnaList.map(item => (
                 <tr key={item.questionId}>
                   <td>{item.questionId}</td>
-                  <td>{item.title}</td>
+                  <td>
+                    <Link to={`/questions/${item.questionId}`}>
+                      {item.title}
+                    </Link>
+                  </td>
                   <td>{item.view}</td>
                   <td>{item.createAt.slice(0, 10)}</td>
                   <td>{item.writer.name}</td>

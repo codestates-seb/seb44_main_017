@@ -42,10 +42,22 @@ export const BoardContainer = styled.table`
     border-bottom: 2px solid var(--color-black);
     & tr {
       border-bottom: 1px solid #ddd;
-
       & td {
         padding: 16px 0;
         font-weight: 400;
+
+        & a {
+          color: var(--color-black);
+        }
+
+        & a:visited {
+          color: var(--color-black);
+        }
+
+        & a:hover {
+          color: var(--color-darkblue);
+          font-weight: 700;
+        }
       }
     }
   }
