@@ -3,3 +3,8 @@ export { default as shopping } from "./shopping.png";
 export { default as shopping_1 } from "./shopping(1).png";
 export { default as sendClothes } from "./sendClothes.png";
 export { default as mobileBannerImage } from "./mobileBannerImage.png";
+export { default as delivery } from "./delivery.png";
+export { default as inspect } from "./inspect.png";
+export { default as point } from "./point.png";
+export { default as clothesShop } from "./clothesShop.png";
+export { default as sellingPoint } from "./sellingPoint.png";
