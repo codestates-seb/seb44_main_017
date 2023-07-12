@@ -6,7 +6,7 @@ export const MainPageContainer = styled.main`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 40px 0px;
+  padding: 36px 0px;
   @media (max-width: 767px) {
     padding: 0px;
   }
