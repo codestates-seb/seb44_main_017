@@ -62,14 +62,14 @@ public class ProductService {
         Admin findAdmin = adminService.findAdminById(adminId);
         product.setAdmin(findAdmin);
         productLikeCountService.createProductLikeCount(product);
-        product.setProductLikeCountVal(0);
+        product.setProductlike(0);
 
         return productRepository.save(product);
     }
 
     public void createProducts(Product product) {
         productLikeCountService.createProductLikeCount(product);
-        product.setProductLikeCountVal(0);
+        product.setProductlike(0);
 
         productRepository.save(product);
     }
@@ -182,7 +182,7 @@ public class ProductService {
         Integer productLikeCountVal = productLikeCountService
                 .findVerifiedProductLikeCount(product)
                 .getLikeCount();
-        product.setProductLikeCountVal(productLikeCountVal);
+        product.setProductlike(productLikeCountVal);
 
         memberService.updateMember(findMember);
         return productRepository.save(product);
