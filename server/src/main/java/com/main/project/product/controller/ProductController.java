@@ -92,23 +92,11 @@ public class ProductController {
     // members can get products list
     @GetMapping
     public ResponseEntity getProducts(
-            @RequestHeader(value = "Refresh", required = false) String tokenstr,
+//            @RequestHeader(value = "Refresh", required = false) String tokenstr,
             @Positive @RequestParam int page,
             @Positive @RequestParam int size,
             @RequestParam(required = false, defaultValue = "") String sort,
             @RequestParam(required = false) Boolean issell){
-        Optional<RefreshToken> refreshToken = Optional.ofNullable(refreshTokenService.findtok(tokenstr));
-        RefreshToken RT = refreshToken.get();
-
-        // Todo : Can view products as admin, unregistered user
-        if(RT.getMemberId() != null){
-
-        }else if(RT.getAdminId() != null){
-
-        }else{
-//            throw new BusinessLogicException(ExceptionCode.REFRESH_NOT_FOUND);
-        }
-
 
         if (issell != null) {
             // when issell is not null...
@@ -136,8 +124,8 @@ public class ProductController {
     public ResponseEntity getProduct(@RequestHeader(value = "Refresh", required = false)
                                      String tokenstr,
                                      @PathVariable("product-id") @Positive Long productId){
-        Optional<RefreshToken> refreshToken = Optional.ofNullable(refreshTokenService.findRefreshToken(tokenstr));
-        RefreshToken RT = refreshToken.get();
+        Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshTokenOptional(tokenstr);
+//        RefreshToken RT = refreshToken.get();
 
         Product product = productService.findProduct(productId);
 
@@ -154,14 +142,18 @@ public class ProductController {
 
         ProductDto.ResponseWithComments response;
 
-        if (RT.getMemberId() != null) {
+
+        if(refreshToken.isEmpty()){
+            response = productMapper.productToProductResponseWithComment(product);
+        }
+        else if (refreshToken.get().getMemberId() != null) {
             Long memberId = refreshToken
                     .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
                     .getMemberId();
             product.addView();
             response = productMapper.productToProductResponseWithComment(product, memberId);
 
-        }else if(RT.getAdminId() != null){
+        }else if(refreshToken.get().getAdminId() != null){
             Long AdminId = refreshToken
                     .orElseThrow( () -> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND))
                     .getAdminId();

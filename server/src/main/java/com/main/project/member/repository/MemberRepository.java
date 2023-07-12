@@ -29,10 +29,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query(value = "select P.product_id,P.member_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from member m join product P ON m.member_id = P.member_id where P.issell=:issell and m.member_id=:ID order by P.price asc", nativeQuery = true)
     Page<queryget.product> findUserProductpriceasc(@Param(value = "ID") Long ID, @Param(value= "issell") boolean issell, Pageable pageable);
 
-    //@Query(value = "select P.product_id,(select count(*) from productlike where product_id = P.product_id) as likecount, P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from member m join product P ON m.member_id = P.member_id where P.issell = true and m.member_id=:ID order by likecount desc", nativeQuery = true)
-    //Page<MemberDto.product> findUserProductLike(@Param(value = "ID") Long ID, Pageable pageable);
-    @Query(value = "select P.product_id,P.member_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from member m join product P ON m.member_id = P.member_id where P.issell = true and m.member_id=:ID order by P.view desc", nativeQuery = true)
-    Page<queryget.product> findUserProductView(@Param(value = "ID") Long ID, Pageable pageable);
+    @Query(value = "select P.product_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from member m join product P ON m.member_id = P.member_id where P.issell=:issell and m.member_id=:ID order by productlike asc", nativeQuery = true)
+    Page<queryget.product> findUserProductLike(@Param(value = "ID") Long ID, @Param(value= "issell") boolean issell, Pageable pageable);
+    @Query(value = "select P.product_id,P.member_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from member m join product P ON m.member_id = P.member_id where P.issell=:issell and m.member_id=:ID order by P.view asc", nativeQuery = true)
+    Page<queryget.product> findUserProductView(@Param(value = "ID") Long ID, @Param(value= "issell") boolean issell, Pageable pageable);
 
     @Query(value = "select P.product_id,P.member_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from  product P left outer join productdeny d on(p.product_id = d.product_id) where P.price is null and d.product_id is null and p.member_id=:ID order by P.product_id desc", nativeQuery = true)
     Page<queryget.product> findUserProductwait(@Param(value = "ID") Long ID, Pageable pageable);

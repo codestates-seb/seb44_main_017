@@ -13,7 +13,7 @@ public interface queryget {
         String getimage_link();
         LocalDateTime getmodify_at();
         LocalDateTime getcreate_at();
-        Boolean getproductlike();
+        Integer getproductlike();
         Integer getprice();
         Integer getview();
         Integer getcondition_value();

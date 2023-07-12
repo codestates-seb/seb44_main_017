@@ -36,7 +36,7 @@ public interface OrderproductRepository extends JpaRepository<Orderproduct, Long
     @Query(value = "select P.product_id,P.member_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from product p natural join orderproduct o where p.product_id = o.product_id and p.member_id=:ID and issell=:issell order by create_at asc",nativeQuery = true)
     Page<queryget.product> getorderproductold(@Param("ID") Long ID, @Param(value= "issell") boolean issell, Pageable pageable);
 
-    @Query(value = "select P.product_id,P.member_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from product p natural join orderproduct o where p.product_id = o.product_id and p.member_id=:ID and issell=:issell order by view desc",nativeQuery = true)
+    @Query(value = "select P.product_id,P.member_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from product p natural join orderproduct o where p.product_id = o.product_id and p.member_id=:ID and issell=:issell order by view asc",nativeQuery = true)
     Page<queryget.product> getorderproductview(@Param("ID") Long ID, @Param(value= "issell") boolean issell, Pageable pageable);
 
     @Query(value = "select P.product_id,P.member_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from product p natural join orderproduct o where p.product_id = o.product_id and p.member_id=:ID and issell=:issell order by price desc",nativeQuery = true)
@@ -47,4 +47,7 @@ public interface OrderproductRepository extends JpaRepository<Orderproduct, Long
 
     @Query(value = "select P.product_id,P.member_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from product p natural join orderproduct o where p.product_id = o.product_id and p.member_id=:ID and issell=:issell order by create_at desc",nativeQuery = true)
     Page<queryget.product> getorderproductnew(@Param("ID") Long ID, @Param(value= "issell") boolean issell, Pageable pageable);
+
+    @Query(value = "select P.product_id,P.member_id,P.category,P.name,P.title,P.content,P.image_link,P.modify_at,P.create_at,P.price,P.productlike,P.view,P.condition_value from product p natural join orderproduct o where p.product_id = o.product_id and p.member_id=:ID and issell=:issell order by productlike asc",nativeQuery = true)
+    Page<queryget.product> getorderproductlike(@Param("ID") Long ID, @Param(value= "issell") boolean issell, Pageable pageable);
 }
