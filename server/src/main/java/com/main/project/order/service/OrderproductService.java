@@ -60,7 +60,7 @@ public class OrderproductService {
         if(keyword.equals("oldest")){
             return orderproductRepository.getorderproductold(memberId, issell, PageRequest.of(page, size));
         } else if(keyword.equals("mostlike")){
-
+            return orderproductRepository.getorderproductlike(memberId, issell, PageRequest.of(page, size));
         } else if(keyword.equals("mostview")){
             return orderproductRepository.getorderproductview(memberId, issell, PageRequest.of(page, size));
         } else if(keyword.equals("pricedesc")){

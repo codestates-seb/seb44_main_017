@@ -6,6 +6,7 @@ import com.main.project.notifyView.entity.NotifyView;
 import com.main.project.productComment.ProductComment;
 import com.main.project.member.entity.Member;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -52,6 +53,9 @@ public class Product extends Auditable {
 
     private Integer pointValue = 0;
 
+    @ColumnDefault("0")
+    private Integer productlike;
+
     @ManyToMany(mappedBy = "likedProducts")
     private List<Member> likedByMembers = new ArrayList<>();
 
@@ -82,6 +86,14 @@ public class Product extends Auditable {
     public boolean isLikedByMember(Long memberId) {
         return likedByMembers.stream()
                 .anyMatch(member -> member.getMemberId().equals(memberId));
+    }
+
+    public void likeup(){
+        this.setProductlike(this.getProductlike() + 1);
+    }
+
+    public void likedown(){
+        this.setProductlike(this.getProductlike() - 1);
     }
 
 }
