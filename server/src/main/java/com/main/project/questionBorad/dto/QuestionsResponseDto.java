@@ -1,7 +1,6 @@
 package com.main.project.questionBorad.dto;
 
 
-import com.main.project.notifyBoard.dto.NotifiesResponseDto;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.domain.Page;

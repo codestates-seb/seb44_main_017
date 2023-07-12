@@ -72,7 +72,7 @@ public class QuestionService {
             if(refreshTokenService.MemberBool(refreshToken)== true) {
                 // 조회 여부 확인 false일 시 조회수 증가
                 if (questionViewService.isViewId(refreshToken,questionId) == false) {
-                    question.setView();
+                    question.setView(); // 저장
                     questionViewService.createView(question, refreshToken);
                 }
             }
