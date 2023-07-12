@@ -1,5 +1,6 @@
 import axios from "axios";
 import NotifyItem from "@/components/Item_notify/NotifyItem";
+import CustomPagination from "@/components/Pagination/CustomPagination";
 import { useEffect, useState } from "react";
 
 type ItemType = {
@@ -12,28 +13,47 @@ type ItemType = {
   modifyAt: string;
 };
 
-const NoticePage = () => {
-  const [notifyList, setNotifyList] = useState([]);
+// interface DataProps {
+//   name: string;
+// }
 
+const NoticePage = () => {
+  const [data, setData] = useState<ItemType[]>([]);
+  const [page, setPage] = useState<any>(1);
+  const [sort, setSort] = useState("newest");
+
+  //* 실제 페이지 변경될 때 실행되는 데이터 받아오기 함수
+  const getUser = async () => {
+    console.log("함수 실행");
+    try {
+      getUser;
+      //* 보통 백엔드 api가 아래처럼 ?page={4} 이런식으로 만드는 게 정석
+      const { data, status } = await axios.get(
+        `http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/notify/board?page=${page}&size=2&sort=${sort}`
+      );
+
+      //* 데이터가 있을 때만 setData에다가 담아주기
+      if (data && status === 200) {
+        console.log(data);
+        setData(data.data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  //* useEffect를 통해 page가 변경 될 떄마다 getUser 함수 실행
   useEffect(() => {
     getUser();
-  }, []);
 
-  async function getUser() {
-    try {
-      const response = await axios.get(
-        `http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/notify/board?page=1&size=10&sort=newest`
-      );
-      console.log(response.data.data);
-      setNotifyList(response.data.data);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+    //* page가 변경될 떄 마다 실행
+  }, [page]);
+
+  console.log(page);
 
   return (
     <div>
-      {notifyList.map((e: ItemType) => (
+      {data.map((e: ItemType) => (
         <NotifyItem
           key={e.boardId}
           title={e.title}
@@ -43,6 +63,8 @@ const NoticePage = () => {
           viewCount={e.view}
         />
       ))}
+      <CustomPagination pageCount={5} page={page} setPage={setPage} />
+      {/* pageCount={totalPage} <- 처럼 구현해야 함 */}
     </div>
   );
 };
