@@ -7,6 +7,7 @@ import { ProductListPage } from "./pages/productListPage/productListPage";
 import CollectionPage from "./pages/collectionPage/collectionPage";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import QnaListPage from "./pages/qnaListPage/qnaListPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route element={<ProductInfoPage />} path="/productinfo" />
           <Route element={<ProductListPage />} path="/productlist" />
           <Route element={<CollectionPage />} path="/collection" />
+          <Route element={<QnaListPage />} path="/qnalist" />
         </Routes>
       </div>
       <Footer />

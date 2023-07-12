@@ -11,18 +11,27 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import Backdrop from "./Backdrop";
-
-// TODO: 햄버거 메뉴를 클릭한 상태로 width가 1024px을 넘어가도 백드롭과 사이드바가 유지되는 문제
+import LoginModal from "../Modal_login/LoginModal";
+import SignupModal from "../Modal_signup/SignupModal";
 
 interface Props {
   isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   toggleMenu: () => void;
-  headerRef: React.MutableRefObject<HTMLDivElement | null>;
+  headerRef: React.MutableRefObject<HTMLDivElement | HTMLButtonElement | null>;
 }
 
-const HamburgerDropdown = ({ isOpen, toggleMenu, headerRef }: Props) => {
+const HamburgerDropdown = ({
+  isOpen,
+  setIsOpen,
+  toggleMenu,
+  headerRef,
+}: Props) => {
   const portalElement = document.getElementById("modal") as HTMLElement;
   const navigate = useNavigate();
+
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [signupModallOpen, setSignupModalOpen] = useState(false);
 
   const barRef = useRef<HTMLDivElement | null>(null);
 
@@ -49,15 +58,31 @@ const HamburgerDropdown = ({ isOpen, toggleMenu, headerRef }: Props) => {
       {createPortal(
         <>
           {isOpen && <Backdrop />}
+          {loginModalOpen && (
+            <LoginModal closeModal={() => setLoginModalOpen(false)} />
+          )}
+          {signupModallOpen && (
+            <SignupModal closeModal={() => setSignupModalOpen(false)} />
+          )}
           <S.SideBar isOpen={isOpen} ref={barRef}>
             <S.Profile>
               {!isLogin ? (
                 <>
                   <div className="auth_btn">
-                    <H.LoginBtn onClick={() => setIsLogin(true)}>
+                    <H.LoginBtn
+                      onClick={() => {
+                        setLoginModalOpen(true);
+                        setIsOpen(false);
+                      }}
+                    >
                       LOGIN
                     </H.LoginBtn>
-                    <H.SignupBtn onClick={() => navigate("/signup")}>
+                    <H.SignupBtn
+                      onClick={() => {
+                        setSignupModalOpen(true);
+                        setIsOpen(false);
+                      }}
+                    >
                       SIGN UP
                     </H.SignupBtn>
                   </div>
@@ -74,17 +99,17 @@ const HamburgerDropdown = ({ isOpen, toggleMenu, headerRef }: Props) => {
               <>
                 <S.MenuBox>
                   <S.Menu>
-                    <li onClick={() => navigate("#")}>
+                    <li onClick={() => navigate("/products")}>
                       <img src={product} title="상품 보기" />
                       <h3 className="nav_text">상품 보기</h3>
                       <div className="nav_description">상품 보기</div>
                     </li>
-                    <li onClick={() => navigate("#")}>
+                    <li onClick={() => navigate("/collection")}>
                       <img src={clothes} title="수거 요청" />
                       <h3 className="nav_text">수거 요청</h3>
                       <div className="nav_description">수거 요청</div>
                     </li>
-                    <li onClick={() => navigate("#")}>
+                    <li onClick={() => navigate("/notice")}>
                       <img src={notice} title="공지사항" />
                       <h3 className="nav_text">공지사항</h3>
                       <div className="nav_description">공지사항</div>
