@@ -7,23 +7,13 @@ import DeleteButton from "../../assets/icons/DeleteButton";
 import elapsedTime from "../../utils/elapsedTime";
 import { useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
-
-interface CommentProps {
-  commentId: string;
-  content: string;
-  createAt: string;
-  modifyAt: string;
-  writer: {
-    memberId: string;
-    name: string;
-  };
-}
+import { CommentTypes } from "@/types/shared";
 
 // TODO: 수정, 삭제 기능 구현
 // TODO: API 연동하기
 
 const Comment = () => {
-  const initialValue: CommentProps = {
+  const initialValue: CommentTypes = {
     commentId: "",
     content: "",
     createAt: "",
@@ -35,7 +25,7 @@ const Comment = () => {
   };
 
   const [commentValue, changeHandler, reset] = useInput("");
-  const [commentList, setCommentList] = useState<CommentProps[]>([
+  const [commentList, setCommentList] = useState<CommentTypes[]>([
     initialValue,
   ]);
   const navigate = useNavigate();
@@ -51,7 +41,7 @@ const Comment = () => {
     alert("수정 기능 구현 예정");
   };
 
-  const handleDeleteComment = (commentId: string) => {
+  const handleDeleteComment = (commentId: string | number) => {
     if (confirm("정말 삭제하시겠습니까?")) {
       try {
         axios.delete(

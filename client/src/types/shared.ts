@@ -1,5 +1,5 @@
 export interface CommentTypes {
-  commentId: number;
+  commentId: number | string;
   content: string;
   createAt: string;
   modifyAt: string;
@@ -7,6 +7,17 @@ export interface CommentTypes {
 }
 
 export interface WriterTypes {
-  memberId: number;
+  memberId: number | string;
   name: string;
+}
+
+export interface QnaTypes {
+  questionId: number;
+  title: string;
+  content: string;
+  createAt: string;
+  modifyAt: string;
+  view: number;
+  writer: WriterTypes;
+  comments: CommentTypes[];
 }
