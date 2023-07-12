@@ -18,6 +18,8 @@ public interface queryget {
         Integer getview();
         Integer getcondition_value();
     }
+
+
     public interface findbypid{
         Long getproduct_id();
     }
