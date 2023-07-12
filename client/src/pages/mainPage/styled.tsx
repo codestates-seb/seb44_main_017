@@ -176,12 +176,3 @@ export const MobileBannerImage = styled.img<{ src: string }>`
     height: 50vw;
   }
 `;
-// flow 설명
-export const FlowConatiner = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--color-gray100);
-  width: 100%;
-  height: 20vh;
-`

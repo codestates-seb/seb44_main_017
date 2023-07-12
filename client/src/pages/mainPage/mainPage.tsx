@@ -3,6 +3,9 @@ import BannerContainerPc from "./bannerContainerPc";
 import BannerContainerMobile from "./bannerContainerMobile";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import FlowCard from "@/components/FlowCard/FlowCard";
+import FadeIn from "@/components/FadeIn/FadeIn";
+
 export const MainPage = () => {
   const [clothesList, setClothesList] = useState([]);
   useEffect(() => {
@@ -24,7 +27,7 @@ export const MainPage = () => {
         style={{
           display: "flex",
           flexDirection: "column",
-          height: "90vh",
+          height: "100vh",
           width: "100%",
         }}
       >
@@ -32,7 +35,7 @@ export const MainPage = () => {
         <BannerContainerMobile />
         <div>의류 리스트</div>
       </div>
-      <S.FlowConatiner>flow 소개</S.FlowConatiner>
+      <FlowCard />
       <div>협력업체 소개</div>
     </S.MainPageContainer>
   );
