@@ -105,9 +105,9 @@ public class MemberService {
         if(keyword.equals("oldest")){
             return memberRepository.findUserProductOld(memberId, issell, PageRequest.of(page, size));
         } else if(keyword.equals("mostlike")){
-            //return memberRepository.findUserProductLike(memberId, issell, PageRequest.of(page, size));
+            return memberRepository.findUserProductLike(memberId, issell, PageRequest.of(page, size));
         } else if(keyword.equals("mostview")){
-            return memberRepository.findUserProductView(memberId, PageRequest.of(page, size));
+            return memberRepository.findUserProductView(memberId, issell, PageRequest.of(page, size));
         } else if(keyword.equals("pricedesc")){
             return memberRepository.findUserProductpricedesc(memberId, issell, PageRequest.of(page, size));
         } else if(keyword.equals("priceasc")){

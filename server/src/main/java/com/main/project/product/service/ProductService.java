@@ -156,9 +156,11 @@ public class ProductService {
         Member findMember = memberService.findVerifiedMember(memberId);
 
         if(product.getLikedByMembers().contains(findMember)){
+            product.likedown();
             product.removeLikeByMembers(findMember);
             findMember.removeLikedProducts(product);
         }else{
+            product.likeup();
             product.addLikeByMembers(findMember);
             findMember.addLikedProducts(product);
         }

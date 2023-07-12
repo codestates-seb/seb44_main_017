@@ -55,9 +55,9 @@ public class AdminService {
         if(keyword.equals("oldest")){
             return adminRepository.findAdminProductOld(memberId, issell, PageRequest.of(page, size));
         } else if(keyword.equals("mostlike")){
-            //return adminRepository.findAdminProductLike(memberId, issell, PageRequest.of(page, size));
+            return adminRepository.findAdminProductLike(memberId, issell, PageRequest.of(page, size));
         } else if(keyword.equals("mostview")){
-            return adminRepository.findAdminProductView(memberId, PageRequest.of(page, size));
+            return adminRepository.findAdminProductView(memberId, issell, PageRequest.of(page, size));
         } else if(keyword.equals("pricedesc")){
             return adminRepository.findAdminProductpricedesc(memberId, issell, PageRequest.of(page, size));
         } else if(keyword.equals("priceasc")){
