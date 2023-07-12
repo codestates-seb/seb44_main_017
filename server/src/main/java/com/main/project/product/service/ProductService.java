@@ -85,6 +85,7 @@ public class ProductService {
         Optional.ofNullable(product.getCategory()).ifPresent(findProduct::setCategory);
         Optional.ofNullable(product.getIssell()).ifPresent(findProduct::setIssell);
         Optional.ofNullable(product.getPointValue()).ifPresent(findProduct::setPointValue);
+        Optional.ofNullable(product.getView()).ifPresent(findProduct::setView);
 
         return productRepository.save(findProduct);
     }
