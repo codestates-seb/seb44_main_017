@@ -12,16 +12,13 @@ export const SelectBox = styled.div`
     rgba(247, 247, 247, 0.7) 0%,
     rgba(247, 247, 247, 0.7) 100%
   );
-  /* margin: 0 10px 12px 0; */
   backdrop-filter: blur(5px);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   display: flex;
   align-items: center;
   font-size: var(--font-size-12);
   font-weight: 700;
-  /* left: 10px;
-  top: 10px; */
 
   & svg {
     position: absolute;
