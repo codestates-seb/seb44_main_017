@@ -35,9 +35,6 @@ const HamburgerDropdown = ({
 
   const barRef = useRef<HTMLDivElement | null>(null);
 
-  console.log("barRef = ", barRef);
-  console.log("headerRef = ", headerRef);
-
   const handleClickOutside = (e: React.BaseSyntheticEvent | MouseEvent) => {
     if (
       !headerRef.current?.contains(e.target) &&
