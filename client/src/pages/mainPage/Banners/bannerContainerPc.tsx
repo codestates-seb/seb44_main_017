@@ -1,11 +1,11 @@
-import * as S from "./styled";
-import FadeIn from "../../components/FadeIn/FadeIn";
+import * as S from "./styled"
+import FadeIn from "@/components/FadeIn/FadeIn";
 import {
   analzy,
   shopping,
   shopping_1,
   sendClothes,
-} from "../../assets";
+} from "../../../assets"
 
 const BannerContainerPc = () => {
   return (

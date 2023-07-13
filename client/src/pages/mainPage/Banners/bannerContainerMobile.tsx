@@ -1,5 +1,5 @@
 import * as S from "./styled";
-import { mobileBannerImage } from "../../assets";
+import { mobileBannerImage } from "../../../assets"
 
 const BannerContainerMobile = () => {
   return (
