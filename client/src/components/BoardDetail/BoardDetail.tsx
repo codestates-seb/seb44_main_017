@@ -1,5 +1,6 @@
 import ViewCount from "@/assets/icons/ViewCount";
 import * as S from "./style";
+import { useNavigate } from "react-router-dom";
 
 interface BoardDetailTypes {
   title: string | undefined;
@@ -16,6 +17,8 @@ const BoardDetail = ({
   createdAt,
   content,
 }: BoardDetailTypes) => {
+  const navigate = useNavigate();
+
   return (
     <S.DetailContainer>
       <S.HeaderBox>
@@ -31,6 +34,9 @@ const BoardDetail = ({
       </S.HeaderBox>
       <S.ContentBox>
         <div>{content}</div>
+        <button className="back_btn" onClick={() => navigate(-1)}>
+          목록으로
+        </button>
       </S.ContentBox>
     </S.DetailContainer>
   );

@@ -45,4 +45,24 @@ export const ContentBox = styled.div`
   min-height: 512px;
   padding: 16px 20px;
   border-bottom: 2px solid var(--color-black);
+  position: relative;
+
+  & .back_btn {
+    position: absolute;
+    bottom: -10%;
+    right: 50%;
+    border-radius: 16px;
+    width: 96px;
+    height: 32px;
+    font-weight: var(--font-weight-700);
+    font-size: var(--font-size-12);
+    border: 2px solid var(--color-darkblue);
+    background-color: var(--color-white);
+    color: var(--color-darkblue);
+
+    &:hover {
+      background-color: var(--color-darkblue);
+      color: var(--color-white);
+    }
+  }
 `;

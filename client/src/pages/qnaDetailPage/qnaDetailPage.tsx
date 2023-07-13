@@ -35,7 +35,9 @@ const QnaDetailPage = () => {
         createdAt={qnaData?.createAt.slice(0, 10)}
         content={qnaData?.content}
       />
-      <Comment />
+      <div>
+        <Comment />
+      </div>
     </>
   );
 };
