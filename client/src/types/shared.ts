@@ -3,11 +3,11 @@ export interface CommentTypes {
   content: string;
   createAt: string;
   modifyAt: string;
-  writer: WriterTypes;
+  admin: WriterTypes;
 }
 
 export interface WriterTypes {
-  memberId: number | string;
+  adminId: number | string;
   name: string;
 }
 
@@ -19,5 +19,5 @@ export interface QnaTypes {
   modifyAt: string;
   view: number;
   writer: WriterTypes;
-  comments: CommentTypes[];
+  qcomments: CommentTypes[];
 }

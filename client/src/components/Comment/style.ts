@@ -78,13 +78,14 @@ export const CommentBox = styled.div`
   width: 100%;
 
   & .comment_info {
-    font-size: 12px;
+    font-size: 14px;
     display: flex;
     gap: 20px;
     line-height: 10px;
 
     @media (max-width: 767px) {
       flex-direction: column;
+      font-size: var(--font-size-12);
     }
   }
 

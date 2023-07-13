@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import useInput from "../../hooks/useInput";
 import axios from "axios";
 import * as S from "./style";
@@ -12,30 +11,10 @@ import { CommentTypes } from "@/types/shared";
 // TODO: 수정, 삭제 기능 구현
 // TODO: API 연동하기
 
-const Comment = () => {
-  const initialValue: CommentTypes = {
-    commentId: "",
-    content: "",
-    createAt: "",
-    modifyAt: "",
-    writer: {
-      memberId: "",
-      name: "",
-    },
-  };
-
+const Comment = ({ comments }: CommentTypes[] | any) => {
   const [commentValue, changeHandler, reset] = useInput("");
-  const [commentList, setCommentList] = useState<CommentTypes[]>([
-    initialValue,
-  ]);
   const navigate = useNavigate();
   const { questionId } = useParams();
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:5173/src/moks/comment.json")
-      .then(res => setCommentList(res.data));
-  }, []);
 
   const handleEditComment = () => {
     alert("수정 기능 구현 예정");
@@ -72,14 +51,14 @@ const Comment = () => {
         <button>댓글 쓰기</button>
       </S.InputLayout>
       <S.CommentsLayout>
-        {commentList.length === 1 && commentList[0].commentId === "" ? (
+        {comments.length === 1 && comments[0].commentId === "" ? (
           <div className="none_comment">작성된 댓글이 없습니다.</div>
         ) : (
-          commentList.map(e => (
+          comments.map((e: CommentTypes) => (
             <S.CommentBox key={e.commentId}>
               <div className="comment_info_box">
                 <div className="comment_info">
-                  <span>작성자 : {e.writer.name}</span>
+                  <span>작성자 : {e.admin.name}</span>
                   <span>{elapsedTime(new Date(e.createAt))}</span>
                 </div>
                 <div className="comment_content">{e.content}</div>
