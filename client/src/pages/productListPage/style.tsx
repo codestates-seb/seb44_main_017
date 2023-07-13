@@ -58,9 +58,10 @@ export const ProductsCarousel = styled.div`
   overflow: hidden;
   width: 60vw;
 `;
-export const Product = styled.div`
+export const Product = styled.div<{ transrate: number }>`
   display: flex;
   background-color: white;
+  transform: translateX(-${(props) => props.transrate}px);
 `;
 export const ArrowLeftIcon = styled.img`
   color: var(--color-darkblue);

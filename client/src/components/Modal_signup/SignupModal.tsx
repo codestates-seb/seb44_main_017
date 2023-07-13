@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import * as S from "./style";
 import { Logo } from "../../assets/logoSimple";
+import { BASE_URL } from "@/constants/constants";
 
 interface Props {
   closeModal: any;
@@ -60,10 +61,7 @@ const SignupModal = ({ closeModal }: Props) => {
       try {
         const data = { email, name, password, phone };
 
-        const response = await axios.post(
-          "https://faf9-221-148-162-66.ngrok-free.app/members",
-          data
-        );
+        const response = await axios.post(`${BASE_URL}/members`, data);
         if (response.status === 201) {
           alert("회원가입을 축하합니다!");
         }
@@ -82,10 +80,7 @@ const SignupModal = ({ closeModal }: Props) => {
       try {
         const data = { email, name, password, phone };
 
-        const response = await axios.post(
-          "https://faf9-221-148-162-66.ngrok-free.app/admin",
-          data
-        );
+        const response = await axios.post(`${BASE_URL}/admin`, data);
         if (response.status === 201) {
           alert("회원가입을 축하합니다!");
         }

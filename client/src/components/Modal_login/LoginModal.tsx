@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
 import * as S from "./style";
 import { Logo } from "../../assets/logoSimple";
 import axios from "axios";
+import { BASE_URL } from "@/constants/constants";
 
 interface Props {
   closeModal: any;
@@ -51,10 +51,7 @@ const LoginModal = ({ closeModal }: Props) => {
       try {
         const data = { username: userName, password };
 
-        const response: any = await axios.post(
-          "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/user/login",
-          data
-        );
+        const response: any = await axios.post(`${BASE_URL}/user/login`, data);
         if (response.status === 200) {
           navigate("/");
           closeModal(false);
@@ -71,10 +68,7 @@ const LoginModal = ({ closeModal }: Props) => {
     } else if (!userNameError && !passwordError && isAdmin) {
       try {
         const data = { email: userName, password };
-        const response: any = await axios.post(
-          "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/admin/login",
-          data
-        );
+        const response: any = await axios.post(`${BASE_URL}/admin/login`, data);
         if (response.status === 200) {
           navigate("/");
           closeModal(false);

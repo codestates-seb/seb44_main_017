@@ -21,6 +21,7 @@ export const ProductListPage = () => {
   const [data, setData] = useState<Data[]>([]);
   const [isLike, setIsLike] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const [test, setTest] = useState<number>(0);
 
   const handleBtn = () => {
     setBtnActive(!btnActive);
@@ -52,6 +53,7 @@ export const ProductListPage = () => {
         }
       );
       setData(response.data.data);
+      console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -60,6 +62,7 @@ export const ProductListPage = () => {
   useEffect(() => {
     getProducts();
   }, []);
+
   const a = 600;
   const handlePrev = () => {
     if (ref.current) {
@@ -68,12 +71,17 @@ export const ProductListPage = () => {
     }
   };
   const handleNext = () => {
-    if (ref.current) {
-      ref.current.style.transform = `translateX(-${a}px)`;
-      console.log(ref.current);
+    // if (ref.current) {
+    //   ref.current.style.transform = `translateX(-${a}px)`;
+    //   console.log(ref.current);
+    // }
+    // console.log(ref.current);
+    if (test < 1500) {
+      setTest(test + 200);
     }
-    console.log(ref.current);
   };
+  // 버튼 컴포넌트 > map
+  // 카테고리 state > filter (클릭 된 버튼 === 같다면)
 
   return (
     <main>
@@ -87,7 +95,7 @@ export const ProductListPage = () => {
           <S.ArrowLeftIcon src={arrowLeftIcon} onClick={handlePrev} />
           <S.ProductsCarousel>
             {data.map((data) => (
-              <S.Product ref={ref}>
+              <S.Product ref={ref} transrate={test}>
                 <ProductItem
                   url={`https://s3.ap-northeast-2.amazonaws.com/mainproject.bucket/${data.image_link}`}
                   isSell={false}
@@ -119,7 +127,7 @@ export const ProductListPage = () => {
         </S.CategoryButton>
       </S.CategoryBar>
       <S.SelectBar>
-        <SelectBox options={sortOptions} setOption={setValue} />
+        <SelectBox usage={""} options={sortOptions} setOption={setValue} />
       </S.SelectBar>
       <S.ProductsContainer>
         {data.map((data) => (
