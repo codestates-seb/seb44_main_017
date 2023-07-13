@@ -9,7 +9,6 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import QnaListPage from "./pages/qnaListPage/qnaListPage";
 import QnaDetailPage from "./pages/qnaDetailPage/qnaDetailPage";
-import ScrollTop from "./utils/scrollTop";
 
 function App() {
   return (
@@ -17,7 +16,6 @@ function App() {
       <div
         style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
       >
-        <ScrollTop />
         <Header />
         <Routes>
           <Route element={<MainPage />} path="/" />
