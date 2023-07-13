@@ -37,7 +37,7 @@ public class QCommentDto {
         private LocalDateTime createAt;
         private LocalDateTime modifyAt;
 
-        private AdminDto.NotifyResponse admin;
+        private AdminDto.NotifyResponse writer;
     }
 
 }
