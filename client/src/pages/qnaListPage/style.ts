@@ -42,11 +42,40 @@ export const BoardContainer = styled.table`
     border-bottom: 2px solid var(--color-black);
     & tr {
       border-bottom: 1px solid #ddd;
-
       & td {
-        padding: 16px 0;
+        padding: 16px 10px;
         font-weight: 400;
+
+        & a {
+          color: var(--color-black);
+        }
+
+        & a:visited {
+          color: var(--color-black);
+        }
+
+        & a:hover {
+          color: var(--color-darkblue);
+          font-weight: 700;
+        }
       }
     }
   }
+`;
+
+export const ViewBox = styled.td`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & svg {
+    margin-right: 8px;
+  }
+`;
+
+export const PagenationBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 36px 0;
 `;

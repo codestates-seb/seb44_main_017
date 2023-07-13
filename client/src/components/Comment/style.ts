@@ -7,14 +7,18 @@ export const Container = styled.article`
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 20px;
+  margin: 40px 0;
   min-width: 320px;
 `;
 
 export const InputLayout = styled.form`
   display: flex;
   border: 1px solid var(--color-lightivory);
-  width: 65%;
+  width: 100%;
+  max-width: 1264px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
   padding: 24px;
   background-color: #fff;
   color: var(--color-black);
@@ -51,7 +55,11 @@ export const InputLayout = styled.form`
 
 export const CommentsLayout = styled.div`
   display: flex;
-  width: 65%;
+  width: 100%;
+  max-width: 1264px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
   flex-direction: column;
   border: 1px solid var(--color-lightivory);
   padding: 24px;
@@ -67,6 +75,7 @@ export const CommentBox = styled.div`
   display: flex;
   border-bottom: 1px solid var(--color-lightivory);
   justify-content: space-between;
+  width: 100%;
 
   & .comment_info {
     font-size: 12px;

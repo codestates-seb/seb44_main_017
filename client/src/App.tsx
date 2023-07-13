@@ -8,6 +8,8 @@ import CollectionPage from "./pages/collectionPage/collectionPage";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import QnaListPage from "./pages/qnaListPage/qnaListPage";
+import QnaDetailPage from "./pages/qnaDetailPage/qnaDetailPage";
+import ScrollTop from "./utils/scrollTop";
 
 function App() {
   return (
@@ -15,6 +17,7 @@ function App() {
       <div
         style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
       >
+        <ScrollTop />
         <Header />
         <Routes>
           <Route element={<MainPage />} path="/" />
@@ -22,7 +25,8 @@ function App() {
           <Route element={<ProductInfoPage />} path="/productinfo" />
           <Route element={<ProductListPage />} path="/productlist" />
           <Route element={<CollectionPage />} path="/collection" />
-          <Route element={<QnaListPage />} path="/qnalist" />
+          <Route element={<QnaListPage />} path="/questions" />
+          <Route element={<QnaDetailPage />} path="/questions/:questionId" />
         </Routes>
       </div>
       <Footer />
