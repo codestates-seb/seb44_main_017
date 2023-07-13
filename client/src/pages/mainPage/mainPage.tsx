@@ -1,10 +1,10 @@
-import * as S from "./styled";
-import BannerContainerPc from "./bannerContainerPc";
-import BannerContainerMobile from "./bannerContainerMobile";
-import { useEffect, useState } from "react";
 import axios from "axios";
-import FlowCard from "@/components/FlowCard/FlowCard";
-import FadeIn from "@/components/FadeIn/FadeIn";
+import { useEffect, useState } from "react";
+import FlowDescription from "@/pages/mainPage/FlowDescription/FlowDescription";
+import styled from "styled-components";
+import BannerContainerPc from "./Banners/bannerContainerPc";
+import BannerContainerMobile from "./Banners/bannerContainerMobile";
+import AffiliatedCompanies from "./AffiliatedCompanies/AffiliatedCompanies";
 
 export const MainPage = () => {
   const [clothesList, setClothesList] = useState([]);
@@ -22,21 +22,32 @@ export const MainPage = () => {
     })();
   }, []);
   return (
-    <S.MainPageContainer>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          height: "100vh",
-          width: "100%",
-        }}
-      >
+    <MainPageContainer>
+      <BannerContainer>
         <BannerContainerPc />
         <BannerContainerMobile />
-        <div>의류 리스트</div>
-      </div>
-      <FlowCard />
-      <div>협력업체 소개</div>
-    </S.MainPageContainer>
+      </BannerContainer>
+      <FlowDescription />
+      <AffiliatedCompanies />
+    </MainPageContainer>
   );
 };
+
+const MainPageContainer = styled.main`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 56px 0px;
+  @media (max-width: 767px) {
+    padding:0px ;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    padding: 36px 0px;
+  }
+`;
+const BannerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;

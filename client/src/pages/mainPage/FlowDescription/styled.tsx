@@ -4,7 +4,8 @@ export const FlowConatiner = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 100vw;
+  width: 100%;
+  margin-top: 100px;
   padding: 56px 0px 100px 0px;
   background-color: var(--color-gray100);
   @media (max-width: 767px) {
@@ -19,14 +20,14 @@ export const MobileScrollContainer = styled.div`
   display: flex;
   @media (max-width: 768px) {
     display: flex;
-    width: 100vw;
+    width: 100%;
   }
 `;
 export const CardContainer = styled.div`
   display: flex;
   margin-top: 56px;
   @media (max-width: 767px) {
-    width: 100vw;
+    width: 100%;
     overflow: scroll;
     margin-top: 20px;
     &::-webkit-scrollbar {
