@@ -26,7 +26,7 @@ public class QComment extends Auditable {
 
     @ManyToOne
     @JoinColumn(name = "admin_id",nullable = false)
-    private Admin admin;
+    private Admin writer;
 
     @ManyToOne
     @JoinColumn(name = "question_id",nullable = false)

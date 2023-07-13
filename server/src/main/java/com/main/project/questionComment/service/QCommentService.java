@@ -84,9 +84,10 @@ public class QCommentService {
        return optionalQComment.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_COMMENT_NOT_FOUND));
     }
 
+    //관리자인지 확인하는 코드
     public boolean userIsEqualAdmin(String refreshToken,long commentId){
         long user = refreshTokenService.findRefreshToken(refreshToken).getAdminId();
-        long writerId = findExistsQComment(commentId).getAdmin().getAdminId();
+        long writerId = findExistsQComment(commentId).getWriter().getAdminId();
         if (user == writerId){
             return true;
         }else{

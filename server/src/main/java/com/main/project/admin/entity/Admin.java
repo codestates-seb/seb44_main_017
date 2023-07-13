@@ -36,25 +36,23 @@ public class Admin {
     @ElementCollection(fetch = FetchType.LAZY)
     private List<String> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "admin",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "writer",cascade = CascadeType.REMOVE)
     private List<NotifyBoard> notifies = new ArrayList<>();
 
-    @OneToMany(mappedBy = "admin",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "writer",cascade = CascadeType.REMOVE)
     private List<QComment> qComments = new ArrayList<>();
 
     public void setNotifies(NotifyBoard notifyBoard){
         this.notifies.add(notifyBoard);
-        if(notifyBoard.getAdmin() != this) notifyBoard.setAdmin(this);
+        if(notifyBoard.getWriter() != this) notifyBoard.setWriter(this);
     }
 
     public void setQComments(QComment qComment){
         this.qComments.add(qComment);
-        if (qComment.getAdmin() != this) qComment.setAdmin(this);
+        if (qComment.getWriter() != this) qComment.setWriter(this);
     }
 
     @OneToMany(mappedBy = "admin", cascade = CascadeType.REMOVE)
     private List<Product> products = new ArrayList<>();
-
-    @OneToMany(mappedBy = "admin", cascade = CascadeType.REMOVE)
-    private List<NotifyBoard> NotifyBoards = new ArrayList<>();
+    
 }

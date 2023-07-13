@@ -41,7 +41,7 @@ public class NotifyDto {
         private LocalDateTime createAt;
         private LocalDateTime modifyAt;
         private int view;
-        private AdminDto.NotifyResponse admin;
+        private AdminDto.NotifyResponse writer;
     }
 
 }
