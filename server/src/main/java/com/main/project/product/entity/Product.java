@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.main.project.admin.entity.Admin;
 import com.main.project.helper.audit.Auditable;
 import com.main.project.notifyView.entity.NotifyView;
+import com.main.project.order.entity.Orderproduct;
 import com.main.project.productComment.ProductComment;
 import com.main.project.member.entity.Member;
 import lombok.*;
@@ -37,24 +38,24 @@ public class Product extends Auditable {
     private String title;
 
     private String content;
-
-    private Integer price = 0;
+    @ColumnDefault("0")
+    private Integer price;
 
     private String category;
-
+    @ColumnDefault("0")
     private Integer view = 0;
 
 //    Todo: image deployment
     private String imageLink;
-
-    private Boolean issell = false;
-
-    private Integer conditionValue = 5;
-
-    private Integer pointValue = 0;
+    @ColumnDefault("false")
+    private Boolean issell;
+    @ColumnDefault("5")
+    private Integer conditionValue;
+    @ColumnDefault("0")
+    private Integer pointValue;
 
     @ColumnDefault("0")
-    private Integer productlike;
+    private Integer productlike = 0;
 
     @ManyToMany(mappedBy = "likedProducts")
     private List<Member> likedByMembers = new ArrayList<>();
@@ -62,8 +63,18 @@ public class Product extends Auditable {
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<ProductComment> comments = new ArrayList<>();
 
+    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private Productdeny productdeny;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private List<Orderproduct> orderproducts = new ArrayList<>();
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private ProductLikeCount productLikeCount;
+
+
     public void addView(){
-        this.view++;
+        this.setView(this.getView() + 1);
     }
 
 //    @OneToOne(mappedBy = "product")
@@ -86,14 +97,6 @@ public class Product extends Auditable {
     public boolean isLikedByMember(Long memberId) {
         return likedByMembers.stream()
                 .anyMatch(member -> member.getMemberId().equals(memberId));
-    }
-
-    public void likeup(){
-        this.setProductlike(this.getProductlike() + 1);
-    }
-
-    public void likedown(){
-        this.setProductlike(this.getProductlike() - 1);
     }
 
 }

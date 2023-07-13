@@ -9,6 +9,7 @@ import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.service.MemberService;
 import com.main.project.product.entity.Product;
 import com.main.project.product.entity.Productdeny;
+import com.main.project.product.repository.ProductLikeCountRepository;
 import com.main.project.product.repository.ProductRepository;
 import com.main.project.productComment.ProductComment;
 import com.main.project.productComment.repository.ProductCommentRepository;
@@ -32,15 +33,20 @@ public class ProductService {
     private final AdminService adminService;
     private final ProductdenyService productdenyService;
     private final AwsS3Service awsS3Service;
+    private final ProductLikeCountService productLikeCountService;
+    private final ProductLikeCountRepository productLikeCountRepository;
 
     public ProductService(ProductRepository productRepository, MemberService memberService, ProductCommentRepository productCommentRepository
-            , AdminService adminService, ProductdenyService productdenyService, AwsS3Service awsS3Service) {
+            , AdminService adminService, ProductdenyService productdenyService, AwsS3Service awsS3Service
+            , ProductLikeCountService productLikeCountService, ProductLikeCountRepository productLikeCountRepository) {
         this.productRepository = productRepository;
         this.memberService = memberService;
         this.productCommentRepository = productCommentRepository;
         this.adminService = adminService;
         this.productdenyService = productdenyService;
         this.awsS3Service = awsS3Service;
+        this.productLikeCountService = productLikeCountService;
+        this.productLikeCountRepository = productLikeCountRepository;
     }
 
     public Page<Product> findProducts(int page, int size) {
@@ -55,10 +61,16 @@ public class ProductService {
     public Product createProduct(Product product, Long adminId) {
         Admin findAdmin = adminService.findAdminById(adminId);
         product.setAdmin(findAdmin);
+        productLikeCountService.createProductLikeCount(product);
+        product.setProductlike(0);
+
         return productRepository.save(product);
     }
 
     public void createProducts(Product product) {
+        productLikeCountService.createProductLikeCount(product);
+        product.setProductlike(0);
+
         productRepository.save(product);
     }
 
@@ -73,6 +85,7 @@ public class ProductService {
         Optional.ofNullable(product.getCategory()).ifPresent(findProduct::setCategory);
         Optional.ofNullable(product.getIssell()).ifPresent(findProduct::setIssell);
         Optional.ofNullable(product.getPointValue()).ifPresent(findProduct::setPointValue);
+        Optional.ofNullable(product.getView()).ifPresent(findProduct::setView);
 
         return productRepository.save(findProduct);
     }
@@ -156,16 +169,23 @@ public class ProductService {
         Member findMember = memberService.findVerifiedMember(memberId);
 
         if(product.getLikedByMembers().contains(findMember)){
-            product.likedown();
             product.removeLikeByMembers(findMember);
             findMember.removeLikedProducts(product);
+
+            productLikeCountService.updateProductLikeCount(product, -1);
         }else{
-            product.likeup();
             product.addLikeByMembers(findMember);
             findMember.addLikedProducts(product);
-        }
-        memberService.updateMember(findMember);
 
+            productLikeCountService.updateProductLikeCount(product, +1);
+        }
+
+        Integer productLikeCountVal = productLikeCountService
+                .findVerifiedProductLikeCount(product)
+                .getLikeCount();
+        product.setProductlike(productLikeCountVal);
+
+        memberService.updateMember(findMember);
         return productRepository.save(product);
     }
 

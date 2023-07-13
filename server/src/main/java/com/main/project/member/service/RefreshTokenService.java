@@ -38,6 +38,11 @@ public class RefreshTokenService {
         return token;
     }
 
+    @Transactional
+    public Optional<RefreshToken> findRefreshTokenOptional(String refreshToken) {
+        return refreshTokenRepository.findByValue(refreshToken);
+    }
+
     //멤버이면 true 반환 관리자면 false 반환
     public boolean MemberBool(String refreshToken){
         RefreshToken token = findRefreshToken(refreshToken);

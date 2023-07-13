@@ -35,7 +35,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<queryget.product> findByPriceDesc(Pageable pageable);
 
     @Query(value = "select p.product_id,p.member_id,p.category,p.name,p.title,p.content," +
-            "p.image_link,p.modify_at,p.create_at,p.price,p.productlike,p.view,p.condition_value "+
+            "p.image_link,p.modify_at,p.create_at,p.price,p.view,p.condition_value "+
             "from product p     " +
             "left outer join member_product_like mpl " +
             "on p.product_id = mpl.product_id " +
