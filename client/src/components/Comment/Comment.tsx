@@ -11,7 +11,12 @@ import { CommentTypes } from "@/types/shared";
 // TODO: 수정, 삭제 기능 구현
 // TODO: API 연동하기
 
-const Comment = ({ comments }: CommentTypes[] | any) => {
+interface CommentProps {
+  comments: CommentTypes[] | any;
+  setComplete: React.Dispatch<React.SetStateAction<boolean>> | any;
+}
+
+const Comment = ({ comments, setComplete }: CommentProps) => {
   const [commentValue, changeHandler, reset] = useInput("");
   const navigate = useNavigate();
   const { questionId } = useParams();
@@ -35,7 +40,22 @@ const Comment = ({ comments }: CommentTypes[] | any) => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("commentValue = ", commentValue);
+
+    axios
+      .post(
+        BASE_URL + `/questions/${questionId}/comments`,
+        { content: commentValue },
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzM4NCJ9.eyJhZG1pbm5hbWUiOiJhZG1pbjEyM0BnbWFpbC5jb20iLCJhZG1pbklkIjo2LCJzdWIiOiJhZG1pbjEyM0BnbWFpbC5jb20iLCJpYXQiOjE2ODkyMTQyMjcsImV4cCI6MTY4OTIxNjAyN30.tPBTKTOni7ecbzca_GvbWoLAdI6o2mFq3Xd9NJeCysunTiZgpIhTA1oKdOZTf3TA",
+            Refresh:
+              "eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImFkbWluMTIzQGdtYWlsLmNvbSIsImlhdCI6MTY4OTIxNDIyNywiZXhwIjoxNjg5MjM5NDI3fQ.Na4xZk2WKAIUyOStcZwy0zwjo9bURsUMfGZ2dcy-RdwbX7XJCsaR_lqQv8Ls5AM3",
+          },
+        }
+      )
+      .then(setComplete(true));
+
     reset && reset();
   };
 
@@ -51,7 +71,7 @@ const Comment = ({ comments }: CommentTypes[] | any) => {
         <button>댓글 쓰기</button>
       </S.InputLayout>
       <S.CommentsLayout>
-        {comments.length === 1 && comments[0].commentId === "" ? (
+        {comments.length === 0 ? (
           <div className="none_comment">작성된 댓글이 없습니다.</div>
         ) : (
           comments.map((e: CommentTypes) => (

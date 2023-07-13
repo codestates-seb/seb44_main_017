@@ -11,6 +11,7 @@ const QnaDetailPage = () => {
   const { questionId } = useParams();
   const [qnaData, setQnaData] = useState<QnaTypes>();
   const [commentData, setCommentData] = useState<CommentTypes[]>([]);
+  const [complete, setComplete] = useState(false);
 
   useEffect(() => {
     axios
@@ -25,8 +26,9 @@ const QnaDetailPage = () => {
       .then(res => {
         setQnaData(res.data);
         setCommentData(res.data.qcomments);
+        setComplete(false);
       });
-  }, []);
+  }, [complete]);
 
   return (
     <>
@@ -39,7 +41,7 @@ const QnaDetailPage = () => {
         usage={"questions"}
       />
       <div style={{ marginTop: "36px" }}>
-        <Comment comments={commentData} />
+        <Comment comments={commentData} setComplete={setComplete} />
       </div>
     </>
   );
