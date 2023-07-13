@@ -28,11 +28,15 @@ const LoginModal = ({ closeModal }: Props) => {
   };
 
   const googleLoginRequestHandler = () => {
-    window.location.assign("http://localhost:8080/oauth2/authorization/google");
+    window.location.assign(
+      "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google"
+    );
   };
 
   const kakaoLoginRequestHandler = () => {
-    window.location.assign("http://localhost:8080/oauth2/authorization/kakao");
+    window.location.assign(
+      "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/kakao"
+    );
   };
 
   const handleLogin = async () => {
@@ -48,7 +52,7 @@ const LoginModal = ({ closeModal }: Props) => {
         const data = { username: userName, password };
 
         const response: any = await axios.post(
-          "https://faf9-221-148-162-66.ngrok-free.app/user/login",
+          "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/user/login",
           data
         );
         if (response.status === 200) {
@@ -68,7 +72,7 @@ const LoginModal = ({ closeModal }: Props) => {
       try {
         const data = { email: userName, password };
         const response: any = await axios.post(
-          "https://faf9-221-148-162-66.ngrok-free.app/admin/login",
+          "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/admin/login",
           data
         );
         if (response.status === 200) {

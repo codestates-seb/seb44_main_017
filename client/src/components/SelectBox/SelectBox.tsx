@@ -43,9 +43,9 @@ const SelectBox = ({ usage, options, setOption }: Props) => {
           setOption("pricedesc");
           break;
       }
+    } else {
+      setOption(current);
     }
-
-    setOption(current);
   };
 
   return (

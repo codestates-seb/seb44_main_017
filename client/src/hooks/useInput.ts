@@ -5,7 +5,7 @@ type UseInputProps<T> = [
   changeHandler: (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => void,
-  reset: () => void
+  reset?: () => void
 ];
 
 const useInput = <T>(initialValue: T): UseInputProps<T> => {
