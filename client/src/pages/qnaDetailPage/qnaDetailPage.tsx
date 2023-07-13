@@ -34,8 +34,9 @@ const QnaDetailPage = () => {
         viewCount={qnaData?.view}
         createdAt={qnaData?.createAt.slice(0, 10)}
         content={qnaData?.content}
+        usage={"questions"}
       />
-      <div>
+      <div style={{ marginTop: "36px" }}>
         <Comment />
       </div>
     </>
