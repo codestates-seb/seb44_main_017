@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import * as S from "./style";
 import { Link } from "react-router-dom";
 import ViewCount from "@/assets/icons/ViewCount";
+import CustomPagination from "@/components/Pagination/CustomPagination";
 
 interface QnaProps {
   questionId: number;
@@ -24,19 +25,29 @@ const QnaListPage = () => {
   const options = ["최신순", "오래된순", "좋아요순", "조회수순"];
   const [sortOption, setSortOption] = useState("newest");
   const [qnaList, setQnaList] = useState<QnaProps[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const pageLimit = 7;
 
   useEffect(() => {
     axios
-      .get(BASE_URL + `/questions/board?page=1&size=10&sort=${sortOption}`, {
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiYWRtaW4yQGdtYWlsLmNvbSIsInN1YiI6ImFkbWluMkBnbWFpbC5jb20iLCJpYXQiOjE2ODkxMjg3OTAsImV4cCI6MTY4OTEzMDU5MH0.urGcZpxBU0T8P8a25EpMVWmpHuSoNt1mtVg-XNwAC1V_gf0UmJFC2t8MVuiExbYm",
-          Refresh:
-            "eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZW1iZXIiLCJzdWIiOiJhZG1pbjJAZ21haWwuY29tIiwiaWF0IjoxNjg5MTI4NzkwLCJleHAiOjE2ODkxNTM5OTB9.SVvmHmQmJ8NVRL0EHfDTRHuHX3VK6pJPewbL65kTzqJYJ07mFBa2GHvDbONvwGIE",
-        },
-      })
-      .then(res => setQnaList(res.data.data));
-  }, [, sortOption]);
+      .get(
+        BASE_URL +
+          `/questions/board?page=${page}&size=${pageLimit}&sort=${sortOption}`,
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiYWRtaW4yQGdtYWlsLmNvbSIsInN1YiI6ImFkbWluMkBnbWFpbC5jb20iLCJpYXQiOjE2ODkyMDU3MzYsImV4cCI6MTY4OTIwNzUzNn0.BI4GbSphJZW8LFD0JM49IbL6WIeUV4ZkK9hUlpWt_hpWPQ2TvyPbcda8WBisAfCC",
+            Refresh:
+              "eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZW1iZXIiLCJzdWIiOiJhZG1pbjJAZ21haWwuY29tIiwiaWF0IjoxNjg5MjA1NzM2LCJleHAiOjE2ODkyMzA5MzZ9.95NR8khbMiPGKilSreRZk2VT5VGCD5uRIw8LIlapb3LpUW3iv1IvIAr0UFhnJ1Yj",
+          },
+        }
+      )
+      .then(res => {
+        setTotalPage(Math.ceil(res.data.pageInfo.totalElements / pageLimit));
+        setQnaList(res.data.data);
+      });
+  }, [, sortOption, page]);
 
   return (
     <>
@@ -85,6 +96,13 @@ const QnaListPage = () => {
             </tbody>
           </S.BoardContainer>
         </S.QnaContainer>
+        <S.PagenationBox>
+          <CustomPagination
+            pageCount={totalPage}
+            page={page}
+            setPage={setPage}
+          />
+        </S.PagenationBox>
       </S.Section>
     </>
   );

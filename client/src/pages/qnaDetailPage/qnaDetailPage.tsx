@@ -18,9 +18,9 @@ const QnaDetailPage = () => {
       .get(BASE_URL + `/questions/${questionId}`, {
         headers: {
           Authorization:
-            "Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiYWRtaW4yQGdtYWlsLmNvbSIsInN1YiI6ImFkbWluMkBnbWFpbC5jb20iLCJpYXQiOjE2ODkxNTI1NzgsImV4cCI6MTY4OTE1NDM3OH0.7Dah_UaRV7BUe99YXCmJ7_PcKRHWsuHb6oeYCs9kdXELUoN6iTwV_XmkmmDHv1yl",
+            "Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiYWRtaW4yQGdtYWlsLmNvbSIsInN1YiI6ImFkbWluMkBnbWFpbC5jb20iLCJpYXQiOjE2ODkyMDU3MzYsImV4cCI6MTY4OTIwNzUzNn0.BI4GbSphJZW8LFD0JM49IbL6WIeUV4ZkK9hUlpWt_hpWPQ2TvyPbcda8WBisAfCC",
           Refresh:
-            "eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZW1iZXIiLCJzdWIiOiJhZG1pbjJAZ21haWwuY29tIiwiaWF0IjoxNjg5MTUyNTc4LCJleHAiOjE2ODkxNzc3Nzh9.zViqGeK0prclMHuxxtfM2lVOYaGC0RPW5lvJmXgDqUhLr9-BjAxBIEhByTuSs0l_",
+            "eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZW1iZXIiLCJzdWIiOiJhZG1pbjJAZ21haWwuY29tIiwiaWF0IjoxNjg5MjA1NzM2LCJleHAiOjE2ODkyMzA5MzZ9.95NR8khbMiPGKilSreRZk2VT5VGCD5uRIw8LIlapb3LpUW3iv1IvIAr0UFhnJ1Yj",
         },
       })
       .then(res => setQnaData(res.data));

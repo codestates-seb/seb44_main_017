@@ -43,7 +43,7 @@ export const BoardContainer = styled.table`
     & tr {
       border-bottom: 1px solid #ddd;
       & td {
-        padding: 16px 0;
+        padding: 16px 10px;
         font-weight: 400;
 
         & a {
@@ -71,4 +71,11 @@ export const ViewBox = styled.td`
   & svg {
     margin-right: 8px;
   }
+`;
+
+export const PagenationBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 36px 0;
 `;
