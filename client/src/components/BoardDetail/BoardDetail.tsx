@@ -26,7 +26,7 @@ const BoardDetail = ({
   const navigate = useNavigate();
 
   return (
-    <S.DetailContainer>
+    <S.Container>
       <S.HeaderBox>
         <h1 className="detail_title">{title}</h1>
         <div className="detail_info">
@@ -34,8 +34,14 @@ const BoardDetail = ({
             <ViewCount />
             <span>{viewCount}</span>
           </span>
-          <span>닉네임 : {name}</span>
-          <span>등록일 : {createdAt}</span>
+          <span>
+            <span className="detail_name">닉네임 : </span>
+            <span>{name}</span>
+          </span>
+          <span>
+            <span className="detail_name">등록일 : </span>
+            <span>{createdAt}</span>
+          </span>
         </div>
       </S.HeaderBox>
       <S.ContentBox>
@@ -44,7 +50,7 @@ const BoardDetail = ({
           목록으로
         </button>
       </S.ContentBox>
-    </S.DetailContainer>
+    </S.Container>
   );
 };
 

@@ -9,9 +9,6 @@ import { BASE_URL } from "@/constants/constants";
 import { CommentTypes } from "@/types/shared";
 import { useEffect, useState, useRef } from "react";
 
-// TODO: 수정, 삭제 기능 구현
-// TODO: API 연동하기
-
 interface CommentProps {
   comments: CommentTypes[];
   setComplete: React.Dispatch<React.SetStateAction<boolean>> | any;
@@ -33,9 +30,13 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
     });
   }, [selectedId]);
 
+  const onkeyHandler = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      updateHandler(selectedId);
+    }
+  };
+
   const updateHandler = (commentId: number | string) => {
-    console.log("qId = ", questionId);
-    console.log("cId = ", commentId);
     try {
       axios.patch(
         BASE_URL + `/questions/${questionId}/comments/${commentId}`,
@@ -62,7 +63,9 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
     setIsEditMode(true);
     setSelectedId(id);
 
-    inputRef.current && inputRef.current.focus();
+    setTimeout(() => {
+      inputRef.current && inputRef.current.focus();
+    }, 0);
   };
 
   const handleDeleteComment = (commentId: string | number) => {
@@ -130,11 +133,13 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
                 </div>
                 {isEditMode && e.commentId === selectedId ? (
                   <input
+                    size={80}
                     className="comment_modify_form"
                     type="text"
                     value={updateValue}
                     ref={inputRef}
                     onChange={e => setUpdateValue(e.target.value)}
+                    onKeyUp={onkeyHandler}
                   />
                 ) : (
                   <div className="comment_content">{e.content}</div>

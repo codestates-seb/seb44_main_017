@@ -62,7 +62,7 @@ export const CommentsLayout = styled.div`
   margin: 0 auto;
   flex-direction: column;
   border: 1px solid var(--color-lightivory);
-  padding: 24px;
+  padding: 16px 24px;
   border-radius: 5px;
   gap: 10px;
 
@@ -76,6 +76,7 @@ export const CommentBox = styled.div`
   border-bottom: 1px solid var(--color-lightivory);
   justify-content: space-between;
   width: 100%;
+  padding-top: 8px;
 
   & .comment_info {
     font-size: 14px;
@@ -95,6 +96,7 @@ export const CommentBox = styled.div`
     border: 1px solid var(--color-gray100);
     border-radius: 5px;
     margin-top: 8px;
+    font-size: var(--font-size-16);
   }
 
   & > .comment_update_btn {
@@ -107,6 +109,10 @@ export const CommentBox = styled.div`
       border: none;
     }
 
+    & svg:hover {
+      transform: scale(1.1);
+    }
+
     & > .comment_modify_btn {
       border-radius: 8px;
       font-weight: var(--font-weight-700);
@@ -114,9 +120,10 @@ export const CommentBox = styled.div`
       border: 0;
       color: var(--color-white);
       margin: 0;
-      width: 60px;
-      height: 22px;
+      width: 70px;
+      height: 30px;
       background-color: var(--color-lightred);
+      padding: 4px;
 
       &:hover {
         background-color: #e35757;

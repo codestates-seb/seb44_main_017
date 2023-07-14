@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
-export const DetailContainer = styled.article`
-  width: 100%;
+export const Container = styled.article`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 export const HeaderBox = styled.div`
@@ -9,13 +11,25 @@ export const HeaderBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-bottom: 3px solid var(--color-black);
-  padding: 36px 20px 16px;
-  max-width: 1264px;
+  padding: 36px 36px 20px;
   margin: 0 auto;
+  max-width: 1200px;
+  gap: 16px;
+
+  @media (max-width: 767px) {
+    padding: 36px 25px 20px;
+  }
 
   & .detail_title {
     font-size: var(--font-size-36);
+
+    @media (max-width: 767px) {
+      font-size: var(--font-size-16);
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      font-size: var(--font-size-24);
+    }
   }
 
   & .detail_info {
@@ -23,6 +37,23 @@ export const HeaderBox = styled.div`
     gap: 24px;
     align-self: flex-end;
     color: #727272;
+    margin-right: 16px;
+    align-items: center;
+
+    @media (max-width: 767px) {
+      margin-right: 0;
+      font-size: 14px;
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      margin-right: 8px;
+    }
+
+    & .detail_name {
+      @media (max-width: 767px) {
+        display: none;
+      }
+    }
   }
 
   & .detail_view {
@@ -32,18 +63,23 @@ export const HeaderBox = styled.div`
 
   & .detail_view > svg {
     margin-right: 8px;
+
+    @media (max-width: 767px) {
+      width: 20px;
+      height: 20px;
+    }
   }
 `;
 
 export const ContentBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: start;
-  margin: 0 auto;
-  max-width: 1264px;
+  max-width: 1200px;
   min-height: 512px;
+  width: 90%;
+  margin: 0 auto;
   padding: 16px 20px;
+  border-top: 3px solid var(--color-black);
   border-bottom: 2px solid var(--color-black);
   position: relative;
 
