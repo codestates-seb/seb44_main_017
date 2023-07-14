@@ -45,7 +45,7 @@ public class Product extends Auditable {
     private String category;
 
     @ColumnDefault("0")
-    private Integer view;
+    private Integer view = 0;
 
 //    Todo: image deployment
     private String imageLink;
@@ -60,7 +60,7 @@ public class Product extends Auditable {
     private Integer pointValue;
 
     @ColumnDefault("0")
-    private Integer productlike;
+    private Integer productlike = 0;
 
     @ManyToMany(mappedBy = "likedProducts")
     private List<Member> likedByMembers = new ArrayList<>();
@@ -79,7 +79,7 @@ public class Product extends Auditable {
 
 
     public void addView(){
-        this.view++;
+        this.setView(this.getView() + 1);
     }
 
 //    @OneToOne(mappedBy = "product")

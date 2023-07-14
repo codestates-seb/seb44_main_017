@@ -156,6 +156,7 @@ public class ProductController {
                     .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
                     .getMemberId();
             product.addView();
+            productService.updateProduct(productId , product);
             response = productMapper.productToProductResponseWithComment(product, memberId);
 
         }else if(refreshToken.get().getAdminId() != null){

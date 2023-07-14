@@ -25,17 +25,6 @@ public class NotifiesResponseDto {
     }
     @Getter
     @Builder
-    public static class MultiNotifiesResponse {
-        private long boardId;
-        private String title;
-        private String content;
-        private LocalDateTime createAt;
-        private LocalDateTime modifyAt;
-        private int view;
-        private AdminDto.NotifyResponse admin;
-    }
-    @Getter
-    @Builder
     public static class PageInfo {
         private int page;
         private int size;
