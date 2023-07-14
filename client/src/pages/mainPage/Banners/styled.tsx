@@ -173,6 +173,6 @@ export const MobileBannerImage = styled.img<{ src: string }>`
   width: 100%;
   @media (min-width: 600px) {
     width: 100vw;
-    height: 50vw;
+    height: 50vh;
   }
 `;

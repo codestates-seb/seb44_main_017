@@ -5,9 +5,9 @@ import {
   point,
   clothesShop,
   sellingPoint,
-} from "../../assets";
-import FadeIn from "../FadeIn/FadeIn";
-const FlowCard = () => {
+} from "../../../assets"
+import FadeIn from "@/components/FadeIn/FadeIn";
+const FlowDescription = () => {
   return (
     <S.FlowConatiner>
       <S.Title>저희 RECLOSET은 이렇게 관리됩니다.</S.Title>
@@ -74,4 +74,4 @@ const FlowCard = () => {
   );
 };
 
-export default FlowCard;
+export default FlowDescription;
