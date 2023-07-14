@@ -36,6 +36,7 @@ export const Imagebox = styled.div`
     align-items: center;
     backdrop-filter: blur(5px);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
 
     @media (min-width: 768px) and (max-width: 1023px) {
       width: 200px;
