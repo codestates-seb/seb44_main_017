@@ -37,9 +37,8 @@ public class Order {
     private LocalDateTime create_at;
     @ColumnDefault("false")
     private Boolean payed;
-
-    @ColumnDefault("false")
-    private Boolean needapprove;
+    private String tid;
+    private Long singleorder;
 
 }
 
