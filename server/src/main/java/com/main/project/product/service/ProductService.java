@@ -6,9 +6,12 @@ import com.main.project.dto.queryget;
 import com.main.project.member.entity.Member;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
+import com.main.project.member.entity.RefreshToken;
 import com.main.project.member.service.MemberService;
+import com.main.project.product.controller.dto.ProductDto;
 import com.main.project.product.entity.Product;
 import com.main.project.product.entity.Productdeny;
+import com.main.project.product.mapper.ProductMapper;
 import com.main.project.product.repository.ProductLikeCountRepository;
 import com.main.project.product.repository.ProductRepository;
 import com.main.project.productComment.ProductComment;
@@ -36,9 +39,11 @@ public class ProductService {
     private final ProductLikeCountService productLikeCountService;
     private final ProductLikeCountRepository productLikeCountRepository;
 
+    private final ProductMapper productMapper;
+
     public ProductService(ProductRepository productRepository, MemberService memberService, ProductCommentRepository productCommentRepository
             , AdminService adminService, ProductdenyService productdenyService, AwsS3Service awsS3Service
-            , ProductLikeCountService productLikeCountService, ProductLikeCountRepository productLikeCountRepository) {
+            , ProductLikeCountService productLikeCountService, ProductLikeCountRepository productLikeCountRepository, ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.memberService = memberService;
         this.productCommentRepository = productCommentRepository;
@@ -47,6 +52,7 @@ public class ProductService {
         this.awsS3Service = awsS3Service;
         this.productLikeCountService = productLikeCountService;
         this.productLikeCountRepository = productLikeCountRepository;
+        this.productMapper = productMapper;
     }
 
     public Page<Product> findProducts(int page, int size) {
@@ -103,6 +109,30 @@ public class ProductService {
 
         findMember.addProductComments(productComment);
         memberService.updateMember(findMember);
+    }
+
+    public ProductDto.ResponseWithComments getResponseWithComments(Long productId, Optional<RefreshToken> refreshToken, Product product) {
+        ProductDto.ResponseWithComments response;
+        if(refreshToken.isEmpty()){
+            response = productMapper.productToProductResponseWithComment(product);
+        }
+        else if (refreshToken.get().getMemberId() != null) {
+            Long memberId = refreshToken
+                    .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
+                    .getMemberId();
+            product.addView();
+            updateProduct(productId, product);
+            response = productMapper.productToProductResponseWithComment(product, memberId);
+
+        }else if(refreshToken.get().getAdminId() != null){
+            Long AdminId = refreshToken
+                    .orElseThrow( () -> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND))
+                    .getAdminId();
+            response = productMapper.productToProductResponseWithComment(product);
+        }else{
+            response = productMapper.productToProductResponseWithComment(product);
+        }
+        return response;
     }
 
     public void deleteProductComment(Product product, Long memberId, Long productCommentId) {

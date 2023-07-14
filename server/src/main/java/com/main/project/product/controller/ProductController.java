@@ -125,10 +125,8 @@ public class ProductController {
                                      String tokenstr,
                                      @PathVariable("product-id") @Positive Long productId){
         Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshTokenOptional(tokenstr);
-//        RefreshToken RT = refreshToken.get();
 
         Product product = productService.findProduct(productId);
-
         List<ProductComment> comments = productCommentRepository.findByProductProductId(productId);
 
         List<ProductCommentDto.Response> commentResponses = comments.stream()
@@ -142,26 +140,7 @@ public class ProductController {
 
         ProductDto.ResponseWithComments response;
 
-
-        if(refreshToken.isEmpty()){
-            response = productMapper.productToProductResponseWithComment(product);
-        }
-        else if (refreshToken.get().getMemberId() != null) {
-            Long memberId = refreshToken
-                    .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
-                    .getMemberId();
-            product.addView();
-            productService.updateProduct(productId , product);
-            response = productMapper.productToProductResponseWithComment(product, memberId);
-
-        }else if(refreshToken.get().getAdminId() != null){
-            Long AdminId = refreshToken
-                    .orElseThrow( () -> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND))
-                    .getAdminId();
-            response = productMapper.productToProductResponseWithComment(product);
-        }else{
-            response = productMapper.productToProductResponseWithComment(product);
-        }
+        response = productService.getResponseWithComments(productId, refreshToken, product);
 
         response.setComments(commentResponses);
 
@@ -171,6 +150,8 @@ public class ProductController {
                 HttpStatus.OK
         );
     }
+
+
 
     // admins can modify their product
     @PatchMapping("/{product-id}")
