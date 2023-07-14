@@ -72,6 +72,7 @@ public class KakaoPay {
         params.add("partner_order_id", String.valueOf(order.getOrderId()));
         params.add("partner_user_id", order.getMember().getEmail());
         params.add("item_name", productname);
+        params.add("item_code", "multi");
         params.add("quantity", String.valueOf(productList.size()));
         params.add("total_amount", String.valueOf(order.getMoneycount()-order.getPointspend()));
         params.add("tax_free_amount", "100");
@@ -85,6 +86,8 @@ public class KakaoPay {
             kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyVO.class);
 
             log.info("" + kakaoPayReadyVO);
+            order.setTid(kakaoPayReadyVO.getTid());
+            orderRepository.save(order);
 
             return kakaoPayReadyVO.getNext_redirect_pc_url();
 
@@ -117,9 +120,10 @@ public class KakaoPay {
         // 서버로 요청할 Body
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
-        params.add("partner_order_id", String.valueOf(order.getOrderId()));
+        params.add("partner_order_id", String.valueOf(order.getSingleorder()));
         params.add("partner_user_id", order.getMember().getEmail());
         params.add("item_name", productname);
+        params.add("item_code", "single");
         params.add("quantity", String.valueOf(productList.size()));
         params.add("total_amount", String.valueOf(order.getMoneycount()-order.getPointspend()));
         params.add("tax_free_amount", "100");
@@ -133,7 +137,8 @@ public class KakaoPay {
             kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyVO.class);
 
             log.info("" + kakaoPayReadyVO);
-
+            order.setTid(kakaoPayReadyVO.getTid());
+            orderRepository.save(order);
             return kakaoPayReadyVO.getNext_redirect_pc_url();
 
         } catch (RestClientException e) {
@@ -148,10 +153,10 @@ public class KakaoPay {
 
     }
     public KakaoPayApprovalVO kakaoPayInfo(String pg_token) {
-        List<queryget.findbyorderid> orderid = orderRepository.findByNeedapprove();
-        Optional<Order> Optionalorder = orderRepository.findById(orderid.get(orderid.size()-1).getorder_id());
+
+        queryget.findbyorderid orderid = orderRepository.findByTid(kakaoPayReadyVO.getTid());
+        Optional<Order> Optionalorder = orderRepository.findById(orderid.getorder_id());
         Order order = Optionalorder.get();
-        order.setNeedapprove(false);
         order.setPayed(true);
         orderRepository.save(order);
 
@@ -170,7 +175,12 @@ public class KakaoPay {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
         params.add("cid", "TC0ONETIME");
         params.add("tid", kakaoPayReadyVO.getTid());
-        params.add("partner_order_id", String.valueOf(order.getOrderId()));
+        if(order.getSingleorder() != 0){
+            params.add("partner_order_id", String.valueOf(order.getSingleorder()));
+        }
+        else{
+            params.add("partner_order_id", String.valueOf(order.getOrderId()));
+        }
         params.add("partner_user_id", order.getMember().getEmail());
         params.add("pg_token", pg_token);
         params.add("total_amount", String.valueOf(order.getMoneycount()-order.getPointspend()));

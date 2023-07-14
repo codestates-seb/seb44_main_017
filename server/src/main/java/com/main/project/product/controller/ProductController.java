@@ -48,6 +48,7 @@ public class ProductController {
     private final RefreshTokenService refreshTokenService;
     private final ProductCommentRepository productCommentRepository;
 
+
     public ProductController(ProductService productService, ProductMapper productMapper, MemberService memberService, RefreshTokenService refreshTokenService, ProductCommentRepository productCommentRepository) {
         this.productService = productService;
         this.productMapper = productMapper;
@@ -77,13 +78,17 @@ public class ProductController {
     }
 
     @PostMapping("/postlist")
-    public ResponseEntity postProductlist(@RequestPart("files") List<MultipartFile> files,
+    public ResponseEntity postProductlist(@RequestHeader("Refresh") String tokenstr,
+                                          @RequestPart("files") List<MultipartFile> files,
                                           @RequestParam("productlist") String productlist) throws JsonProcessingException {
+        Optional<RefreshToken> refresht = refreshTokenService.findRefreshTokenOptional(tokenstr);
+        RefreshToken findtoken = refresht.orElseThrow(()-> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+
         ObjectMapper objectMapper = new ObjectMapper().registerModule(new SimpleModule());
         List<ProductDto.UserPP> productlists = objectMapper.readValue(productlist, new TypeReference<>() {});
         for(int i = 0; i < productlists.size(); i++){
             Product pp = productMapper.NproductPatchDtotoProduct(productlists.get(i));
-            productService.createProducts(pp);
+            productService.createProducts(pp,findtoken.getMemberId());
             productService.uploadImage(files.get(i),pp.getProductId());
         }
         return new ResponseEntity(HttpStatus.OK);

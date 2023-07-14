@@ -23,6 +23,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -61,13 +63,14 @@ public class AdminController {
 
         Map<String, Object> claims = jwtTokenizer.getClaims(tokenResponseDto.getAtk()).getBody();
         long adminId = Long.parseLong(claims.get("adminId").toString());
-
+        Admin findadmin = adminService.findAdminById(adminId);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + tokenResponseDto.getAtk());
         headers.add("Refresh", tokenResponseDto.getRtk());
-        //headers.add("roles", "admin");
+        headers.add("roles", "admin");
 
-        return new ResponseEntity<>(new SingleResponseDto<>(adminId), headers, HttpStatus.OK);
+
+        return new ResponseEntity<>(new SingleResponseDto<>(findadmin.getName()), headers, HttpStatus.OK);
 
     }
     @PostMapping
