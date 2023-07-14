@@ -24,7 +24,7 @@ const QnaListPage = () => {
   const title = "무엇이 궁금한가요?";
   const options = ["최신순", "오래된순", "좋아요순", "조회수순"];
   const PAGE_LIMIT = 7;
-  const TITLE_MAX_LENGTH = 45;
+  const TITLE_MAX_LENGTH = 40;
 
   const [sortOption, setSortOption] = useState("newest");
   const [qnaList, setQnaList] = useState<QnaProps[]>([]);
@@ -96,10 +96,12 @@ const QnaListPage = () => {
                         : item.title}
                     </Link>
                   </td>
-                  <S.ViewBox>
-                    <ViewCount />
-                    <span>{item.view}</span>
-                  </S.ViewBox>
+                  <td>
+                    <S.ViewBox>
+                      <ViewCount />
+                      <span>{item.view}</span>
+                    </S.ViewBox>
+                  </td>
                   <td>{item.createAt.slice(0, 10)}</td>
                   <td>{item.writer.name}</td>
                 </tr>

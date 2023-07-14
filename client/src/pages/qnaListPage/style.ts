@@ -1,14 +1,17 @@
 import styled from "styled-components";
 
 export const Section = styled.section`
-  width: 100%;
-  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 36px;
 `;
 
 export const QnaContainer = styled.article`
   display: flex;
   flex-direction: column;
-  max-width: 1264px;
+  max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
 `;
 
@@ -20,7 +23,6 @@ export const BoardContainer = styled.table`
   border-collapse: collapse;
   width: 100%;
   text-align: center;
-  font-size: var(--font-size-16);
 
   @media (max-width: 767px) {
     font-size: var(--font-size-12);
@@ -70,6 +72,11 @@ export const ViewBox = styled.td`
 
   & svg {
     margin-right: 8px;
+
+    @media (max-width: 767px) {
+      width: 20px;
+      height: 20px;
+    }
   }
 `;
 
