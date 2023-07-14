@@ -4,6 +4,7 @@ export const Container = styled.article`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;
 
 export const HeaderBox = styled.div`
@@ -11,10 +12,10 @@ export const HeaderBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 36px 36px 20px;
-  margin: 0 auto;
+  padding: 36px 36px 8px;
   max-width: 1200px;
-  gap: 16px;
+  width: 100%;
+  gap: 24px;
 
   @media (max-width: 767px) {
     padding: 36px 25px 20px;
@@ -38,7 +39,6 @@ export const HeaderBox = styled.div`
     align-self: flex-end;
     color: #727272;
     margin-right: 16px;
-    align-items: center;
 
     @media (max-width: 767px) {
       margin-right: 0;
@@ -86,7 +86,7 @@ export const ContentBox = styled.div`
   & .back_btn {
     position: absolute;
     bottom: -10%;
-    right: 50%;
+    right: 47%;
     border-radius: 16px;
     width: 96px;
     height: 32px;

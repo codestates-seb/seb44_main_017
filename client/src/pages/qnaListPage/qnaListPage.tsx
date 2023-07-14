@@ -102,6 +102,7 @@ const QnaListPage = () => {
                       <span>{item.view}</span>
                     </S.ViewBox>
                   </td>
+
                   <td>{item.createAt.slice(0, 10)}</td>
                   <td>{item.writer.name}</td>
                 </tr>

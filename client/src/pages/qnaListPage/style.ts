@@ -65,7 +65,7 @@ export const BoardContainer = styled.table`
   }
 `;
 
-export const ViewBox = styled.td`
+export const ViewBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
