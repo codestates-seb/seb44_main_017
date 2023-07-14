@@ -27,8 +27,9 @@ public enum ExceptionCode {
     PAY_FAILED(404,"Pay_failed"),
     SOLD_OUT(404, "Product_Sold_Out"),
     NOT_ENOUGH_POINT(409,"point_is_not_enough"),
-    MEMBER_IS_BAN(409, "Member is ban")
-    , PRODUCTLIKE_NOT_FOUND(404, "Productlike does not exists" );
+    MEMBER_IS_BAN(409, "Member is ban"),
+    ELASTIC_IOException(404, "elastic_ioexception"),
+    PRODUCTLIKE_NOT_FOUND(404, "Productlike does not exists" );
 
     private final int status;
     private final String message;

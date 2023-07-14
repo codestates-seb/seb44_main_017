@@ -16,6 +16,8 @@ spring:
     open-in-view: true
     profiles:
       include: create
+  main:
+    allow-bean-definition-overriding: true
 
   logging:
     level:
@@ -75,8 +77,14 @@ mail:
   address:
     admin: admin@gmail.com
 
+elasticsearch:
+  host: 127.0.0.1
+  port: 9200
+  cluster_name: elasticsearch
+
 jwt:
   admin-key: ${Admin_key}
   key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
+

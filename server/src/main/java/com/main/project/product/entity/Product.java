@@ -38,19 +38,24 @@ public class Product extends Auditable {
     private String title;
 
     private String content;
+
     @ColumnDefault("0")
     private Integer price;
 
     private String category;
+
     @ColumnDefault("0")
     private Integer view = 0;
 
 //    Todo: image deployment
     private String imageLink;
+
     @ColumnDefault("false")
     private Boolean issell;
+
     @ColumnDefault("5")
     private Integer conditionValue;
+
     @ColumnDefault("0")
     private Integer pointValue;
 
