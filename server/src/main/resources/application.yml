@@ -7,7 +7,7 @@ spring:
   jpa:
 #    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
@@ -78,7 +78,7 @@ mail:
 
 elasticsearch:
   host: 127.0.0.1
-  port: 9300
+  port: 9200
   cluster_name: elasticsearch
 
 jwt:

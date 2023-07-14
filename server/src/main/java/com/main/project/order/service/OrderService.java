@@ -15,11 +15,12 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    public Order createOrder(Order order, Member member, int sum){
+    public Order createOrder(Order order, Member member, int sum, Long productId){
 
         order.setMember(member);
         order.setCreate_at(LocalDateTime.now());
         order.setMoneycount(sum);
+        order.setSingleorder(productId);
         return orderRepository.save(order);
     }
 }
