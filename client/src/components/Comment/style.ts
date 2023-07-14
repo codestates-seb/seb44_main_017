@@ -89,6 +89,14 @@ export const CommentBox = styled.div`
     }
   }
 
+  & .comment_modify_form {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid var(--color-gray100);
+    border-radius: 5px;
+    margin-top: 8px;
+  }
+
   & > .comment_update_btn {
     display: flex;
     align-items: center;
@@ -97,6 +105,22 @@ export const CommentBox = styled.div`
     & button {
       background: none;
       border: none;
+    }
+
+    & > .comment_modify_btn {
+      border-radius: 8px;
+      font-weight: var(--font-weight-700);
+      font-size: var(--font-size-12);
+      border: 0;
+      color: var(--color-white);
+      margin: 0;
+      width: 60px;
+      height: 22px;
+      background-color: var(--color-lightred);
+
+      &:hover {
+        background-color: #e35757;
+      }
     }
   }
 

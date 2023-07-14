@@ -3,7 +3,7 @@ export interface CommentTypes {
   content: string;
   createAt: string;
   modifyAt: string;
-  admin: WriterTypes;
+  writer: WriterTypes;
 }
 
 export interface WriterTypes {
@@ -12,12 +12,12 @@ export interface WriterTypes {
 }
 
 export interface QnaTypes {
-  questionId: number;
+  questionId: number | string;
   title: string;
   content: string;
   createAt: string;
   modifyAt: string;
-  view: number;
+  view: number | string;
   writer: WriterTypes;
   qcomments: CommentTypes[];
 }

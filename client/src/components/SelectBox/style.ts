@@ -69,15 +69,17 @@ export const SelectOptions = styled.ul<{ isOpen: boolean }>`
   );
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: #111;
-  appearance: none;
-  z-index: 10;
+  z-index: 100;
+
+  & li:not(:last-child) {
+    border-bottom: 1px solid var(--color-lightivory);
+  }
 `;
 
 export const Option = styled.li`
   text-align: center;
   padding: 6px 0;
   transition: background-color 0.2s ease-in;
-  border-bottom: 1px solid var(--color-lightivory);
 
   &:hover {
     background-color: var(--color-darkgreen);

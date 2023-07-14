@@ -9,7 +9,7 @@ import useDetectClose from "../../hooks/useDetectClose";
  * @setOption: state의 set 함수
  */
 interface Props {
-  usage: string;
+  usage: "정렬" | "카테고리";
   options: string[];
   setOption: React.Dispatch<React.SetStateAction<string>>;
 }

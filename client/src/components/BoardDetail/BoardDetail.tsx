@@ -3,11 +3,11 @@ import * as S from "./style";
 import { useNavigate } from "react-router-dom";
 
 interface BoardDetailTypes {
-  title: string | undefined;
-  name: string | undefined;
-  viewCount: number | undefined;
-  createdAt: string | undefined;
-  content: string | undefined;
+  title: string;
+  name: string;
+  viewCount: number | string;
+  createdAt: string;
+  content: string;
   usage: string;
 }
 
