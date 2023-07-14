@@ -20,7 +20,6 @@ public class OrderService {
         order.setMember(member);
         order.setCreate_at(LocalDateTime.now());
         order.setMoneycount(sum);
-        order.setNeedapprove(true);
         return orderRepository.save(order);
     }
 }

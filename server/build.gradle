@@ -55,21 +55,7 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.5'
 	implementation 'com.google.guava:guava:31.1-jre'
-	implementation 'org.springframework.data:spring-data-elasticsearch:4.3.0'
-	//implementation 'org.elasticsearch:elasticsearch:7.15.2'
-	//implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.15.2'
 
-	//implementation 'com.fasterxml.jackson.core:jackson-core:2.13.1'
-
-/*
-	implementation 'co.elastic.clients:elasticsearch-java:7.15.2'
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
-	implementation 'jakarta.json:jakarta.json-api:2.0.1'
-
-	implementation group: 'org.json', name: 'json', version: '20090211'
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-elasticsearch', version: '1.2.5.RELEASE'
-
- */
 }
 
 tasks.named('test') {

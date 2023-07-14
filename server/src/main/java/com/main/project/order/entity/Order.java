@@ -38,8 +38,7 @@ public class Order {
     @ColumnDefault("false")
     private Boolean payed;
 
-    @ColumnDefault("false")
-    private Boolean needapprove;
+    private String tid;
 
 }
 

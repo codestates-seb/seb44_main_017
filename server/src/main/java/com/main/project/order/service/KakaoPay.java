@@ -133,7 +133,8 @@ public class KakaoPay {
             kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyVO.class);
 
             log.info("" + kakaoPayReadyVO);
-
+            order.setTid(kakaoPayReadyVO.getTid());
+            orderRepository.save(order);
             return kakaoPayReadyVO.getNext_redirect_pc_url();
 
         } catch (RestClientException e) {
@@ -148,10 +149,10 @@ public class KakaoPay {
 
     }
     public KakaoPayApprovalVO kakaoPayInfo(String pg_token) {
-        List<queryget.findbyorderid> orderid = orderRepository.findByNeedapprove();
-        Optional<Order> Optionalorder = orderRepository.findById(orderid.get(orderid.size()-1).getorder_id());
+
+        queryget.findbyorderid orderid = orderRepository.findByTid(kakaoPayReadyVO.getTid());
+        Optional<Order> Optionalorder = orderRepository.findById(orderid.getorder_id());
         Order order = Optionalorder.get();
-        order.setNeedapprove(false);
         order.setPayed(true);
         orderRepository.save(order);
 

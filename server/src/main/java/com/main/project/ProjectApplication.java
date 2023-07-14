@@ -1,6 +1,5 @@
 package com.main.project;
 
-import com.main.project.search.repository.ElasticRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;

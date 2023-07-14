@@ -10,6 +10,7 @@ import com.main.project.member.repository.MemberRepository;
 import com.main.project.member.repository.RefreshTokenRepository;
 import com.main.project.member.service.MemberService;
 import com.main.project.order.dto.KakaoPayApprovalVO;
+import com.main.project.order.dto.KakaoPayReadyVO;
 import com.main.project.order.dto.OrderDto;
 import com.main.project.order.entity.Order;
 import com.main.project.order.entity.Orderproduct;
