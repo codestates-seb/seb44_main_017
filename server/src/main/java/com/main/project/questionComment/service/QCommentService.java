@@ -63,6 +63,11 @@ public class QCommentService {
         findQComment.setContent(patchQComment.getContent());
 
         QCommentDto.Response response = mapper.QCommentToQCommentDtoResponse(findQComment);
+
+        // 저장
+
+        qCommentRepository.save(findQComment);
+
         return response;
     }
 
