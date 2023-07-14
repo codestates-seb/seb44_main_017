@@ -23,8 +23,6 @@ import com.main.project.product.entity.Product;
 import com.main.project.product.mapper.ProductMapper;
 import com.main.project.product.repository.ProductRepository;
 import com.main.project.product.service.ProductService;
-import com.main.project.search.document.Eproduct;
-import com.main.project.search.service.EproductService;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.java.Log;
@@ -53,7 +51,7 @@ public class KakaoController {
     private final OrderproductRepository orderproductRepository;
     private final OrderproductService orderproductService;
     private final MemberRepository memberRepository;
-    private final EproductService eproductService;
+    //private final EproductService eproductService;
     private final ProductMapper productMapper;
 
     private final ProductRepository productRepository;
@@ -116,9 +114,12 @@ public class KakaoController {
             // change product state
             Product product = productService.findProduct(Long.valueOf(kakaoPayApprovalVO.getPartner_order_id()));
             product.setIssell(true);
+            /*
             Eproduct eproduct = productMapper.productToEproduct(product);
             eproduct.setSell("sold");
             eproductService.addEproduct(eproduct);
+
+             */
             productRepository.save(product);
             // sava point
             Member seller = memberService.findVerifiedMember(product.getMember().getMemberId());
@@ -130,9 +131,12 @@ public class KakaoController {
             productIdList.forEach(productId -> {
                 Product product = productService.findProduct(productId.getproduct_id());
                 product.setIssell(true);
+                /*
                 Eproduct eproduct = productMapper.productToEproduct(product);
                 eproduct.setSell("sold");
                 eproductService.addEproduct(eproduct);
+
+                 */
                 productRepository.save(product);
                 Member seller = memberService.findVerifiedMember(product.getMember().getMemberId());
                 seller.setMoney(seller.getMoney() + product.getPrice()*10/100);
