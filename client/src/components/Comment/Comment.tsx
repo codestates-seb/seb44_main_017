@@ -132,15 +132,16 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
                   <span>{elapsedTime(new Date(e.createAt))}</span>
                 </div>
                 {isEditMode && e.commentId === selectedId ? (
-                  <input
-                    size={80}
-                    className="comment_modify_form"
-                    type="text"
-                    value={updateValue}
-                    ref={inputRef}
-                    onChange={e => setUpdateValue(e.target.value)}
-                    onKeyUp={onkeyHandler}
-                  />
+                  <div className="modify_box">
+                    <input
+                      className="comment_modify_form"
+                      type="text"
+                      value={updateValue}
+                      ref={inputRef}
+                      onChange={e => setUpdateValue(e.target.value)}
+                      onKeyUp={onkeyHandler}
+                    />
+                  </div>
                 ) : (
                   <div className="comment_content">{e.content}</div>
                 )}

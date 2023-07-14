@@ -65,7 +65,7 @@ const QnaDetailPage = () => {
         content={qnaData.content}
         usage={"questions"}
       />
-      <div style={{ marginTop: "36px" }}>
+      <div style={{ paddingTop: "36px" }}>
         <Comment comments={commentData} setComplete={setComplete} />
       </div>
     </>
