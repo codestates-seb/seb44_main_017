@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import useInput from "../../hooks/useInput";
 import axios from "axios";
 import * as S from "./style";
@@ -8,45 +7,80 @@ import elapsedTime from "../../utils/elapsedTime";
 import { useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 import { CommentTypes } from "@/types/shared";
+import { useEffect, useState, useRef } from "react";
 
-// TODO: 수정, 삭제 기능 구현
-// TODO: API 연동하기
+interface CommentProps {
+  comments: CommentTypes[];
+  setComplete: React.Dispatch<React.SetStateAction<boolean>> | any;
+}
 
-const Comment = () => {
-  const initialValue: CommentTypes = {
-    commentId: "",
-    content: "",
-    createAt: "",
-    modifyAt: "",
-    writer: {
-      memberId: "",
-      name: "",
-    },
-  };
-
+const Comment = ({ comments, setComplete }: CommentProps) => {
   const [commentValue, changeHandler, reset] = useInput("");
-  const [commentList, setCommentList] = useState<CommentTypes[]>([
-    initialValue,
-  ]);
-  const navigate = useNavigate();
   const { questionId } = useParams();
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [updateValue, setUpdateValue] = useState("");
+  const [selectedId, setSelectedId] = useState<number | string>(-1);
+
+  const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5173/src/moks/comment.json")
-      .then(res => setCommentList(res.data));
-  }, []);
+    comments.map(item => {
+      item.commentId === selectedId && setUpdateValue(item.content);
+    });
+  }, [selectedId]);
 
-  const handleEditComment = () => {
-    alert("수정 기능 구현 예정");
+  const onkeyHandler = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      updateHandler(selectedId);
+    }
+  };
+
+  const updateHandler = (commentId: number | string) => {
+    try {
+      axios.patch(
+        BASE_URL + `/questions/${questionId}/comments/${commentId}`,
+        {
+          content: updateValue,
+        },
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhZG1pbm5hbWUiOiJhZG1pbjIwMEBnbWFpbC5jb20iLCJhZG1pbklkIjo0LCJzdWIiOiJhZG1pbjIwMEBnbWFpbC5jb20iLCJpYXQiOjE2ODkyOTk1MzIsImV4cCI6MTY4OTMwMTMzMn0.b4k9ctp2BkvWtgXkF-gfmnAphCNQ76-_m0Z-9hGuQnE",
+            Refresh:
+              "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImFkbWluMjAwQGdtYWlsLmNvbSIsImlhdCI6MTY4OTI5OTUzMiwiZXhwIjoxNjg5MzI0NzMyfQ.vNXpfYbBabJgi1mw8NE-g5ySqeImBNMX_-SfocaN3Hw",
+          },
+        }
+      );
+      setComplete(true);
+      setIsEditMode(false);
+    } catch {
+      console.log("error!");
+    }
+  };
+
+  const handleEditComment = (id: number | string) => {
+    setIsEditMode(true);
+    setSelectedId(id);
+
+    setTimeout(() => {
+      inputRef.current && inputRef.current.focus();
+    }, 0);
   };
 
   const handleDeleteComment = (commentId: string | number) => {
     if (confirm("정말 삭제하시겠습니까?")) {
       try {
-        axios.delete(
-          BASE_URL + `/questions/${questionId}/comments/${commentId}`
-        );
+        axios
+          .delete(BASE_URL + `/questions/${questionId}/comments/${commentId}`, {
+            headers: {
+              Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhZG1pbm5hbWUiOiJhZG1pbjIwMEBnbWFpbC5jb20iLCJhZG1pbklkIjo0LCJzdWIiOiJhZG1pbjIwMEBnbWFpbC5jb20iLCJpYXQiOjE2ODkyOTk1MzIsImV4cCI6MTY4OTMwMTMzMn0.b4k9ctp2BkvWtgXkF-gfmnAphCNQ76-_m0Z-9hGuQnE",
+              Refresh:
+                "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImFkbWluMjAwQGdtYWlsLmNvbSIsImlhdCI6MTY4OTI5OTUzMiwiZXhwIjoxNjg5MzI0NzMyfQ.vNXpfYbBabJgi1mw8NE-g5ySqeImBNMX_-SfocaN3Hw",
+            },
+          })
+          .then(setComplete(true));
         navigate(`/questions/${questionId}`);
       } catch {
         console.log("error!");
@@ -56,7 +90,22 @@ const Comment = () => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("commentValue = ", commentValue);
+
+    axios
+      .post(
+        BASE_URL + `/questions/${questionId}/comments`,
+        { content: commentValue },
+        {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhZG1pbm5hbWUiOiJhZG1pbjIwMEBnbWFpbC5jb20iLCJhZG1pbklkIjo0LCJzdWIiOiJhZG1pbjIwMEBnbWFpbC5jb20iLCJpYXQiOjE2ODkyOTk1MzIsImV4cCI6MTY4OTMwMTMzMn0.b4k9ctp2BkvWtgXkF-gfmnAphCNQ76-_m0Z-9hGuQnE",
+            Refresh:
+              "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImFkbWluMjAwQGdtYWlsLmNvbSIsImlhdCI6MTY4OTI5OTUzMiwiZXhwIjoxNjg5MzI0NzMyfQ.vNXpfYbBabJgi1mw8NE-g5ySqeImBNMX_-SfocaN3Hw",
+          },
+        }
+      )
+      .then(setComplete(true));
+
     reset && reset();
   };
 
@@ -72,25 +121,49 @@ const Comment = () => {
         <button>댓글 쓰기</button>
       </S.InputLayout>
       <S.CommentsLayout>
-        {commentList.length === 1 && commentList[0].commentId === "" ? (
+        {comments.length === 0 ? (
           <div className="none_comment">작성된 댓글이 없습니다.</div>
         ) : (
-          commentList.map(e => (
+          comments.map((e: CommentTypes) => (
             <S.CommentBox key={e.commentId}>
               <div className="comment_info_box">
                 <div className="comment_info">
                   <span>작성자 : {e.writer.name}</span>
                   <span>{elapsedTime(new Date(e.createAt))}</span>
                 </div>
-                <div className="comment_content">{e.content}</div>
+                {isEditMode && e.commentId === selectedId ? (
+                  <div className="modify_box">
+                    <input
+                      className="comment_modify_form"
+                      type="text"
+                      value={updateValue}
+                      ref={inputRef}
+                      onChange={e => setUpdateValue(e.target.value)}
+                      onKeyUp={onkeyHandler}
+                    />
+                  </div>
+                ) : (
+                  <div className="comment_content">{e.content}</div>
+                )}
               </div>
               <div className="comment_update_btn">
-                <button onClick={handleEditComment}>
-                  <EditButton />
-                </button>
-                <button onClick={() => handleDeleteComment(e.commentId)}>
-                  <DeleteButton />
-                </button>
+                {isEditMode && e.commentId === selectedId ? (
+                  <button
+                    className="comment_modify_btn"
+                    onClick={() => updateHandler(e.commentId)}
+                  >
+                    수정완료
+                  </button>
+                ) : (
+                  <>
+                    <button onClick={() => handleEditComment(e.commentId)}>
+                      <EditButton />
+                    </button>
+                    <button onClick={() => handleDeleteComment(e.commentId)}>
+                      <DeleteButton />
+                    </button>
+                  </>
+                )}
               </div>
             </S.CommentBox>
           ))
