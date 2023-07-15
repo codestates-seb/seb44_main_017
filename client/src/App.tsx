@@ -1,35 +1,42 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import { MainPage } from "./pages/mainPage/mainPage";
+import NoticePage from "./pages/noticePage/noticePage";
+import { ProductInfoPage } from "./pages/productInfoPage/productInfoPage";
+import { ProductListPage } from "./pages/productListPage/productListPage";
+import CollectionPage from "./pages/collectionPage/collectionPage";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-import LoginModal from "./components/Modal_login/LoginModal";
-import SignupModal from "./components/Modal_signup/SignupModal";
-import HamburgerDropdown from "./components/Dropdown_hamburger/HamburgerDropdown";
-import ProfileDropdown from "./components/Dropdown_profile/ProfileDropdown";
-import ProductItem from "./components/Item_product/ProductItem";
-import NotifyItem from "./components/Item_notify/NotifyItem";
-import Comment from "./components/Comment/Comment";
-import CustomPagination from "./components/Pagination/CustomPagination";
-import CustomAutocomplete from "./components/Autocomplete/CustomAutocomplete";
-import TitleBackground from "./components/TItleBackground/TitleBackground";
+import QnaListPage from "./pages/qnaListPage/qnaListPage";
+import QnaDetailPage from "./pages/qnaDetailPage/qnaDetailPage";
+import Mypage from "./pages/mypage/mypage";
+import styled from "styled-components";
 
 function App() {
   return (
-    <Routes>
-      <Route element={<Header />} path="/header" />
-      <Route element={<Footer />} path="/footer" />
-      <Route element={<LoginModal />} path="/modal_login" />
-      <Route element={<SignupModal />} path="/modal_signup" />
-      <Route element={<HamburgerDropdown />} path="/dropdown_hamburger" />
-      <Route element={<ProfileDropdown />} path="/dropdown_profile" />
-      <Route element={<ProductItem />} path="/item_product" />
-      <Route element={<NotifyItem />} path="/item_notify" />
-      <Route element={<Comment />} path="/comment" />
-      <Route element={<CustomAutocomplete />} path="/autocomplete" />
-      <Route element={<CustomPagination />} path="/pagination" />
-      <Route element={<TitleBackground/>} path="/title_background"/>
-    </Routes>
+    <>
+      <AppContainer>
+        <Header />
+        <Routes>
+          <Route element={<MainPage />} path="/" />
+          <Route element={<NoticePage />} path="/notice" />
+          <Route element={<ProductInfoPage />} path="/productinfo" />
+          <Route element={<ProductListPage />} path="/productlist" />
+          <Route element={<CollectionPage />} path="/collection" />
+          <Route element={<QnaListPage />} path="/questions" />
+          <Route element={<QnaDetailPage />} path="/questions/:questionId" />
+          <Route element={<Mypage />} path="/mypage/:memberId" />
+        </Routes>
+      </AppContainer>
+      <Footer />
+    </>
   );
 }
 
 export default App;
+
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`;
