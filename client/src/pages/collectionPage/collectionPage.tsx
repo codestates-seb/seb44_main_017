@@ -64,14 +64,20 @@ const CollectionPage = () => {
 
     formData.append("productlist", JSON.stringify(contentList));
 
+    const cookie: string[] = document.cookie.split(";");
+    const authorization: string | undefined = cookie
+      .find((c) => c.includes("authorization="))
+      ?.replace("authorization=", "");
+    const refresh: string | undefined = cookie
+      .find((c) => c.includes("refresh="))
+      ?.replace(" refresh=", "");
+
     const res = await axios.post(BASE_URL + "/products/postlist", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         "ngrok-skip-browser-warning": true,
-        Authorization:
-          "Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiYWRtaW4xQGdtYWlsLmNvbSIsInN1YiI6ImFkbWluMUBnbWFpbC5jb20iLCJpYXQiOjE2ODkxMDUzNjQsImV4cCI6MTY4OTEwNzE2NH0.rcy4ZVnCH6CsXbAA1IKsQpLwnm4thgCaLxywtWODnK6miVZfJvvYGPKbOA51Y3QC",
-        Refresh:
-          "eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZW1iZXIiLCJzdWIiOiJhZG1pbjFAZ21haWwuY29tIiwiaWF0IjoxNjg5MTA1MzY0LCJleHAiOjE2ODkxMzA1NjR9.dJGVM3jkD1sTn3zdXXOZjhKb6A3Gln45-uNH2FYuNcakYMEDiTvPcT6pLMuDUagI",
+        Authorization: `${authorization}`,
+        Refresh: `${refresh}`,
       },
     });
 
