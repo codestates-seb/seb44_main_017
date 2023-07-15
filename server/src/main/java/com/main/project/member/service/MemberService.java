@@ -1,11 +1,14 @@
 package com.main.project.member.service;
 
 import com.main.project.auth.util.UserCustomAuthorityUtils;
+import com.main.project.dto.queryresponse.ProductResponse;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.dto.queryget;
 import com.main.project.member.entity.Member;
+import com.main.project.member.repository.MemberQueryRepository;
 import com.main.project.member.repository.MemberRepository;
+import com.main.project.product.entity.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-
+    private final MemberQueryRepository memberQueryRepository;
     private final UserCustomAuthorityUtils authorityUtils;
     private final PasswordEncoder passwordEncoder;
 
@@ -101,19 +104,9 @@ public class MemberService {
         memberRepository.delete(findMember);
     }
 
-    public Page<queryget.product> searchMemberProdcut(Long memberId, int page, int size, String keyword, boolean issell){
-        if(keyword.equals("oldest")){
-            return memberRepository.findUserProductOld(memberId, issell, PageRequest.of(page, size));
-        } else if(keyword.equals("mostlike")){
-            return memberRepository.findUserProductLike(memberId, issell, PageRequest.of(page, size));
-        } else if(keyword.equals("mostview")){
-            return memberRepository.findUserProductView(memberId, issell, PageRequest.of(page, size));
-        } else if(keyword.equals("pricedesc")){
-            return memberRepository.findUserProductpricedesc(memberId, issell, PageRequest.of(page, size));
-        } else if(keyword.equals("priceasc")){
-            return memberRepository.findUserProductpriceasc(memberId, issell, PageRequest.of(page, size));
-        }
-        return memberRepository.findUserProductNew(memberId, issell, PageRequest.of(page, size));
+    public Page<ProductResponse> getMemberProduct(Long memberId, int page, int size, String keyword, boolean issell){
+
+        return memberQueryRepository.getMemberProduct(memberId, PageRequest.of(page,size), keyword, issell);
     }
 
     public Page<Member> searchMemberlist(String keyword, int page, int size){
