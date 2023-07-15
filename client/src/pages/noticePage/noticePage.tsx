@@ -21,7 +21,8 @@ type ItemType = {
 const NoticePage = () => {
   const [data, setData] = useState<ItemType[]>([]);
   const [page, setPage] = useState<any>(1);
-  const [sort, setSort] = useState("newest");
+  const sort = "newest";
+  // const [sort, setSort] = useState("newest");
 
   //* 실제 페이지 변경될 때 실행되는 데이터 받아오기 함수
   const getUser = async () => {

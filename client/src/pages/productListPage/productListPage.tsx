@@ -1,6 +1,5 @@
 import axios from "axios";
 import * as S from "./style";
-// import { Link } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 import { IMG_URL } from "@/constants/constants";
 import Logo from "../../assets/logo_subtitle.svg";
@@ -9,7 +8,6 @@ import arrowLeftIcon from "../../assets/arrowLeftIcon.svg";
 import SelectBox from "../../components/SelectBox/SelectBox";
 import arrowRightIcon from "../../assets/arrowRightIcon.svg";
 import ProductItem from "../../components/Item_product/ProductItem";
-// import { ProductInfoPage } from "../productInfoPage/productInfoPage";
 import CategoryButton from "../../components/CategoryButton/CategoryButton";
 import { getToken } from "@/utils/token";
 
@@ -30,11 +28,13 @@ export const ProductListPage = () => {
   const [btnSelect, setBtnSelect] = useState<boolean>(false);
   const [btnCategory, setBtnCategory] = useState<string>("");
   const [data, setData] = useState<Data[]>([]);
-  const [isLike, setIsLike] = useState(false);
+  // const [isLike, setIsLike] = useState(false);
+  const isLike = false;
   const ref = useRef<HTMLDivElement>(null);
   const [translate, setTranslate] = useState<number>(0);
   const [value, setValue] = useState<string>("newest");
-  const [isSell, setIssell] = useState<boolean>(false);
+  // const [isSell, setIssell] = useState<boolean>(false);
+  const isSell = false;
 
   const handleBtnCategory = (category: string) => {
     setBtnCategory(category);
@@ -75,7 +75,8 @@ export const ProductListPage = () => {
         {
           // 서버 수정 후 사용 안함
           headers: {
-            refresh: `${refresh}`,
+            Authorization: `${authorization}`,
+            Refresh: `${refresh}`,
           },
         }
       );
@@ -131,7 +132,7 @@ export const ProductListPage = () => {
         <S.ProductsBox>
           <S.ArrowLeftIcon src={arrowLeftIcon} onClick={handlePrev} />
           <S.ProductsCarousel>
-            {data.map((data) => (
+            {data.map(data => (
               <S.Url
                 href={`/productinfo?productId=${data.product_id}`}
                 style={{ textDecoration: "none" }}
@@ -146,6 +147,7 @@ export const ProductListPage = () => {
                     like={isLike}
                     title={data.name}
                     price={data.price}
+                    product_id={data.product_id}
                   ></ProductItem>
                 </S.Product>
               </S.Url>
@@ -155,7 +157,7 @@ export const ProductListPage = () => {
         </S.ProductsBox>
       </S.SubTitleContainer>
       <S.CategoryBar>
-        {categories.map((category) => (
+        {categories.map(category => (
           <CategoryButton
             onClick={handleBtnCategory}
             btnSelect={btnCategory === category.name}
@@ -167,7 +169,7 @@ export const ProductListPage = () => {
         <SelectBox usage={"정렬"} options={sortOptions} setOption={setValue} />
       </S.SelectBar>
       <S.ProductsContainer>
-        {data.map((data) => (
+        {data.map(data => (
           <S.Url
             href={`/productinfo?productId=${data.product_id}`}
             style={{ textDecoration: "none" }}
@@ -179,6 +181,7 @@ export const ProductListPage = () => {
                 like={isLike}
                 title={data.name}
                 price={data.price}
+                product_id={data.product_id}
               ></ProductItem>
             </S.Product>
           </S.Url>
