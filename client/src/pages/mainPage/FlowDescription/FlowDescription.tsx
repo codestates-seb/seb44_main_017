@@ -5,16 +5,14 @@ import {
   point,
   clothesShop,
   sellingPoint,
-} from "../../../assets"
-import FadeIn from "@/components/FadeIn/FadeIn";
+} from "../../../assets";
 const FlowDescription = () => {
   return (
     <S.FlowConatiner>
       <S.Title>저희 RECLOSET은 이렇게 관리됩니다.</S.Title>
       <S.MobileScrollContainer>
-      <S.CardContainer>
-        <S.UpperContainer>
-          <FadeIn index={1}>
+        <S.CardContainer>
+          <S.UpperContainer>
             <S.FlowCardContainer>
               <S.FlowImage src={delivery} />
               <S.FlowDescirbe>
@@ -23,8 +21,6 @@ const FlowDescription = () => {
               </S.FlowDescirbe>
               <S.FlowDescirbe></S.FlowDescirbe>
             </S.FlowCardContainer>
-          </FadeIn>
-          <FadeIn index={2}>
             <S.FlowCardContainer>
               <S.FlowImage src={inspect} />
               <S.FlowDescirbe>
@@ -33,8 +29,6 @@ const FlowDescription = () => {
               </S.FlowDescirbe>
               <S.FlowDescirbe></S.FlowDescirbe>
             </S.FlowCardContainer>
-          </FadeIn>
-          <FadeIn index={3}>
             <S.FlowCardContainer>
               <S.FlowImage src={point} />
               <S.FlowDescirbe>
@@ -43,10 +37,8 @@ const FlowDescription = () => {
               </S.FlowDescirbe>
               <S.FlowDescirbe></S.FlowDescirbe>
             </S.FlowCardContainer>
-          </FadeIn>
-        </S.UpperContainer>
-        <S.lowwerContainer>
-          <FadeIn index={4}>
+          </S.UpperContainer>
+          <S.lowwerContainer>
             <S.FlowCardContainer>
               <S.FlowImage src={clothesShop} />
               <S.FlowDescirbe>
@@ -55,8 +47,6 @@ const FlowDescription = () => {
                 <S.Highlight> 판매</S.Highlight>됩니다.
               </S.FlowDescirbe>
             </S.FlowCardContainer>
-          </FadeIn>
-          <FadeIn index={5}>
             <S.FlowCardContainer>
               <S.FlowImage src={sellingPoint} />
               <S.FlowDescirbe>
@@ -66,9 +56,8 @@ const FlowDescription = () => {
               </S.FlowDescirbe>
               <S.FlowDescirbe></S.FlowDescirbe>
             </S.FlowCardContainer>
-          </FadeIn>
-        </S.lowwerContainer>
-      </S.CardContainer>
+          </S.lowwerContainer>
+        </S.CardContainer>
       </S.MobileScrollContainer>
     </S.FlowConatiner>
   );

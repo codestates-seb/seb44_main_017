@@ -1,32 +1,20 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import FlowDescription from "@/pages/mainPage/FlowDescription/FlowDescription";
 import styled from "styled-components";
 import BannerContainerPc from "./Banners/bannerContainerPc";
 import BannerContainerMobile from "./Banners/bannerContainerMobile";
 import AffiliatedCompanies from "./AffiliatedCompanies/AffiliatedCompanies";
+import ClothesList from "./ClothesList/ClothesList";
 
 export const MainPage = () => {
-  const [clothesList, setClothesList] = useState([]);
-  useEffect(() => {
-    (async () => {
-      try {
-        // const res = await axios({
-        //   method: "GET",
-        //   url: "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/products?page=1&size=10&sort=newest",
-        // });
-        // console.log(res);
-      } catch (err) {
-        console.error("Error getting clothes list", err);
-      }
-    })();
-  }, []);
   return (
     <MainPageContainer>
-      <BannerContainer>
-        <BannerContainerPc />
-        <BannerContainerMobile />
-      </BannerContainer>
+      <MainContentContainer>
+        <BannerContainer>
+          <BannerContainerPc />
+          <BannerContainerMobile />
+        </BannerContainer>
+        <ClothesList />
+      </MainContentContainer>
       <FlowDescription />
       <AffiliatedCompanies />
     </MainPageContainer>
@@ -38,13 +26,17 @@ const MainPageContainer = styled.main`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 56px 0px;
   @media (max-width: 767px) {
-    padding:0px ;
+    padding: 0px;
   }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    padding: 36px 0px;
-  }
+
+`;
+const MainContentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+  min-height: calc(100vh - 72px);
 `;
 const BannerContainer = styled.div`
   display: flex;
