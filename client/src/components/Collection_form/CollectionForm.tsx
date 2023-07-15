@@ -64,7 +64,7 @@ const CollectionForm = ({ contents, setContents, itemNumber }: Props) => {
     <S.FormContainer>
       <S.ContentContainer>
         <S.Imagebox>
-          <div className="image_background">
+          <div className="image_background" onClick={uploadBtnClickHandler}>
             {preview ? <img src={preview} /> : <ImageIcon />}
           </div>
           <input

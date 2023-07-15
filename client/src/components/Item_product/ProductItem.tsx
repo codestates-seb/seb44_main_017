@@ -9,7 +9,7 @@ interface ProductInfo {
   like: boolean;
   title: string;
   price: string;
-  product_id: number;
+  product_id: number | string;
 }
 
 const ProductItem: React.FC<ProductInfo> = ({

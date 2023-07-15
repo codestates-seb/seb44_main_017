@@ -1,6 +1,5 @@
 import FlowDescription from "@/pages/mainPage/FlowDescription/FlowDescription";
 import styled from "styled-components";
-import { BASE_URL } from "@/constants/constants";
 import BannerContainerPc from "./Banners/bannerContainerPc";
 import BannerContainerMobile from "./Banners/bannerContainerMobile";
 import AffiliatedCompanies from "./AffiliatedCompanies/AffiliatedCompanies";
@@ -30,7 +29,6 @@ const MainPageContainer = styled.main`
   @media (max-width: 767px) {
     padding: 0px;
   }
-
 `;
 const MainContentContainer = styled.div`
   display: flex;
