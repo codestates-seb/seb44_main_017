@@ -7,17 +7,17 @@ export interface CommentTypes {
 }
 
 export interface WriterTypes {
-  memberId: number | string;
+  adminId: number | string;
   name: string;
 }
 
 export interface QnaTypes {
-  questionId: number;
+  questionId: number | string;
   title: string;
   content: string;
   createAt: string;
   modifyAt: string;
-  view: number;
+  view: number | string;
   writer: WriterTypes;
-  comments: CommentTypes[];
+  qcomments: CommentTypes[];
 }

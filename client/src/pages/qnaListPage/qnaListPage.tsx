@@ -23,17 +23,19 @@ interface QnaProps {
 const QnaListPage = () => {
   const title = "무엇이 궁금한가요?";
   const options = ["최신순", "오래된순", "좋아요순", "조회수순"];
+  const PAGE_LIMIT = 7;
+  const TITLE_MAX_LENGTH = 40;
+
   const [sortOption, setSortOption] = useState("newest");
   const [qnaList, setQnaList] = useState<QnaProps[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
-  const pageLimit = 7;
 
   useEffect(() => {
     axios
       .get(
         BASE_URL +
-          `/questions/board?page=${page}&size=${pageLimit}&sort=${sortOption}`,
+          `/questions/board?page=${page}&size=${PAGE_LIMIT}&sort=${sortOption}`,
         {
           headers: {
             Authorization:
@@ -44,7 +46,7 @@ const QnaListPage = () => {
         }
       )
       .then(res => {
-        setTotalPage(Math.ceil(res.data.pageInfo.totalElements / pageLimit));
+        setTotalPage(Math.ceil(res.data.pageInfo.totalElements / PAGE_LIMIT));
         setQnaList(res.data.data);
       });
   }, [, sortOption, page]);
@@ -67,6 +69,13 @@ const QnaListPage = () => {
             />
           </S.SortBox>
           <S.BoardContainer>
+            <colgroup>
+              <col style={{ width: "5%" }} />
+              <col style={{ width: "50%" }} />
+              <col style={{ width: "15%" }} />
+              <col style={{ width: "15%" }} />
+              <col style={{ width: "15%" }} />
+            </colgroup>
             <thead>
               <tr>
                 <th>No</th>
@@ -80,15 +89,20 @@ const QnaListPage = () => {
               {qnaList.map(item => (
                 <tr key={item.questionId}>
                   <td>{item.questionId}</td>
-                  <td>
+                  <td title={item.title}>
                     <Link to={`/questions/${item.questionId}`}>
-                      {item.title}
+                      {item.title.length > TITLE_MAX_LENGTH
+                        ? item.title.slice(0, TITLE_MAX_LENGTH).concat("...")
+                        : item.title}
                     </Link>
                   </td>
-                  <S.ViewBox>
-                    <ViewCount />
-                    <span>{item.view}</span>
-                  </S.ViewBox>
+                  <td>
+                    <S.ViewBox>
+                      <ViewCount />
+                      <span>{item.view}</span>
+                    </S.ViewBox>
+                  </td>
+
                   <td>{item.createAt.slice(0, 10)}</td>
                   <td>{item.writer.name}</td>
                 </tr>
