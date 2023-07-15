@@ -9,6 +9,7 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import QnaListPage from "./pages/qnaListPage/qnaListPage";
 import QnaDetailPage from "./pages/qnaDetailPage/qnaDetailPage";
+import Mypage from "./pages/mypage/mypage";
 import styled from "styled-components";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route element={<CollectionPage />} path="/collection" />
           <Route element={<QnaListPage />} path="/questions" />
           <Route element={<QnaDetailPage />} path="/questions/:questionId" />
+          <Route element={<Mypage />} path="/mypage/:memberId" />
         </Routes>
       </AppContainer>
       <Footer />

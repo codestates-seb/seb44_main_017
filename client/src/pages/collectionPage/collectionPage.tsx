@@ -33,7 +33,7 @@ const CollectionPage = () => {
 
   const deleteHandler = (id: number) => {
     confirm("정말 삭제하시겠습니까?");
-    setContents(contents.filter((item) => item.itemId !== id));
+    setContents(contents.filter(item => item.itemId !== id));
   };
 
   const submitHandler = async () => {
