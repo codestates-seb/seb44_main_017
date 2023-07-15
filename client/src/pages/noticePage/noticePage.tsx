@@ -2,6 +2,7 @@ import axios from "axios";
 import NotifyItem from "@/components/Item_notify/NotifyItem";
 import CustomPagination from "@/components/Pagination/CustomPagination";
 import { useEffect, useState } from "react";
+import { BASE_URL } from "@/constants/constants";
 
 type ItemType = {
   title: string;
@@ -29,7 +30,7 @@ const NoticePage = () => {
       getUser;
       //* 보통 백엔드 api가 아래처럼 ?page={4} 이런식으로 만드는 게 정석
       const { data, status } = await axios.get(
-        `http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/notify/board?page=${page}&size=2&sort=${sort}`
+        `${BASE_URL}/notify/board?page=${page}&size=2&sort=${sort}`
       );
 
       //* 데이터가 있을 때만 setData에다가 담아주기
