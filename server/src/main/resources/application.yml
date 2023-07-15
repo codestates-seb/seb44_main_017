@@ -3,7 +3,7 @@ spring:
     url: jdbc:mysql://localhost:3306/main_project?serverTimezone=Asia/Seoul
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password:
+    password: 1234
   jpa:
 #    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
@@ -46,7 +46,7 @@ spring:
             client-id: ${K_CLIENT_ID}
             client-secret: ${K_CLIENT_SECRET}
             client-name: Kakao
-            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            redirect-uri: http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
             client-authentication-method: POST
             scope:

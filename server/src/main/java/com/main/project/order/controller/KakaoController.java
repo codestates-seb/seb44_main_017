@@ -57,17 +57,13 @@ public class KakaoController {
     private final ProductMapper productMapper;
 
     private final ProductRepository productRepository;
-    @Setter(onMethod_ = @Autowired)
-    private KakaoPay kakaopay;
+
+    //@Setter(onMethod_ = @Autowired)
+    //private KakakoPay kakaopay;
+    private final KakaoPay kakaopay;
 
 
-    /*
-    @GetMapping("/kakaoPay")
-    public void kakaoPayGet() {
 
-    }
-
-     */
     @PostMapping("/kakaoPaybucket")
     public ResponseEntity kakaoPaybucket(@RequestHeader(name = "Refresh") String token,
                                  @Valid @RequestBody OrderDto.Post requestBody){
@@ -116,14 +112,22 @@ public class KakaoController {
             // change product state
             Product product = productService.findProduct(Long.valueOf(kakaoPayApprovalVO.getPartner_order_id()));
             product.setIssell(true);
-            Eproduct eproduct = productMapper.productToEproduct(product);
-            eproduct.setSell("sold");
-            eproductService.addEproduct(eproduct);
+            //Eproduct eproduct = productMapper.productToEproduct(product);
+            //eproduct.setSell("sold");
+            //eproductService.addEproduct(eproduct);
             productRepository.save(product);
             // sava point
             Member seller = memberService.findVerifiedMember(product.getMember().getMemberId());
             seller.setMoney(seller.getMoney() + product.getPrice()*10/100);
             memberRepository.save(seller);
+            // delete product in other user bucket & add in buy list
+
+            orderproductService.createOpforsingle(member, product);
+            List<queryget.findbyorderpid> orderproductIdList = orderproductService.findOrderproductdelete(member.getMemberId(),product.getProductId());
+            orderproductIdList.forEach(orderproductId -> {
+                Orderproduct orderproduct = orderproductService.findorderproduct(orderproductId.getorderproduct_id());
+                orderproductRepository.delete(orderproduct);
+            });
         }
         else{
             List<queryget.findbypid> productIdList = orderproductRepository.findAllByMemberId(member.getMemberId());
