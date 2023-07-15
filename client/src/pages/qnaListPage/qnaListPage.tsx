@@ -8,6 +8,7 @@ import * as S from "./style";
 import { Link } from "react-router-dom";
 import ViewCount from "@/assets/icons/ViewCount";
 import CustomPagination from "@/components/Pagination/CustomPagination";
+import { getToken } from "@/utils/token";
 
 interface QnaProps {
   questionId: number;
@@ -31,6 +32,8 @@ const QnaListPage = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
 
+  const [authorization, refresh] = getToken();
+
   useEffect(() => {
     axios
       .get(
@@ -38,14 +41,12 @@ const QnaListPage = () => {
           `/questions/board?page=${page}&size=${PAGE_LIMIT}&sort=${sortOption}`,
         {
           headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2xlcyI6WyJVU0VSIl0sInVzZXJuYW1lIjoiYWRtaW4yQGdtYWlsLmNvbSIsInN1YiI6ImFkbWluMkBnbWFpbC5jb20iLCJpYXQiOjE2ODkyMDU3MzYsImV4cCI6MTY4OTIwNzUzNn0.BI4GbSphJZW8LFD0JM49IbL6WIeUV4ZkK9hUlpWt_hpWPQ2TvyPbcda8WBisAfCC",
-            Refresh:
-              "eyJhbGciOiJIUzM4NCJ9.eyJpc3MiOiJtZW1iZXIiLCJzdWIiOiJhZG1pbjJAZ21haWwuY29tIiwiaWF0IjoxNjg5MjA1NzM2LCJleHAiOjE2ODkyMzA5MzZ9.95NR8khbMiPGKilSreRZk2VT5VGCD5uRIw8LIlapb3LpUW3iv1IvIAr0UFhnJ1Yj",
+            Authorization: `${authorization}`,
+            Refresh: `${refresh}`,
           },
         }
       )
-      .then(res => {
+      .then((res) => {
         setTotalPage(Math.ceil(res.data.pageInfo.totalElements / PAGE_LIMIT));
         setQnaList(res.data.data);
       });
@@ -86,7 +87,7 @@ const QnaListPage = () => {
               </tr>
             </thead>
             <tbody>
-              {qnaList.map(item => (
+              {qnaList.map((item) => (
                 <tr key={item.questionId}>
                   <td>{item.questionId}</td>
                   <td title={item.title}>

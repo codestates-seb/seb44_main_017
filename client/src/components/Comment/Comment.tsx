@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 import { CommentTypes } from "@/types/shared";
 import { useEffect, useState, useRef } from "react";
+import { getToken } from "@/utils/token";
 
 interface CommentProps {
   comments: CommentTypes[];
@@ -24,8 +25,10 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const [authorization, refresh] = getToken();
+
   useEffect(() => {
-    comments.map(item => {
+    comments.map((item) => {
       item.commentId === selectedId && setUpdateValue(item.content);
     });
   }, [selectedId]);
@@ -45,10 +48,8 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
         },
         {
           headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhZG1pbm5hbWUiOiJhZG1pbjIwMEBnbWFpbC5jb20iLCJhZG1pbklkIjo0LCJzdWIiOiJhZG1pbjIwMEBnbWFpbC5jb20iLCJpYXQiOjE2ODkyOTk1MzIsImV4cCI6MTY4OTMwMTMzMn0.b4k9ctp2BkvWtgXkF-gfmnAphCNQ76-_m0Z-9hGuQnE",
-            Refresh:
-              "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImFkbWluMjAwQGdtYWlsLmNvbSIsImlhdCI6MTY4OTI5OTUzMiwiZXhwIjoxNjg5MzI0NzMyfQ.vNXpfYbBabJgi1mw8NE-g5ySqeImBNMX_-SfocaN3Hw",
+            Authorization: `${authorization}`,
+            Refresh: `${refresh}`,
           },
         }
       );
@@ -74,10 +75,8 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
         axios
           .delete(BASE_URL + `/questions/${questionId}/comments/${commentId}`, {
             headers: {
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhZG1pbm5hbWUiOiJhZG1pbjIwMEBnbWFpbC5jb20iLCJhZG1pbklkIjo0LCJzdWIiOiJhZG1pbjIwMEBnbWFpbC5jb20iLCJpYXQiOjE2ODkyOTk1MzIsImV4cCI6MTY4OTMwMTMzMn0.b4k9ctp2BkvWtgXkF-gfmnAphCNQ76-_m0Z-9hGuQnE",
-              Refresh:
-                "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImFkbWluMjAwQGdtYWlsLmNvbSIsImlhdCI6MTY4OTI5OTUzMiwiZXhwIjoxNjg5MzI0NzMyfQ.vNXpfYbBabJgi1mw8NE-g5ySqeImBNMX_-SfocaN3Hw",
+              Authorization: `${authorization}`,
+              Refresh: `${refresh}`,
             },
           })
           .then(setComplete(true));
@@ -97,10 +96,8 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
         { content: commentValue },
         {
           headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhZG1pbm5hbWUiOiJhZG1pbjIwMEBnbWFpbC5jb20iLCJhZG1pbklkIjo0LCJzdWIiOiJhZG1pbjIwMEBnbWFpbC5jb20iLCJpYXQiOjE2ODkyOTk1MzIsImV4cCI6MTY4OTMwMTMzMn0.b4k9ctp2BkvWtgXkF-gfmnAphCNQ76-_m0Z-9hGuQnE",
-            Refresh:
-              "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImFkbWluMjAwQGdtYWlsLmNvbSIsImlhdCI6MTY4OTI5OTUzMiwiZXhwIjoxNjg5MzI0NzMyfQ.vNXpfYbBabJgi1mw8NE-g5ySqeImBNMX_-SfocaN3Hw",
+            Authorization: `${authorization}`,
+            Refresh: `${refresh}`,
           },
         }
       )
@@ -138,7 +135,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
                       type="text"
                       value={updateValue}
                       ref={inputRef}
-                      onChange={e => setUpdateValue(e.target.value)}
+                      onChange={(e) => setUpdateValue(e.target.value)}
                       onKeyUp={onkeyHandler}
                     />
                   </div>

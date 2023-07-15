@@ -11,6 +11,7 @@ import arrowRightIcon from "../../assets/arrowRightIcon.svg";
 import ProductItem from "../../components/Item_product/ProductItem";
 // import { ProductInfoPage } from "../productInfoPage/productInfoPage";
 import CategoryButton from "../../components/CategoryButton/CategoryButton";
+import { getToken } from "@/utils/token";
 
 interface Data {
   product_id: string;
@@ -66,11 +67,8 @@ export const ProductListPage = () => {
   //   { name: "하의", value: "hi" },
   // ];
   const getProducts = async () => {
-    // 함수 별도 파일 만들기
-    const cookie: string[] = document.cookie.split(";");
-    const refresh: string | undefined = cookie
-      .find((c) => c.includes("refresh="))
-      ?.replace(" refresh=", "");
+    const [authorization, refresh] = getToken();
+
     try {
       const response = await axios.get(
         `${BASE_URL}/products?page=1&size=20&sort=${value}&issell=false`,

@@ -26,9 +26,9 @@ const Header = () => {
         <S.LogoText>RECLOSET</S.LogoText>
       </S.LogoContainer>
       <S.NavBarContainer>
-        <NavBtn href="/products">상품보기</NavBtn>
+        <NavBtn href="/productlist">상품보기</NavBtn>
         <NavBtn href="/notice">공지사항</NavBtn>
-        <NavBtn href="/">Q&A</NavBtn>
+        <NavBtn href="/questions">Q&A</NavBtn>
         {isLogin ? (
           <ProfileDropdown />
         ) : (
