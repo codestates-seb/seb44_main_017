@@ -18,7 +18,7 @@ export const HeaderBox = styled.div`
   gap: 24px;
 
   @media (max-width: 767px) {
-    padding: 36px 25px 20px;
+    padding: 36px 25px 10px;
   }
 
   & .detail_title {
@@ -43,6 +43,7 @@ export const HeaderBox = styled.div`
     @media (max-width: 767px) {
       margin-right: 0;
       font-size: 14px;
+      align-items: center;
     }
 
     @media (min-width: 768px) and (max-width: 1023px) {
