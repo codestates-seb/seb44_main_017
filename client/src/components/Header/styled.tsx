@@ -14,10 +14,15 @@ export const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 56px;
   padding: 8px 36px;
   background-color: var(--color-white);
   z-index: 99;
-  @media (max-width: 1023px) {
+  @media (max-width: 767px) {
+    height: 32px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    height: 36px;
     padding: 12px 32px;
   }
 `;

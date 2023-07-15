@@ -9,13 +9,12 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import QnaListPage from "./pages/qnaListPage/qnaListPage";
 import QnaDetailPage from "./pages/qnaDetailPage/qnaDetailPage";
+import styled from "styled-components";
 
 function App() {
   return (
     <>
-      <div
-        style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
-      >
+      <AppContainer>
         <Header />
         <Routes>
           <Route element={<MainPage />} path="/" />
@@ -26,10 +25,16 @@ function App() {
           <Route element={<QnaListPage />} path="/questions" />
           <Route element={<QnaDetailPage />} path="/questions/:questionId" />
         </Routes>
-      </div>
+      </AppContainer>
       <Footer />
     </>
   );
 }
 
 export default App;
+
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`;

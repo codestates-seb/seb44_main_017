@@ -27,8 +27,8 @@ export const UppserListContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 1px;
   animation: loop 30s linear infinite;
-  padding-bottom: 1px;
   @keyframes loop {
     100% {
       transform: translateX(-100%);
@@ -39,6 +39,7 @@ export const LowerListContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 1px;
   animation: loop 40s linear infinite;
   @keyframes loop {
     100% {

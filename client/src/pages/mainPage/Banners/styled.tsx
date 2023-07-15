@@ -99,7 +99,7 @@ export const CollectionBtn = styled.button`
   width: 200px;
   color: var(--color-white);
   background-color: var(--color-darkblue);
-  padding: 8px;
+  padding: 12px;
   border: 2px solid var(--color-darkblue);
   border-radius: 99px;
   margin-bottom: 16px;
@@ -116,7 +116,7 @@ export const ShoppingBtn = styled.button`
   width: 200px;
   color: var(--color-darkblue);
   background-color: var(--color-white);
-  padding: 8px;
+  padding: 12px;
   border: 2px solid var(--color-darkblue);
   border-radius: 99px;
   font-weight: var(--font-weight-700);
@@ -172,7 +172,7 @@ export const TitleContainerMobile = styled.div`
 export const MobileBannerImage = styled.img<{ src: string }>`
   width: 100%;
   @media (min-width: 600px) {
-    width: 100vw;
-    height: 50vh;
+    width: 100%;
+    height: 40vh;
   }
 `;

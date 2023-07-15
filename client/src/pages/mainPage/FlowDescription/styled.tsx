@@ -10,6 +10,7 @@ export const FlowConatiner = styled.div`
   background-color: var(--color-gray100);
   @media (max-width: 767px) {
     padding: 36px 0px 72px 0px;
+    margin-top: 56px;
     align-items: flex-start;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
