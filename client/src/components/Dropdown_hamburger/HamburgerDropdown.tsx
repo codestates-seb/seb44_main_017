@@ -99,7 +99,7 @@ const HamburgerDropdown = ({
               <>
                 <S.MenuBox>
                   <S.Menu>
-                    <li onClick={() => navigate("/products")}>
+                    <li onClick={() => navigate("/productlist")}>
                       <img src={product} title="상품 보기" />
                       <h3 className="nav_text">상품 보기</h3>
                       <div className="nav_description">상품 보기</div>
@@ -114,7 +114,7 @@ const HamburgerDropdown = ({
                       <h3 className="nav_text">공지사항</h3>
                       <div className="nav_description">공지사항</div>
                     </li>
-                    <li onClick={() => navigate("#")}>
+                    <li onClick={() => navigate("/questions")}>
                       <img src={askQuestion} title="Q&A" />
                       <h3 className="nav_text">Q & A</h3>
                       <div className="nav_description">Q&A</div>

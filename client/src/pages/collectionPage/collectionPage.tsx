@@ -4,6 +4,7 @@ import axios from "axios";
 import * as S from "./style";
 import { BASE_URL } from "../../constants/constants";
 import { useNavigate } from "react-router-dom";
+import { getToken } from "@/utils/token";
 
 export interface ItemProps {
   name: string;
@@ -64,18 +65,11 @@ const CollectionPage = () => {
 
     formData.append("productlist", JSON.stringify(contentList));
 
-    const cookie: string[] = document.cookie.split(";");
-    const authorization: string | undefined = cookie
-      .find((c) => c.includes("authorization="))
-      ?.replace("authorization=", "");
-    const refresh: string | undefined = cookie
-      .find((c) => c.includes("refresh="))
-      ?.replace(" refresh=", "");
+    const [authorization, refresh] = getToken();
 
     const res = await axios.post(BASE_URL + "/products/postlist", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        "ngrok-skip-browser-warning": true,
         Authorization: `${authorization}`,
         Refresh: `${refresh}`,
       },
