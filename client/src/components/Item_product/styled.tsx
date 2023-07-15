@@ -32,13 +32,19 @@ export const Content = styled.div`
 `;
 export const ProdcutImage = styled.img<ImageProps>`
   width: 200px;
+  height: 200px;
+  object-fit: cover;
   border: 2px solid var(--color-darkblue);
   border-radius: 16px;
   @media (max-width: 767px) {
     width: 156px;
+    height: 156px;
+    object-fit: cover;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     width: 184px;
+    height: 184px;
+    object-fit: cover;
   }
 `;
 export const ImageErrorIcon = styled(HideImageIcon)`
