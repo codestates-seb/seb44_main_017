@@ -35,7 +35,7 @@ const ClothesList = () => {
       try {
         const res = await axios({
           method: "GET",
-          url: `http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/products?page=1&size=12&sort=newest`,
+          url: `http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/products?page=1&size=20&sort=newest&issell=false`,
         });
         setClothesList(res.data.data);
       } catch (err) {
