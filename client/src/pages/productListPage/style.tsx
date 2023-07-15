@@ -56,11 +56,22 @@ export const ProductsCarousel = styled.div`
   display: flex;
   flex-wrap: none;
   overflow: hidden;
-  width: 60vw;
+  @media (max-width: 767px) {
+    width: 234px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 740px;
+  }
+  @media (min-width: 1024px) {
+    width: 1024px;
+  }
 `;
 export const Product = styled.div`
   display: flex;
-  background-color: white;
+  transition: 0.5s;
+  :hover {
+    cursor: pointer;
+  }
 `;
 export const ArrowLeftIcon = styled.img`
   color: var(--color-darkblue);
@@ -113,30 +124,6 @@ export const CategoryBar = styled.nav`
     margin-top: 40px;
   }
 `;
-export const CategoryButton = styled.button<{ $btnActive: boolean }>`
-  /* background-color: $(var(--color-lightivory); */
-  background-color: ${(props) => (props.$btnActive ? "#e9e6e1" : "#2b475c")};
-  color: var(--color-darkblue);
-  border: solid 2px #2b475c;
-  border-radius: 30px;
-  font-weight: 700;
-  padding: 4px 0px;
-  :nth-child(-n + 4) {
-    margin-right: 16px;
-  }
-  @media (max-width: 767px) {
-    font-size: 10px;
-    width: 48px;
-  }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    font-size: 12px;
-    width: 52px;
-  }
-  @media (min-width: 1024px) {
-    font-size: 16px;
-    width: 80px;
-  }
-`;
 export const SelectBar = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -162,4 +149,8 @@ export const ProductsContainer = styled.div`
   @media (min-width: 1024px) {
     padding: 0px 320px;
   }
+`;
+export const Url = styled.a`
+  text-decoration: none;
+  color: var(--color-black);
 `;
