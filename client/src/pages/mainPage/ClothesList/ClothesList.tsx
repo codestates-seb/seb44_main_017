@@ -4,6 +4,7 @@ import axios from "axios";
 import ProductItem from "@/components/Item_product/ProductItem";
 import FadeIn from "@/components/FadeIn/FadeIn";
 import { useNavigate } from "react-router";
+import { IMG_URL } from "@/constants/constants";
 
 interface Data {
   image_link: string;
@@ -20,7 +21,7 @@ const ClothesList = () => {
     return (
       <ProductItem
         key={`product_${idx}`}
-        url={`${data.image_link}`}
+        url={`${IMG_URL}/${data.image_link}`}
         isSell={false}
         like={data.productlike}
         title={data.name}
@@ -35,7 +36,7 @@ const ClothesList = () => {
       try {
         const res = await axios({
           method: "GET",
-          url: `http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/products?page=1&size=20&sort=newest&issell=false`,
+          url: `http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/products?page=1&size=12&sort=newest&issell=false`,
         });
         setClothesList(res.data.data);
       } catch (err) {
