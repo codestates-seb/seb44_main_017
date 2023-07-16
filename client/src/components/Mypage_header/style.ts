@@ -18,6 +18,7 @@ export const ProfileImage = styled.img`
   position: relative;
   top: 30px;
   right: 30px;
+  width: 188px;
 
   @media (max-width: 767px) {
     display: none;
@@ -35,10 +36,12 @@ export const InfoBox = styled.div`
   justify-content: center;
   align-items: center;
   padding: 48px 140px;
+
   @media (max-width: 767px) {
     padding: 24px 0px;
     min-height: 64px;
   }
+
   @media (min-width: 768px) and (max-width: 1120px) {
     padding: 40px 80px;
     min-height: 64px;
@@ -99,10 +102,12 @@ export const NavBox = styled.nav`
 `;
 
 export const Spacing = styled.div`
-  width: 350px;
+  width: 270px;
+
   @media (max-width: 767px) {
     display: none;
   }
+
   @media (min-width: 768px) and (max-width: 1120px) {
     display: none;
   }
