@@ -9,8 +9,8 @@ import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import QnaListPage from "./pages/qnaListPage/qnaListPage";
 import QnaDetailPage from "./pages/qnaDetailPage/qnaDetailPage";
-import Mypage from "./pages/mypage/mypage";
 import styled from "styled-components";
+import MyproductsPage from "./pages/myproductsPage/myproductsPage";
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
           <Route element={<CollectionPage />} path="/collection" />
           <Route element={<QnaListPage />} path="/questions" />
           <Route element={<QnaDetailPage />} path="/questions/:questionId" />
-          <Route element={<Mypage />} path="/mypage" />
+          <Route element={<MyproductsPage />} path="/mypage" />
         </Routes>
       </AppContainer>
       <Footer />

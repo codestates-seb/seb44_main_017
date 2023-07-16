@@ -18,7 +18,8 @@ export const ProfileImage = styled.img`
   position: relative;
   top: 30px;
   right: 30px;
-  width: 188px;
+  width: 150px;
+  margin-top: 30px;
 
   @media (max-width: 767px) {
     display: none;
@@ -65,6 +66,12 @@ export const ProfileInfo = styled.div`
     @media (min-width: 768px) and (max-width: 1120px) {
       font-size: var(--font-size-24);
     }
+  }
+
+  & .mypage_title {
+    color: var(--color-white);
+    font-size: var(--font-size-36);
+    font-weight: var(--font-weight-500);
   }
 `;
 

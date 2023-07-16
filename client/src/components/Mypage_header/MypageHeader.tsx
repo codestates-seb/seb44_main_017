@@ -3,14 +3,15 @@ import * as S from "./style";
 import defaultImage from "@/assets/icons/default_image.png";
 
 interface MypageHeaderProps {
-  username: string;
+  username?: string;
+  title?: string;
 }
 
-const MypageHeader = ({ username }: MypageHeaderProps) => {
+const MypageHeader = ({ username, title }: MypageHeaderProps) => {
   const navButtonList = [
     { name: "상품 관리", href: "/mypage" },
     { name: "질문 관리", href: "/mypage/posts" },
-    { name: "정보 수정", href: "/mypage/info" },
+    { name: "나의 정보", href: "/mypage/info" },
   ];
 
   const list = navButtonList.map(nav => {
@@ -26,11 +27,17 @@ const MypageHeader = ({ username }: MypageHeaderProps) => {
       <S.ProfileImage alt="profile_image" src={defaultImage} />
       <S.InfoBox>
         <S.ProfileInfo>
-          <div className="profile_username">{username} 의 마이페이지</div>
-          <S.PointInfo>
-            <PointIcon />
-            <span className="profile_point">1000</span>
-          </S.PointInfo>
+          {username ? (
+            <>
+              <div className="profile_username">{username} 의 마이페이지</div>
+              <S.PointInfo>
+                <PointIcon />
+                <span className="profile_point">1000</span>
+              </S.PointInfo>
+            </>
+          ) : (
+            <div className="mypage_title">{title}</div>
+          )}
         </S.ProfileInfo>
         <S.NavBox>{list}</S.NavBox>
       </S.InfoBox>
