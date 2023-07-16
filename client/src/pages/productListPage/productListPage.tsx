@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as S from "./style";
+import { getToken } from "@/utils/token";
 import { BASE_URL } from "@/constants/constants";
 import { IMG_URL } from "@/constants/constants";
 import Logo from "../../assets/logo_subtitle.svg";
@@ -9,7 +10,6 @@ import SelectBox from "../../components/SelectBox/SelectBox";
 import arrowRightIcon from "../../assets/arrowRightIcon.svg";
 import ProductItem from "../../components/Item_product/ProductItem";
 import CategoryButton from "../../components/CategoryButton/CategoryButton";
-import { getToken } from "@/utils/token";
 
 interface Data {
   product_id: string;
@@ -26,19 +26,43 @@ interface Category {
 }
 export const ProductListPage = () => {
   const [btnSelect, setBtnSelect] = useState<boolean>(false);
-  const [btnCategory, setBtnCategory] = useState<string>("");
+  const [btnCategory, setBtnCategory] = useState<string>("전체");
   const [data, setData] = useState<Data[]>([]);
-  // const [isLike, setIsLike] = useState(false);
   const isLike = false;
   const ref = useRef<HTMLDivElement>(null);
   const [translate, setTranslate] = useState<number>(0);
   const [value, setValue] = useState<string>("newest");
-  // const [isSell, setIssell] = useState<boolean>(false);
   const isSell = false;
 
-  const handleBtnCategory = (category: string) => {
-    setBtnCategory(category);
-    setBtnSelect(!btnSelect);
+  const getProducts = async () => {
+    const [authorization, refresh] = getToken();
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/products?page=1&size=20&sort=${value}&issell=false`,
+        {
+          // 서버 수정 후 사용 안함
+          headers: {
+            Authorization: `${authorization}`,
+            Refresh: `${refresh}`,
+          },
+        }
+      );
+      const data = response.data.data;
+      let filteredData = [];
+
+      if (btnCategory === "전체") {
+        filteredData = data;
+      } else {
+        filteredData = data.filter(
+          (product: any) => product.category === btnCategory
+        );
+      }
+
+      setData(filteredData);
+      // setData(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const sortOptions = [
@@ -57,72 +81,42 @@ export const ProductListPage = () => {
     { name: "아우터", value: "outer" },
     { name: "기타", value: "etc" },
   ];
-  // const sortOptions = [
-  //   { name: "최신순", value: "new" },
-  //   { name: "오래된순", value: "old" },
-  // ];
 
-  // const category = [
-  //   { name: "상의", value: "sang" },
-  //   { name: "하의", value: "hi" },
-  // ];
-  const getProducts = async () => {
-    const [authorization, refresh] = getToken();
-
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/products?page=1&size=20&sort=${value}&issell=false`,
-        {
-          // 서버 수정 후 사용 안함
-          headers: {
-            Authorization: `${authorization}`,
-            Refresh: `${refresh}`,
-          },
-        }
-      );
-
-      const filteredData = response.data.data;
-
-      // if (btnCategory !== "전체") {
-      //   filteredData = response.data.data.filter(
-      //     (product: any) => product.category === btnCategory
-      //   );
-      // }
-
-      setData(filteredData);
-      // setData(response.data.data);
-      // console.log(filteredData);
-      console.log(response.data.data);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleBtnCategory = (btnCategory: string) => {
+    setBtnCategory(btnCategory);
+    setBtnSelect(!btnSelect);
   };
 
   useEffect(() => {
     getProducts();
-  }, []);
+  }, [value, btnCategory]);
 
   const handlePrev = () => {
     if (ref.current) {
       if (ref.current.style.transform === "translateX(0px)") {
         return;
       } else {
-        setTranslate(translate + 416);
+        setTranslate(translate + 440);
       }
     }
   };
+
   const handleNext = () => {
+    const productCnt = data.length;
     if (ref.current) {
-      if (ref.current.style.transform === `translateX(-1248px)`) {
+      if (
+        ref.current.style.transform ===
+        `translateX(-${(productCnt - 4) * 220}px)`
+      ) {
         return;
       } else {
-        setTranslate(translate - 416);
+        setTranslate(translate - 440);
       }
     }
   };
 
   return (
-    <main>
+    <S.Container>
       <S.SubTitleContainer>
         <S.SubTitleBox>
           <S.SubTitle style={{ color: "#2b475c" }}>RECLOSET</S.SubTitle>
@@ -132,32 +126,27 @@ export const ProductListPage = () => {
         <S.ProductsBox>
           <S.ArrowLeftIcon src={arrowLeftIcon} onClick={handlePrev} />
           <S.ProductsCarousel>
-            {data.map(data => (
-              <S.Url
-                href={`/productinfo?productId=${data.product_id}`}
-                style={{ textDecoration: "none" }}
+            {data.map((data) => (
+              <S.Product
+                ref={ref}
+                style={{ transform: `translateX(${translate}px)` }}
               >
-                <S.Product
-                  ref={ref}
-                  style={{ transform: `translateX(${translate}px)` }}
-                >
-                  <ProductItem
-                    url={`${IMG_URL}/${data.image_link}`}
-                    isSell={false}
-                    like={isLike}
-                    title={data.name}
-                    price={data.price}
-                    product_id={data.product_id}
-                  ></ProductItem>
-                </S.Product>
-              </S.Url>
+                <ProductItem
+                  url={`${IMG_URL}/${data.image_link}`}
+                  isSell={false}
+                  like={isLike}
+                  title={data.name}
+                  price={data.price}
+                  product_id={data.product_id}
+                ></ProductItem>
+              </S.Product>
             ))}
           </S.ProductsCarousel>
           <S.ArrowRightIcon src={arrowRightIcon} onClick={handleNext} />
         </S.ProductsBox>
       </S.SubTitleContainer>
       <S.CategoryBar>
-        {categories.map(category => (
+        {categories.map((category) => (
           <CategoryButton
             onClick={handleBtnCategory}
             btnSelect={btnCategory === category.name}
@@ -169,24 +158,19 @@ export const ProductListPage = () => {
         <SelectBox usage={"정렬"} options={sortOptions} setOption={setValue} />
       </S.SelectBar>
       <S.ProductsContainer>
-        {data.map(data => (
-          <S.Url
-            href={`/productinfo?productId=${data.product_id}`}
-            style={{ textDecoration: "none" }}
-          >
-            <S.Product>
-              <ProductItem
-                url={`https://s3.ap-northeast-2.amazonaws.com/mainproject.bucket/${data.image_link}`}
-                isSell={isSell}
-                like={isLike}
-                title={data.name}
-                price={data.price}
-                product_id={data.product_id}
-              ></ProductItem>
-            </S.Product>
-          </S.Url>
+        {data.map((data) => (
+          <S.Product>
+            <ProductItem
+              url={`https://s3.ap-northeast-2.amazonaws.com/mainproject.bucket/${data.image_link}`}
+              isSell={isSell}
+              like={isLike}
+              title={data.name}
+              price={data.price}
+              product_id={data.product_id}
+            ></ProductItem>
+          </S.Product>
         ))}
       </S.ProductsContainer>
-    </main>
+    </S.Container>
   );
 };
