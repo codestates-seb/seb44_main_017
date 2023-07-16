@@ -20,6 +20,39 @@ import static com.main.project.product.entity.QProduct.product;
 public class AdminQueryRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
+    public  Page<ProductResponse> getAdminProductwait(Pageable pageable, String keyword){
+        OrderSpecifier orderSpecifiers = createOrderSpecifier(keyword);
+        List<ProductResponse> responses = jpaQueryFactory
+                .select(new QProductResponse(
+                        product.productId,
+                        product.member.memberId,
+                        product.category,
+                        product.name,
+                        product.title,
+                        product.content,
+                        product.imageLink,
+                        product.modifyAt,
+                        product.createAt,
+                        product.productlike,
+                        product.price,
+                        product.view,
+                        product.conditionValue)
+                )
+                .from(product)
+                .where(product.admin.adminId.isNull(),
+                        product.price.eq(0))
+                .orderBy(orderSpecifiers)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        Long count = jpaQueryFactory
+                .select(product.count())
+                .from(product)
+                .where(product.admin.adminId.isNull(),
+                        product.price.eq(0))
+                .fetchOne();
+        return new PageImpl<>(responses,pageable,count);
+    }
     public Page<ProductResponse> getAdminProduct(Long ID, Pageable pageable, String keyword, boolean issell){
         OrderSpecifier orderSpecifiers = createOrderSpecifier(keyword);
         List<ProductResponse> responses = jpaQueryFactory
@@ -50,8 +83,10 @@ public class AdminQueryRepository {
         Long count = jpaQueryFactory
                 .select(product.count())
                 .from(product)
-                .where(product.member.memberId.eq(ID),
-                        product.issell.eq(issell))
+                .where(product.admin.adminId.eq(ID),
+                        product.issell.eq(issell),
+                        product.price.ne(0),
+                        product.price.isNotNull())
                 .fetchOne();
         return new PageImpl<>(responses,pageable,count);
     }

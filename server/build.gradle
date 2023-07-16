@@ -53,8 +53,8 @@ dependencies {
 
 	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 	implementation 'io.projectreactor:reactor-test'
-	implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.15.2'
-	implementation 'org.elasticsearch:elasticsearch:7.15.2'
+	implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.17.11'
+	implementation 'org.elasticsearch:elasticsearch:7.17.11'
 
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
