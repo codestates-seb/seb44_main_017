@@ -25,7 +25,7 @@ function App() {
           <Route element={<CollectionPage />} path="/collection" />
           <Route element={<QnaListPage />} path="/questions" />
           <Route element={<QnaDetailPage />} path="/questions/:questionId" />
-          <Route element={<Mypage />} path="/mypage/:memberId" />
+          <Route element={<Mypage />} path="/mypage" />
         </Routes>
       </AppContainer>
       <Footer />
