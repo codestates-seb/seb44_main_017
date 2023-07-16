@@ -49,7 +49,11 @@ public class EproductService {
                         "price", eproduct.getPrice(),
                         "category", eproduct.getCategory(),
                         "imageLink", eproduct.getImageLink(),
-                        "sell", eproduct.getSell());
+                        "sell", eproduct.getSell(),
+                        "condition", eproduct.getConditionValue(),
+                        "like", eproduct.getProductlike(),
+                        "view", eproduct.getView());
+
         try {
             IndexResponse indexResponse = restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
         } catch (IOException e){

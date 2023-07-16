@@ -3,6 +3,7 @@ package com.main.project.member.repository;
 
 import static com.main.project.dto.queryresponse.ProductResponse.*;
 import static com.main.project.product.entity.QProduct.product;
+import static com.main.project.product.entity.QProductdeny.productdeny;
 
 import com.main.project.dto.queryresponse.ProductResponse;
 import com.main.project.dto.queryresponse.QProductResponse;
@@ -27,6 +28,73 @@ import java.util.Optional;
 public class MemberQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
+
+    public  Page<ProductResponse> getMemberProductdeny(Long ID, Pageable pageable){
+        List<ProductResponse> responses = jpaQueryFactory
+                .select(new QProductResponse(
+                        product.productId,
+                        product.member.memberId,
+                        product.category,
+                        product.name,
+                        product.title,
+                        product.content,
+                        product.imageLink,
+                        product.modifyAt,
+                        product.createAt,
+                        product.productlike,
+                        product.price,
+                        product.view,
+                        product.conditionValue)
+                )
+                .from(product)
+                .join(product.productdeny, productdeny).on(product.productId.eq(productdeny.product.productId))
+                .where(product.price.eq(0),
+                        product.member.memberId.eq(ID))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        Long count = jpaQueryFactory
+                .select(product.count())
+                .from(product)
+                .join(product.productdeny, productdeny).on(product.productId.eq(productdeny.product.productId))
+                .where(product.price.eq(0),
+                        product.member.memberId.eq(ID))
+                .fetchOne();
+        return new PageImpl<>(responses,pageable,count);
+    }
+    public Page<ProductResponse> getMemberProductwait(Long ID, Pageable pageable){
+        List<ProductResponse> responses = jpaQueryFactory
+                .select(new QProductResponse(
+                        product.productId,
+                        product.member.memberId,
+                        product.category,
+                        product.name,
+                        product.title,
+                        product.content,
+                        product.imageLink,
+                        product.modifyAt,
+                        product.createAt,
+                        product.productlike,
+                        product.price,
+                        product.view,
+                        product.conditionValue)
+                )
+                .from(product)
+                .where(product.admin.adminId.isNull(),
+                        product.price.eq(0),
+                        product.member.memberId.eq(ID))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        Long count = jpaQueryFactory
+                .select(product.count())
+                .from(product)
+                .where(product.admin.adminId.isNull(),
+                        product.price.eq(0),
+                        product.member.memberId.eq(ID))
+                .fetchOne();
+        return new PageImpl<>(responses,pageable,count);
+    }
 
     public Page<ProductResponse> getMemberProduct(Long ID, Pageable pageable, String keyword, boolean issell){
         OrderSpecifier orderSpecifiers = createOrderSpecifier(keyword);

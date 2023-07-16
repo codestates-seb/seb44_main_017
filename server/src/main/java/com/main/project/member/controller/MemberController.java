@@ -113,8 +113,8 @@ public class MemberController {
                                           @Positive @RequestParam int page,
                                           @Positive @RequestParam int size){
         Long memberId = findmemberId(token);
-        Page<queryget.product> ss = memberService.searchMemberProdcutwait(memberId,page-1,size);
-        List<queryget.product> productList = ss.getContent();
+        Page<ProductResponse> ss = memberService.searchMemberProdcutwait(memberId,page-1,size);
+        List<ProductResponse> productList = ss.getContent();
         return ResponseEntity.ok(new MultiResponseDto(productList,ss));
     }
 
@@ -123,8 +123,8 @@ public class MemberController {
                                           @Positive @RequestParam int page,
                                           @Positive @RequestParam int size){
         Long memberId = findmemberId(token);
-        Page<queryget.denyproduct> ss = memberService.searchMemberProdcutdeny(memberId,page-1,size);
-        List<queryget.denyproduct> productList = ss.getContent();
+        Page<ProductResponse> ss = memberService.searchMemberProdcutdeny(memberId,page-1,size);
+        List<ProductResponse> productList = ss.getContent();
         return ResponseEntity.ok(new MultiResponseDto(productList,ss));
     }
 

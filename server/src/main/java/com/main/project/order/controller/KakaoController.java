@@ -112,9 +112,9 @@ public class KakaoController {
             // change product state
             Product product = productService.findProduct(Long.valueOf(kakaoPayApprovalVO.getPartner_order_id()));
             product.setIssell(true);
-            //Eproduct eproduct = productMapper.productToEproduct(product);
-            //eproduct.setSell("sold");
-            //eproductService.addEproduct(eproduct);
+            Eproduct eproduct = productMapper.productToEproduct(product);
+            eproduct.setSell("sold");
+            eproductService.addEproduct(eproduct);
             productRepository.save(product);
             // sava point
             Member seller = memberService.findVerifiedMember(product.getMember().getMemberId());

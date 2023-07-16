@@ -47,11 +47,8 @@ public class AdminService {
         return adminRepository.save(admin);
     }
 
-    public Page<queryget.product> searchProdcutwait(int page, int size, String keyword){
-        if(keyword.equals("oldest")){
-            return adminRepository.findProductascwait(PageRequest.of(page, size));
-        }
-        return adminRepository.findProductdescwait(PageRequest.of(page, size));
+    public Page<ProductResponse> searchProdcutwait(int page, int size, String keyword){
+        return adminQueryRepository.getAdminProductwait(PageRequest.of(page,size), keyword);
     }
 
 

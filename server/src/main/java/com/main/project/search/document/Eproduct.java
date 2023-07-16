@@ -18,5 +18,8 @@ public class Eproduct {
     private String category;
     private String imageLink;
     private String sell;
+    private Integer conditionValue;
+    private Integer productlike;
+    private Integer view;
 
 }
