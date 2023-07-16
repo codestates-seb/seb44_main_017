@@ -7,6 +7,7 @@ import com.main.project.member.entity.Member;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.service.MemberService;
+import com.main.project.product.controller.dto.ProductDto;
 import com.main.project.product.entity.Product;
 import com.main.project.product.entity.Productdeny;
 import com.main.project.product.mapper.ProductMapper;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.Optional;
 
 // Service Layer Implementation
@@ -81,7 +83,9 @@ public class ProductService {
         product.setMember(member);
         productLikeCountService.createProductLikeCount(product);
         product.setProductlike(0);
+        product.setPrice(0);
         product.setIssell(false);
+        product.setView(0);
         Product saveproduct = productRepository.save(product);
         /*
         Eproduct eproduct = mapper.productToEproduct(saveproduct);
@@ -89,6 +93,18 @@ public class ProductService {
         eproductService.addEproduct(eproduct);
 
          */
+    }
+
+    public Product updatedenyProduct(List<ProductDto.UserPP> productlists, Long productId){
+        Product product = mapper.NproductPatchDtotoProduct(productlists.get(0));
+        Product findproduct = findProduct(productId);
+        Optional.ofNullable(product.getName()).ifPresent(findproduct::setName);
+        Optional.ofNullable(product.getContent()).ifPresent(findproduct::setContent);
+        Optional.ofNullable(product.getCategory()).ifPresent(findproduct::setCategory);
+        findproduct.setAdmin(null);
+        productdenyService.deleteproductdeny(findproduct);
+        return productRepository.save(findproduct);
+
     }
 
     public Product updateProduct(Long productId, Product product) {
@@ -110,6 +126,14 @@ public class ProductService {
         eproductService.addEproduct(eproduct);
 
          */
+        return saveproduct;
+    }
+    public Product updateProductview(Long productId, Product product){
+        Product findProduct = findProduct(productId);
+        Optional.ofNullable(product.getView()).ifPresent(findProduct::setView);
+        Product saveproduct = productRepository.save(findProduct);
+        Eproduct eproduct = mapper.productToEproduct(saveproduct);
+        eproductService.addEproduct(eproduct);
         return saveproduct;
     }
 
@@ -216,7 +240,10 @@ public class ProductService {
         product.setProductlike(productLikeCountVal);
 
         memberService.updateMember(findMember);
-        return productRepository.save(product);
+        Product saveproduct = productRepository.save(product);
+        Eproduct eproduct = mapper.productToEproduct(saveproduct);
+        eproductService.addEproduct(eproduct);
+        return saveproduct;
     }
 
 
@@ -228,12 +255,14 @@ public class ProductService {
         productRepository.save(pm);
     }
 
-    public void denyProduct(Long productId, String content){
+    public void denyProduct(Long productId, String content, Admin admin){
         Optional<Product> optionalProduct = productRepository.findById(productId);
         Product findproduct = optionalProduct.orElseThrow(()->new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
         if(productdenyService.findByproductId(findproduct) == true) {
             throw new BusinessLogicException(ExceptionCode.PRODUCTDENY_EXISTS);
         }
+        findproduct.setAdmin(admin);
+        productRepository.save(findproduct);
         Productdeny productdeny = new Productdeny();
         productdeny.setDenycontent(content);
         productdeny.setProduct(findproduct);

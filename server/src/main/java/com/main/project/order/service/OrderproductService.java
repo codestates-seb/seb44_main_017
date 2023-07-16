@@ -1,12 +1,14 @@
 package com.main.project.order.service;
 
 import com.main.project.dto.queryget;
+import com.main.project.dto.queryresponse.ProductResponse;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.entity.Member;
 import com.main.project.member.service.MemberService;
 import com.main.project.order.entity.Orderproduct;
 import com.main.project.order.repository.OrderRepository;
+import com.main.project.order.repository.OrderproductQueryRepository;
 import com.main.project.order.repository.OrderproductRepository;
 import com.main.project.product.entity.Product;
 import com.main.project.product.service.ProductService;
@@ -22,6 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderproductService {
     private final OrderproductRepository orderproductRepository;
+    private final OrderproductQueryRepository orderproductQueryRepository;
     public Orderproduct createorderproduct(Member member, Product product){
 
         List<queryget.orderproduct> orderproducts = orderproductRepository.findOrderproduct(member.getMemberId(),product.getProductId());
@@ -36,6 +39,15 @@ public class OrderproductService {
         orderproduct.setProduct(product);
         return orderproductRepository.save(orderproduct);
 
+    }
+    public void createOpforsingle(Member member, Product product){
+        List<queryget.orderproduct> orderproducts = orderproductRepository.findOrderproduct(member.getMemberId(),product.getProductId());
+        if(orderproducts.size() == 0){
+            Orderproduct orderproduct = new Orderproduct();
+            orderproduct.setMember(member);
+            orderproduct.setProduct(product);
+            orderproductRepository.save(orderproduct);
+        }
     }
     public Orderproduct findorderproduct(Long orderproductId) {
         Optional<Orderproduct> orderproduct = orderproductRepository.findById(orderproductId);
@@ -56,19 +68,9 @@ public class OrderproductService {
         orderproductRepository.delete(orderproduct);
     }
 
-    public Page<queryget.product> getbucket(Long memberId, int page, int size, String keyword, boolean issell){
-        if(keyword.equals("oldest")){
-            return orderproductRepository.getorderproductold(memberId, issell, PageRequest.of(page, size));
-        } else if(keyword.equals("mostlike")){
-            return orderproductRepository.getorderproductlike(memberId, issell, PageRequest.of(page, size));
-        } else if(keyword.equals("mostview")){
-            return orderproductRepository.getorderproductview(memberId, issell, PageRequest.of(page, size));
-        } else if(keyword.equals("pricedesc")){
-            return orderproductRepository.getorderproductpricedesc(memberId, issell, PageRequest.of(page, size));
-        } else if(keyword.equals("priceasc")){
-            return orderproductRepository.getorderproductpriceasc(memberId, issell,PageRequest.of(page, size));
-        }
-        return orderproductRepository.getorderproductnew(memberId, issell, PageRequest.of(page, size));
+    public Page<ProductResponse> getOrderProduct(Long memberId, int page, int size, String keyword, boolean issell){
+
+        return orderproductQueryRepository.getOrderProduct(memberId, PageRequest.of(page,size), keyword, issell);
     }
 
 }

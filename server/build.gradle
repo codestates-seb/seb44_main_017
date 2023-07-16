@@ -1,9 +1,16 @@
+buildscript {
+	ext {
+		queryDslVersion = "5.0.0"
+	}
+}
+
 plugins {
 	id 'java'
 	id 'war'
 	id 'org.springframework.boot' version '2.7.13'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	id "org.asciidoctor.jvm.convert" version "3.3.2"
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'com.main'
@@ -18,7 +25,9 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+	querydsl.extendsFrom compileClasspath
 }
+
 
 ext {
 	set('snippetsDir', file("build/generated-snippets"))
@@ -44,8 +53,8 @@ dependencies {
 
 	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 	implementation 'io.projectreactor:reactor-test'
-	implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.15.2'
-	implementation 'org.elasticsearch:elasticsearch:7.15.2'
+	implementation 'org.elasticsearch.client:elasticsearch-rest-high-level-client:7.17.11'
+	implementation 'org.elasticsearch:elasticsearch:7.17.11'
 
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
@@ -59,7 +68,24 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+
 }
+
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+sourceSets {
+	main.java.srcDir querydslDir
+}
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
+}
+
 
 tasks.named('test') {
 	outputs.dir snippetsDir

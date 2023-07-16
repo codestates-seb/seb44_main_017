@@ -46,7 +46,7 @@ spring:
             client-id: ${K_CLIENT_ID}
             client-secret: ${K_CLIENT_SECRET}
             client-name: Kakao
-            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            redirect-uri: http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
             client-authentication-method: POST
             scope:
@@ -77,9 +77,8 @@ mail:
     admin: admin@gmail.com
 
 elasticsearch:
-  host: 127.0.0.1
-  port: 9200
-  cluster_name: elasticsearch
+  host: mainproject.es.ap-northeast-2.aws.elastic-cloud.com
+  user-key: ${Elastic_key}
 
 jwt:
   admin-key: ${Admin_key}

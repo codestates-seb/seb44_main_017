@@ -60,7 +60,7 @@ public class Product extends Auditable {
     private Integer pointValue;
 
     @ColumnDefault("0")
-    private Integer productlike = 0;
+    private Integer productlike;
 
     @ManyToMany(mappedBy = "likedProducts")
     private List<Member> likedByMembers = new ArrayList<>();
@@ -76,7 +76,6 @@ public class Product extends Auditable {
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
     private ProductLikeCount productLikeCount;
-
 
     public void addView(){
         this.setView(this.getView() + 1);

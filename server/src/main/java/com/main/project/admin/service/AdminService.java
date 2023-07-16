@@ -1,8 +1,10 @@
 package com.main.project.admin.service;
 
 import com.main.project.admin.entity.Admin;
+import com.main.project.admin.repository.AdminQueryRepository;
 import com.main.project.admin.repository.AdminRepository;
 import com.main.project.auth.util.AdminCustomAuthorityUtils;
+import com.main.project.dto.queryresponse.ProductResponse;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.dto.queryget;
@@ -19,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AdminService {
     private final AdminRepository adminRepository;
+    private final AdminQueryRepository adminQueryRepository;
     private final AdminCustomAuthorityUtils authorityUtils;
     private final PasswordEncoder passwordEncoder;
 
@@ -44,26 +47,13 @@ public class AdminService {
         return adminRepository.save(admin);
     }
 
-    public Page<queryget.product> searchProdcutwait(int page, int size, String keyword){
-        if(keyword.equals("oldest")){
-            return adminRepository.findProductascwait(PageRequest.of(page, size));
-        }
-        return adminRepository.findProductdescwait(PageRequest.of(page, size));
+    public Page<ProductResponse> searchProdcutwait(int page, int size, String keyword){
+        return adminQueryRepository.getAdminProductwait(PageRequest.of(page,size), keyword);
     }
 
-    public Page<queryget.product> searchAdminProdcut(Long memberId, int page, int size, String keyword, boolean issell){
-        if(keyword.equals("oldest")){
-            return adminRepository.findAdminProductOld(memberId, issell, PageRequest.of(page, size));
-        } else if(keyword.equals("mostlike")){
-            return adminRepository.findAdminProductLike(memberId, issell, PageRequest.of(page, size));
-        } else if(keyword.equals("mostview")){
-            return adminRepository.findAdminProductView(memberId, issell, PageRequest.of(page, size));
-        } else if(keyword.equals("pricedesc")){
-            return adminRepository.findAdminProductpricedesc(memberId, issell, PageRequest.of(page, size));
-        } else if(keyword.equals("priceasc")){
-            return adminRepository.findAdminProductpriceasc(memberId, issell, PageRequest.of(page, size));
-        }
-        return adminRepository.findAdminProductNew(memberId, issell, PageRequest.of(page, size));
+
+    public Page<ProductResponse> getAdminProduct(Long memberId, int page, int size, String keyword, boolean issell){
+        return adminQueryRepository.getAdminProduct(memberId, PageRequest.of(page,size), keyword, issell);
     }
     public Admin loginAdmin(Admin admin){
         Admin findAdmin = adminRepository.findByEmail(admin.getEmail()).orElseThrow(()->new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND));

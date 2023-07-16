@@ -3,6 +3,7 @@ package com.main.project.member.controller;
 import com.main.project.dto.MultiResponseDto;
 import com.main.project.dto.SingleResponseDto;
 import com.main.project.dto.queryget;
+import com.main.project.dto.queryresponse.ProductResponse;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.dto.MemberDto;
@@ -77,6 +78,7 @@ public class MemberController {
         List<Member> memberList = members.getContent();
         return ResponseEntity.ok(new MultiResponseDto(mapper.membersToMemberResponses(memberList),members));
     }
+
     @GetMapping("/{member-id}")
     public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId) {
         Member member = memberService.findVerifiedMember(memberId);
@@ -90,8 +92,8 @@ public class MemberController {
                                       @Positive @RequestParam int size,
                                       @RequestParam(required = false) String sort){
         Long memberId = findmemberId(token);
-        Page<queryget.product> ss = memberService.searchMemberProdcut(memberId,page-1,size,sort, true);
-        List<queryget.product> productList = ss.getContent();
+        Page<ProductResponse> ss = memberService.getMemberProduct(Long.valueOf(memberId),page-1,size,sort,true);
+        List<ProductResponse> productList = ss.getContent();
         return ResponseEntity.ok(new MultiResponseDto(productList,ss));
     }
 
@@ -101,8 +103,8 @@ public class MemberController {
                                         @Positive @RequestParam int size,
                                         @RequestParam(required = false) String sort){
         Long memberId = findmemberId(token);
-        Page<queryget.product> ss = memberService.searchMemberProdcut(memberId,page-1,size,sort, false);
-        List<queryget.product> productList = ss.getContent();
+        Page<ProductResponse> ss = memberService.getMemberProduct(Long.valueOf(memberId),page-1,size,sort,false);
+        List<ProductResponse> productList = ss.getContent();
         return ResponseEntity.ok(new MultiResponseDto(productList,ss));
     }
 
@@ -111,8 +113,8 @@ public class MemberController {
                                           @Positive @RequestParam int page,
                                           @Positive @RequestParam int size){
         Long memberId = findmemberId(token);
-        Page<queryget.product> ss = memberService.searchMemberProdcutwait(memberId,page-1,size);
-        List<queryget.product> productList = ss.getContent();
+        Page<ProductResponse> ss = memberService.searchMemberProdcutwait(memberId,page-1,size);
+        List<ProductResponse> productList = ss.getContent();
         return ResponseEntity.ok(new MultiResponseDto(productList,ss));
     }
 
@@ -121,8 +123,8 @@ public class MemberController {
                                           @Positive @RequestParam int page,
                                           @Positive @RequestParam int size){
         Long memberId = findmemberId(token);
-        Page<queryget.denyproduct> ss = memberService.searchMemberProdcutdeny(memberId,page-1,size);
-        List<queryget.denyproduct> productList = ss.getContent();
+        Page<ProductResponse> ss = memberService.searchMemberProdcutdeny(memberId,page-1,size);
+        List<ProductResponse> productList = ss.getContent();
         return ResponseEntity.ok(new MultiResponseDto(productList,ss));
     }
 
