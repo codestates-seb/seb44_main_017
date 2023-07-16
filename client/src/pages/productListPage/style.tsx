@@ -1,19 +1,16 @@
 import styled from "styled-components";
 
+export const Container = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 export const SubTitleContainer = styled.section`
   display: flex;
   align-items: center;
   flex-direction: column;
   background-color: var(--color-gray100);
-  @media (max-width: 767px) {
-    padding: 48px 40px 48px 40px;
-  }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    padding: 40px 48px 56px 48px;
-  }
-  @media (min-width: 1024px) {
-    padding: 40px 320px 62px 320px;
-  }
+  width: 100%;
 `;
 export const SubTitleBox = styled.div`
   display: flex;
@@ -57,18 +54,18 @@ export const ProductsCarousel = styled.div`
   flex-wrap: none;
   overflow: hidden;
   @media (max-width: 767px) {
-    width: 234px;
+    width: 440px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
-    width: 740px;
+    width: 660px;
   }
   @media (min-width: 1024px) {
-    width: 1024px;
+    width: 972px;
   }
 `;
 export const Product = styled.div`
   display: flex;
-  transition: 0.5s;
+  transition: all ease 1s;
   :hover {
     cursor: pointer;
   }
@@ -127,30 +124,28 @@ export const CategoryBar = styled.nav`
 export const SelectBar = styled.div`
   display: flex;
   justify-content: flex-end;
+  margin-top: 8px;
+  padding-right: 8px;
   @media (max-width: 767px) {
-    padding: 0px 40px;
+    width: 356px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
-    padding: 0px 48px;
+    width: 612px;
   }
   @media (min-width: 1024px) {
-    padding: 0px 320px;
+    width: 1100px;
   }
 `;
 export const ProductsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   @media (max-width: 767px) {
-    padding: 0px 40px;
+    width: 356px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
-    padding: 0px 48px;
+    width: 612px;
   }
   @media (min-width: 1024px) {
-    padding: 0px 320px;
+    width: 1100px;
   }
-`;
-export const Url = styled.a`
-  text-decoration: none;
-  color: var(--color-black);
 `;
