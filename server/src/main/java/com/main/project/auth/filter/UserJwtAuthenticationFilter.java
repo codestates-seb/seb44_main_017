@@ -75,6 +75,7 @@ public class UserJwtAuthenticationFilter extends UsernamePasswordAuthenticationF
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
         response.setHeader("roles", "user");
+        response.setHeader("memberId", String.valueOf(member.getMemberId()));
 
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
