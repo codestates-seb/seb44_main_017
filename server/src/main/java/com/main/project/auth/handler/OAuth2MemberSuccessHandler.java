@@ -97,6 +97,14 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         response.setHeader("Authorization", addedAccessToken);
         response.setHeader("Refresh", refreshToken);
+        response.setHeader("roles", "user");
+        response.setHeader("memberId", String.valueOf(member.getMemberId()));
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        Member fm = memberService.findVerifiedMember(member.getMemberId());
+        response.getWriter().write(fm.getName());
+
 
         String uri = createURI(addedAccessToken, refreshToken).toString();
         getRedirectStrategy().sendRedirect(request, response, uri);
