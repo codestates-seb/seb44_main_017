@@ -18,7 +18,7 @@ type ItemType = {
 //   name: string;
 // }
 
-const NoticePage = () => {
+export const NoticePage = () => {
   const [data, setData] = useState<ItemType[]>([]);
   const [page, setPage] = useState<any>(1);
   const sort = "newest";
@@ -70,5 +70,3 @@ const NoticePage = () => {
     </div>
   );
 };
-
-export default NoticePage;
