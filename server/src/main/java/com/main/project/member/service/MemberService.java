@@ -2,6 +2,7 @@ package com.main.project.member.service;
 
 import com.main.project.auth.util.UserCustomAuthorityUtils;
 import com.main.project.dto.queryresponse.ProductResponse;
+import com.main.project.dto.queryresponse.QuestionResponse;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.dto.queryget;
@@ -122,8 +123,8 @@ public class MemberService {
         return memberQueryRepository.getMemberProductdeny(memberId, PageRequest.of(page, size));
     }
 
-    public Page<queryget.question> searchMemberQuestion(Long memberId, int page, int size){
-        return memberRepository.findUserQuestion(memberId, PageRequest.of(page, size));
+    public Page<QuestionResponse> searchMemberQuestion(Long memberId, int page, int size){
+        return memberQueryRepository.getMemberQuestions(memberId, PageRequest.of(page, size));
     }
 
     public Member findMember(String email){

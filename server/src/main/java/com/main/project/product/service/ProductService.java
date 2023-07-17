@@ -6,6 +6,7 @@ import com.main.project.dto.queryget;
 import com.main.project.member.entity.Member;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
+import com.main.project.member.entity.RefreshToken;
 import com.main.project.member.service.MemberService;
 import com.main.project.product.controller.dto.ProductDto;
 import com.main.project.product.entity.Product;
@@ -24,7 +25,6 @@ import com.main.project.s3.service.AwsS3Service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,8 +41,11 @@ public class ProductService {
     private final AwsS3Service awsS3Service;
     private final ProductLikeCountService productLikeCountService;
     private final ProductLikeCountRepository productLikeCountRepository;
+
     private final EproductService eproductService;
+
     private final ProductMapper mapper;
+
     public ProductService(ProductRepository productRepository, MemberService memberService, ProductCommentRepository productCommentRepository
             , AdminService adminService, ProductdenyService productdenyService, AwsS3Service awsS3Service
             , ProductLikeCountService productLikeCountService, ProductLikeCountRepository productLikeCountRepository, ProductMapper mapper, EproductService eproductService) {
@@ -137,10 +140,6 @@ public class ProductService {
 
     public void deleteProduct(Long productId) {
         Product findProduct = findProduct(productId);
-        Eproduct eproduct = new Eproduct();
-        eproduct.setProductId(productId);
-        eproduct.setSell("delete");
-        eproductService.addEproduct(eproduct);
         productRepository.delete(findProduct);
     }
 
@@ -152,6 +151,30 @@ public class ProductService {
 
         findMember.addProductComments(productComment);
         memberService.updateMember(findMember);
+    }
+
+    public ProductDto.ResponseWithComments getResponseWithComments(Long productId, Optional<RefreshToken> refreshToken, Product product) {
+        ProductDto.ResponseWithComments response;
+        if(refreshToken.isEmpty()){
+            response = mapper.productToProductResponseWithComment(product);
+        }
+        else if (refreshToken.get().getMemberId() != null) {
+            Long memberId = refreshToken
+                    .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
+                    .getMemberId();
+            product.addView();
+            updateProductview(productId, product);
+            response = mapper.productToProductResponseWithComment(product, memberId);
+
+        }else if(refreshToken.get().getAdminId() != null){
+            Long AdminId = refreshToken
+                    .orElseThrow( () -> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND))
+                    .getAdminId();
+            response = mapper.productToProductResponseWithComment(product);
+        }else{
+            response = mapper.productToProductResponseWithComment(product);
+        }
+        return response;
     }
 
     public void deleteProductComment(Product product, Long memberId, Long productCommentId) {
