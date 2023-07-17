@@ -10,4 +10,7 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long
 
     boolean existsByMemberId(Long memberId);
     boolean existsByAdminId(Long adminId);
+
+    Optional<RefreshToken> findByMemberId(Long memberId);
+    Optional<RefreshToken> findByAdminId(Long adminId);
 }

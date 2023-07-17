@@ -54,9 +54,7 @@ public class AdminController {
         Admin admin = mapper.loginDtoToAdmin(loginDto);
         Admin fd = adminService.findAdminByEmail(loginDto.getEmail());
 
-        if(refreshTokenRepository.existsByAdminId(fd.getAdminId()) == true){
-            throw new BusinessLogicException(ExceptionCode.ALREADY_LOGGED_IN);
-        }
+
         Admin authorizedAdmin = adminService.loginAdmin(admin);
         AdminDto.Response responseDto = mapper.adminToAdminResponseDto(authorizedAdmin);
 
@@ -116,8 +114,8 @@ public class AdminController {
     public ResponseEntity getproductwait(@Positive @RequestParam int page,
                                          @Positive @RequestParam int size,
                                          @RequestParam(required = false) String sort){
-        Page<queryget.product> ss = adminService.searchProdcutwait(page-1,size,sort);
-        List<queryget.product> productList = ss.getContent();
+        Page<ProductResponse> ss = adminService.searchProdcutwait(page-1,size,sort);
+        List<ProductResponse> productList = ss.getContent();
         return ResponseEntity.ok(new MultiResponseDto(productList,ss));
     }
 

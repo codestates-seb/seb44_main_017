@@ -79,22 +79,24 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
     public void redirect(HttpServletRequest request, HttpServletResponse response, Member member, List<String> authorities) throws IOException {
 
-        if(refreshTokenRepository.existsByMemberId(member.getMemberId()) == true){
-
-            throw new BusinessLogicException(ExceptionCode.ALREADY_LOGGED_IN);
-        }
-
-        String accessToken = delegateAccessToken(member, authorities);
         String refreshToken = delegateRefreshToken(member.getEmail());
+        String accessToken = delegateAccessToken(member, authorities);
         String addedAccessToken = "Bearer " + accessToken;
+
+        if(refreshTokenRepository.existsByMemberId(member.getMemberId()) == true){
+            Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByMemberId(member.getMemberId());
+            RefreshToken findtoken = optionalRefreshToken.get();
+            findtoken.setValue(refreshToken);
+            refreshTokenRepository.save(findtoken);
+        }else{
+            RefreshToken refreshTokenEntity = new RefreshToken();
+            refreshTokenEntity.setValue(refreshToken);
+            refreshTokenEntity.setMemberId(member.getMemberId());
+            refreshTokenService.addRefreshToken(refreshTokenEntity);
+        }
 
         response.setHeader("Authorization", addedAccessToken);
         response.setHeader("Refresh", refreshToken);
-
-        RefreshToken refreshTokenEntity = new RefreshToken();
-        refreshTokenEntity.setValue(refreshToken);
-        refreshTokenEntity.setMemberId(member.getMemberId());
-        refreshTokenService.addRefreshToken(refreshTokenEntity);
 
         String uri = createURI(addedAccessToken, refreshToken).toString();
         getRedirectStrategy().sendRedirect(request, response, uri);

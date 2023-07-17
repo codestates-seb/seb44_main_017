@@ -112,14 +112,14 @@ public class MemberService {
     public Page<Member> searchMemberlist(String keyword, int page, int size){
         return memberRepository.findByNameContaining(keyword, PageRequest.of(page, size));
     }
-    public Page<queryget.product> searchMemberProdcutwait(Long memberId, int page, int size){
+    public Page<ProductResponse> searchMemberProdcutwait(Long memberId, int page, int size){
 
-        return memberRepository.findUserProductwait(memberId, PageRequest.of(page, size));
+        return memberQueryRepository.getMemberProductwait(memberId, PageRequest.of(page, size));
     }
 
-    public Page<queryget.denyproduct> searchMemberProdcutdeny(Long memberId, int page, int size){
+    public Page<ProductResponse> searchMemberProdcutdeny(Long memberId, int page, int size){
 
-        return memberRepository.findUserProductdeny(memberId, PageRequest.of(page, size));
+        return memberQueryRepository.getMemberProductdeny(memberId, PageRequest.of(page, size));
     }
 
     public Page<queryget.question> searchMemberQuestion(Long memberId, int page, int size){

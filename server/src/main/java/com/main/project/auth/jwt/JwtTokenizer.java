@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.main.project.admin.dto.AdminDto;
 import com.main.project.auth.dto.TokenResponseDto;
 import com.main.project.member.entity.RefreshToken;
+import com.main.project.member.repository.RefreshTokenRepository;
 import com.main.project.member.service.RefreshTokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -19,10 +20,7 @@ import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -40,7 +38,7 @@ public class JwtTokenizer {
     private int refreshTokenExpirationMinutes;
 
     private final RefreshTokenService refreshTokenService;
-
+    private final RefreshTokenRepository refreshTokenRepository;
 
     public String encodeBase64SecretKey(String secretKey){
         return Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
@@ -129,10 +127,18 @@ public class JwtTokenizer {
         String atk = delegateAccessToken(adminResponseDto);
         String rtk = delegateRefreshToken(adminResponseDto);
 
-        RefreshToken refreshTokenEntity = new RefreshToken();
-        refreshTokenEntity.setValue(rtk);
-        refreshTokenEntity.setAdminId(adminResponseDto.getAdminId());
-        refreshTokenService.addRefreshToken(refreshTokenEntity);
+        if(refreshTokenRepository.existsByMemberId(adminResponseDto.getAdminId()) == true){
+            Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByAdminId(adminResponseDto.getAdminId());
+            RefreshToken findtoken = optionalRefreshToken.get();
+            findtoken.setValue(rtk);
+            refreshTokenRepository.save(findtoken);
+
+        }else {
+            RefreshToken refreshTokenEntity = new RefreshToken();
+            refreshTokenEntity.setValue(rtk);
+            refreshTokenEntity.setAdminId(adminResponseDto.getAdminId());
+            refreshTokenService.addRefreshToken(refreshTokenEntity);
+        }
 
         return new TokenResponseDto(atk, rtk);
     }

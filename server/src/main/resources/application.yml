@@ -78,9 +78,8 @@ mail:
     admin: admin@gmail.com
 
 elasticsearch:
-  host: 127.0.0.1
-  port: 9200
-  cluster_name: elasticsearch
+  host: mainproject.es.ap-northeast-2.aws.elastic-cloud.com
+  user-key: ${Elastic_key}
 
 jwt:
   admin-key: ${Admin_key}

@@ -45,10 +45,6 @@ public class UserJwtAuthenticationFilter extends UsernamePasswordAuthenticationF
         Member findmember = memberService.findMember(loginDto.getUsername());
         memberService.checkisban(findmember);
 
-        if(refreshTokenRepository.existsByMemberId(findmember.getMemberId()) == true){
-            throw new BusinessLogicException(ExceptionCode.ALREADY_LOGGED_IN);
-        }
-
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
@@ -65,6 +61,17 @@ public class UserJwtAuthenticationFilter extends UsernamePasswordAuthenticationF
         String accessToken = delegateAccessToken(member);
         String refreshToken = delegateRefreshToken(member);
 
+        if(refreshTokenRepository.existsByMemberId(member.getMemberId()) == true){
+            Optional<RefreshToken> optionaltoken = refreshTokenRepository.findByMemberId(member.getMemberId());
+            RefreshToken findtoken = optionaltoken.get();
+            findtoken.setValue(refreshToken);
+            refreshTokenRepository.save(findtoken);
+        }else {
+            RefreshToken refreshTokenEntity = new RefreshToken();
+            refreshTokenEntity.setValue(refreshToken);
+            refreshTokenEntity.setMemberId(member.getMemberId());
+            refreshTokenService.addRefreshToken(refreshTokenEntity);
+        }
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
         response.setHeader("roles", "user");
@@ -73,11 +80,6 @@ public class UserJwtAuthenticationFilter extends UsernamePasswordAuthenticationF
         response.setCharacterEncoding("utf-8");
         Member fm = memberService.findVerifiedMember(member.getMemberId());
         response.getWriter().write(fm.getName());
-
-        RefreshToken refreshTokenEntity = new RefreshToken();
-        refreshTokenEntity.setValue(refreshToken);
-        refreshTokenEntity.setMemberId(member.getMemberId());
-        refreshTokenService.addRefreshToken(refreshTokenEntity);
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }
