@@ -17,14 +17,19 @@ const MyproductsPage = () => {
 
   const getMyProducts = async () => {
     try {
-      await axios
-        .get(BASE_URL + `/members/${sortValue}?page=1&size=10&sort=newest`, {
+      const { data, status } = await axios.get(
+        BASE_URL + `/members/${sortValue}?page=1&size=10&sort=newest`,
+        {
           headers: {
             Authorization: authorization,
             Refresh: refresh,
           },
-        })
-        .then(res => setProductData(res.data.data));
+        }
+      );
+
+      if (data && status === 200) {
+        setProductData(data.data);
+      }
     } catch (error) {
       console.error("Failed get data", error);
     }

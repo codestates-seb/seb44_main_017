@@ -1,11 +1,11 @@
+import QnaListComponent from "@/components/Qna_list/qnaListComponent";
 import { BASE_URL } from "@/constants/constants";
 import { QnaTypes } from "@/types/shared";
-import axios from "axios";
-import { useState, useEffect } from "react";
 import { getToken } from "@/utils/token";
-import QnaListComponent from "@/components/Qna_list/qnaListComponent";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-const QnaListPage = () => {
+const MyQnaPage = () => {
   const PAGE_LIMIT = 7;
 
   const [sortOption, setSortOption] = useState("newest");
@@ -19,7 +19,7 @@ const QnaListPage = () => {
     try {
       const { data, status } = await axios.get(
         BASE_URL +
-          `/questions/board?page=${page}&size=${PAGE_LIMIT}&sort=${sortOption}`,
+          `/members/getqna?page=${page}&size=${PAGE_LIMIT}&sort=${sortOption}`,
         {
           headers: {
             Authorization: `${authorization}`,
@@ -54,4 +54,4 @@ const QnaListPage = () => {
   );
 };
 
-export default QnaListPage;
+export default MyQnaPage;

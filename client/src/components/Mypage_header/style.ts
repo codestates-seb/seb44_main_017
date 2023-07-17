@@ -17,7 +17,6 @@ export const ProfileImage = styled.img`
   background-color: var(--color-white);
   position: relative;
   top: 30px;
-  right: 30px;
   width: 150px;
   margin-top: 30px;
 
@@ -109,7 +108,7 @@ export const NavBox = styled.nav`
 `;
 
 export const Spacing = styled.div`
-  width: 270px;
+  width: 150px;
 
   @media (max-width: 767px) {
     display: none;

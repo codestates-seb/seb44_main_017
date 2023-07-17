@@ -3,10 +3,15 @@ export interface CommentTypes {
   content: string;
   createAt: string;
   modifyAt: string;
-  writer: WriterTypes;
+  writer: AdminTypes;
 }
 
 export interface WriterTypes {
+  memberId: number | string;
+  name: string;
+}
+
+export interface AdminTypes {
   adminId: number | string;
   name: string;
 }
@@ -18,13 +23,13 @@ export interface QnaTypes {
   createAt: string;
   modifyAt: string;
   view: number | string;
-  writer: WriterTypes;
-  qcomments: CommentTypes[];
+  writer?: WriterTypes;
+  qcomments?: CommentTypes[];
 }
 
 export interface ProductTypes {
   name: string;
-  price: number | string;
+  price: number | string | null;
   product_id: number | string;
   member_id: number | string;
   category: string;
