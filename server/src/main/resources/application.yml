@@ -5,7 +5,6 @@ spring:
     username: admin
     password:
   jpa:
-#    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
     properties:
