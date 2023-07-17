@@ -15,6 +15,7 @@ import com.main.project.product.repository.ProductLikeCountRepository;
 import com.main.project.product.repository.ProductRepository;
 import com.main.project.productComment.ProductComment;
 import com.main.project.productComment.repository.ProductCommentRepository;
+import com.main.project.search.document.Eproduct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -69,12 +70,12 @@ public class ProductService {
         productLikeCountService.createProductLikeCount(product);
         product.setProductlike(0);
         Product saveproduct = productRepository.save(product);
-        /*
+
         Eproduct eproduct = mapper.productToEproduct(saveproduct);
         eproduct.setSell("sale");
         eproductService.addEproduct(eproduct);
 
-         */
+
         return saveproduct;
     }
 
@@ -87,12 +88,12 @@ public class ProductService {
         product.setIssell(false);
         product.setView(0);
         Product saveproduct = productRepository.save(product);
-        /*
+
         Eproduct eproduct = mapper.productToEproduct(saveproduct);
         eproduct.setSell("wait");
         eproductService.addEproduct(eproduct);
 
-         */
+
     }
 
     public Product updatedenyProduct(List<ProductDto.UserPP> productlists, Long productId){
@@ -120,12 +121,12 @@ public class ProductService {
         Optional.ofNullable(product.getPointValue()).ifPresent(findProduct::setPointValue);
         Optional.ofNullable(product.getView()).ifPresent(findProduct::setView);
         Product saveproduct = productRepository.save(findProduct);
-        /*
+
         Eproduct eproduct = mapper.productToEproduct(saveproduct);
         eproduct.setSell("sale");
         eproductService.addEproduct(eproduct);
 
-         */
+
         return saveproduct;
     }
     public Product updateProductview(Long productId, Product product){
@@ -139,13 +140,13 @@ public class ProductService {
 
     public void deleteProduct(Long productId) {
         Product findProduct = findProduct(productId);
-        /*
+
         Eproduct eproduct = new Eproduct();
         eproduct.setProductId(productId);
         eproduct.setSell("delete");
         eproductService.addEproduct(eproduct);
 
-         */
+
         productRepository.delete(findProduct);
     }
 
