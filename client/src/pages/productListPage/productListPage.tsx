@@ -9,6 +9,7 @@ import arrowLeftIcon from "../../assets/arrowLeftIcon.svg";
 import SelectBox from "../../components/SelectBox/SelectBox";
 import arrowRightIcon from "../../assets/arrowRightIcon.svg";
 import ProductItem from "../../components/Item_product/ProductItem";
+import CustomPagination from "@/components/Pagination/CustomPagination";
 import CategoryButton from "../../components/CategoryButton/CategoryButton";
 
 interface Data {
@@ -33,12 +34,13 @@ export const ProductListPage = () => {
   const [translate, setTranslate] = useState<number>(0);
   const [value, setValue] = useState<string>("newest");
   const isSell = false;
+  const [page, setPage] = useState<any>(1);
 
   const getProducts = async () => {
     const [authorization, refresh] = getToken();
     try {
       const response = await axios.get(
-        `${BASE_URL}/products?page=1&size=20&sort=${value}&issell=false`,
+        `${BASE_URL}/products?page=${page}&size=20&sort=${value}&issell=false`,
         {
           // 서버 수정 후 사용 안함
           headers: {
@@ -89,7 +91,7 @@ export const ProductListPage = () => {
 
   useEffect(() => {
     getProducts();
-  }, [value, btnCategory]);
+  }, [value, btnCategory, page]);
 
   const handlePrev = () => {
     if (ref.current) {
@@ -171,6 +173,9 @@ export const ProductListPage = () => {
           </S.Product>
         ))}
       </S.ProductsContainer>
+      <S.CustomPaginationBox>
+        <CustomPagination pageCount={5} page={page} setPage={setPage} />
+      </S.CustomPaginationBox>
     </S.Container>
   );
 };

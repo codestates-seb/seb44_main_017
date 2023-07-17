@@ -2,7 +2,7 @@ import axios from "axios";
 import { getToken } from "@/utils/token";
 import * as S from "@/pages/myinfoPage/style";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL, IMG_URL } from "@/constants/constants";
+import { BASE_URL } from "@/constants/constants";
 import React, { useEffect, useRef, useState } from "react";
 import defaultImage from "@/assets/icons/default_image.png";
 import MypageHeader from "@/components/Mypage_header/MypageHeader";

@@ -149,3 +149,6 @@ export const ProductsContainer = styled.div`
     width: 1100px;
   }
 `;
+export const CustomPaginationBox = styled.div`
+  margin: 16px 0px;
+`;
