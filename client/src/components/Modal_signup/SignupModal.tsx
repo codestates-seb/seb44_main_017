@@ -34,6 +34,20 @@ const SignupModal = ({ closeModal }: Props) => {
     setCheckShowPassword(!showCheckPassword);
   };
 
+  // 닉네임 중복 여부 체크
+  const handleDuplicateCheckName = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/members/namecheck/${name}`);
+      if (response.data === false) {
+        alert("사용 가능한 닉네임입니다.");
+      } else if (response.data === true) {
+        alert("이미 사용중인 닉네임입니다.");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSignup = async () => {
     const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,40}$/;
     const phoneReg = /^010-\d{4}-\d{4}$/;
@@ -90,7 +104,7 @@ const SignupModal = ({ closeModal }: Props) => {
   };
   return (
     <S.Container onClick={closeModal}>
-      <S.Content onClick={e => e.stopPropagation()}>
+      <S.Content onClick={(e) => e.stopPropagation()}>
         <S.CloseButton onClick={closeModal} />
         <S.SignupTitleContainer>
           <Logo width="40px" height="24px" />
@@ -104,23 +118,25 @@ const SignupModal = ({ closeModal }: Props) => {
           type="text"
           value={email}
           placeholder="이메일을 입력해주세요."
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <S.NameLabel>
           <S.InputBox
             type="text"
             value={name}
             placeholder="닉네임을 입력해주세요."
-            onChange={e => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
           />
-          <S.DuplicateCheck>중복 검사</S.DuplicateCheck>
+          <S.DuplicateCheck onClick={handleDuplicateCheckName}>
+            중복 검사
+          </S.DuplicateCheck>
         </S.NameLabel>
         <S.PasswordLabel>
           <S.InputBox
             type={showPassword ? "text" : "password"}
             value={password}
             placeholder="비밀번호를 입력해주세요."
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <S.VisibilityButton onClick={passwordVisibility} />
         </S.PasswordLabel>
@@ -129,7 +145,7 @@ const SignupModal = ({ closeModal }: Props) => {
             type={showCheckPassword ? "text" : "password"}
             value={checkPassword}
             placeholder="비밀번호를 확인합니다."
-            onChange={e => setCheckPassword(e.target.value)}
+            onChange={(e) => setCheckPassword(e.target.value)}
           />
           <S.VisibilityButton onClick={checkPasswordVisibility} />
         </S.PasswordLabel>
@@ -137,7 +153,7 @@ const SignupModal = ({ closeModal }: Props) => {
           style={{ marginBottom: "4px" }}
           placeholder="핸드폰 번호를 입력해주세요."
           value={phone}
-          onChange={e => setPhone(e.target.value)}
+          onChange={(e) => setPhone(e.target.value)}
         />
         {emailError && (
           <S.ErrorMsg>이메일은 '@'이 포함되어야합니다.</S.ErrorMsg>
@@ -160,7 +176,7 @@ const SignupModal = ({ closeModal }: Props) => {
           <input
             type="checkbox"
             checked={isAdmin}
-            onChange={e => setIsAdmin(e.target.checked)}
+            onChange={(e) => setIsAdmin(e.target.checked)}
             style={{ cursor: "pointer", marginRight: "8px" }}
           />
           관리자로 회원가입하기
