@@ -36,4 +36,7 @@ out/
 ### VS Code ###
 .vscode/
 
+restart.sh
+resources/application.yml
+
 
