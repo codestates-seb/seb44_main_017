@@ -86,7 +86,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         if(refreshTokenRepository.existsByMemberId(member.getMemberId()) == true){
             Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByMemberId(member.getMemberId());
             RefreshToken findtoken = optionalRefreshToken.get();
-            refreshToken = findtoken.getValue();
+            findtoken.setValue(refreshToken);
+            refreshTokenRepository.save(findtoken);
         }else{
             RefreshToken refreshTokenEntity = new RefreshToken();
             refreshTokenEntity.setValue(refreshToken);

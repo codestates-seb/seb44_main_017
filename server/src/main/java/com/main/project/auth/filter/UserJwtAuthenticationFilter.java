@@ -64,7 +64,8 @@ public class UserJwtAuthenticationFilter extends UsernamePasswordAuthenticationF
         if(refreshTokenRepository.existsByMemberId(member.getMemberId()) == true){
             Optional<RefreshToken> optionaltoken = refreshTokenRepository.findByMemberId(member.getMemberId());
             RefreshToken findtoken = optionaltoken.get();
-            refreshToken = findtoken.getValue();
+            findtoken.setValue(refreshToken);
+            refreshTokenRepository.save(findtoken);
         }else {
             RefreshToken refreshTokenEntity = new RefreshToken();
             refreshTokenEntity.setValue(refreshToken);
