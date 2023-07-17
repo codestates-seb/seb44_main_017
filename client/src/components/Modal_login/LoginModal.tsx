@@ -90,7 +90,7 @@ const LoginModal = ({ closeModal }: Props) => {
   };
   return (
     <S.Container onClick={closeModal}>
-      <S.Content onClick={(e) => e.stopPropagation()}>
+      <S.Content onClick={e => e.stopPropagation()}>
         <S.CloseButton onClick={closeModal} />
         <S.LoginTitleContainer>
           <Logo width="40px" height="24px" />
@@ -104,7 +104,7 @@ const LoginModal = ({ closeModal }: Props) => {
           type="text"
           value={userName}
           placeholder="이메일을 입력해주세요."
-          onChange={(e) => setUserName(e.target.value)}
+          onChange={e => setUserName(e.target.value)}
           style={{ marginBottom: "48px" }}
         />
         <S.PasswordLabel>
@@ -112,7 +112,7 @@ const LoginModal = ({ closeModal }: Props) => {
             type={showPassword ? "text" : "password"}
             value={password}
             placeholder="비밀번호를 입력해주세요."
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
           />
           <S.VisibilityButton onClick={passwordVisibility} />
         </S.PasswordLabel>
@@ -128,7 +128,7 @@ const LoginModal = ({ closeModal }: Props) => {
           <input
             type="checkbox"
             checked={isAdmin}
-            onChange={(e) => setIsAdmin(e.target.checked)}
+            onChange={e => setIsAdmin(e.target.checked)}
             style={{ cursor: "pointer", marginRight: "8px" }}
           />
           관리자로 로그인하기

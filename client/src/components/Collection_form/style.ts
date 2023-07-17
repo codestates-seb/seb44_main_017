@@ -6,6 +6,18 @@ export const FormContainer = styled.article`
   gap: 4px;
   padding-bottom: 24px;
   border-bottom: 1px solid var(--color-gray100);
+  animation: fadeInDown 0.5s;
+
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, -10%, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translateZ(0);
+    }
+  }
 `;
 
 export const ContentContainer = styled.div`
