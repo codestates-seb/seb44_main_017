@@ -2,8 +2,9 @@ import { Divider } from "@mui/material";
 import styled from "styled-components";
 
 export const Container = styled.div`
-  @media (max-width:467px) {
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 export const ContentConatiner = styled.div`
   display: flex;
@@ -42,8 +43,8 @@ export const Title = styled.span`
   margin-left: 20px;
 `;
 export const SelectBoxContainer = styled.div`
-    margin-right: 20px;
-`
+  margin-right: 20px;
+`;
 export const CustomDivider = styled(Divider)`
   display: flex;
   width: 100%;
