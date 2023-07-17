@@ -19,6 +19,7 @@ export const SelectBox = styled.div`
   align-items: center;
   font-size: var(--font-size-12);
   font-weight: 700;
+  z-index: 100;
 
   & svg {
     position: absolute;
@@ -69,7 +70,6 @@ export const SelectOptions = styled.ul<{ isOpen: boolean }>`
   );
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: #111;
-  z-index: 100;
 
   & li:not(:last-child) {
     border-bottom: 1px solid var(--color-lightivory);

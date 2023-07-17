@@ -1,13 +1,12 @@
-import React from "react";
 import * as S from "./style";
 
 interface Props {
-  onClick: (category: string) => void;
   btnSelect: boolean;
   category: string;
+  onClick: (category: string) => void;
 }
 
-export const CategoryButton = ({ onClick, btnSelect, category }: Props) => {
+export const CategoryButton = ({ btnSelect, onClick, category }: Props) => {
   const handleClick = () => {
     onClick(category);
   };
