@@ -11,11 +11,12 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999;
 `;
 
 export const Content = styled.div`
   width: 360px;
-  height: 422px;
+  padding: 36px 0px;
   background-color: rgba(247, 247, 247, 0.7);
   backdrop-filter: 10px;
   box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.25);
@@ -35,16 +36,16 @@ export const CloseButton = styled(CloseIcon)`
   top: 12px;
 `;
 
-export const LoginTitleContainer = styled.div`
+export const SignupTitleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-export const LoginTitle = styled.span`
+export const SignupTitle = styled.span`
   font-size: var(--font-size-36);
   font-weight: var(--font-weight-700);
-  color: var(--color-darkgreen);
+  color: var(--color-darkblue);
 `;
 
 export const Explanation = styled.div`
@@ -56,19 +57,24 @@ export const Explanation = styled.div`
 
 export const InputBox = styled.input`
   width: 280px;
-  height: 24px;
+  padding: 4px 0px;
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 0;
   border-bottom-width: 2px;
   border-color: var(--color-darkblue);
   outline: none;
-  background-color: rgba(247, 247, 247, 0.7);
+  background-color: transparent;
   margin-bottom: 24px;
   ::placeholder {
     color: var(--color-gray200);
     font-weight: var(--font-weight-700);
   }
+`;
+
+export const NameLabel = styled.label`
+  display: flex;
+  position: relative;
 `;
 
 export const DuplicateCheck = styled.button`
@@ -82,6 +88,7 @@ export const DuplicateCheck = styled.button`
   background-color: var(--color-darkblue);
   color: var(--color-white);
   border-radius: 16px;
+  border: none;
   position: absolute;
   top: 4px;
   right: 0px;
@@ -91,7 +98,6 @@ export const PasswordLabel = styled.label`
   display: flex;
   position: relative;
 `;
-
 export const VisibilityButton = styled(VisibilityIcon)`
   width: 16px;
   height: 10px;
@@ -111,24 +117,21 @@ export const AdminLabel = styled.label`
   margin-bottom: 16px;
 `;
 
-export const LoginButton = styled.button`
+export const SignupButton = styled.button`
   width: 130px;
   height: 50px;
-  background-color: var(--color-darkgreen);
+  background-color: rgba(247, 247, 247, 0.7);
   border-radius: 40px;
-  border: none;
+  border-style: solid;
+  border-width: 3px;
+  border-color: var(--color-darkblue);
   font-size: 16px;
   font-weight: 700;
-  color: var(--color-white);
+  color: var(--color-darkblue);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `;
 
 export const ErrorMsg = styled.div`
   color: red;
   font-size: 12px;
-`;
-
-export const ButtonTest = styled.button`
-  width: 120px;
-  height: 48px;
 `;

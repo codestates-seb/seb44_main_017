@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import * as S from "./style";
-import { Logo } from "../../assets/logoSimple";
 import axios from "axios";
+import * as S from "./style";
+import { useState } from "react";
+
+import { Logo } from "../../assets/logoSimple";
+import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 
 interface Props {
@@ -57,8 +58,10 @@ const LoginModal = ({ closeModal }: Props) => {
           closeModal(false);
           const authorization = response.headers.get("authorization");
           const refresh = response.headers.get("refresh");
+          const name = response.data;
           document.cookie = `authorization=${authorization}; path=/;`;
           document.cookie = `refresh=${refresh}; path=/; SameSite=none; Secure`;
+          document.cookie = `name=${name};`;
         }
       } catch (error: any) {
         if (error.response.status === 404 || error.response.status === 500) {
@@ -74,6 +77,7 @@ const LoginModal = ({ closeModal }: Props) => {
           closeModal(false);
           const authorization = response.headers.get("authorization");
           const refresh = response.headers.get("refresh");
+          console.log(response.data);
           document.cookie = `authorization=${authorization}; path=/;`;
           document.cookie = `refresh=${refresh}; path=/; SameSite=none; Secure`;
         }
@@ -86,7 +90,7 @@ const LoginModal = ({ closeModal }: Props) => {
   };
   return (
     <S.Container onClick={closeModal}>
-      <S.Content onClick={e => e.stopPropagation()}>
+      <S.Content onClick={(e) => e.stopPropagation()}>
         <S.CloseButton onClick={closeModal} />
         <S.LoginTitleContainer>
           <Logo width="40px" height="24px" />
@@ -100,7 +104,7 @@ const LoginModal = ({ closeModal }: Props) => {
           type="text"
           value={userName}
           placeholder="이메일을 입력해주세요."
-          onChange={e => setUserName(e.target.value)}
+          onChange={(e) => setUserName(e.target.value)}
           style={{ marginBottom: "48px" }}
         />
         <S.PasswordLabel>
@@ -108,7 +112,7 @@ const LoginModal = ({ closeModal }: Props) => {
             type={showPassword ? "text" : "password"}
             value={password}
             placeholder="비밀번호를 입력해주세요."
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <S.VisibilityButton onClick={passwordVisibility} />
         </S.PasswordLabel>
@@ -124,14 +128,22 @@ const LoginModal = ({ closeModal }: Props) => {
           <input
             type="checkbox"
             checked={isAdmin}
-            onChange={e => setIsAdmin(e.target.checked)}
+            onChange={(e) => setIsAdmin(e.target.checked)}
             style={{ cursor: "pointer", marginRight: "8px" }}
           />
           관리자로 로그인하기
         </S.AdminLabel>
+        <S.OAuthButtonContainer>
+          <S.KakaoButton onClick={kakaoLoginRequestHandler}>
+            <S.KakaoIcon />
+            카카오
+          </S.KakaoButton>
+          <S.GoogleButton onClick={googleLoginRequestHandler}>
+            <S.GoogleIcon />
+            구글
+          </S.GoogleButton>
+        </S.OAuthButtonContainer>
         <S.LoginButton onClick={handleLogin}>LOGIN</S.LoginButton>
-        <S.ButtonTest onClick={googleLoginRequestHandler}>구글</S.ButtonTest>
-        <S.ButtonTest onClick={kakaoLoginRequestHandler}>카카오</S.ButtonTest>
       </S.Content>
     </S.Container>
   );

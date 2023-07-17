@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { FcGoogle } from "react-icons/fc";
+import { RiKakaoTalkFill } from "react-icons/ri";
 import CloseIcon from "@mui/icons-material/Close";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
@@ -11,11 +13,12 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999;
 `;
 
 export const Content = styled.div`
   width: 360px;
-  height: 500px;
+  padding: 36px 0px;
   background-color: rgba(247, 247, 247, 0.7);
   backdrop-filter: 10px;
   box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.25);
@@ -35,16 +38,16 @@ export const CloseButton = styled(CloseIcon)`
   top: 12px;
 `;
 
-export const SignupTitleContainer = styled.div`
+export const LoginTitleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-export const SignupTitle = styled.span`
+export const LoginTitle = styled.span`
   font-size: var(--font-size-36);
   font-weight: var(--font-weight-700);
-  color: var(--color-darkblue);
+  color: var(--color-darkgreen);
 `;
 
 export const Explanation = styled.div`
@@ -63,17 +66,12 @@ export const InputBox = styled.input`
   border-bottom-width: 2px;
   border-color: var(--color-darkblue);
   outline: none;
-  background-color: rgba(247, 247, 247, 0.7);
+  background-color: transparent;
   margin-bottom: 24px;
   ::placeholder {
     color: var(--color-gray200);
     font-weight: var(--font-weight-700);
   }
-`;
-
-export const NameLabel = styled.label`
-  display: flex;
-  position: relative;
 `;
 
 export const DuplicateCheck = styled.button`
@@ -87,7 +85,6 @@ export const DuplicateCheck = styled.button`
   background-color: var(--color-darkblue);
   color: var(--color-white);
   border-radius: 16px;
-  border: none;
   position: absolute;
   top: 4px;
   right: 0px;
@@ -97,6 +94,7 @@ export const PasswordLabel = styled.label`
   display: flex;
   position: relative;
 `;
+
 export const VisibilityButton = styled(VisibilityIcon)`
   width: 16px;
   height: 10px;
@@ -116,21 +114,60 @@ export const AdminLabel = styled.label`
   margin-bottom: 16px;
 `;
 
-export const SignupButton = styled.button`
+export const LoginButton = styled.button`
   width: 130px;
   height: 50px;
-  background-color: rgba(247, 247, 247, 0.7);
+  background-color: var(--color-darkgreen);
   border-radius: 40px;
-  border-style: solid;
-  border-width: 3px;
-  border-color: var(--color-darkblue);
+  border: none;
   font-size: 16px;
   font-weight: 700;
-  color: var(--color-darkblue);
+  color: var(--color-white);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 `;
 
 export const ErrorMsg = styled.div`
   color: red;
   font-size: 12px;
+`;
+
+export const OAuthButtonContainer = styled.div`
+  display: flex;
+  margin-bottom: 16px;
+`;
+export const KakaoButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0px;
+  width: 120px;
+  font-weight: 700;
+  background-color: #fee500;
+  color: #000000;
+  margin-right: 16px;
+  border-radius: 12px;
+  border: none;
+`;
+export const KakaoIcon = styled(RiKakaoTalkFill)`
+  width: 20px;
+  height: 20px;
+  color: #000000;
+  margin-right: 4px;
+`;
+export const GoogleButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0px;
+  width: 120px;
+  font-weight: 700;
+  background-color: white;
+  color: #000000;
+  border-radius: 12px;
+  border: none;
+`;
+export const GoogleIcon = styled(FcGoogle)`
+  width: 20px;
+  height: 20px;
+  margin-right: 4px;
 `;

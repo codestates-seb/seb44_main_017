@@ -15,6 +15,7 @@ import MyQnaPage from "./pages/myQnaPage/myQnaPage";
 import ManageProductsPage from "./pages/adminpage/manageProductsPage/manageProductsPage";
 import ManageUserPage from "./pages/adminpage/manageUserPage/manageUserPage";
 import ManageApprovalPage from "./pages/adminpage/manageApproval/manageApprovalPage";
+import MyinfoPage from "./pages/myinfoPage/myinfoPage";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route element={<ManageProductsPage />} path="admin/products" />
           <Route element={<ManageUserPage />} path="admin/users" />
           <Route element={<ManageApprovalPage />} path="admin/approval" />
+          <Route element={<MyinfoPage />} path="/mypage/info" />
         </Routes>
       </AppContainer>
       <Footer />
