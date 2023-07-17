@@ -22,7 +22,7 @@ const QnaListComponent = ({
   totalPage,
 }: QnaListComponentProps) => {
   const title = "무엇이 궁금한가요?";
-  const options = ["최신순", "오래된순", "좋아요순", "조회수순"];
+  const options = ["최신순", "오래된순", "조회수순"];
   const TITLE_MAX_LENGTH = 40;
 
   return (
