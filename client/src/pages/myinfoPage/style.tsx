@@ -123,8 +123,10 @@ export const DuplicateCheck = styled.button`
   padding: 4px 0px;
   border-radius: 20px;
   @media (max-width: 767px) {
-    width: 48px;
+    width: 72px;
+    font-size: 10px;
     margin-left: 8px;
+    right: 4px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     width: 96px;
@@ -143,7 +145,8 @@ export const WithdrawalButton = styled.button`
   padding: 8px 0px;
   border-radius: 20px;
   @media (max-width: 767px) {
-    width: 48px;
+    width: 80px;
+    font-size: 10px;
     margin-left: 8px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
@@ -164,7 +167,8 @@ export const SubmitButton = styled.button`
   padding: 8px 0px;
   border-radius: 20px;
   @media (max-width: 767px) {
-    width: 48px;
+    width: 80px;
+    font-size: 10px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     width: 96px;

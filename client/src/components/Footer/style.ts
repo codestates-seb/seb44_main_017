@@ -55,6 +55,9 @@ export const ContentContainer = styled.div`
     }
   }
 `;
+export const ContentGithub = styled.div`
+  display: flex;
+`;
 export const ContentTitle = styled.div`
   color: var(--color-gray200);
   font-weight: var(--font-weight-700);
@@ -73,6 +76,7 @@ export const ContentTitle = styled.div`
 export const Content = styled.li`
   color: var(--color-gray200);
   margin-bottom: 12px;
+  width: 160px;
   display: flex;
   &:hover {
     cursor: pointer;
