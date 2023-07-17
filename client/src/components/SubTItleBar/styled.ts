@@ -6,6 +6,7 @@ export const Container = styled.div`
   background-color: var(--color-darkblue);
   justify-content: center;
   align-items: center;
+  width: 100%;
 `;
 export const SubTitleBox = styled.div`
   position: relative;
