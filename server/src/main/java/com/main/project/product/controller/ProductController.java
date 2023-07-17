@@ -88,8 +88,8 @@ public class ProductController {
         List<ProductDto.UserPP> productlists = objectMapper.readValue(productlist, new TypeReference<>() {});
         for(int i = 0; i < productlists.size(); i++){
             Product pp = productMapper.NproductPatchDtotoProduct(productlists.get(i));
-            productService.createProducts(pp,findtoken.getMemberId());
-            productService.uploadImage(files.get(i),pp.getProductId());
+            productService.createProducts(pp, findtoken.getMemberId());
+            productService.uploadImage(files.get(i), pp.getProductId());
         }
         return new ResponseEntity(HttpStatus.OK);
     }
