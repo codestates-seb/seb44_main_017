@@ -11,6 +11,7 @@ import QnaListPage from "./pages/qnaListPage/qnaListPage";
 import QnaDetailPage from "./pages/qnaDetailPage/qnaDetailPage";
 import styled from "styled-components";
 import MyproductsPage from "./pages/myproductsPage/myproductsPage";
+import MyQnaPage from "./pages/myQnaPage/myQnaPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route element={<QnaListPage />} path="/questions" />
           <Route element={<QnaDetailPage />} path="/questions/:questionId" />
           <Route element={<MyproductsPage />} path="/mypage" />
+          <Route element={<MyQnaPage />} path="/mypage/posts" />
         </Routes>
       </AppContainer>
       <Footer />

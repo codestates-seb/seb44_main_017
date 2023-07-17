@@ -28,7 +28,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   const [authorization, refresh] = getToken();
 
   useEffect(() => {
-    comments.map((item) => {
+    comments.map(item => {
       item.commentId === selectedId && setUpdateValue(item.content);
     });
   }, [selectedId]);
@@ -55,8 +55,8 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
       );
       setComplete(true);
       setIsEditMode(false);
-    } catch {
-      console.log("error!");
+    } catch (e) {
+      console.log("failed update!", e);
     }
   };
 
@@ -80,9 +80,10 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
             },
           })
           .then(setComplete(true));
+
         navigate(`/questions/${questionId}`);
-      } catch {
-        console.log("error!");
+      } catch (e) {
+        console.log("failed delete comment", e);
       }
     }
   };
@@ -90,20 +91,24 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    axios
-      .post(
-        BASE_URL + `/questions/${questionId}/comments`,
-        { content: commentValue },
-        {
-          headers: {
-            Authorization: `${authorization}`,
-            Refresh: `${refresh}`,
-          },
-        }
-      )
-      .then(setComplete(true));
+    try {
+      axios
+        .post(
+          BASE_URL + `/questions/${questionId}/comments`,
+          { content: commentValue },
+          {
+            headers: {
+              Authorization: `${authorization}`,
+              Refresh: `${refresh}`,
+            },
+          }
+        )
+        .then(setComplete(true));
 
-    reset && reset();
+      reset && reset();
+    } catch (e) {
+      console.error("failed submit!", e);
+    }
   };
 
   return (
@@ -135,7 +140,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
                       type="text"
                       value={updateValue}
                       ref={inputRef}
-                      onChange={(e) => setUpdateValue(e.target.value)}
+                      onChange={e => setUpdateValue(e.target.value)}
                       onKeyUp={onkeyHandler}
                     />
                   </div>
