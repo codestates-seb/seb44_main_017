@@ -127,7 +127,7 @@ public class JwtTokenizer {
         String atk = delegateAccessToken(adminResponseDto);
         String rtk = delegateRefreshToken(adminResponseDto);
 
-        if(refreshTokenRepository.existsByMemberId(adminResponseDto.getAdminId()) == true){
+        if(refreshTokenRepository.existsByAdminId(adminResponseDto.getAdminId()) == true){
             Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByAdminId(adminResponseDto.getAdminId());
             RefreshToken findtoken = optionalRefreshToken.get();
             findtoken.setValue(rtk);
