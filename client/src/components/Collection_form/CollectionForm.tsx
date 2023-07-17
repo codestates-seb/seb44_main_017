@@ -23,7 +23,7 @@ const CollectionForm = ({ contents, setContents, itemNumber }: Props) => {
 
   useEffect(() => {
     setContents(
-      contents.map(item =>
+      contents.map((item) =>
         item.itemId === itemNumber
           ? {
               ...item,
