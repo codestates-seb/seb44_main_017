@@ -24,7 +24,7 @@ export const SubTitleBox = styled.div`
     min-height: 64px;
   }
 `;
-export const AdmitButtonContainer = styled.nav`
+export const AdminButtonContainer = styled.nav`
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -35,7 +35,8 @@ export const AdmitButtonContainer = styled.nav`
   padding: 16px 20px;
   border-radius: 99px;
   @media (max-width: 767px) {
-    margin-bottom: -128px;
+    width: 250px;
+    margin-bottom: -120px;
   }
   @media (min-width: 768px) and (max-width: 1120px) {
     margin-bottom: -152px;

@@ -39,7 +39,7 @@ const SubTitleBar: React.FC<SubTitleProps> = ({
           <></>
         )}
         {shouldRenderDiv ? (
-          <S.AdmitButtonContainer>{list}</S.AdmitButtonContainer>
+          <S.AdminButtonContainer>{list}</S.AdminButtonContainer>
         ) : (
           <></>
         )}
