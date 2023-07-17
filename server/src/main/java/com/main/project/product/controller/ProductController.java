@@ -52,7 +52,7 @@ public class ProductController {
     private final ProductCommentRepository productCommentRepository;
 
 
-    public ProductController(ProductService productService, ProductMapper productMapper, AdminService adminService, RefreshTokenService refreshTokenService, ProductCommentRepository productCommentRepository) {
+    public ProductController(ProductService productService, ProductMapper productMapper, MemberService memberService, AdminService adminService, RefreshTokenService refreshTokenService, ProductCommentRepository productCommentRepository) {
         this.productService = productService;
         this.adminService = adminService;
         this.productMapper = productMapper;
@@ -110,8 +110,8 @@ public class ProductController {
         List<ProductDto.UserPP> productlists = objectMapper.readValue(productlist, new TypeReference<>() {});
         for(int i = 0; i < productlists.size(); i++){
             Product pp = productMapper.NproductPatchDtotoProduct(productlists.get(i));
-            productService.createProducts(pp,findtoken.getMemberId());
-            productService.uploadImage(files.get(i),pp.getProductId());
+            productService.createProducts(pp, findtoken.getMemberId());
+            productService.uploadImage(files.get(i), pp.getProductId());
         }
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -152,10 +152,8 @@ public class ProductController {
                                      String tokenstr,
                                      @PathVariable("product-id") @Positive Long productId){
         Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshTokenOptional(tokenstr);
-//        RefreshToken RT = refreshToken.get();
 
         Product product = productService.findProduct(productId);
-
         List<ProductComment> comments = productCommentRepository.findByProductProductId(productId);
 
         List<ProductCommentDto.Response> commentResponses = comments.stream()
@@ -169,26 +167,7 @@ public class ProductController {
 
         ProductDto.ResponseWithComments response;
 
-
-        if(refreshToken.isEmpty()){
-            response = productMapper.productToProductResponseWithComment(product);
-        }
-        else if (refreshToken.get().getMemberId() != null) {
-            Long memberId = refreshToken
-                    .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
-                    .getMemberId();
-            product.addView();
-            productService.updateProductview(productId , product);
-            response = productMapper.productToProductResponseWithComment(product, memberId);
-
-        }else if(refreshToken.get().getAdminId() != null){
-            Long AdminId = refreshToken
-                    .orElseThrow( () -> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND))
-                    .getAdminId();
-            response = productMapper.productToProductResponseWithComment(product);
-        }else{
-            response = productMapper.productToProductResponseWithComment(product);
-        }
+        response = productService.getResponseWithComments(productId, refreshToken, product);
 
         response.setComments(commentResponses);
 
@@ -198,6 +177,8 @@ public class ProductController {
                 HttpStatus.OK
         );
     }
+
+
 
     // admins can modify their product
     @PatchMapping("/{product-id}")
