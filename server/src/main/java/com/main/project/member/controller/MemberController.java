@@ -4,6 +4,7 @@ import com.main.project.dto.MultiResponseDto;
 import com.main.project.dto.SingleResponseDto;
 import com.main.project.dto.queryget;
 import com.main.project.dto.queryresponse.ProductResponse;
+import com.main.project.dto.queryresponse.QuestionResponse;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.dto.MemberDto;
@@ -138,8 +139,8 @@ public class MemberController {
                                        @Positive @RequestParam int page,
                                        @Positive @RequestParam int size){
         Long memberId = findmemberId(token);
-        Page<queryget.question> ss = memberService.searchMemberQuestion(memberId,page-1,size);
-        List<queryget.question> productList = ss.getContent();
+        Page<QuestionResponse> ss = memberService.searchMemberQuestion(memberId,page-1,size);
+        List<QuestionResponse> productList = ss.getContent();
         return ResponseEntity.ok(new MultiResponseDto(productList,ss));
     }
     @GetMapping

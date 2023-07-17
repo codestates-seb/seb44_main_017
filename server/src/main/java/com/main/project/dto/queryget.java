@@ -1,5 +1,8 @@
 package com.main.project.dto;
 
+import lombok.Getter;
+
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 public interface queryget {
@@ -49,6 +52,7 @@ public interface queryget {
         LocalDateTime getcreate_at();
         String getdenycontent();
     }
+
     public interface question{
         Long getquestion_id();
         Integer getview();

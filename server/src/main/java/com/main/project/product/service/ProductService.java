@@ -121,8 +121,11 @@ public class ProductService {
         Optional.ofNullable(product.getIssell()).ifPresent(findProduct::setIssell);
         Optional.ofNullable(product.getPointValue()).ifPresent(findProduct::setPointValue);
         Optional.ofNullable(product.getView()).ifPresent(findProduct::setView);
-
-        return productRepository.save(findProduct);
+        Product saveproduct = productRepository.save(findProduct);
+        Eproduct eproduct = mapper.productToEproduct(saveproduct);
+        eproduct.setSell("sale");
+        eproductService.addEproduct(eproduct);
+        return saveproduct;
     }
     public Product updateProductview(Long productId, Product product){
         Product findProduct = findProduct(productId);
@@ -158,7 +161,7 @@ public class ProductService {
                     .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
                     .getMemberId();
             product.addView();
-            updateProduct(productId, product);
+            updateProductview(productId, product);
             response = mapper.productToProductResponseWithComment(product, memberId);
 
         }else if(refreshToken.get().getAdminId() != null){

@@ -16,7 +16,4 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByEmail(String email);
     boolean existsByName(String name);
     Page<Member> findByNameContaining(String keyword, Pageable pageable);
-    @Query(value = "select Q.question_id,Q.member_id,Q.view,Q.title,Q.content,Q.create_at,Q.modify_at from question Q where Q.member_id=:ID", nativeQuery = true)
-    Page<queryget.question> findUserQuestion(@Param(value = "ID") Long ID, Pageable pageable);
-
 }

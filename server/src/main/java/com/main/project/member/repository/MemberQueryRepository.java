@@ -2,11 +2,14 @@ package com.main.project.member.repository;
 
 
 import static com.main.project.dto.queryresponse.ProductResponse.*;
+import static com.main.project.questionBorad.entity.QQuestion.question;
 import static com.main.project.product.entity.QProduct.product;
 import static com.main.project.product.entity.QProductdeny.productdeny;
 
 import com.main.project.dto.queryresponse.ProductResponse;
 import com.main.project.dto.queryresponse.QProductResponse;
+import com.main.project.dto.queryresponse.QuestionResponse;
+import com.main.project.dto.queryresponse.*;
 import com.main.project.product.entity.Product;
 import com.main.project.product.entity.QProduct;
 import com.querydsl.core.types.Order;
@@ -28,6 +31,30 @@ import java.util.Optional;
 public class MemberQueryRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
+
+    public Page<QuestionResponse> getMemberQuestions(Long ID, Pageable pageable){
+        List<QuestionResponse> responses = jpaQueryFactory
+                .select(new QQuestionResponse(
+                        question.questionId,
+                        question.view,
+                        question.title,
+                        question.content,
+                        question.createAt,
+                        question.modifyAt)
+                )
+                .from(question)
+                .where(question.writer.memberId.eq(ID))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+        Long count = jpaQueryFactory
+                .select(question.count())
+                .from(question)
+                .where(question.writer.memberId.eq(ID))
+                .fetchOne();
+        return new PageImpl<>(responses,pageable,count);
+
+    }
 
     public  Page<ProductResponse> getMemberProductdeny(Long ID, Pageable pageable){
         List<ProductResponse> responses = jpaQueryFactory
