@@ -21,3 +21,19 @@ export interface QnaTypes {
   writer: WriterTypes;
   qcomments: CommentTypes[];
 }
+
+export interface ProductTypes {
+  name: string;
+  price: number | string;
+  product_id: number | string;
+  member_id: number | string;
+  category: string;
+  title: null;
+  content: string;
+  image_link: string;
+  modify_at: string;
+  create_at: string;
+  productlike: number | string;
+  view: number | string;
+  condition_value: null;
+}
