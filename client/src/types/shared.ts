@@ -24,7 +24,7 @@ export interface QnaTypes {
 
 export interface ProductTypes {
   name: string;
-  price: number | string;
+  price: number | string | null;
   product_id: number | string;
   member_id: number | string;
   category: string;
