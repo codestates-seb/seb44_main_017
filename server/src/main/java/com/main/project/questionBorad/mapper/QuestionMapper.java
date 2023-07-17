@@ -24,14 +24,4 @@ public interface QuestionMapper {
 
     List<QuestionDto.Response> questionsToMultiResponseDtos(List<Question> questions);
 
-    default QuestionDto.Response questionquerytoquestion(queryget.question question){
-        return QuestionDto.Response.builder()
-                .questionId(question.getquestion_id())
-                .content(question.getcontent())
-                .view(question.getview())
-                .title(question.gettitle())
-                .createAt(question.getcreate_at())
-                .modifyAt(question.getmodify_at()).build();
-    }
-
 }

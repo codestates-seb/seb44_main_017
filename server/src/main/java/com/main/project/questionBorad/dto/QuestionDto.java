@@ -34,7 +34,6 @@ public class QuestionDto {
 
     @Getter
     @Setter
-    @Builder
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Response{
