@@ -17,8 +17,8 @@ const SubTitleBar: React.FC<SubTitleProps> = ({
   const location = useLocation();
   const shouldRenderDiv = location.pathname.startsWith("/admin");
   const navButtonList = [
-    { name: "회원 관리", href: "/admin/members" },
     { name: "상품 관리", href: "/admin/products" },
+    { name: "회원 관리", href: "/admin/users" },
     { name: "승인 관리", href: "/admin/approval" },
   ];
   const list = navButtonList.map((nav) => {
@@ -39,7 +39,7 @@ const SubTitleBar: React.FC<SubTitleProps> = ({
           <></>
         )}
         {shouldRenderDiv ? (
-          <S.AdmitButtonContainer>{list}</S.AdmitButtonContainer>
+          <S.AdminButtonContainer>{list}</S.AdminButtonContainer>
         ) : (
           <></>
         )}
