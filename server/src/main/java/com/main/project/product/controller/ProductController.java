@@ -1,5 +1,7 @@
 package com.main.project.product.controller;
 
+import com.main.project.admin.entity.Admin;
+import com.main.project.admin.service.AdminService;
 import com.main.project.dto.MultiResponseDto;
 import com.main.project.dto.queryget;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
@@ -44,13 +46,15 @@ public class ProductController {
     private final static String PRODUCT_DEF_URL = "/products";
 
     private final ProductService productService;
+    private final AdminService adminService;
     private final ProductMapper productMapper;
     private final RefreshTokenService refreshTokenService;
     private final ProductCommentRepository productCommentRepository;
 
 
-    public ProductController(ProductService productService, ProductMapper productMapper, MemberService memberService, RefreshTokenService refreshTokenService, ProductCommentRepository productCommentRepository) {
+    public ProductController(ProductService productService, ProductMapper productMapper, MemberService memberService, AdminService adminService, RefreshTokenService refreshTokenService, ProductCommentRepository productCommentRepository) {
         this.productService = productService;
+        this.adminService = adminService;
         this.productMapper = productMapper;
         this.refreshTokenService = refreshTokenService;
         this.productCommentRepository = productCommentRepository;
@@ -71,9 +75,27 @@ public class ProductController {
     }
 
     @PostMapping("/deny/{product-id}")
-    public ResponseEntity productdeny(@PathVariable("product-id") @Positive Long productId,
+    public ResponseEntity productdeny(@RequestHeader("Refresh") String tokenstr,
+                                      @PathVariable("product-id") @Positive Long productId,
                                       @Valid @RequestBody ProductDto.Postdeny requestbody){
-        productService.denyProduct(productId,requestbody.getDenycontent());
+        Optional<RefreshToken> refresht = refreshTokenService.findRefreshTokenOptional(tokenstr);
+        RefreshToken findtoken = refresht.orElseThrow(()-> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND));
+        Admin admin = adminService.findAdminById(findtoken.getAdminId());
+        productService.denyProduct(productId,requestbody.getDenycontent(),admin);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PatchMapping("/denypatch/{product-id}")
+    public ResponseEntity productdenypatch(@PathVariable("product-id") @Positive Long productId,
+                                           @RequestPart("file") MultipartFile file,
+                                           @RequestParam("product") String product) throws JsonProcessingException{
+
+        ObjectMapper objectMapper = new ObjectMapper().registerModule(new SimpleModule());
+
+        List<ProductDto.UserPP> productlists = objectMapper.readValue(product, new TypeReference<>() {});
+        //Product pp = productMapper.NproductPatchDtotoProduct(productlists.get(0));
+        Product pp = productService.updatedenyProduct(productlists, productId);
+        productService.uploadImage(file,pp.getProductId());
         return new ResponseEntity(HttpStatus.OK);
     }
 
