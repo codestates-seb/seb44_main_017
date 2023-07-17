@@ -6,6 +6,7 @@ import com.main.project.product.entity.Product;
 import com.main.project.productComment.ProductComment;
 import com.main.project.productComment.dto.ProductCommentDto;
 import com.main.project.response.ListResponseDto;
+import com.main.project.search.document.Eproduct;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -49,5 +50,5 @@ public interface ProductMapper {
 
     Product NproductPatchDtotoProduct(ProductDto.UserPP requestbody);
 
-    //Eproduct productToEproduct(Product product);
+    Eproduct productToEproduct(Product product);
 }
