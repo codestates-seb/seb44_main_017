@@ -56,11 +56,8 @@ const ManageProductsPage = () => {
     })();
   }, [filter, page]);
   return (
-    <div
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
+    <S.Container>
       <SubTitleBar title="상품 관리" isButton={false} />
-      <S.Container>
         <S.ContentConatiner>
           <S.SubTitleContainer>
             <S.Title>상품 관리</S.Title>
@@ -85,7 +82,6 @@ const ManageProductsPage = () => {
           />
         </S.ContentConatiner>
       </S.Container>
-    </div>
   );
 };
 
