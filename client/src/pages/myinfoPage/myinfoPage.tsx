@@ -96,10 +96,10 @@ export const MyinfoPage = () => {
           alert("정상적으로 탈퇴되었습니다.");
           delCookie();
         }
-        navigate("/");
       } catch (error) {
         console.log(error);
       }
+      navigate("/");
     }
   };
 
