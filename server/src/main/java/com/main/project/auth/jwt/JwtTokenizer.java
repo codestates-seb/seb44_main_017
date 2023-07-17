@@ -130,7 +130,9 @@ public class JwtTokenizer {
         if(refreshTokenRepository.existsByMemberId(adminResponseDto.getAdminId()) == true){
             Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByAdminId(adminResponseDto.getAdminId());
             RefreshToken findtoken = optionalRefreshToken.get();
-            rtk = findtoken.getValue();
+            findtoken.setValue(rtk);
+            refreshTokenRepository.save(findtoken);
+
         }else {
             RefreshToken refreshTokenEntity = new RefreshToken();
             refreshTokenEntity.setValue(rtk);
