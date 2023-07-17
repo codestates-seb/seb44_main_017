@@ -12,9 +12,6 @@ export const getToken = (): Props => {
 
   return [authorization, refresh];
 };
-const [authorization, refresh] = getToken();
-console.log(authorization);
-console.log(refresh);
 
 // 사용자, 관리자 닉네임 가져오기
 export const getName = () => {
@@ -24,7 +21,6 @@ export const getName = () => {
     ?.replace(" name=", "");
   return name;
 };
-console.log(getName());
 
 // 사용자, 관리자 Id 가져오기
 export const getId = () => {

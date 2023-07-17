@@ -54,17 +54,13 @@ const LoginModal = ({ closeModal }: Props) => {
 
         const response: any = await axios.post(`${BASE_URL}/user/login`, data);
         if (response.status === 200) {
-          // navigate("/");
-          // closeModal(false);
+          navigate("/");
+          closeModal(false);
           const authorization = response.headers.get("authorization");
           const refresh = response.headers.get("refresh");
           const roles = response.headers.get("roles");
           const memberId = response.headers.get("memberid");
           const userName = response.data;
-          console.log(`헤더:${response.headers}`);
-          console.log(`바디:${response.data}`);
-          console.log(roles);
-          console.log(memberId);
           document.cookie = `authorization=${authorization}; path=/;`;
           document.cookie = `refresh=${refresh}; path=/;`;
           document.cookie = `name=${userName};`;
@@ -81,19 +77,13 @@ const LoginModal = ({ closeModal }: Props) => {
         const data = { email: userName, password };
         const response: any = await axios.post(`${BASE_URL}/admin/login`, data);
         if (response.status === 200) {
-          // navigate("/");
-          // closeModal(false);
+          navigate("/");
+          closeModal(false);
           const authorization = response.headers.get("authorization");
           const refresh = response.headers.get("refresh");
           const roles = response.headers.get("roles");
           const adminId = response.headers.get("adminid");
           const adminName = response.data.data;
-          console.log(response);
-          console.log(`헤더:${response.headers}`);
-          console.log(adminId);
-          console.log(roles);
-          console.log(adminName);
-          // console.log(adminname);
           document.cookie = `authorization=${authorization}; path=/;`;
           document.cookie = `refresh=${refresh}; path=/; SameSite=none; Secure`;
           document.cookie = `name=${adminName};`;
