@@ -11,6 +11,7 @@ import QnaListPage from "./pages/qnaListPage/qnaListPage";
 import QnaDetailPage from "./pages/qnaDetailPage/qnaDetailPage";
 import styled from "styled-components";
 import MyproductsPage from "./pages/myproductsPage/myproductsPage";
+import MyQnaPage from "./pages/myQnaPage/myQnaPage";
 import ManageProductsPage from "./pages/adminpage/manageProductsPage/manageProductsPage";
 import ManageUserPage from "./pages/adminpage/manageUserPage/manageUserPage";
 import ManageApprovalPage from "./pages/adminpage/manageApproval/manageApprovalPage";
@@ -29,9 +30,10 @@ function App() {
           <Route element={<QnaListPage />} path="/questions" />
           <Route element={<QnaDetailPage />} path="/questions/:questionId" />
           <Route element={<MyproductsPage />} path="/mypage" />
+          <Route element={<MyQnaPage />} path="/mypage/posts" />
           <Route element={<ManageProductsPage />} path="admin/products" />
-          <Route element={<ManageUserPage/>} path="admin/users" />
-          <Route element={<ManageApprovalPage/>} path="admin/approval" />
+          <Route element={<ManageUserPage />} path="admin/users" />
+          <Route element={<ManageApprovalPage />} path="admin/approval" />
         </Routes>
       </AppContainer>
       <Footer />
