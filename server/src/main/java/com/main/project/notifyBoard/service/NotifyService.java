@@ -60,6 +60,9 @@ public class NotifyService {
 
         NotifyDto.Response response = mapper.notifyBoardToNotifyResponse(findBoard);
 
+        // 저장
+        notifyRepository.save(findBoard);
+
         return response;
 
     }

@@ -62,6 +62,8 @@ public class QuestionService {
 
         QuestionDto.Response response = mapper.questionToQuestionDtoResponse(findQuestion);
 
+        questionRepository.save(findQuestion);
+
         return response;
     }
     //질문 상세 조회

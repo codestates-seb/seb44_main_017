@@ -2,6 +2,7 @@ package com.main.project.order.controller;
 
 import com.main.project.dto.MultiResponseDto;
 import com.main.project.dto.queryget;
+import com.main.project.dto.queryresponse.ProductResponse;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.entity.Member;
@@ -54,8 +55,8 @@ public class OrderproductController {
                                      @Positive @RequestParam int size,
                                      @RequestParam(required = false) String sort){
         Long memberId = findmemberId(token);
-        Page<queryget.product> ss = orderproductService.getbucket(memberId, page-1,size,sort, false);
-        List<queryget.product> productList = ss.getContent();
+        Page<ProductResponse> ss = orderproductService.getOrderProduct(Long.valueOf(memberId),page-1,size,sort,false);
+        List<ProductResponse> productList = ss.getContent();
         return ResponseEntity.ok(new MultiResponseDto(productList,ss));
     }
 
@@ -65,8 +66,8 @@ public class OrderproductController {
                                      @Positive @RequestParam int size,
                                      @RequestParam(required = false) String sort){
         Long memberId = findmemberId(token);
-        Page<queryget.product> ss = orderproductService.getbucket(memberId, page-1,size,sort, true);
-        List<queryget.product> productList = ss.getContent();
+        Page<ProductResponse> ss = orderproductService.getOrderProduct(Long.valueOf(memberId),page-1,size,sort,true);
+        List<ProductResponse> productList = ss.getContent();
         return ResponseEntity.ok(new MultiResponseDto(productList,ss));
     }
 
