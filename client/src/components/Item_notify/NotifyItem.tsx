@@ -1,4 +1,4 @@
-import * as S from "./NotifyItem.styles";
+import * as S from "./style";
 import { NotifyProps } from "./NotifyItem.type";
 import View from "@/assets/icons/view.svg";
 import Post from "@/assets/icons/Post.svg";
