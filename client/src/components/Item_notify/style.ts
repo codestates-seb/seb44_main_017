@@ -54,6 +54,8 @@ export const NotifyContents = styled.p`
 
   @media (max-width: 767px) {
     font-size: var(--font-size-10);
+    margin-bottom: 8px;
+    margin-left: 8px;
   }
 `;
 
@@ -71,6 +73,7 @@ export const NewBadge = styled.div`
   @media (max-width: 767px) {
     width: 32px;
     margin-bottom: 8px;
+    margin-left: 8px;
     font-size: var(--font-size-8);
     font-weight: var(--font-weight-400);
   }
@@ -81,14 +84,32 @@ export const RegInfoWrapper = styled.div`
   display: flex;
   align-items: end;
   justify-content: space-between;
+`;
 
-  small {
-    color: var(--color-gray200);
-    font-size: var(--font-size-12);
+export const RegDt = styled.small`
+  color: var(--color-gray200);
+  font-size: var(--font-size-12);
+
+  @media (max-width: 767px) {
+    margin-left: 4px;
+  }
+`;
+
+export const ViewCount = styled.small`
+  color: var(--color-gray200);
+  font-size: var(--font-size-12);
+  padding: 4px;
+
+  @media (max-width: 767px) {
+    margin-right: 8px;
   }
 `;
 
 export const ViewImg = styled.img`
   width: 18px;
   height: 8px;
+
+  @media (max-width: 767px) {
+    width: 14px;
+  }
 `;
