@@ -1,5 +1,4 @@
 import SelectBox from "@/components/SelectBox/SelectBox";
-import SubTitleBar from "@/components/SubTItleBar/SubTitleBar";
 import * as S from "./style";
 import { Link } from "react-router-dom";
 import ViewCount from "@/assets/icons/ViewCount";
@@ -21,18 +20,11 @@ const QnaListComponent = ({
   setSortOption,
   totalPage,
 }: QnaListComponentProps) => {
-  const title = "무엇이 궁금한가요?";
   const options = ["최신순", "오래된순", "조회수순"];
   const TITLE_MAX_LENGTH = 40;
 
   return (
     <>
-      <SubTitleBar
-        title={title}
-        isButton={true}
-        btnTitle={"질문하기"}
-        btnLink={"/questions"}
-      />
       <S.Section>
         <S.QnaContainer>
           <S.SortBox>
