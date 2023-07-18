@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: ${ SPRING_DATASOURCE_URL }
+    url: ${SPRING_DATASOURCE_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${ SPRING_DATASOURCE_USERNAME }
-    password: ${ SPRING_DATASOURCE_PASSWORD }
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${MYSQL_PASSWORD}
   jpa:
 #    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
@@ -37,16 +37,16 @@ spring:
       client:
         registration:
           google:
-            clientId: ${ Google_clientid }
-            clientSecret: ${ Google_clientsecret }
+            clientId: ${Google_clientid}
+            clientSecret: ${Google_clientsecret}
             scope:
               - email
               - profile
           kakao:
-            client-id: ${ K_CLIENT_ID }
-            client-secret: ${ K_CLIENT_SECRET }
+            client-id: ${K_CLIENT_ID}
+            client-secret: ${K_CLIENT_SECRET}
             client-name: Kakao
-            redirect-uri: http://localhost:8080/login/oauth2/code/kakao
+            redirect-uri: http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
             client-authentication-method: POST
             scope:
@@ -64,8 +64,8 @@ cloud:
     s3:
       bucket: mainproject.bucket
     credentials:
-      accessKey: ${ Access_key }
-      secretKey: ${ Secret_access_key }
+      accessKey: ${Access_key}
+      secretKey: ${Secret_access_key}
     region:
       static: ap-northeast-2
       auto: false
@@ -78,11 +78,11 @@ mail:
 
 elasticsearch:
   host: mainproject.es.ap-northeast-2.aws.elastic-cloud.com
-  user-key: ${ Elastic_key }
+  user-key: ${Elastic_key}
 
 jwt:
-  admin-key: ${ Admin_key }
-  key: ${ JWT_SECRET_KEY }
+  admin-key: ${Admin_key}
+  key: ${JWT_SECRET_KEY}
   access-token-expiration-minutes: 30
   refresh-token-expiration-minutes: 420
 
