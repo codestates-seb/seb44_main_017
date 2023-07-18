@@ -22,7 +22,6 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   const [updateValue, setUpdateValue] = useState("");
   const [selectedId, setSelectedId] = useState<number | string>(-1);
   const role = getRoles();
-  console.log(role);
 
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -115,15 +114,17 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
 
   return (
     <S.Container>
-      <S.InputLayout onSubmit={submitHandler}>
-        <input
-          type="text"
-          onChange={changeHandler}
-          value={commentValue}
-          placeholder="Add Comment..."
-        />
-        <button>댓글 쓰기</button>
-      </S.InputLayout>
+      {role === "admin" && (
+        <S.InputLayout onSubmit={submitHandler}>
+          <input
+            type="text"
+            onChange={changeHandler}
+            value={commentValue}
+            placeholder="Add Comment..."
+          />
+          <button>댓글 쓰기</button>
+        </S.InputLayout>
+      )}
       <S.CommentsLayout>
         {comments.length === 0 ? (
           <div className="none_comment">작성된 댓글이 없습니다.</div>
@@ -150,25 +151,27 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
                   <div className="comment_content">{e.content}</div>
                 )}
               </div>
-              <div className="comment_update_btn">
-                {isEditMode && e.commentId === selectedId ? (
-                  <button
-                    className="comment_modify_btn"
-                    onClick={() => updateHandler(e.commentId)}
-                  >
-                    수정완료
-                  </button>
-                ) : (
-                  <>
-                    <button onClick={() => handleEditComment(e.commentId)}>
-                      <EditButton />
+              {role === "admin" && (
+                <div className="comment_update_btn">
+                  {isEditMode && e.commentId === selectedId ? (
+                    <button
+                      className="comment_modify_btn"
+                      onClick={() => updateHandler(e.commentId)}
+                    >
+                      수정완료
                     </button>
-                    <button onClick={() => handleDeleteComment(e.commentId)}>
-                      <DeleteButton />
-                    </button>
-                  </>
-                )}
-              </div>
+                  ) : (
+                    <>
+                      <button onClick={() => handleEditComment(e.commentId)}>
+                        <EditButton />
+                      </button>
+                      <button onClick={() => handleDeleteComment(e.commentId)}>
+                        <DeleteButton />
+                      </button>
+                    </>
+                  )}
+                </div>
+              )}
             </S.CommentBox>
           ))
         )}
