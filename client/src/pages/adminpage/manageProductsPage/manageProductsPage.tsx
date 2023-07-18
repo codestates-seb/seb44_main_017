@@ -58,30 +58,22 @@ const ManageProductsPage = () => {
   return (
     <S.Container>
       <SubTitleBar title="상품 관리" isButton={false} />
-        <S.ContentConatiner>
-          <S.SubTitleContainer>
-            <S.Title>상품 관리</S.Title>
-            <S.SelectBoxContainer>
-              <SelectBox
-                usage={"정렬"}
-                options={options}
-                setOption={setFilter}
-              />
-            </S.SelectBoxContainer>
-          </S.SubTitleContainer>
-          <S.CustomDivider />
-          {clothesList.length ? (
-            <S.ProductsContainer>{products}</S.ProductsContainer>
-          ) : (
-            <S.EmptyList>리스트가 비어있습니다.</S.EmptyList>
-          )}
-          <CustomPagination
-            pageCount={totalPage}
-            page={page}
-            setPage={setPage}
-          />
-        </S.ContentConatiner>
-      </S.Container>
+      <S.ContentConatiner>
+        <S.SubTitleContainer>
+          <S.Title>상품 관리</S.Title>
+          <S.SelectBoxContainer>
+            <SelectBox usage={"정렬"} options={options} setOption={setFilter} />
+          </S.SelectBoxContainer>
+        </S.SubTitleContainer>
+        <S.CustomDivider />
+        {clothesList.length ? (
+          <S.ProductsContainer>{products}</S.ProductsContainer>
+        ) : (
+          <S.EmptyList>리스트가 비어있습니다.</S.EmptyList>
+        )}
+        <CustomPagination pageCount={totalPage} page={page} setPage={setPage} />
+      </S.ContentConatiner>
+    </S.Container>
   );
 };
 
