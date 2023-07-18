@@ -13,10 +13,7 @@ import { createPortal } from "react-dom";
 import Backdrop from "./Backdrop";
 import LoginModal from "../Modal_login/LoginModal";
 import SignupModal from "../Modal_signup/SignupModal";
-import { delCookie, getId, getName, getRoles, getToken } from "@/utils/token";
-import { BASE_URL, IMG_URL } from "@/constants/constants";
-import axios from "axios";
-import { UserInfoTypes } from "@/types/shared";
+import { delCookie, getName, getRoles } from "@/utils/token";
 
 interface Props {
   isOpen: boolean;
