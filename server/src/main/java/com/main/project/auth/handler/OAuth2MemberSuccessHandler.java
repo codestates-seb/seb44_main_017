@@ -97,6 +97,14 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
 
         response.setHeader("Authorization", addedAccessToken);
         response.setHeader("Refresh", refreshToken);
+        response.setHeader("roles", "user");
+        response.setHeader("memberId", String.valueOf(member.getMemberId()));
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("utf-8");
+        Member fm = memberService.findVerifiedMember(member.getMemberId());
+        response.getWriter().write(fm.getName());
+
 
         String uri = createURI(addedAccessToken, refreshToken).toString();
         getRedirectStrategy().sendRedirect(request, response, uri);
@@ -136,9 +144,9 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         // 추후 프론트 준비 왼료시 바꿈
         return UriComponentsBuilder
                 .newInstance()
-                .scheme("https")
-                .host("recloset-git-fe-dev-7eleven.vercel.app")
-                .port(443)
+                .scheme("http")
+                .host("recloset-bucket.s3-website.ap-northeast-2.amazonaws.com")
+                .port(80)
                 .path("/")
                 .queryParams(queryParams)
                 .build()

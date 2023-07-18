@@ -52,8 +52,6 @@ public class AdminController {
     @PostMapping("/login")
     public ResponseEntity login(@Valid @RequestBody AdminLoginDto loginDto) throws JsonProcessingException{
         Admin admin = mapper.loginDtoToAdmin(loginDto);
-        Admin fd = adminService.findAdminByEmail(loginDto.getEmail());
-
 
         Admin authorizedAdmin = adminService.loginAdmin(admin);
         AdminDto.Response responseDto = mapper.adminToAdminResponseDto(authorizedAdmin);
@@ -67,6 +65,7 @@ public class AdminController {
         headers.add("Authorization", "Bearer " + tokenResponseDto.getAtk());
         headers.add("Refresh", tokenResponseDto.getRtk());
         headers.add("roles", "admin");
+        headers.add("adminId", String.valueOf(findadmin.getAdminId()));
 
 
         return new ResponseEntity<>(new SingleResponseDto<>(findadmin.getName()), headers, HttpStatus.OK);

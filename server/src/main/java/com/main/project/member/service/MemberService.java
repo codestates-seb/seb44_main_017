@@ -2,6 +2,7 @@ package com.main.project.member.service;
 
 import com.main.project.auth.util.UserCustomAuthorityUtils;
 import com.main.project.dto.queryresponse.ProductResponse;
+import com.main.project.dto.queryresponse.QuestionResponse;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.dto.queryget;
@@ -9,6 +10,7 @@ import com.main.project.member.entity.Member;
 import com.main.project.member.repository.MemberQueryRepository;
 import com.main.project.member.repository.MemberRepository;
 import com.main.project.product.entity.Product;
+import com.main.project.s3.service.AwsS3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +29,7 @@ public class MemberService {
     private final MemberQueryRepository memberQueryRepository;
     private final UserCustomAuthorityUtils authorityUtils;
     private final PasswordEncoder passwordEncoder;
+    private final AwsS3Service awsS3Service;
 
     public boolean verifyExistname(String name){
         return memberRepository.existsByName(name);
@@ -73,6 +76,7 @@ public class MemberService {
         Member fm = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         List<String> fileName = new ArrayList<>();
+        fileName = awsS3Service.uploadImage(multipartFile);
         fileName.forEach(file ->{
             Optional.ofNullable(file).ifPresent(profile -> fm.setProfile(file));
             memberRepository.save(fm);
@@ -122,8 +126,8 @@ public class MemberService {
         return memberQueryRepository.getMemberProductdeny(memberId, PageRequest.of(page, size));
     }
 
-    public Page<queryget.question> searchMemberQuestion(Long memberId, int page, int size){
-        return memberRepository.findUserQuestion(memberId, PageRequest.of(page, size));
+    public Page<QuestionResponse> searchMemberQuestion(Long memberId, int page, int size){
+        return memberQueryRepository.getMemberQuestions(memberId, PageRequest.of(page, size));
     }
 
     public Member findMember(String email){
