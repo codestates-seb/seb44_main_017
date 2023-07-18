@@ -7,7 +7,7 @@ export const SideBar = styled.nav<{ isOpen: boolean }>`
   gap: 20px;
   color: var(--color-darkblue);
   width: 20%;
-  z-index: 99;
+  z-index: 999;
   position: fixed;
   top: 43px;
   right: 0;
@@ -17,7 +17,7 @@ export const SideBar = styled.nav<{ isOpen: boolean }>`
   transition: all 0.2s ease;
   background-color: var(--color-white);
 
-  ${(props) =>
+  ${props =>
     props.isOpen &&
     css`
       opacity: 1;

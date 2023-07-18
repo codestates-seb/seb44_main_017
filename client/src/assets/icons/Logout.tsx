@@ -1,10 +1,10 @@
 import SvgTagProps from "./../../types/SvgTagProps";
 
 interface LogoutProps extends SvgTagProps {
-  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  logoutHandler: () => void;
 }
 
-const Logout = ({ width = 28, height = 28, setIsLogin }: LogoutProps) => {
+const Logout = ({ width = 28, height = 28, logoutHandler }: LogoutProps) => {
   return (
     <svg
       width={width}
@@ -12,7 +12,7 @@ const Logout = ({ width = 28, height = 28, setIsLogin }: LogoutProps) => {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      onClick={() => setIsLogin(false)}
+      onClick={logoutHandler}
     >
       <path
         fillRule="evenodd"
