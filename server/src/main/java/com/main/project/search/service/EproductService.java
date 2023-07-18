@@ -50,8 +50,8 @@ public class EproductService {
                         "category", eproduct.getCategory(),
                         "imageLink", eproduct.getImageLink(),
                         "sell", eproduct.getSell(),
-                        "condition", eproduct.getConditionValue(),
-                        "like", eproduct.getProductlike(),
+                        "conditionValue", eproduct.getConditionValue(),
+                        "productlike", eproduct.getProductlike(),
                         "view", eproduct.getView());
 
         try {
