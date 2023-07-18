@@ -94,8 +94,7 @@ export const InfoInputbox = styled.div`
   border-radius: 20px;
   position: relative;
   @media (max-width: 767px) {
-    font-size: 10px;
-    width: 160px;
+    width: 200px;
   }
   @media (min-width: 1024px) {
     padding: 12px 0px 12px 12px;
@@ -105,6 +104,9 @@ export const InfoInput = styled.input`
   outline: none;
   border: none;
   font-weight: 700;
+  @media (max-width: 767px) {
+    font-size: 10px;
+  }
 `;
 export const VisibilityButton = styled(VisibilityIcon)`
   width: 16px;
