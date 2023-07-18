@@ -5,9 +5,14 @@ import styled from "styled-components";
 interface SearchBarProps {
   searchValue: string;
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+  submitHandler: () => void;
 }
 
-const SearchBar = ({ searchValue, setSearchValue }: SearchBarProps) => {
+const SearchBar = ({
+  searchValue,
+  setSearchValue,
+  submitHandler,
+}: SearchBarProps) => {
   const [isFocus, setIsFocus] = useState(false);
 
   return (
@@ -22,7 +27,7 @@ const SearchBar = ({ searchValue, setSearchValue }: SearchBarProps) => {
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
         />
-        <button>검색</button>
+        <button onClick={submitHandler}>검색</button>
       </SearchElement>
     </Form>
   );
