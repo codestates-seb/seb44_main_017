@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { getToken } from "@/utils/token";
 import QnaListComponent from "@/components/Qna_list/qnaListComponent";
 import SubTitleBar from "@/components/SubTItleBar/SubTitleBar";
+import SearchBar from "@/components/Search_bar/SearchBar";
 
 const QnaListPage = () => {
   const PAGE_LIMIT = 7;
@@ -51,6 +52,7 @@ const QnaListPage = () => {
         btnTitle={"질문하기"}
         btnLink={"/questions"}
       />
+      <SearchBar />
       <QnaListComponent
         data={qnaList}
         setPage={setPage}
