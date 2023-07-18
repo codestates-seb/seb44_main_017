@@ -85,7 +85,7 @@ const LoginModal = ({ closeModal }: Props) => {
           const adminId = response.headers.get("adminid");
           const adminName = response.data.data;
           document.cookie = `authorization=${authorization}; path=/;`;
-          document.cookie = `refresh=${refresh}; path=/; SameSite=none; Secure`;
+          document.cookie = `refresh=${refresh}; path=/;`;
           document.cookie = `name=${adminName};`;
           document.cookie = `id=${adminId};`;
           document.cookie = `roles=${roles};`;
