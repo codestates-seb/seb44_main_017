@@ -27,7 +27,6 @@ export const NoticePage = () => {
   const [size, setSize] = useState<number>(1);
   const [page, setPage] = useState<any>(1);
   const [isButton, setIsButton] = useState<boolean>(false);
-  console.log(data);
 
   const getNotice = async () => {
     try {
