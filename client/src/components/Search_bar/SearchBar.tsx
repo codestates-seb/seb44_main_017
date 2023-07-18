@@ -2,8 +2,12 @@ import SearchIcon from "@/assets/icons/SearchIcon";
 import { useState } from "react";
 import styled from "styled-components";
 
-const SearchBar = () => {
-  const [searchValue, setSearchValue] = useState("");
+interface SearchBarProps {
+  searchValue: string;
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const SearchBar = ({ searchValue, setSearchValue }: SearchBarProps) => {
   const [isFocus, setIsFocus] = useState(false);
 
   return (
