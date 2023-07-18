@@ -1,6 +1,7 @@
-import { useState } from "react";
 import axios from "axios";
 import * as S from "./style";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Logo } from "../../assets/logoSimple";
 import { BASE_URL } from "@/constants/constants";
 
@@ -25,6 +26,8 @@ const SignupModal = ({ closeModal }: Props) => {
   const [showCheckPassword, setCheckShowPassword] = useState<boolean>(false);
   // 관리자 여부
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   // 비밀번호 확인 아이콘
   const passwordVisibility = () => {
@@ -75,6 +78,8 @@ const SignupModal = ({ closeModal }: Props) => {
         const response = await axios.post(`${BASE_URL}/members`, data);
         if (response.status === 201) {
           alert("회원가입을 축하합니다!");
+          closeModal();
+          navigate("/");
         }
       } catch (error: any) {
         if (error.response.status === 409) {
@@ -94,6 +99,8 @@ const SignupModal = ({ closeModal }: Props) => {
         const response = await axios.post(`${BASE_URL}/admin`, data);
         if (response.status === 201) {
           alert("회원가입을 축하합니다!");
+          closeModal();
+          navigate("/");
         }
       } catch (error: any) {
         if (error.response.status === 409) {

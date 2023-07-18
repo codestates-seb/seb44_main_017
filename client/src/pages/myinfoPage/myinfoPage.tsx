@@ -2,7 +2,8 @@ import axios from "axios";
 import { getToken } from "@/utils/token";
 import * as S from "@/pages/myinfoPage/style";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "@/constants/constants";
+import { BASE_URL, IMG_URL } from "@/constants/constants";
+import { getId, delCookie } from "@/utils/token";
 import React, { useEffect, useRef, useState } from "react";
 import defaultImage from "@/assets/icons/default_image.png";
 import MypageHeader from "@/components/Mypage_header/MypageHeader";
@@ -33,8 +34,7 @@ export const MyinfoPage = () => {
 
   const navigate = useNavigate();
 
-  // 로그인 로직 수정 후 memberid 반영
-  const memberID = "19";
+  const memberID = getId();
   const getMember = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/members/${memberID}`);
@@ -43,7 +43,6 @@ export const MyinfoPage = () => {
       setName(memberData.name);
       setPhone(memberData.phone);
       setProfile(memberData.profile);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
@@ -61,7 +60,6 @@ export const MyinfoPage = () => {
 
       setPreview(imgUrl);
 
-      // API 체크 필요
       const formData = new FormData();
       formData.append("multipartFile", imgFile);
       try {
@@ -76,7 +74,10 @@ export const MyinfoPage = () => {
             },
           }
         );
-        console.log(response);
+        if (response.status === 200) {
+          alert("이미지가 변경되었습니다.");
+          setPreview(profile);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -93,11 +94,12 @@ export const MyinfoPage = () => {
         const response = await axios.delete(`${BASE_URL}/members/${memberID}`);
         if (response.status === 204) {
           alert("정상적으로 탈퇴되었습니다.");
-          navigate("/");
+          delCookie();
         }
       } catch (error) {
         console.log(error);
       }
+      navigate("/");
     }
   };
 
@@ -133,8 +135,9 @@ export const MyinfoPage = () => {
           `${BASE_URL}/members/${memberID}`,
           data
         );
-        alert("회원 정보가 수정되었습니다.");
-        console.log(response);
+        if (response.status === 200) {
+          alert("회원 정보가 수정되었습니다.");
+        }
       } catch (error) {
         alert("입력하신 내용을 확인해주세요.");
         console.log(error);
@@ -149,7 +152,11 @@ export const MyinfoPage = () => {
         <S.ImgBox>
           <S.ImgPreview
             src={
-              profile ? `IMG_URL/${profile}` : preview ? preview : defaultImage
+              profile
+                ? `${IMG_URL}/${profile}`
+                : preview
+                ? preview
+                : defaultImage
             }
           />
           <S.ImgContent
@@ -177,7 +184,7 @@ export const MyinfoPage = () => {
                 type="text"
                 value={nameInput}
                 placeholder={name}
-                onChange={(e) => setNameInput(e.target.value)}
+                onChange={(e) => setNameInput(e.target.name)}
               />
               <S.DuplicateCheck onClick={handleDuplicateCheckName}>
                 중복 검사
