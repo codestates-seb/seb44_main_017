@@ -21,10 +21,10 @@ const NotifyItem = (props: NotifyProps) => {
       <S.NotifyContents>{contents}</S.NotifyContents>
       {isNew && <S.NewBadge>NEW</S.NewBadge>}
       <S.RegInfoWrapper>
-        <small>{regDt.slice(0, 10)}</small>
+        <S.RegDt>{regDt.slice(0, 10)}</S.RegDt>
         <div>
           <S.ViewImg src={View} alt="조회수" />
-          <small>{viewCount}</small>
+          <S.ViewCount>{viewCount}</S.ViewCount>
         </div>
       </S.RegInfoWrapper>
     </S.Notifyitemcard>
