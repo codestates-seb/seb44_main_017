@@ -9,12 +9,17 @@ export const Condition = styled.img`
 export const ProductInfo = styled.div`
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
-  align-items: flex-end;
+  /* flex-direction: column; */
+  align-items: flex-start;
   width: 100%;
   max-width: 1260px;
   height: 600px;
   border: 4px solid red;
+`;
+
+export const ContetntsWrapper = styled.div`
+  display: flex;
+  width: 100%;
 `;
 
 export const ProductImage = styled.div`
@@ -26,9 +31,8 @@ export const ProductImage = styled.div`
 
 export const ProductDetailContainer = styled.div`
   width: 100%;
-  max-width: 768px;
+  max-width: 772px;
   height: 168px;
-  border: 4px solid skyblue;
 
   & > * {
     margin-top: 24px;
@@ -116,7 +120,12 @@ export const ProductDescription = styled.div`
   width: 100%;
   max-width: 768px;
   height: 157px;
-  border: 4px solid orange;
+`;
+
+export const PurchaseButtonWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
 `;
 
 export const ProductPurchase = styled.button`
