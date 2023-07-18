@@ -6,6 +6,7 @@ import com.main.project.dto.MultiResponseDto;
 import com.main.project.dto.queryget;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
+import com.main.project.member.dto.MemberDto;
 import com.main.project.member.entity.RefreshToken;
 import com.main.project.member.service.MemberService;
 import com.main.project.member.service.RefreshTokenService;
@@ -19,6 +20,7 @@ import com.main.project.product.mapper.ProductMapper;
 import com.main.project.product.service.ProductService;
 import com.main.project.productComment.ProductComment;
 import com.main.project.productComment.dto.ProductCommentDto;
+import com.main.project.productComment.mapper.ProductCommentMapper;
 import com.main.project.productComment.repository.ProductCommentRepository;
 import com.main.project.response.SingleResponseDto;
 import com.main.project.utils.UriCreator;
@@ -34,7 +36,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -51,14 +52,16 @@ public class ProductController {
     private final ProductMapper productMapper;
     private final RefreshTokenService refreshTokenService;
     private final ProductCommentRepository productCommentRepository;
+    private final ProductCommentMapper productCommentMapper;
 
 
-    public ProductController(ProductService productService, ProductMapper productMapper, MemberService memberService, AdminService adminService, RefreshTokenService refreshTokenService, ProductCommentRepository productCommentRepository) {
+    public ProductController(ProductService productService, ProductMapper productMapper, MemberService memberService, AdminService adminService, RefreshTokenService refreshTokenService, ProductCommentRepository productCommentRepository, ProductCommentMapper productCommentMapper) {
         this.productService = productService;
         this.adminService = adminService;
         this.productMapper = productMapper;
         this.refreshTokenService = refreshTokenService;
         this.productCommentRepository = productCommentRepository;
+        this.productCommentMapper = productCommentMapper;
     }
 
     // admin can post their product.
@@ -155,22 +158,16 @@ public class ProductController {
         Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshTokenOptional(tokenstr);
 
         Product product = productService.findProduct(productId);
-        List<ProductComment> comments = productCommentRepository.findByProductProductId(productId);
+//        List<ProductComment> comments = productCommentRepository.findByProductProductId(productId);
 
-        List<ProductCommentDto.Response> commentResponses = comments.stream()
-                .map(comment -> new ProductCommentDto.Response(
-                        comment.getContent(),
-                        comment.getMember().getMemberId(),
-                        comment.getCreateAt(),
-                        comment.getModifyAt()
-                ))
-                .collect(Collectors.toList());
+//        List<ProductCommentDto.Response> commentResponses =
+//                productCommentMapper.productCommentsToProductCommentResponseDto(comments);
 
         ProductDto.ResponseWithComments response;
 
         response = productService.getResponseWithComments(productId, refreshToken, product);
 
-        response.setComments(commentResponses);
+//        response.setComments(commentResponses);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(
@@ -192,14 +189,18 @@ public class ProductController {
 
         List<ProductComment> comments = productCommentRepository.findByProductProductId(productId);
 
-        List<ProductCommentDto.Response> commentResponses = comments.stream()
-                .map(comment -> new ProductCommentDto.Response(
-                        comment.getContent(),
-                        comment.getMember().getMemberId(),
-                        comment.getCreateAt(),
-                        comment.getModifyAt()
-                ))
-                .collect(Collectors.toList());
+//        List<ProductCommentDto.Response> commentResponses = comments.stream()
+//                .map(comment -> new ProductCommentDto.Response(
+//                        comment.getProductCommentId(),
+//                        comment.getContent(),
+//                        comment.getCreateAt(),
+//                        comment.getModifyAt(),
+////                        co
+//                ))
+//                .collect(Collectors.toList());
+
+        List<ProductCommentDto.Response> commentResponses = productCommentMapper
+                .productCommentsToProductCommentResponseDto(comments);
 
         ProductDto.ResponseWithComments response;
 
@@ -267,12 +268,34 @@ public class ProductController {
                 .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
                 .getMemberId();
         productService
-                .createProductComment(product, memberId, productMapper.productCommentDtoToProductComment(productCommentDto));
+                .createProductComment(product, memberId, productCommentMapper.productCommentDtoToProductComment(productCommentDto));
 
         return new ResponseEntity<>(new SingleResponseDto<>(
-                productMapper.productToProductResponse(product, memberId)),
+                productMapper.productToProductResponseWithComment(product, memberId)),
                 HttpStatus.OK);
     }
+
+    @PatchMapping("/{product-id}/comments/{product-comment-id}")
+    public ResponseEntity patchProductComment(@RequestHeader("Refresh") String tokenstr,
+                                               @PathVariable("product-id") @Positive Long productId,
+                                               @PathVariable("product-comment-id")
+                                               @Positive Long productCommentId,
+                                              @RequestBody @Valid ProductCommentDto.Patch productCommentDto){
+        Product product = productService.findProduct(productId);
+        Optional<RefreshToken> refreshToken = Optional.ofNullable(refreshTokenService.findRefreshToken(tokenstr));
+        Long memberId = refreshToken
+                .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
+                .getMemberId();
+
+        productService
+                .updateProductComment(product, memberId,
+                        productCommentId, productCommentMapper.productCommentDtoToProductComment(productCommentDto));
+
+        return new ResponseEntity<>(new SingleResponseDto<>(
+                productMapper.productToProductResponseWithComment(product, memberId)),
+                HttpStatus.OK);
+    }
+
 
     @DeleteMapping("/{product-id}/comments/{product-comment-id}")
     public ResponseEntity deleteProductComment(@RequestHeader("Refresh") String tokenstr,

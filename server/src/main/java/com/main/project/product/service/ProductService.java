@@ -144,7 +144,7 @@ public class ProductService {
     public void createProductComment(Product product, Long memberId, ProductComment productComment) {
         Member findMember = memberService.findVerifiedMember(memberId);
         productComment.setProduct(product);
-        productComment.setMember(findMember);
+        productComment.setWriter(findMember);
         productCommentRepository.save(productComment);
 
         findMember.addProductComments(productComment);
@@ -173,6 +173,21 @@ public class ProductService {
             response = mapper.productToProductResponseWithComment(product);
         }
         return response;
+    }
+
+    public void updateProductComment(Product product, Long memberId, Long productCommentId, ProductComment productComment) {
+        Member findMember = memberService.findVerifiedMember(memberId);
+
+        ProductComment findProductComment = productCommentRepository.findById(productCommentId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.COMMENT_NOT_FOUND));
+
+        Optional.ofNullable(productComment.getContent())
+                .ifPresent(findProductComment::setContent);
+
+        if (findMember.hasProductComment(productComment)){
+            productCommentRepository.save(findProductComment);
+            memberService.updateMember(findMember);
+        }
     }
 
     public void deleteProductComment(Product product, Long memberId, Long productCommentId) {
@@ -285,4 +300,6 @@ public class ProductService {
         productdeny.setMember(findproduct.getMember());
         productdenyService.addProductdeny(productdeny);
     }
+
+
 }
