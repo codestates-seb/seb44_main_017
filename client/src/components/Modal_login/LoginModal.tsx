@@ -58,10 +58,14 @@ const LoginModal = ({ closeModal }: Props) => {
           closeModal(false);
           const authorization = response.headers.get("authorization");
           const refresh = response.headers.get("refresh");
-          const name = response.data;
+          const roles = response.headers.get("roles");
+          const memberId = response.headers.get("memberid");
+          const userName = response.data;
           document.cookie = `authorization=${authorization}; path=/;`;
-          document.cookie = `refresh=${refresh}; path=/; SameSite=none; Secure`;
-          document.cookie = `name=${name};`;
+          document.cookie = `refresh=${refresh}; path=/;`;
+          document.cookie = `name=${userName};`;
+          document.cookie = `id=${memberId};`;
+          document.cookie = `roles=${roles};`;
         }
       } catch (error: any) {
         if (error.response.status === 404 || error.response.status === 500) {
@@ -77,13 +81,20 @@ const LoginModal = ({ closeModal }: Props) => {
           closeModal(false);
           const authorization = response.headers.get("authorization");
           const refresh = response.headers.get("refresh");
-          console.log(response.data);
+          const roles = response.headers.get("roles");
+          const adminId = response.headers.get("adminid");
+          const adminName = response.data.data;
           document.cookie = `authorization=${authorization}; path=/;`;
           document.cookie = `refresh=${refresh}; path=/; SameSite=none; Secure`;
+          document.cookie = `name=${adminName};`;
+          document.cookie = `id=${adminId};`;
+          document.cookie = `roles=${roles};`;
         }
       } catch (error: any) {
         if (error.response.status === 404 || error.response.status === 500) {
           alert("회원 정보를 확인해주세요.");
+        } else {
+          console.log(error);
         }
       }
     }
