@@ -2,14 +2,36 @@ import useDetectClose from "../../hooks/useDetectClose";
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./style";
 import defaultImage from "/images/cat.jpg";
-import { delCookie, getName, getRoles } from "@/utils/token";
+import { delCookie, getId, getName, getRoles, getToken } from "@/utils/token";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BASE_URL, IMG_URL } from "@/constants/constants";
 
 const ProfileDropdown = () => {
   const [DropdownIsOpen, Ref, DropdownHandler] = useDetectClose();
+  const [profileImage, setProfileImage] = useState("");
   const navigate = useNavigate();
 
   const username = getName();
   const role = getRoles();
+  const memberId = getId();
+
+  useEffect(() => {
+    if (memberId) {
+      const [authorization, refresh] = getToken();
+
+      axios
+        .get(BASE_URL + `/members/${memberId}`, {
+          headers: {
+            Authorization: authorization,
+            Refresh: refresh,
+          },
+        })
+        .then(res => setProfileImage(res.data.data.profile));
+    } else {
+      setProfileImage("");
+    }
+  }, []);
 
   const logoutHandler = () => {
     if (confirm("로그아웃 하시겠습니까?")) {
@@ -23,7 +45,11 @@ const ProfileDropdown = () => {
       <S.ProfileContainer>
         <div ref={Ref} onClick={DropdownHandler}>
           <div className="profile_nickname">{username} 님</div>
-          <img src={defaultImage} />
+          {memberId ? (
+            <img src={IMG_URL + "/" + { profileImage }} />
+          ) : (
+            <img src={defaultImage} />
+          )}
         </div>
         <S.DropDownContainer isDropped={DropdownIsOpen ? true : false}>
           <ul>

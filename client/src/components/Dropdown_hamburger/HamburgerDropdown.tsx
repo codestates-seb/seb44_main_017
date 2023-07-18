@@ -13,7 +13,9 @@ import { createPortal } from "react-dom";
 import Backdrop from "./Backdrop";
 import LoginModal from "../Modal_login/LoginModal";
 import SignupModal from "../Modal_signup/SignupModal";
-import { delCookie, getName, getRoles } from "@/utils/token";
+import { delCookie, getId, getName, getRoles, getToken } from "@/utils/token";
+import axios from "axios";
+import { BASE_URL, IMG_URL } from "@/constants/constants";
 
 interface Props {
   isOpen: boolean;
@@ -33,10 +35,29 @@ const HamburgerDropdown = ({
 
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [signupModallOpen, setSignupModalOpen] = useState(false);
+  const [profileImage, setProfileImage] = useState("");
   const role = getRoles();
   const username = getName();
+  const memberId = getId();
 
   const barRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (memberId) {
+      const [authorization, refresh] = getToken();
+
+      axios
+        .get(BASE_URL + `/members/${memberId}`, {
+          headers: {
+            Authorization: authorization,
+            Refresh: refresh,
+          },
+        })
+        .then(res => setProfileImage(res.data.data.profile));
+    } else {
+      setProfileImage("");
+    }
+  }, [isOpen]);
 
   const logoutHandler = () => {
     if (confirm("로그아웃 하시겠습니까?")) {
@@ -97,7 +118,11 @@ const HamburgerDropdown = ({
                 </>
               ) : (
                 <>
-                  <img src={defaultImage} />
+                  {profileImage ? (
+                    <img src={IMG_URL + "/" + profileImage} />
+                  ) : (
+                    <img src={defaultImage} />
+                  )}
 
                   <div className="profile_name">{username} 님</div>
                   <div></div>
