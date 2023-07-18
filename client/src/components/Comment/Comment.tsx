@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 import { CommentTypes } from "@/types/shared";
 import { useEffect, useState, useRef } from "react";
-import { getToken } from "@/utils/token";
+import { getRoles, getToken } from "@/utils/token";
 
 interface CommentProps {
   comments: CommentTypes[];
@@ -21,6 +21,8 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [updateValue, setUpdateValue] = useState("");
   const [selectedId, setSelectedId] = useState<number | string>(-1);
+  const role = getRoles();
+  console.log(role);
 
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
