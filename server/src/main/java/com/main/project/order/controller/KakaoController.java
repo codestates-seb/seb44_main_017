@@ -1,5 +1,8 @@
 package com.main.project.order.controller;
 
+import com.main.project.alarm.entity.Alarm;
+import com.main.project.alarm.repository.AlarmRepository;
+import com.main.project.alarm.service.SseService;
 import com.main.project.dto.queryget;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
@@ -55,6 +58,7 @@ public class KakaoController {
     private final MemberRepository memberRepository;
     private final EproductService eproductService;
     private final ProductMapper productMapper;
+    private final SseService sseService;
 
     private final ProductRepository productRepository;
 
@@ -120,6 +124,7 @@ public class KakaoController {
             Member seller = memberService.findVerifiedMember(product.getMember().getMemberId());
             seller.setMoney(seller.getMoney() + product.getPrice()*10/100);
             memberRepository.save(seller);
+            sseService.addalarm(seller, product);
             // delete product in other user bucket & add in buy list
 
             orderproductService.createOpforsingle(member, product);
@@ -141,6 +146,7 @@ public class KakaoController {
                 Member seller = memberService.findVerifiedMember(product.getMember().getMemberId());
                 seller.setMoney(seller.getMoney() + product.getPrice()*10/100);
                 memberRepository.save(seller);
+                sseService.addalarm(seller, product);
                 List<queryget.findbyorderpid> orderproductIdList = orderproductService.findOrderproductdelete(member.getMemberId(),product.getProductId());
                 orderproductIdList.forEach(orderproductId -> {
                     Orderproduct orderproduct = orderproductService.findorderproduct(orderproductId.getorderproduct_id());
