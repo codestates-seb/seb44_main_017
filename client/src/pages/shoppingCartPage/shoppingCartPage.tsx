@@ -1,16 +1,18 @@
 import MypageHeader from "@/components/Mypage_header/MypageHeader";
 import { BASE_URL, IMG_URL } from "@/constants/constants";
 import { CartItemTypes, LoginUserInfo } from "@/types/shared";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
 import * as S from "./style";
 import { userInfoSelector } from "@/recoil/selector";
 import { cartItemState } from "@/recoil/atom";
 import axios from "axios";
 import { getToken } from "@/utils/token";
+import DeleteIcon from "@/assets/icons/DeleteIcon";
 
 const ShoppingCartPage = () => {
   const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
+  const [total, setTotal] = useState({ price: 0, quantity: 0 });
   const [cartItems, setCartItems] =
     useRecoilState<CartItemTypes[]>(cartItemState);
   const [checkedItems, setCheckedItems] = useState<number[]>(
@@ -64,13 +66,6 @@ const ShoppingCartPage = () => {
     orderItems();
   };
 
-  const allItemsOrderHandler = () => {
-    for (let i = 0; i < cartItems.length; i++) {
-      addToCart(cartItems[i].productId);
-    }
-    orderItems();
-  };
-
   const removeCartItemHandler = (id: number) => {
     setCartItems(cartItems.filter(item => item.productId !== id));
     setCheckedItems(checkedItems.filter(item => item !== id));
@@ -92,6 +87,24 @@ const ShoppingCartPage = () => {
     }
   };
 
+  const getTotal = () => {
+    let total = {
+      price: 0,
+      quantity: 0,
+    };
+    for (let i = 0; i < cartItems.length; i++) {
+      if (checkedItems.indexOf(cartItems[i].productId) > -1) {
+        total.price += cartItems[i].price;
+        total.quantity++;
+      }
+    }
+    return total;
+  };
+
+  useEffect(() => {
+    setTotal(getTotal());
+  }, [checkedItems]);
+
   return (
     <>
       <MypageHeader
@@ -100,10 +113,10 @@ const ShoppingCartPage = () => {
         point={userInfo?.money}
       />
       <S.Section>
-        <S.ItemLayout>
-          <S.SubHeader>
-            <h2>장바구니 내역</h2>
-          </S.SubHeader>
+        <S.SubHeader>
+          <h2>장바구니 내역</h2>
+        </S.SubHeader>
+        <S.CartLayout>
           <S.ItemBox>
             <div className="cart_label">
               <input
@@ -130,49 +143,45 @@ const ShoppingCartPage = () => {
                   <div className="cart_image">
                     <img src={`${IMG_URL}/${item.imageLink}`} />
                   </div>
-                  <div className="cart_info">
-                    <div>{item.name}</div>
-                    <div>{item.price}</div>
-                  </div>
-                  <div>
-                    <button
-                      onClick={() => removeCartItemHandler(item.productId)}
-                    >
-                      삭제
-                    </button>
-                  </div>
+                  <S.ItemInfo>
+                    <div className="info_left">
+                      <span>{item.category}</span>
+                      <span>{item.name}</span>
+                    </div>
+                    <div className="info_right">
+                      <div>{item.price.toLocaleString()}원</div>
+                      <div
+                        className="delete_icon"
+                        onClick={() => removeCartItemHandler(item.productId)}
+                      >
+                        <DeleteIcon />
+                      </div>
+                    </div>
+                  </S.ItemInfo>
                 </li>
               ))}
             </S.CartItems>
           </S.ItemBox>
-        </S.ItemLayout>
 
-        <S.InfoLayout>
-          <S.InfoBox>
-            <div>
-              <h3>주문 합계</h3>
+          <S.OrderInfoBox>
+            <S.OrderInfo>
+              <h3>주문 내역</h3>
               <div>
-                <span>총 아이템 개수 : </span>
-                <span>{cartItems.length}개</span>
+                <div className="order_info">
+                  <span>상품 개수</span>
+                  <span>{total.quantity}개</span>
+                </div>
+                <div className="order_info">
+                  <span>결제 예정 금액</span>
+                  <span>{total.price.toLocaleString()}원</span>
+                </div>
               </div>
-              <div>
-                <span>합계 : </span>
-                <span>
-                  {cartItems
-                    .reduce((sum, item) => sum + item.price, 0)
-                    .toLocaleString()}
-                  원
-                </span>
-              </div>
-              <div>
-                <button onClick={checkedItemsOrderHandler}>
-                  체크 상품 주문
-                </button>
-                <button onClick={allItemsOrderHandler}>전체 상품 주문</button>
-              </div>
+            </S.OrderInfo>
+            <div className="order_btn">
+              <button onClick={checkedItemsOrderHandler}>주문하기</button>
             </div>
-          </S.InfoBox>
-        </S.InfoLayout>
+          </S.OrderInfoBox>
+        </S.CartLayout>
       </S.Section>
     </>
   );
