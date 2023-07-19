@@ -1,5 +1,6 @@
 package com.main.project.productComment.dto;
 
+import com.main.project.member.dto.MemberDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,10 +16,11 @@ public class ProductCommentDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Response{
+        private Long productCommentId;
         private String content;
-        private Long memberId;
         private LocalDateTime createAt;
         private LocalDateTime modifyAt;
+        private MemberDto.WriterResponse writer;
     }
 
     @Getter
@@ -28,5 +30,11 @@ public class ProductCommentDto {
     public static class Post{
         private String content;
     }
-
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Patch {
+        private String content;
+    }
 }

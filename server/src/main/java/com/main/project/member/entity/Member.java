@@ -46,7 +46,7 @@ public class Member {
     private List<Product> products = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.REMOVE)
     private List<ProductComment> productComments = new ArrayList<>();
 
     @ManyToMany

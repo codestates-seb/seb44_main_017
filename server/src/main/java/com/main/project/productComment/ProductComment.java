@@ -26,7 +26,7 @@ public class ProductComment extends Auditable {
 
     @ManyToOne
     @JoinColumn(name = "member_id")
-    private Member member;
+    private Member writer;
 
     @ManyToOne
     @JsonManagedReference
