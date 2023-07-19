@@ -37,7 +37,7 @@ const ManageApprovalPage = () => {
   }, [page]);
   return (
     <S.Container>
-      <SubTitleBar title="회원 관리" isButton={false} />
+      <SubTitleBar title="승인 관리" isButton={false} />
       <S.ContentContainer>
         <S.Title>승인 관리</S.Title>
         <S.CustomDivider />
