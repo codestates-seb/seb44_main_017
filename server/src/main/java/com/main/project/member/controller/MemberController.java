@@ -1,5 +1,6 @@
 package com.main.project.member.controller;
 
+import com.main.project.alarm.service.SseService;
 import com.main.project.dto.MultiResponseDto;
 import com.main.project.dto.SingleResponseDto;
 import com.main.project.dto.queryget;
@@ -39,6 +40,7 @@ public class MemberController {
     private final RefreshTokenService refreshTokenService;
     private final MemberMapper mapper;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final SseService sseService;
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post requestBody) {
         Member member = mapper.memberPostToMember(requestBody);
@@ -161,8 +163,9 @@ public class MemberController {
     }
     @DeleteMapping("/logout")
     public ResponseEntity logout(@RequestHeader("Refresh") @Positive String refreshtoken) {
-        log.info(refreshtoken);
+        Long memberId = findmemberId(refreshtoken);
         refreshTokenService.deleteRefreshToken(refreshtoken);
+        sseService.deletealarm(memberId);
         return new ResponseEntity(HttpStatus.OK);
     }
 

@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.util.List;
+
 import static com.main.project.alarm.controller.SseController.sseEmitters;
 
 @RequiredArgsConstructor
@@ -37,13 +39,22 @@ public class SseService {
         }
     }
 
-    public Alarm addalarm(Long memberId, Long productId){
+    public void addalarm(Member member, Product product){
         Alarm alarm = new Alarm();
-        Member member = memberService.findVerifiedMember(memberId);
-        Product product = productService.findProduct(productId);
         alarm.setMember(member);
         alarm.setProduct(product);
-        return alarmRepository.save(alarm);
+        Alarm savealarm = alarmRepository.save(alarm);
+        alarmaddEvent(savealarm.getAlarmId());
+    }
+
+    public void deletealarm(Long memberId){
+        Member member = memberService.findVerifiedMember(memberId);
+        if(alarmRepository.existsByMember(member) == true){
+            List<Alarm> alarmlist = alarmRepository.findByMember(member);
+            alarmlist.forEach(alarm -> {
+                alarmRepository.delete(alarm);
+            });
+        }
     }
 }
 

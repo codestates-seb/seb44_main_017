@@ -45,6 +45,7 @@ public class SseController {
         return emitter;
     }
 
+    /*
     @PostMapping("/alarm")
     public ResponseEntity addComment(@Positive @RequestParam Long memberId,
                                      @Positive @RequestParam Long productId)
@@ -56,6 +57,7 @@ public class SseController {
 
         return ResponseEntity.ok("ok");
     }
+     */
 
 
 }
