@@ -99,7 +99,7 @@ public class KakaoPay {
             e.printStackTrace();
         }
 
-        return "/pay";
+        return "/error";
 
     }
     public String kakaoPayReady(List<Product> productList, Order order) {
@@ -149,7 +149,7 @@ public class KakaoPay {
             e.printStackTrace();
         }
 
-        return "/pay";
+        return "/error";
 
     }
     public KakaoPayApprovalVO kakaoPayInfo(String pg_token) {
