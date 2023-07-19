@@ -1,5 +1,6 @@
 package com.main.project.member.entity;
 
+import com.main.project.alarm.entity.Alarm;
 import com.main.project.productComment.ProductComment;
 import com.main.project.notifyView.entity.NotifyView;
 import com.main.project.questionBorad.entity.Question;
@@ -45,8 +46,10 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Product> products = new ArrayList<>();
 
-
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    private List<Alarm> alarms = new ArrayList<>();
+
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.REMOVE)
     private List<ProductComment> productComments = new ArrayList<>();
 
     @ManyToMany
