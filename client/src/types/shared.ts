@@ -43,6 +43,22 @@ export interface ProductTypes {
   condition_value: null;
 }
 
+export interface CartItemTypes {
+  name: string;
+  price: number;
+  productId: number | string;
+  memberId: number | string;
+  category: string;
+  title: null;
+  content: string;
+  imageLink: string;
+  modifyAt: string;
+  createAt: string;
+  productlike: number | string;
+  view: number | string;
+  conditionValue: null;
+}
+
 export interface UserInfoTypes {
   email: string;
   isBan: boolean;
@@ -51,4 +67,8 @@ export interface UserInfoTypes {
   name: string;
   phone: string;
   profile: string;
+}
+
+export interface LoginUserInfo extends UserInfoTypes {
+  role: "";
 }
