@@ -13,6 +13,7 @@ import { createPortal } from "react-dom";
 import Backdrop from "./Backdrop";
 import LoginModal from "../Modal_login/LoginModal";
 import SignupModal from "../Modal_signup/SignupModal";
+import { delCookie, getName, getRoles } from "@/utils/token";
 
 interface Props {
   isOpen: boolean;
@@ -32,8 +33,18 @@ const HamburgerDropdown = ({
 
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [signupModallOpen, setSignupModalOpen] = useState(false);
+  const role = getRoles();
+  const username = getName();
 
   const barRef = useRef<HTMLDivElement | null>(null);
+
+  const logoutHandler = () => {
+    if (confirm("로그아웃 하시겠습니까?")) {
+      toggleMenu();
+      delCookie();
+      navigate("/");
+    }
+  };
 
   const handleClickOutside = (e: React.BaseSyntheticEvent | MouseEvent) => {
     if (
@@ -50,9 +61,6 @@ const HamburgerDropdown = ({
     }
   }, [isOpen]);
 
-  // 임시 UI 구현용 state
-  const [isLogin, setIsLogin] = useState(false);
-
   return (
     <>
       {createPortal(
@@ -66,7 +74,7 @@ const HamburgerDropdown = ({
           )}
           <S.SideBar isOpen={isOpen} ref={barRef}>
             <S.Profile>
-              {!isLogin ? (
+              {!username ? (
                 <>
                   <div className="auth_btn">
                     <H.LoginBtn
@@ -90,44 +98,83 @@ const HamburgerDropdown = ({
               ) : (
                 <>
                   <img src={defaultImage} />
-                  <div className="profile_name">고양이 귀여워 님</div>
+
+                  <div className="profile_name">{username} 님</div>
                   <div></div>
                 </>
               )}
             </S.Profile>
-            {isLogin && (
+            {username && (
               <>
                 <S.MenuBox>
                   <S.Menu>
-                    <li onClick={() => navigate("/productlist")}>
+                    <li
+                      onClick={() => {
+                        navigate("/productlist");
+                        toggleMenu();
+                      }}
+                    >
                       <img src={product} title="상품 보기" />
                       <h3 className="nav_text">상품 보기</h3>
                       <div className="nav_description">상품 보기</div>
                     </li>
-                    <li onClick={() => navigate("/collection")}>
+                    <li
+                      onClick={() => {
+                        navigate("/collection");
+                        toggleMenu();
+                      }}
+                    >
                       <img src={clothes} title="수거 요청" />
                       <h3 className="nav_text">수거 요청</h3>
                       <div className="nav_description">수거 요청</div>
                     </li>
-                    <li onClick={() => navigate("/notice")}>
+                    <li
+                      onClick={() => {
+                        navigate("/notice");
+                        toggleMenu();
+                      }}
+                    >
                       <img src={notice} title="공지사항" />
                       <h3 className="nav_text">공지사항</h3>
                       <div className="nav_description">공지사항</div>
                     </li>
-                    <li onClick={() => navigate("/questions")}>
+                    <li
+                      onClick={() => {
+                        navigate("/questions");
+                        toggleMenu();
+                      }}
+                    >
                       <img src={askQuestion} title="Q&A" />
                       <h3 className="nav_text">Q & A</h3>
                       <div className="nav_description">Q&A</div>
                     </li>
-                    <li onClick={() => navigate("#")}>
-                      <img src={magnifier} title="마이페이지" />
-                      <h3 className="nav_text">마이페이지</h3>
-                      <div className="nav_description">마이페이지</div>
-                    </li>
+                    {role === "user" ? (
+                      <li
+                        onClick={() => {
+                          navigate("/mypage");
+                          toggleMenu();
+                        }}
+                      >
+                        <img src={magnifier} title="마이페이지" />
+                        <h3 className="nav_text">마이페이지</h3>
+                        <div className="nav_description">마이페이지</div>
+                      </li>
+                    ) : (
+                      <li
+                        onClick={() => {
+                          navigate("/admin/products");
+                          toggleMenu();
+                        }}
+                      >
+                        <img src={magnifier} title="관리자페이지" />
+                        <h3 className="nav_text">관리자페이지</h3>
+                        <div className="nav_description">관리자페이지</div>
+                      </li>
+                    )}
                   </S.Menu>
                 </S.MenuBox>
                 <div className="logout-icon">
-                  <Logout setIsLogin={setIsLogin} />
+                  <Logout logoutHandler={logoutHandler} />
                 </div>
               </>
             )}

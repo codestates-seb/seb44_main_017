@@ -19,7 +19,7 @@ export const SelectBox = styled.div`
   align-items: center;
   font-size: var(--font-size-12);
   font-weight: 700;
-  z-index: 100;
+  z-index: 5;
 
   & svg {
     position: absolute;

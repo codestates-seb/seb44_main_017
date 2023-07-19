@@ -6,29 +6,35 @@ export const Condition = styled.img`
   margin-left: 480px;
 `;
 
-export const ProductInfo = styled.div`
+export const ProductInfo = styled.section`
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
-  align-items: flex-end;
-  width: 100%;
-  max-width: 1260px;
-  height: 600px;
-  border: 4px solid red;
+  align-items: flex-start;
+  padding: 36px;
 `;
 
-export const ProductImage = styled.div`
+export const ContetntsWrapper = styled.div`
+  display: flex;
   width: 100%;
-  max-width: 464px;
+`;
+
+export const ProductImageBox = styled.div`
+  width: 100%;
+  max-width: 440px;
   height: 424px;
+  margin-right: 40px;
   border: 4px solid blue;
+`;
+
+export const ProductImage = styled.img`
+  width: 400px;
+  height: 400px;
 `;
 
 export const ProductDetailContainer = styled.div`
   width: 100%;
-  max-width: 768px;
+  max-width: 772px;
   height: 168px;
-  border: 4px solid skyblue;
 
   & > * {
     margin-top: 24px;
@@ -42,10 +48,12 @@ export const ProductUpperPart = styled.div`
   max-width: 757px;
 `;
 
-export const SalesButton = styled.button`
+export const SalesBox = styled.div`
   border-radius: 16px;
   width: 108px;
   height: 36px;
+  text-align: center;
+  line-height: 36px;
   font-weight: var(--font-weight-700);
   margin-right: 16px;
   font-size: var(--font-size-16);
@@ -84,10 +92,12 @@ export const ProductMiddlePart = styled.div`
   }
 `;
 
-export const CategoryButton = styled.button`
+export const CategoryBox = styled.div`
   border-radius: 10px;
   width: 112px;
   height: 40px;
+  text-align: center;
+  line-height: 40px;
   font-weight: var(--font-weight-700);
   margin-right: 16px;
   font-size: var(--font-size-16);
@@ -107,29 +117,46 @@ export const ProductLowerPart = styled.div`
     font-size: 32px;
     font-weight: 700;
     color: var(--gray-title);
-    margin-left: 20px;
   }
 `;
 
 export const ProductDescription = styled.div`
   display: flex;
   width: 100%;
-  max-width: 768px;
+  justify-content: center;
+  align-items: center;
+  max-width: 756px;
   height: 157px;
-  border: 4px solid orange;
+  border: 1px solid var(--color-gray200);
+  border-radius: 20px;
+`;
+
+export const PurchaseButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  width: 1236px;
+  border-bottom: 4px solid var(--color-gray200);
 `;
 
 export const ProductPurchase = styled.button`
   width: 100%;
-  max-width: 170px;
+  max-width: 160px;
   height: 48px;
-  border: 4px solid gray;
+  border-radius: 20px;
+  font-weight: var(--font-weight-700);
+  margin-bottom: 36px;
+  font-size: var(--font-size-24);
+  border: 0;
+  color: white;
+  font-family: "Roboto";
+  background-color: var(--color-darkblue);
+
+  &:hover {
+    background-color: #385c78;
+  }
 `;
 
 export const CommentContainer = styled.div`
   display: flex;
-  width: 100%;
-  height: 100%;
-  max-width: 1260px;
   border: 4px solid black;
 `;

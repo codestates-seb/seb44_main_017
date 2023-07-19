@@ -4,6 +4,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { getToken } from "@/utils/token";
 import QnaListComponent from "@/components/Qna_list/qnaListComponent";
+import SubTitleBar from "@/components/SubTItleBar/SubTitleBar";
 
 const QnaListPage = () => {
   const PAGE_LIMIT = 7;
@@ -12,6 +13,7 @@ const QnaListPage = () => {
   const [qnaList, setQnaList] = useState<QnaTypes[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
+  const title = "무엇이 궁금한가요?";
 
   const [authorization, refresh] = getToken();
 
@@ -43,6 +45,12 @@ const QnaListPage = () => {
 
   return (
     <>
+      <SubTitleBar
+        title={title}
+        isButton={true}
+        btnTitle={"질문하기"}
+        btnLink={"/questions"}
+      />
       <QnaListComponent
         data={qnaList}
         setPage={setPage}

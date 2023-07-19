@@ -1,3 +1,4 @@
+import MypageHeader from "@/components/Mypage_header/MypageHeader";
 import QnaListComponent from "@/components/Qna_list/qnaListComponent";
 import { BASE_URL } from "@/constants/constants";
 import { QnaTypes } from "@/types/shared";
@@ -43,6 +44,7 @@ const MyQnaPage = () => {
 
   return (
     <>
+      <MypageHeader title="나의 Q&A" />
       <QnaListComponent
         data={qnaList}
         setPage={setPage}

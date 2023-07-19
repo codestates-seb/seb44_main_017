@@ -42,3 +42,13 @@ export interface ProductTypes {
   view: number | string;
   condition_value: null;
 }
+
+export interface UserInfoTypes {
+  email: string;
+  isBan: boolean;
+  memberId: number | string;
+  money: number | string;
+  name: string;
+  phone: string;
+  profile: string;
+}
