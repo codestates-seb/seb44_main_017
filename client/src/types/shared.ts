@@ -47,7 +47,7 @@ export interface UserInfoTypes {
   email: string;
   isBan: boolean;
   memberId: number | string;
-  money: number | string;
+  money: number;
   name: string;
   phone: string;
   profile: string;

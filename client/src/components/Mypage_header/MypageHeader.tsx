@@ -4,10 +4,11 @@ import defaultImage from "@/assets/icons/default_image.png";
 
 interface MypageHeaderProps {
   username?: string;
-  title?: string;
+  title: string;
+  point?: number;
 }
 
-const MypageHeader = ({ username, title }: MypageHeaderProps) => {
+const MypageHeader = ({ username, title, point }: MypageHeaderProps) => {
   const navButtonList = [
     { name: "상품 관리", href: "/mypage" },
     { name: "질문 관리", href: "/mypage/posts" },
@@ -29,10 +30,12 @@ const MypageHeader = ({ username, title }: MypageHeaderProps) => {
         <S.ProfileInfo>
           {username ? (
             <>
-              <div className="profile_username">{username} 의 마이페이지</div>
+              <div className="profile_username">
+                {username} 의 {title}
+              </div>
               <S.PointInfo>
                 <PointIcon />
-                <span className="profile_point">1000</span>
+                <span className="profile_point">{point}</span>
               </S.PointInfo>
             </>
           ) : (

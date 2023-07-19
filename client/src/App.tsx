@@ -16,6 +16,7 @@ import ManageProductsPage from "./pages/adminpage/manageProductsPage/manageProdu
 import ManageUserPage from "./pages/adminpage/manageUserPage/manageUserPage";
 import ManageApprovalPage from "./pages/adminpage/manageApproval/manageApprovalPage";
 import MyinfoPage from "./pages/myinfoPage/myinfoPage";
+import ShoppingCartPage from "./pages/shoppingCartPage/shoppingCartPage";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route element={<ManageUserPage />} path="admin/users" />
           <Route element={<ManageApprovalPage />} path="admin/approval" />
           <Route element={<MyinfoPage />} path="/mypage/info" />
+          <Route element={<ShoppingCartPage />} path="/cart" />
         </Routes>
       </AppContainer>
       <Footer />
