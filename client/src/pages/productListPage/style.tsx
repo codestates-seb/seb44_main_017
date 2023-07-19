@@ -54,7 +54,7 @@ export const ProductsCarousel = styled.div`
   flex-wrap: none;
   overflow: hidden;
   @media (max-width: 767px) {
-    width: 440px;
+    width: 280px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     width: 660px;

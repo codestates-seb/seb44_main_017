@@ -14,6 +14,7 @@ interface Product {
   price: string;
   product_id: string | number;
 }
+
 const options = [
   "최신순",
   "오래된순",
@@ -25,9 +26,9 @@ const options = [
 
 const ManageProductsPage = () => {
   const [clothesList, setClothesList] = useState<Product[]>([]);
-  const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(1);
-  const [filter, setFilter] = useState("newest");
+  const [page, setPage] = useState<number>(1);
+  const [totalPage, setTotalPage] = useState<number>(1);
+  const [filter, setFilter] = useState<string>("newest");
   const products = clothesList.map((product, idx) => {
     return (
       <ProductItem
