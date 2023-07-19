@@ -5,10 +5,10 @@ export const cartItemState = atom<CartItemTypes[]>({
   key: "cartItemState",
   default: [
     {
-      name: "하이요",
+      name: "노랑바지22222",
       price: 1000,
-      productId: 100,
-      memberId: 999,
+      productId: 2,
+      memberId: 5,
       category: "상의",
       title: null,
       content: "안녕안녕",
@@ -22,8 +22,8 @@ export const cartItemState = atom<CartItemTypes[]>({
     {
       name: "하이요",
       price: 1000,
-      productId: 101,
-      memberId: 999,
+      productId: 4,
+      memberId: 5,
       category: "하의",
       title: null,
       content: "방가방가",

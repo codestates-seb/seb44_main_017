@@ -19,29 +19,56 @@ const ShoppingCartPage = () => {
 
   const [authorization, refresh] = getToken();
 
-  console.log("cartItems = ", cartItems);
-  console.log("checkedItems = ", checkedItems);
-
-  const orderItems = async (productId: number) => {
-    await axios.post(BASE_URL + `/orderproducts/${productId}`, {
-      headers: {
-        Authorization: authorization,
-        Refresh: refresh,
+  const orderItems = async () => {
+    const { data, status } = await axios.post(
+      BASE_URL + "/kakaoPaybucket",
+      {
+        postnum: "06276",
+        address: "선릉로221",
+        reciver: "박준용",
+        reciverphone: "010-1234-1234",
+        pointspend: 0,
       },
-    });
+      {
+        headers: {
+          Authorization: authorization,
+          Refresh: refresh,
+        },
+      }
+    );
+
+    if ((data && status === 200) || 201) {
+      console.log(data);
+      window.open(data);
+      return data;
+    }
+  };
+
+  const addToCart = (productId: number) => {
+    axios.post(
+      BASE_URL + `/orderproducts/${productId}`,
+      {},
+      {
+        headers: {
+          Authorization: authorization,
+          Refresh: refresh,
+        },
+      }
+    );
   };
 
   const checkedItemsOrderHandler = () => {
     for (let i = 0; i < checkedItems.length; i++) {
-      orderItems(checkedItems[i]);
-      console.log("chItem = ", checkedItems[i]);
+      addToCart(checkedItems[i]);
     }
+    orderItems();
   };
 
   const allItemsOrderHandler = () => {
     for (let i = 0; i < cartItems.length; i++) {
-      orderItems(cartItems[i].productId);
+      addToCart(cartItems[i].productId);
     }
+    orderItems();
   };
 
   const removeCartItemHandler = (id: number) => {
