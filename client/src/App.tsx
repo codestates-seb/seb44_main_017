@@ -26,7 +26,7 @@ function App() {
         <Routes>
           <Route element={<MainPage />} path="/" />
           <Route element={<NoticePage />} path="/notice" />
-          <Route element={<ProductInfoPage />} path="/productinfo" />
+          <Route element={<ProductInfoPage />} path="/products/:productsID" />
           <Route element={<ProductListPage />} path="/productlist" />
           <Route element={<CollectionPage />} path="/collection" />
           <Route element={<QnaListPage />} path="/questions" />
