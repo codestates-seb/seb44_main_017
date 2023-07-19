@@ -9,28 +9,23 @@ import ProductInfo from "./ProductInfo";
 // import ProductItem from "@/components/Item_product/ProductItem";
 // import Comment from "@/components/Comment/Comment";
 
-type ProductType = {
-  productId: string;
+export type ProductType = {
+  productId: number;
   name: string;
-  title: string;
+  title: null;
   content: string;
   price: number;
   category: string;
   memberId: number;
-  productLike: boolean;
+  productLike: boolean | null;
   imageLink: string;
   issell: boolean;
   createdAt: string;
   modifiedAt: string;
-  conditionValue: "condition integer value";
-  pointValue: "point integer value";
-  // comments: [
-  //   {
-  //     content: "댓글 내용",
-  //     created-at: "YYYY-MM-DD hh-mm-ss";
-  //     modified-at: "YYYY-MM-DD hh-mm-ss";
-  //   }
-  // ];
+  conditionValue: number | null;
+  pointValue: number | null;
+  view: number;
+  comments: [];
 };
 
 export const ProductInfoPage = () => {

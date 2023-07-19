@@ -2,28 +2,12 @@ import * as S from "./style";
 import ConditionImg from "@/assets/icons/Condition.svg";
 
 type ProductProps = {
-  //   productId: string;
   name: string;
-  //   title: string;
   content: string;
   price: number;
   category: string;
-  //   memberId: number;
-  //   productLike: boolean;
   imageLink: string;
   handlePayment: () => void;
-  //   issell: boolean;
-  //   createdAt: string;
-  //   modifiedAt: string;
-  //   conditionValue: "condition integer value";
-  //   pointValue: "point integer value";
-  // comments: [
-  //   {
-  //     content: "댓글 내용",
-  //     created-at: "YYYY-MM-DD hh-mm-ss";
-  //     modified-at: "YYYY-MM-DD hh-mm-ss";
-  //   }
-  // ];
 };
 
 const ProductInfo = (props: ProductProps) => {
