@@ -1,4 +1,3 @@
-import { IMG_URL } from "@/constants/constants";
 import { CartItemTypes, LoginUserInfo } from "@/types/shared";
 import { atom } from "recoil";
 
