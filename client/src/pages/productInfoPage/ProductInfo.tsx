@@ -11,6 +11,7 @@ type ProductProps = {
   //   memberId: number;
   //   productLike: boolean;
   imageLink: string;
+  handlePayment: () => void;
   //   issell: boolean;
   //   createdAt: string;
   //   modifiedAt: string;
@@ -26,7 +27,8 @@ type ProductProps = {
 };
 
 const ProductInfo = (props: ProductProps) => {
-  const { name, content, price, category, imageLink } = props;
+  const { name, content, price, category, imageLink, handlePayment } = props;
+
   return (
     <>
       <S.ProductInfo>
@@ -40,8 +42,10 @@ const ProductInfo = (props: ProductProps) => {
               <S.DeleteBtn>삭제</S.DeleteBtn>
             </S.ProductUpperPart>
             <S.ProductMiddlePart>
-              <S.CategoryBox>{category}</S.CategoryBox>
-              <h2>{name}</h2>
+              <S.LeftWrapper>
+                <S.CategoryBox>{category}</S.CategoryBox>
+                <h2>{name}</h2>
+              </S.LeftWrapper>
               <S.Condition src={ConditionImg} />
             </S.ProductMiddlePart>
             <S.ProductLowerPart>
@@ -51,7 +55,7 @@ const ProductInfo = (props: ProductProps) => {
           </S.ProductDetailContainer>
         </S.ContetntsWrapper>
         <S.PurchaseButtonWrapper>
-          <S.ProductPurchase>구매하기</S.ProductPurchase>
+          <S.PaymentBtn onClick={handlePayment}>구매하기</S.PaymentBtn>
         </S.PurchaseButtonWrapper>
       </S.ProductInfo>
       <S.CommentContainer>
