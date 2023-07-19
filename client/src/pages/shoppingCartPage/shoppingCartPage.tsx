@@ -34,6 +34,7 @@ const ShoppingCartPage = () => {
   const checkedItemsOrderHandler = () => {
     for (let i = 0; i < checkedItems.length; i++) {
       orderItems(checkedItems[i]);
+      console.log("chItem = ", checkedItems[i]);
     }
   };
 
@@ -137,12 +138,10 @@ const ShoppingCartPage = () => {
                 </span>
               </div>
               <div>
-                <button onClick={() => checkedItemsOrderHandler}>
+                <button onClick={checkedItemsOrderHandler}>
                   체크 상품 주문
                 </button>
-                <button onClick={() => allItemsOrderHandler}>
-                  전체 상품 주문
-                </button>
+                <button onClick={allItemsOrderHandler}>전체 상품 주문</button>
               </div>
             </div>
           </S.InfoBox>
