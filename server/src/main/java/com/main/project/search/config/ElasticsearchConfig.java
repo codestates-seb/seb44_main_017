@@ -18,6 +18,7 @@ import java.util.Base64;
 public class ElasticsearchConfig {
 
     @Value("${elasticsearch.host}")
+    
     private String elasticHost;
 
     @Value("${elasticsearch.user-key}")

@@ -1,6 +1,7 @@
 package com.main.project.product.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.main.project.admin.entity.Admin;
+import com.main.project.alarm.entity.Alarm;
 import com.main.project.helper.audit.Auditable;
 import com.main.project.notifyView.entity.NotifyView;
 import com.main.project.order.entity.Orderproduct;
@@ -76,6 +77,9 @@ public class Product extends Auditable {
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.REMOVE)
     private ProductLikeCount productLikeCount;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
+    private List<Alarm> alarms = new ArrayList<>();
 
     public void addView(){
         this.setView(this.getView() + 1);
