@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import GitHubIcon from "@mui/icons-material/GitHub";
+import { AiFillGithub } from "react-icons/ai";
 
 export const FooterContainer = styled.footer`
   background-color: var(--color-darkblue);
@@ -8,6 +8,9 @@ export const FooterContainer = styled.footer`
   align-items: center;
   bottom: 0px;
   padding: 36px 60px 24px 60px;
+  @media (max-width: 767px) {
+    padding: 36px 40px 24px 40px;
+  }
 `;
 
 export const LogoContainer = styled.div`
@@ -55,8 +58,27 @@ export const ContentContainer = styled.div`
     }
   }
 `;
+export const ContentBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-right: 56px;
+  @media (min-width: 1024px) {
+    margin-right: 80px;
+  }
+`;
+export const GithubContainer = styled.div`
+  display: flex;
+`;
 export const ContentGithub = styled.div`
   display: flex;
+  flex-direction: column;
+  margin-right: 56px;
+  @media (max-width: 767px) {
+    margin-right: 12px;
+  }
+  @media (min-width: 1024px) {
+    margin-right: 80px;
+  }
 `;
 export const ContentTitle = styled.div`
   color: var(--color-gray200);
@@ -76,7 +98,6 @@ export const ContentTitle = styled.div`
 export const Content = styled.li`
   color: var(--color-gray200);
   margin-bottom: 12px;
-  width: 160px;
   display: flex;
   &:hover {
     cursor: pointer;
@@ -90,6 +111,9 @@ export const Content = styled.li`
       margin-bottom: 12px;
     }
   }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    font-size: 12px;
+  }
 `;
 export const CloseButton = styled.button`
   width: 56px;
@@ -98,12 +122,23 @@ export const CloseButton = styled.button`
   border-radius: 4px;
   color: var(--color-white);
 `;
-export const GitHub = styled(GitHubIcon)`
-  width: 20px;
-  height: 20px;
+export const GitHubIcon = styled(AiFillGithub)`
   margin-left: 4px;
+  @media (max-width: 767px) {
+    width: 10px;
+    height: 10px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 20px;
+    height: 20px;
+  }
+  @media (min-width: 1024px) {
+    width: 20px;
+    height: 20px;
+  }
 `;
 export const GitHubLink = styled.a`
   color: var(--color-gray200);
   display: flex;
+  align-items: center;
 `;

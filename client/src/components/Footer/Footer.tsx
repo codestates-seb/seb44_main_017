@@ -18,21 +18,21 @@ const Footer = () => {
         <S.LogoIcon src={Logo} />
       </S.LogoContainer>
       <S.ContentContainer>
-        <div style={{ marginRight: "56px" }}>
+        <S.ContentBox>
           <S.ContentTitle>
             Copyright©2023 RECLOSET.All rights reserved.
           </S.ContentTitle>
-        </div>
-        <div style={{ marginRight: "56px" }}>
+        </S.ContentBox>
+        <S.ContentBox>
           <S.ContentTitle>SUPPORT</S.ContentTitle>
           <ul>
             <S.Content onClick={handleOpenModal}>이용약관</S.Content>
             <S.Content onClick={handleOpenModal}>개인정보처리방침</S.Content>
             <S.Content onClick={handleOpenModal}>문의하기</S.Content>
           </ul>
-        </div>
-        <S.ContentGithub>
-          <div style={{ marginRight: "56px" }}>
+        </S.ContentBox>
+        <S.GithubContainer>
+          <S.ContentGithub>
             <S.ContentTitle>WITH.FE</S.ContentTitle>
             <ul>
               <S.Content>
@@ -41,7 +41,7 @@ const Footer = () => {
                   target="_blank"
                 >
                   강민승
-                  <S.GitHub />
+                  <S.GitHubIcon />
                 </S.GitHubLink>
               </S.Content>
               <S.Content>
@@ -50,7 +50,7 @@ const Footer = () => {
                   target="_blank"
                 >
                   안상우
-                  <S.GitHub />
+                  <S.GitHubIcon />
                 </S.GitHubLink>
               </S.Content>
               <S.Content>
@@ -59,18 +59,18 @@ const Footer = () => {
                   target="_blank"
                 >
                   오승찬
-                  <S.GitHub />
+                  <S.GitHubIcon />
                 </S.GitHubLink>
               </S.Content>
               <S.Content>
                 <S.GitHubLink href="https://github.com/lhyjjg" target="_blank">
                   이현영
-                  <S.GitHub />
+                  <S.GitHubIcon />
                 </S.GitHubLink>
               </S.Content>
             </ul>
-          </div>
-          <div style={{ marginRight: "10%" }}>
+          </S.ContentGithub>
+          <S.ContentGithub>
             <S.ContentTitle>WITH.BE</S.ContentTitle>
             <ul>
               <S.Content>
@@ -79,7 +79,7 @@ const Footer = () => {
                   target="_blank"
                 >
                   박준용
-                  <S.GitHub />
+                  <S.GitHubIcon />
                 </S.GitHubLink>
               </S.Content>
               <S.Content>
@@ -88,7 +88,7 @@ const Footer = () => {
                   target="_blank"
                 >
                   신예림
-                  <S.GitHub />
+                  <S.GitHubIcon />
                 </S.GitHubLink>
               </S.Content>
               <S.Content>
@@ -97,12 +97,12 @@ const Footer = () => {
                   target="_blank"
                 >
                   황호준
-                  <S.GitHub />
+                  <S.GitHubIcon />
                 </S.GitHubLink>
               </S.Content>
             </ul>
-          </div>
-        </S.ContentGithub>
+          </S.ContentGithub>
+        </S.GithubContainer>
       </S.ContentContainer>
       <Modal
         open={openModal}
