@@ -63,7 +63,7 @@ export const ProductInfoPage = () => {
       );
       console.log(res.data);
       window.open(res.data);
-      return res;
+      console.log(res.data);
     } catch (e) {
       console.log(e);
     }

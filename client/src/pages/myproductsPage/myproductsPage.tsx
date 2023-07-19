@@ -41,7 +41,7 @@ const MyproductsPage = () => {
 
   return (
     <>
-      <MypageHeader username={"user100"} />
+      <MypageHeader title={"마이페이지"} username={"user100"} point={1000} />
       <S.Section>
         <S.PageTitle>
           <h2>내가 등록한 상품</h2>
