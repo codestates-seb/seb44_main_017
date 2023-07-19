@@ -11,6 +11,7 @@ interface UserData {
   name: string;
   phone: string;
   isban: boolean;
+  memberId: number;
 }
 
 const ManageUserPage = () => {
@@ -18,7 +19,7 @@ const ManageUserPage = () => {
   const [totalPage, setTotalPage] = useState<number>(1);
   const [page, setPage] = useState<number>(1);
   const userList = users.map((user, idx) => {
-    return <UserTable key={`user_${idx}`} user={user} idx={idx} />;
+    return <UserTable key={`user_${idx}`} user={user} idx={idx} page={page}/>;
   });
   useEffect(() => {
     (async () => {
@@ -59,7 +60,7 @@ const ManageUserPage = () => {
           )}
         </S.UserListContainer>
       </S.ContentContainer>
-      <CustomPagination pageCount={totalPage} page={page} setPage={setPage} />
+      <CustomPagination pageCount={totalPage} page={page} setPage={setPage}/>
     </S.Container>
   );
 };

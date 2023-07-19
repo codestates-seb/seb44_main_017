@@ -51,12 +51,12 @@ export const FieldUserInfo = styled.p`
   text-overflow: ellipsis;
   cursor: pointer;
 `;
-export const AgreeBtn = styled.button`
+export const AgreeBtn = styled.button<{ banState: boolean }>`
   padding: 8px 20px;
   border: 0;
   border-radius: 16px;
   color: white;
-  background-color: #fd3c3c;
+  background-color: ${(props) => (props.banState ? "#42c45c" : "#fd3c3c")};
 `;
 export const CancelBtn = styled.button`
   padding: 8px 20px;
