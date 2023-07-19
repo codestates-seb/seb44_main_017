@@ -46,16 +46,16 @@ export interface ProductTypes {
 export interface CartItemTypes {
   name: string;
   price: number;
-  productId: number | string;
-  memberId: number | string;
+  productId: number;
+  memberId: number;
   category: string;
   title: null;
   content: string;
   imageLink: string;
   modifyAt: string;
   createAt: string;
-  productlike: number | string;
-  view: number | string;
+  productlike: number;
+  view: number;
   conditionValue: null;
 }
 

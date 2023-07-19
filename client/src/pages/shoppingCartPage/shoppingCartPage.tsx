@@ -1,56 +1,74 @@
 import MypageHeader from "@/components/Mypage_header/MypageHeader";
 import { BASE_URL, IMG_URL } from "@/constants/constants";
-import { cartItemState } from "@/recoil/atom";
-import { CartItemTypes, UserInfoTypes } from "@/types/shared";
-import { getId, getName, getToken } from "@/utils/token";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { CartItemTypes, LoginUserInfo } from "@/types/shared";
+import { useState } from "react";
+import { useRecoilValue, useRecoilState } from "recoil";
 import * as S from "./style";
+import { userInfoSelector } from "@/recoil/selector";
+import { cartItemState } from "@/recoil/atom";
+import axios from "axios";
+import { getToken } from "@/utils/token";
 
 const ShoppingCartPage = () => {
-  const [userInfo, setUserInfo] = useState<UserInfoTypes>();
+  const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
   const [cartItems, setCartItems] =
     useRecoilState<CartItemTypes[]>(cartItemState);
-  const memberId = getId();
-  const username = getName();
+  const [checkedItems, setCheckedItems] = useState<number[]>(
+    cartItems.map(item => item.productId)
+  );
 
   const [authorization, refresh] = getToken();
 
-  console.log(document.cookie);
+  console.log("cartItems = ", cartItems);
+  console.log("checkedItems = ", checkedItems);
 
-  const getCartItems = () => {
-    axios
-      .get(BASE_URL + "/orderproducts/bucket?page=1&size=100&sort=newest", {
-        headers: {
-          Authorization: authorization,
-          Refresh: refresh,
-        },
-      })
-      .then(res => setCartItems(res.data.data));
+  const orderItems = async (productId: number) => {
+    await axios.post(BASE_URL + `/orderproducts/${productId}`, {
+      headers: {
+        Authorization: authorization,
+        Refresh: refresh,
+      },
+    });
   };
 
-  const getUserInfo = () => {
-    axios
-      .get(BASE_URL + `/members/${memberId}`, {
-        headers: {
-          Authorization: authorization,
-          Refresh: refresh,
-        },
-      })
-      .then(res => setUserInfo(res.data.data));
+  const checkedItemsOrderHandler = () => {
+    for (let i = 0; i < checkedItems.length; i++) {
+      orderItems(checkedItems[i]);
+    }
   };
 
-  useEffect(() => {
-    getUserInfo();
-    getCartItems();
-  }, []);
+  const allItemsOrderHandler = () => {
+    for (let i = 0; i < cartItems.length; i++) {
+      orderItems(cartItems[i].productId);
+    }
+  };
+
+  const removeCartItemHandler = (id: number) => {
+    setCartItems(cartItems.filter(item => item.productId !== id));
+    setCheckedItems(checkedItems.filter(item => item !== id));
+  };
+
+  const handleAllCheck = (checked: boolean) => {
+    if (checked) {
+      setCheckedItems(cartItems.map(item => item.productId));
+    } else {
+      setCheckedItems([]);
+    }
+  };
+
+  const handleCheckHandler = (checked: boolean, id: number) => {
+    if (checked) {
+      setCheckedItems([...checkedItems, id]);
+    } else {
+      setCheckedItems(checkedItems.filter(item => item !== id));
+    }
+  };
 
   return (
     <>
       <MypageHeader
         title={"장바구니"}
-        username={username}
+        username={userInfo?.name}
         point={userInfo?.money}
       />
       <S.Section>
@@ -60,19 +78,40 @@ const ShoppingCartPage = () => {
           </S.SubHeader>
           <S.ItemBox>
             <div className="cart_label">
-              <input type="checkbox"></input>
+              <input
+                type="checkbox"
+                checked={
+                  checkedItems.length === cartItems.length ? true : false
+                }
+                onChange={e => handleAllCheck(e.target.checked)}
+              ></input>
               <label>전체 선택</label>
             </div>
             <S.CartItems>
               {cartItems.map(item => (
                 <li key={item.productId}>
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    checked={
+                      checkedItems.includes(item.productId) ? true : false
+                    }
+                    onChange={e =>
+                      handleCheckHandler(e.target.checked, item.productId)
+                    }
+                  />
                   <div className="cart_image">
                     <img src={`${IMG_URL}/${item.imageLink}`} />
                   </div>
                   <div className="cart_info">
                     <div>{item.name}</div>
                     <div>{item.price}</div>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => removeCartItemHandler(item.productId)}
+                    >
+                      삭제
+                    </button>
                   </div>
                 </li>
               ))}
@@ -96,6 +135,14 @@ const ShoppingCartPage = () => {
                     .toLocaleString()}
                   원
                 </span>
+              </div>
+              <div>
+                <button onClick={() => checkedItemsOrderHandler}>
+                  체크 상품 주문
+                </button>
+                <button onClick={() => allItemsOrderHandler}>
+                  전체 상품 주문
+                </button>
               </div>
             </div>
           </S.InfoBox>

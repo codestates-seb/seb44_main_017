@@ -45,7 +45,6 @@ const HamburgerDropdown = ({
   const role = getRoles();
   const memberId = getId();
 
-  console.log(userInfo);
   const barRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
