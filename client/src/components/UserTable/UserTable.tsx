@@ -17,6 +17,7 @@ interface UserTableProps {
   page: number;
 }
 const UserTable: React.FC<UserTableProps> = ({ user, idx, page }) => {
+  
   const [banState, setBanState] = useState<boolean>(user.isban);
   const [listOpen, setListOpen] = useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -30,6 +31,7 @@ const UserTable: React.FC<UserTableProps> = ({ user, idx, page }) => {
   const handleClose = () => setDialogOpen(false);
   const banclick = () => {
     (async () => {
+      
       try {
         await axios.patch(
           `${BASE_URL}/members/ban/${user.memberId}`,

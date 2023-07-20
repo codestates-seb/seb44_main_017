@@ -72,7 +72,7 @@ export const FlowCardContainer = styled.div`
   background-color: var(--color-darkblue);
   &:hover {
     transform: translateY(-8px);
-    transition: transform 1s ease;
+    transition: transform 0.5s ease;
     box-shadow: 8px 16px 5px gray;
   }
   @media (max-width: 767px) {
