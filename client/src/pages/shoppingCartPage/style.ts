@@ -11,15 +11,48 @@ export const Section = styled.section`
   & li {
     list-style: none;
   }
-`;
 
-export const SubHeader = styled.header`
-  border-bottom: 2px solid var(--color-black);
-  padding: 36px 16px 8px;
+  & .point_icon_price {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--color-darkblue);
+    font-size: 20px;
+
+    & svg {
+      @media (max-width: 1200px) {
+        width: 14px;
+        height: 14px;
+      }
+    }
+
+    & .item_price {
+      font-weight: var(--font-weight-700);
+    }
+  }
+
+  & .point_icon_price_small {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--color-black);
+
+    & svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
 `;
 
 export const CartLayout = styled.article`
   display: flex;
+  gap: 36px;
+  padding: 36px;
+
+  @media (max-width: 1023px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const ItemBox = styled.div`
@@ -28,10 +61,20 @@ export const ItemBox = styled.div`
   flex-direction: column;
   max-width: 800px;
   width: 80%;
+  min-width: 200px;
+  background-color: rgb(250, 250, 250);
+
+  @media (max-width: 1023px) {
+    width: 90%;
+  }
 
   & .cart_label {
     padding: 12px;
-    border-bottom: 1px solid var(--color-black);
+    border-bottom: 1px solid var(--color-lightivory);
+
+    @media (max-width: 767px) {
+      text-align: center;
+    }
   }
 `;
 
@@ -47,6 +90,10 @@ export const CartItems = styled.div`
     gap: 16px;
     border-bottom: 1px solid var(--color-lightivory);
     padding: 12px;
+
+    @media (max-width: 767px) {
+      flex-direction: column;
+    }
   }
 
   & img {
@@ -62,10 +109,20 @@ export const ItemInfo = styled.div`
   justify-content: space-between;
   font-weight: var(--font-weight-700);
 
+  @media (max-width: 767px) {
+    flex-direction: column;
+    gap: 8px;
+  }
+
   & .info_left {
     display: flex;
-    gap: 16px;
-    align-items: center;
+    flex-direction: column;
+    gap: 8px;
+    align-items: start;
+
+    @media (max-width: 767px) {
+      align-items: center;
+    }
   }
 
   & .info_right {
@@ -79,22 +136,35 @@ export const ItemInfo = styled.div`
     display: flex;
     align-items: center;
   }
+
+  & .info_category {
+    border-radius: 10px;
+    background-color: var(--color-darkblue);
+    padding: 4px 8px;
+    color: #fff;
+  }
 `;
 
 export const OrderInfoBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  width: 20%;
-  border: 1px solid red;
+  width: 25%;
+  position: sticky;
+  height: max-content;
+  gap: 24px;
+  top: 0;
+
+  @media (max-width: 1023px) {
+    width: 90%;
+  }
 
   & .order_btn {
     display: flex;
     justify-content: center;
 
     & button {
-      border-radius: 16px;
-      width: 96px;
+      border-radius: 8px;
+      width: 150px;
       height: 32px;
       font-weight: var(--font-weight-700);
       margin-right: 16px;
@@ -112,16 +182,73 @@ export const OrderInfoBox = styled.div`
 
 export const OrderInfo = styled.div`
   display: flex;
-  width: 100%;
   flex-direction: column;
-  border: 1px solid blue;
   gap: 16px;
   background-color: rgb(250, 250, 250);
+  padding: 40px 20px;
+  min-width: 200px;
 
   & .order_info {
     display: flex;
     justify-content: space-between;
     font-size: var(--font-size-16);
     font-weight: var(--font-weight-500);
+
+    @media (max-width: 1200px) {
+      font-size: 14px;
+    }
   }
+`;
+
+export const OrderInfoElement = styled.div`
+  border-bottom: 1px solid var(--color-black);
+  padding-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const OrderInfoSum = styled.div`
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const RemainPoint = styled.div<{ total: number }>`
+  & span {
+    font-weight: var(--font-weight-700);
+    color: ${props => (props.total < 0 ? "#d84747" : "#2b475c")};
+
+    @media (max-width: 1200px) {
+      font-size: 14px;
+    }
+  }
+`;
+
+export const CheckBox = styled.input`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+
+  &:checked + label {
+    background-color: var(--color-darkblue);
+    color: var(--color-white);
+  }
+`;
+
+export const CheckboxLabel = styled.label`
+  padding: 4px 7px;
+  height: 15px;
+  cursor: pointer;
+  border-radius: 40px;
+  background-color: #f2f4f6;
+  font-size: var(--font-size-12);
+  color: #383838;
+  border: 1px solid var(--color-darkblue);
 `;

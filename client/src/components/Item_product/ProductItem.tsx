@@ -8,7 +8,7 @@ interface ProductInfo {
   isSell: boolean;
   like: boolean;
   title: string;
-  price: string;
+  price: number | string | null;
   product_id: number | string;
 }
 
