@@ -55,7 +55,13 @@ const ClothesList = () => {
         </FadeIn>
       </S.ContainerPC>
       <S.ContainerMobile>
-        <S.UppserListContainer>{products}</S.UppserListContainer>
+      <S.UppserListContainer>
+          {clothesList.length ? (
+            products
+          ) : (
+            <S.EmptyList>상품 정보가 없습니다.</S.EmptyList>
+          )}
+        </S.UppserListContainer>
       </S.ContainerMobile>
       <S.ListpageBtn
         onClick={() => {
