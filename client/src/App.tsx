@@ -40,6 +40,10 @@ function App() {
             <Route element={<ManageApprovalPage />} path="admin/approval" />
             <Route element={<MyinfoPage />} path="/mypage/info" />
             <Route element={<ShoppingCartPage />} path="/cart" />
+            <Route
+            element={<NoticeDetailPage />}
+            path="/notice/detail/:boardId"
+          />
           </Routes>
         </AppContainer>
         <Footer />

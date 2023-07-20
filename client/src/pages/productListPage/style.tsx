@@ -16,33 +16,34 @@ export const SubTitleBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 10px;
   margin-bottom: 10px;
 `;
 export const SubTitle = styled.div`
   font-weight: var(--font-weight-700);
   @media (max-width: 767px) {
-    font-size: 24px;
+    font-size: 16px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
-    font-size: 36px;
+    font-size: 24px;
   }
   @media (min-width: 1024px) {
-    font-size: 48px;
+    font-size: 36px;
   }
 `;
 export const SubTitleLogo = styled.img`
-  margin: 0px 16px 0px 4px;
+  margin: 0px 8px 0px 4px;
   @media (max-width: 767px) {
+    width: 16px;
+    height: 16px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
     width: 24px;
     height: 24px;
   }
-  @media (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 1024px) {
     width: 36px;
     height: 36px;
-  }
-  @media (min-width: 1024px) {
-    width: 40px;
-    height: 40px;
   }
 `;
 export const ProductsBox = styled.div`
@@ -125,15 +126,14 @@ export const SelectBar = styled.div`
   display: flex;
   justify-content: flex-end;
   margin-top: 8px;
-  padding-right: 8px;
   @media (max-width: 767px) {
-    width: 356px;
+    width: 340px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
-    width: 612px;
+    width: 594px;
   }
   @media (min-width: 1024px) {
-    width: 1100px;
+    width: 1084px;
   }
 `;
 export const ProductsContainer = styled.div`

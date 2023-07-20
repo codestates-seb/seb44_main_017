@@ -1,12 +1,12 @@
 import axios from "axios";
+import { getRoles } from "@/utils/token";
+import { useEffect, useState } from "react";
+import * as S from "@/pages/noticePage/style";
+import { BASE_URL } from "@/constants/constants";
+import SelectBox from "@/components/SelectBox/SelectBox";
 import NotifyItem from "@/components/Item_notify/NotifyItem";
 import CustomPagination from "@/components/Pagination/CustomPagination";
-import { useEffect, useState } from "react";
-import { BASE_URL } from "@/constants/constants";
 import SubTitleBar from "@/components/SubTItleBar/SubTitleBar";
-import * as S from "@/pages/noticePage/style";
-import SelectBox from "@/components/SelectBox/SelectBox";
-import { getRoles } from "@/utils/token";
 
 type ItemType = {
   title: string;
