@@ -91,7 +91,7 @@ export interface UserInfoTypes {
   isBan: boolean;
   memberId: number | string;
   money: number;
-  name: string;
+  name: string | undefined;
   phone: string;
   profile: string;
 }

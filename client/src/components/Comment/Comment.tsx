@@ -4,33 +4,45 @@ import * as S from "./style";
 import EditButton from "../../assets/icons/EditButton";
 import DeleteButton from "../../assets/icons/DeleteButton";
 import elapsedTime from "../../utils/elapsedTime";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
-import { QnACommentTypes } from "@/types/shared";
+import {
+  LoginUserInfo,
+  ProductCommentTypes,
+  QnACommentTypes,
+} from "@/types/shared";
 import { useEffect, useState, useRef } from "react";
-import { getRoles, getToken } from "@/utils/token";
+import { getToken } from "@/utils/token";
+import { useRecoilValue } from "recoil";
+import { userInfoSelector } from "@/recoil/selector";
 
 interface CommentProps {
-  comments: QnACommentTypes[];
+  comments: QnACommentTypes[] | ProductCommentTypes[] | any;
   setComplete: React.Dispatch<React.SetStateAction<boolean>> | any;
 }
 
 const Comment = ({ comments, setComplete }: CommentProps) => {
+  const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
   const [commentValue, changeHandler, reset] = useInput("");
-  const { questionId } = useParams();
   const [isEditMode, setIsEditMode] = useState(false);
   const [updateValue, setUpdateValue] = useState("");
   const [selectedId, setSelectedId] = useState<number | string>(-1);
-  const role = getRoles();
+
+  const { questionId, productsID } = useParams();
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const qPath = location.pathname.startsWith("/questions");
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [authorization, refresh] = getToken();
 
   useEffect(() => {
-    comments.map(item => {
-      item.commentId === selectedId && setUpdateValue(item.content);
+    comments.map((item: any) => {
+      qPath
+        ? item.commentId
+        : item.productId === selectedId && setUpdateValue(item.content);
     });
   }, [selectedId]);
 
@@ -43,7 +55,9 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   const updateHandler = (commentId: number | string) => {
     try {
       axios.patch(
-        BASE_URL + `/questions/${questionId}/comments/${commentId}`,
+        qPath
+          ? BASE_URL + `/questions/${questionId}/comments/${commentId}`
+          : BASE_URL + `/products/${productsID}/comments/${commentId}`,
         {
           content: updateValue,
         },
@@ -74,12 +88,17 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
     if (confirm("정말 삭제하시겠습니까?")) {
       try {
         axios
-          .delete(BASE_URL + `/questions/${questionId}/comments/${commentId}`, {
-            headers: {
-              Authorization: `${authorization}`,
-              Refresh: `${refresh}`,
-            },
-          })
+          .delete(
+            qPath
+              ? BASE_URL + `/questions/${questionId}/comments/${commentId}`
+              : BASE_URL + `/products/${productsID}/comments/${commentId}`,
+            {
+              headers: {
+                Authorization: `${authorization}`,
+                Refresh: `${refresh}`,
+              },
+            }
+          )
           .then(setComplete(true));
 
         navigate(`/questions/${questionId}`);
@@ -95,7 +114,9 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
     try {
       axios
         .post(
-          BASE_URL + `/questions/${questionId}/comments`,
+          qPath
+            ? BASE_URL + `/questions/${questionId}/comments`
+            : BASE_URL + `/products/${productsID}/comments`,
           { content: commentValue },
           {
             headers: {
@@ -114,7 +135,12 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
 
   return (
     <S.Container>
-      {role === "admin" && (
+      {/**
+       * [댓글 작성 레이아웃 보이는 조건]
+       * QnA: 관리자인 경우
+       * Product: 사용자, 관리자 모두
+       */}
+      {userInfo?.role === "admin" || !qPath ? (
         <S.InputLayout onSubmit={submitHandler}>
           <input
             type="text"
@@ -124,13 +150,15 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
           />
           <button>댓글 쓰기</button>
         </S.InputLayout>
+      ) : (
+        ""
       )}
       <S.CommentsLayout>
-        {comments.length === 0 ? (
+        {Array.isArray(comments) && comments.length === 0 ? (
           <div className="none_comment">작성된 댓글이 없습니다.</div>
         ) : (
-          comments.map((e: QnACommentTypes) => (
-            <S.CommentBox key={e.commentId}>
+          comments.map((e: QnACommentTypes | ProductCommentTypes | any) => (
+            <S.CommentBox key={qPath ? e.commentId : e.productId}>
               <div className="comment_info_box">
                 <div className="comment_info">
                   <span>작성자 : {e.writer.name}</span>
@@ -151,26 +179,48 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
                   <div className="comment_content">{e.content}</div>
                 )}
               </div>
-              {role === "admin" && (
+
+              {/*
+               * [수정, 삭제 버튼 보이는 조건]
+               * QnA: 작성한 관리자인 경우
+               * Product: 작성한 관리자 & 사용자인 경우
+               */}
+              {(qPath &&
+                userInfo?.role === "admin" &&
+                userInfo?.memberId === e.writer.adminId) ||
+              (userInfo?.role === "user" &&
+                userInfo?.memberId === e.writer.memberId) ? (
                 <div className="comment_update_btn">
                   {isEditMode && e.commentId === selectedId ? (
                     <button
                       className="comment_modify_btn"
-                      onClick={() => updateHandler(e.commentId)}
+                      onClick={() =>
+                        updateHandler(qPath ? e.commentId : e.productId)
+                      }
                     >
                       수정완료
                     </button>
                   ) : (
                     <>
-                      <button onClick={() => handleEditComment(e.commentId)}>
+                      <button
+                        onClick={() =>
+                          handleEditComment(qPath ? e.commentId : e.productId)
+                        }
+                      >
                         <EditButton />
                       </button>
-                      <button onClick={() => handleDeleteComment(e.commentId)}>
+                      <button
+                        onClick={() =>
+                          handleDeleteComment(qPath ? e.commentId : e.productId)
+                        }
+                      >
                         <DeleteButton />
                       </button>
                     </>
                   )}
                 </div>
+              ) : (
+                ""
               )}
             </S.CommentBox>
           ))
