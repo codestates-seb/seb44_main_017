@@ -36,7 +36,8 @@ public class Product extends Auditable {
 
     private String name;
 
-    private String title;
+    @ColumnDefault("")
+    private String title = "";
 
     private String content;
 

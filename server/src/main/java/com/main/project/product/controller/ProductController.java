@@ -189,16 +189,6 @@ public class ProductController {
 
         List<ProductComment> comments = productCommentRepository.findByProductProductId(productId);
 
-//        List<ProductCommentDto.Response> commentResponses = comments.stream()
-//                .map(comment -> new ProductCommentDto.Response(
-//                        comment.getProductCommentId(),
-//                        comment.getContent(),
-//                        comment.getCreateAt(),
-//                        comment.getModifyAt(),
-////                        co
-//                ))
-//                .collect(Collectors.toList());
-
         List<ProductCommentDto.Response> commentResponses = productCommentMapper
                 .productCommentsToProductCommentResponseDto(comments);
 

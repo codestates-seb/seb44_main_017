@@ -1,11 +1,11 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/main_project?serverTimezone=Asia/Seoul
+    url: ${SPRING_DATASOURCE_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password : 1234
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${MYSQL_PASSWORD}
   jpa:
-#    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
     properties:
