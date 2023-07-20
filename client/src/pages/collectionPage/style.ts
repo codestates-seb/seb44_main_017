@@ -14,7 +14,6 @@ export const PageTitle = styled.div`
   flex-direction: column;
   text-align: center;
   padding-bottom: 40px;
-  border-bottom: 2px solid var(--color-black);
   gap: 12px;
   width: 67%;
 
@@ -42,7 +41,8 @@ export const ContentsContainer = styled.article`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin: 36px 0;
+  padding: 36px 0;
+  border-top: 2px solid var(--color-black);
 `;
 
 export const ContentHeader = styled.div`
@@ -67,6 +67,7 @@ export const DeleteBtn = styled(LoginBtn)`
   width: 75px;
   height: 27px;
   background-color: var(--color-lightred);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 2px;
 
   &:hover {
     background-color: #e35757;
@@ -78,6 +79,7 @@ export const AddFormBtn = styled(LoginBtn)`
   width: 150px;
   height: 50px;
   border-radius: 40px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 2px;
 
   &:hover {
     background-color: #355873;
@@ -109,6 +111,8 @@ export const SubmitBox = styled.div`
 
 export const SubmitBtn = styled(LoginBtn)`
   margin: 0;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 2px;
+
   &:hover {
     background-color: #355873;
   }
