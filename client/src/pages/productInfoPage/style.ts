@@ -1,20 +1,24 @@
 import styled from "styled-components";
 
-export const Condition = styled.img`
-  width: 24px;
-  height: 36px;
-`;
-
 export const ProductInfo = styled.section`
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   align-items: flex-start;
   padding: 36px;
+  /* border: 4px solid red; */
 `;
 
 export const ContetntsWrapper = styled.div`
   display: flex;
+  /* justify-content: space-between; */
   width: 100%;
+  /* border: 4px solid red; */
+
+  @media (max-width: 872px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const ProductImageBox = styled.div`
@@ -25,17 +29,23 @@ export const ProductImageBox = styled.div`
   max-width: 440px;
   height: 424px;
   margin-right: 40px;
+  /* border: 4px solid red; */
+
+  @media (max-width: 872px) {
+    margin: 0;
+  }
 `;
 
 export const ProductImage = styled.img`
   width: 400px;
   height: 400px;
+  object-fit: contain;
 `;
 
 export const ProductDetailContainer = styled.div`
   width: 100%;
   max-width: 772px;
-  height: 168px;
+  /* border: 4px solid red; */
 
   & > * {
     margin-top: 24px;
@@ -47,6 +57,7 @@ export const ProductUpperPart = styled.div`
   justify-content: space-between;
   width: 100%;
   max-width: 757px;
+  /* border: 4px solid red; */
 `;
 
 export const SalesBox = styled.div`
@@ -62,6 +73,7 @@ export const SalesBox = styled.div`
   color: white;
   font-family: "Roboto";
   background-color: var(--color-orange);
+  /* border: 4px solid red; */
 `;
 
 export const DeleteBtn = styled.button`
@@ -84,6 +96,7 @@ export const ProductMiddlePart = styled.div`
   justify-content: space-between;
   width: 100%;
   max-width: 757px;
+  /* border: 4px solid red; */
 `;
 
 export const LeftWrapper = styled.div`
@@ -91,10 +104,11 @@ export const LeftWrapper = styled.div`
   width: 100%;
 
   & > h2 {
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--gray-title);
     margin-left: 20px;
+    /* border: 4px solid red; */
   }
 `;
 
@@ -113,14 +127,20 @@ export const CategoryBox = styled.div`
   background-color: var(--color-darkblue);
 `;
 
+export const Condition = styled.img`
+  width: 24px;
+  height: 36px;
+`;
+
 export const ProductLowerPart = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;
   max-width: 757px;
+  /* border: 4px solid red; */
 
   & > h2 {
-    font-size: 32px;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--gray-title);
   }
@@ -139,9 +159,17 @@ export const ProductDescription = styled.div`
 
 export const PurchaseButtonWrapper = styled.div`
   display: flex;
-  flex-direction: row-reverse;
-  width: 1236px;
+  /* flex-direction: row-reverse; */
+  justify-content: flex-end;
+  width: 100%;
   border-bottom: 4px solid var(--color-gray200);
+  font-size: 1.2rem;
+  /* border: 4px solid red; */
+`;
+
+export const FourBox = styled.div`
+  width: 440px;
+  border: 4px solid red;
 `;
 
 export const PaymentBtn = styled.button`
@@ -156,6 +184,10 @@ export const PaymentBtn = styled.button`
   color: white;
   font-family: "Roboto";
   background-color: var(--color-darkblue);
+  /* border: 4px solid red; */
+  @media (max-width: 872px) {
+    margin-top: 20px;
+  }
 
   &:hover {
     background-color: #385c78;
@@ -163,6 +195,9 @@ export const PaymentBtn = styled.button`
 `;
 
 export const CommentContainer = styled.div`
-  display: flex;
-  border: 4px solid black;
+  /* display: flex; */
+  /* width: 100%; */
+  /* justify-content: center; */
+  padding-top: 36px;
+  /* border: 4px solid black; */
 `;
