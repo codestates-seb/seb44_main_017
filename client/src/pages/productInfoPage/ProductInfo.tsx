@@ -1,5 +1,6 @@
 import * as S from "./style";
 import ConditionImg from "@/assets/icons/Condition.svg";
+import { getRoles } from "@/utils/token";
 
 type ProductProps = {
   name: string;
@@ -12,6 +13,7 @@ type ProductProps = {
 
 const ProductInfo = (props: ProductProps) => {
   const { name, content, price, category, imageLink, handlePayment } = props;
+  const role = getRoles();
 
   return (
     <>
@@ -23,7 +25,7 @@ const ProductInfo = (props: ProductProps) => {
           <S.ProductDetailContainer>
             <S.ProductUpperPart>
               <S.SalesBox>판매중</S.SalesBox>
-              <S.DeleteBtn>삭제</S.DeleteBtn>
+              {role === "admin" ? <S.DeleteBtn>삭제</S.DeleteBtn> : undefined}
             </S.ProductUpperPart>
             <S.ProductMiddlePart>
               <S.LeftWrapper>
