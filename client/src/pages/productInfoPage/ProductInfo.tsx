@@ -1,6 +1,9 @@
 import * as S from "./style";
-import ConditionImg from "@/assets/icons/Condition.svg";
+import { useState } from "react";
 import { getRoles } from "@/utils/token";
+import { QnACommentTypes } from "@/types/shared";
+import Comment from "@/components/Comment/Comment";
+import ConditionImg from "@/assets/icons/Condition.svg";
 
 type ProductProps = {
   name: string;
@@ -9,10 +12,20 @@ type ProductProps = {
   category: string;
   imageLink: string;
   handlePayment: () => void;
+  handleDeletePost: () => void;
 };
 
 const ProductInfo = (props: ProductProps) => {
-  const { name, content, price, category, imageLink, handlePayment } = props;
+  const {
+    name,
+    content,
+    price,
+    category,
+    imageLink,
+    handlePayment,
+    handleDeletePost,
+  } = props;
+  const [commentData, setCommentData] = useState<QnACommentTypes[]>([]);
   const role = getRoles();
 
   return (
@@ -25,7 +38,9 @@ const ProductInfo = (props: ProductProps) => {
           <S.ProductDetailContainer>
             <S.ProductUpperPart>
               <S.SalesBox>판매중</S.SalesBox>
-              {role === "admin" ? <S.DeleteBtn>삭제</S.DeleteBtn> : undefined}
+              {role === "admin" ? (
+                <S.DeleteBtn onClick={handleDeletePost}>삭제</S.DeleteBtn>
+              ) : undefined}
             </S.ProductUpperPart>
             <S.ProductMiddlePart>
               <S.LeftWrapper>
@@ -41,12 +56,12 @@ const ProductInfo = (props: ProductProps) => {
           </S.ProductDetailContainer>
         </S.ContetntsWrapper>
         <S.PurchaseButtonWrapper>
+          {/* <S.FourBox></S.FourBox> */}
           <S.PaymentBtn onClick={handlePayment}>구매하기</S.PaymentBtn>
         </S.PurchaseButtonWrapper>
       </S.ProductInfo>
       <S.CommentContainer>
-        코멘트
-        {/* <Comment comments={commentData} setComplete={setCommentData} /> */}
+        <Comment comments={commentData} setComplete={setCommentData} />
       </S.CommentContainer>
     </>
   );
