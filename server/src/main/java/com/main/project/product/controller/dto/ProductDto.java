@@ -68,7 +68,6 @@ public class ProductDto {
         @NotBlank(message = "공백이 아니어야 합니다.")
         private String name;
 
-        @NotBlank(message = "공백이 아니어야 합니다.")
         private String title;
 
         private String content;
