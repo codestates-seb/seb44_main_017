@@ -9,7 +9,6 @@ import { CartItemTypes, LoginUserInfo } from "@/types/shared";
 import ProductItem from "@/components/Item_product/ProductItem";
 import { useRecoilValue } from "recoil";
 import { userInfoSelector } from "@/recoil/selector";
-import ProfileDropdown from "@/components/Dropdown_profile/ProfileDropdown";
 
 const MyproductsPage = () => {
   const [sortValue, setSortValue] = useState("productsf");
