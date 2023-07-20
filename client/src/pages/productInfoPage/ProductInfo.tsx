@@ -1,32 +1,20 @@
 import * as S from "./style";
 import ConditionImg from "@/assets/icons/Condition.svg";
+import { getRoles } from "@/utils/token";
 
 type ProductProps = {
-  //   productId: string;
   name: string;
-  //   title: string;
   content: string;
   price: number;
   category: string;
-  //   memberId: number;
-  //   productLike: boolean;
   imageLink: string;
-  //   issell: boolean;
-  //   createdAt: string;
-  //   modifiedAt: string;
-  //   conditionValue: "condition integer value";
-  //   pointValue: "point integer value";
-  // comments: [
-  //   {
-  //     content: "댓글 내용",
-  //     created-at: "YYYY-MM-DD hh-mm-ss";
-  //     modified-at: "YYYY-MM-DD hh-mm-ss";
-  //   }
-  // ];
+  handlePayment: () => void;
 };
 
 const ProductInfo = (props: ProductProps) => {
-  const { name, content, price, category, imageLink } = props;
+  const { name, content, price, category, imageLink, handlePayment } = props;
+  const role = getRoles();
+
   return (
     <>
       <S.ProductInfo>
@@ -37,11 +25,13 @@ const ProductInfo = (props: ProductProps) => {
           <S.ProductDetailContainer>
             <S.ProductUpperPart>
               <S.SalesBox>판매중</S.SalesBox>
-              <S.DeleteBtn>삭제</S.DeleteBtn>
+              {role === "admin" ? <S.DeleteBtn>삭제</S.DeleteBtn> : undefined}
             </S.ProductUpperPart>
             <S.ProductMiddlePart>
-              <S.CategoryBox>{category}</S.CategoryBox>
-              <h2>{name}</h2>
+              <S.LeftWrapper>
+                <S.CategoryBox>{category}</S.CategoryBox>
+                <h2>{name}</h2>
+              </S.LeftWrapper>
               <S.Condition src={ConditionImg} />
             </S.ProductMiddlePart>
             <S.ProductLowerPart>
@@ -51,7 +41,7 @@ const ProductInfo = (props: ProductProps) => {
           </S.ProductDetailContainer>
         </S.ContetntsWrapper>
         <S.PurchaseButtonWrapper>
-          <S.ProductPurchase>구매하기</S.ProductPurchase>
+          <S.PaymentBtn onClick={handlePayment}>구매하기</S.PaymentBtn>
         </S.PurchaseButtonWrapper>
       </S.ProductInfo>
       <S.CommentContainer>
