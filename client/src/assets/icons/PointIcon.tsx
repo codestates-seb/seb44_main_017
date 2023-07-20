@@ -1,6 +1,14 @@
 import SvgTagProps from "./../../types/SvgTagProps";
 
-const PointIcon = ({ width = 20, height = 20 }: SvgTagProps) => {
+interface PointIconProps extends SvgTagProps {
+  color: string;
+}
+
+const PointIcon = ({
+  width = 20,
+  height = 20,
+  color = "#ffffff",
+}: PointIconProps) => {
   return (
     <svg
       version="1.1"
@@ -9,8 +17,8 @@ const PointIcon = ({ width = 20, height = 20 }: SvgTagProps) => {
       viewBox="0 0 512 512"
       width={width}
       height={height}
-      fill="#ffffff"
-      stroke="#ffffff"
+      fill={color}
+      stroke={color}
     >
       <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
       <g

@@ -4,7 +4,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { CommentTypes, QnaTypes } from "@/types/shared";
+import { QnACommentTypes, QnaTypes } from "@/types/shared";
 import Comment from "@/components/Comment/Comment";
 import { getToken } from "@/utils/token";
 
@@ -36,7 +36,7 @@ const initialValue: QnaTypes = {
 const QnaDetailPage = () => {
   const { questionId } = useParams();
   const [qnaData, setQnaData] = useState<QnaTypes>(initialValue);
-  const [commentData, setCommentData] = useState<CommentTypes[]>([]);
+  const [commentData, setCommentData] = useState<QnACommentTypes[]>([]);
   const [complete, setComplete] = useState(false);
 
   const [authorization, refresh] = getToken();

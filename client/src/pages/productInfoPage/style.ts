@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Condition = styled.img`
   width: 24px;
   height: 36px;
-  margin-left: 480px;
 `;
 
 export const ProductInfo = styled.section`
@@ -19,11 +18,13 @@ export const ContetntsWrapper = styled.div`
 `;
 
 export const ProductImageBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   max-width: 440px;
   height: 424px;
   margin-right: 40px;
-  border: 4px solid blue;
 `;
 
 export const ProductImage = styled.img`
@@ -68,7 +69,6 @@ export const DeleteBtn = styled.button`
   width: 96px;
   height: 32px;
   font-weight: var(--font-weight-700);
-  margin-right: 16px;
   font-size: var(--font-size-12);
   border: 0;
   color: white;
@@ -81,8 +81,14 @@ export const DeleteBtn = styled.button`
 `;
 export const ProductMiddlePart = styled.div`
   display: flex;
+  justify-content: space-between;
   width: 100%;
   max-width: 757px;
+`;
+
+export const LeftWrapper = styled.div`
+  display: flex;
+  width: 100%;
 
   & > h2 {
     font-size: 32px;
@@ -94,7 +100,7 @@ export const ProductMiddlePart = styled.div`
 
 export const CategoryBox = styled.div`
   border-radius: 10px;
-  width: 112px;
+  width: 108px;
   height: 40px;
   text-align: center;
   line-height: 40px;
@@ -138,7 +144,7 @@ export const PurchaseButtonWrapper = styled.div`
   border-bottom: 4px solid var(--color-gray200);
 `;
 
-export const ProductPurchase = styled.button`
+export const PaymentBtn = styled.button`
   width: 100%;
   max-width: 160px;
   height: 48px;
