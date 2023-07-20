@@ -1,5 +1,5 @@
 import MypageHeader from "@/components/Mypage_header/MypageHeader";
-import { BASE_URL, IMG_URL } from "@/constants/constants";
+import { BASE_URL, CART_ITEMS, IMG_URL } from "@/constants/constants";
 import { CartItemTypes, LoginUserInfo } from "@/types/shared";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
@@ -9,6 +9,7 @@ import { cartItemState } from "@/recoil/atom";
 import axios from "axios";
 import { getToken } from "@/utils/token";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
+import PointIcon from "@/assets/icons/PointIcon";
 
 const ShoppingCartPage = () => {
   const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
@@ -20,6 +21,48 @@ const ShoppingCartPage = () => {
   );
 
   const [authorization, refresh] = getToken();
+
+  const init = () => {
+    const initialValues = [
+      {
+        name: "노랑바지22222",
+        price: 1000,
+        productId: 2,
+        memberId: 5,
+        category: "상의",
+        title: null,
+        content:
+          "이 상품은 영국에서 최초로 시작되어 일년에 한바퀴를 돌면서 받는 사람에게 행운을 주었고 지금은 당신에게로 옮겨진 이 상품은 4일 안에 당신 곁을 떠나야 하는",
+        imageLink: "ccc2cca4-4503-45e4-b51f-c76a54276bb1.jpg",
+        modifyAt: "",
+        createAt: "",
+        productlike: 0,
+        view: 0,
+        conditionValue: null,
+      },
+      {
+        name: "하이요",
+        price: 1000,
+        productId: 4,
+        memberId: 5,
+        category: "하의",
+        title: null,
+        content: "방가방가",
+        imageLink: "ccc2cca4-4503-45e4-b51f-c76a54276bb1.jpg",
+        modifyAt: "",
+        createAt: "",
+        productlike: 0,
+        view: 0,
+        conditionValue: null,
+      },
+    ];
+
+    if (localStorage.getItem(CART_ITEMS)) {
+      localStorage.removeItem(CART_ITEMS);
+    }
+
+    localStorage.setItem(CART_ITEMS, JSON.stringify(initialValues));
+  };
 
   const orderItems = async () => {
     const { data, status } = await axios.post(
@@ -40,7 +83,7 @@ const ShoppingCartPage = () => {
     );
 
     if ((data && status === 200) || 201) {
-      console.log(data);
+      localStorage.removeItem(CART_ITEMS);
       window.open(data);
       return data;
     }
@@ -103,7 +146,8 @@ const ShoppingCartPage = () => {
 
   useEffect(() => {
     setTotal(getTotal());
-  }, [checkedItems]);
+    init();
+  }, [, checkedItems]);
 
   return (
     <>
@@ -113,9 +157,6 @@ const ShoppingCartPage = () => {
         point={userInfo?.money}
       />
       <S.Section>
-        <S.SubHeader>
-          <h2>장바구니 내역</h2>
-        </S.SubHeader>
         <S.CartLayout>
           <S.ItemBox>
             <div className="cart_label">
@@ -145,11 +186,16 @@ const ShoppingCartPage = () => {
                   </div>
                   <S.ItemInfo>
                     <div className="info_left">
-                      <span>{item.category}</span>
+                      <span className="info_category">{item.category}</span>
                       <span>{item.name}</span>
                     </div>
                     <div className="info_right">
-                      <div>{item.price.toLocaleString()}원</div>
+                      <div className="point_icon_price">
+                        <PointIcon color={"#2b475c"} />
+                        <span className="item_price">
+                          {item.price.toLocaleString()}
+                        </span>
+                      </div>
                       <div
                         className="delete_icon"
                         onClick={() => removeCartItemHandler(item.productId)}
@@ -167,14 +213,45 @@ const ShoppingCartPage = () => {
             <S.OrderInfo>
               <h3>주문 내역</h3>
               <div>
-                <div className="order_info">
-                  <span>상품 개수</span>
-                  <span>{total.quantity}개</span>
-                </div>
-                <div className="order_info">
-                  <span>결제 예정 금액</span>
-                  <span>{total.price.toLocaleString()}원</span>
-                </div>
+                <S.OrderInfoElement>
+                  <div className="order_info">
+                    <span>상품 개수</span>
+                    <span>{total.quantity}개</span>
+                  </div>
+                  <div className="order_info">
+                    <span>주문 금액</span>
+
+                    <span>{total.price.toLocaleString()}</span>
+                  </div>
+                  <div className="order_info">
+                    <span>배송비</span>
+                    <span>무료</span>
+                  </div>
+                </S.OrderInfoElement>
+                <S.OrderInfoSum>
+                  <div className="order_info">
+                    <span>결제 예정 포인트</span>
+                    <span>{total.price.toLocaleString()}</span>
+                  </div>
+                  <S.RemainPoint
+                    className="order_info"
+                    total={Number(userInfo?.money) - total.price}
+                  >
+                    <span>남은 포인트</span>
+                    <div className="point_icon_price">
+                      {Number(userInfo?.money) - total.price < 0 ? (
+                        <PointIcon color={"#d84747"} />
+                      ) : (
+                        <PointIcon color={"#2b475c"} />
+                      )}
+                      <span className="item_price">
+                        {(
+                          Number(userInfo?.money) - total.price
+                        ).toLocaleString()}
+                      </span>
+                    </div>
+                  </S.RemainPoint>
+                </S.OrderInfoSum>
               </div>
             </S.OrderInfo>
             <div className="order_btn">

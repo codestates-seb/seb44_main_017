@@ -70,5 +70,5 @@ export interface UserInfoTypes {
 }
 
 export interface LoginUserInfo extends UserInfoTypes {
-  role: "";
+  role: string;
 }

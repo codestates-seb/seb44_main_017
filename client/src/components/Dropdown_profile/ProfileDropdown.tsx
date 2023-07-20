@@ -2,36 +2,18 @@ import useDetectClose from "../../hooks/useDetectClose";
 import { Link, useNavigate } from "react-router-dom";
 import * as S from "./style";
 import defaultImage from "/images/cat.jpg";
-import { delCookie, getId, getName, getRoles, getToken } from "@/utils/token";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { BASE_URL, IMG_URL } from "@/constants/constants";
+import { delCookie } from "@/utils/token";
+import { IMG_URL } from "@/constants/constants";
+import { useRecoilValue } from "recoil";
+import { LoginUserInfo } from "@/types/shared";
+import { userInfoSelector } from "@/recoil/selector";
 
 const ProfileDropdown = () => {
   const [DropdownIsOpen, Ref, DropdownHandler] = useDetectClose();
-  const [profileImage, setProfileImage] = useState("");
+  const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
   const navigate = useNavigate();
 
-  const username = getName();
-  const role = getRoles();
-  const memberId = getId();
-
-  useEffect(() => {
-    if (memberId) {
-      const [authorization, refresh] = getToken();
-
-      axios
-        .get(BASE_URL + `/members/${memberId}`, {
-          headers: {
-            Authorization: authorization,
-            Refresh: refresh,
-          },
-        })
-        .then(res => setProfileImage(res.data.data.profile));
-    } else {
-      setProfileImage("");
-    }
-  }, []);
+  console.log(userInfo);
 
   const logoutHandler = () => {
     if (confirm("로그아웃 하시겠습니까?")) {
@@ -44,19 +26,24 @@ const ProfileDropdown = () => {
     <>
       <S.ProfileContainer>
         <div ref={Ref} onClick={DropdownHandler}>
-          <div className="profile_nickname">{username} 님</div>
-          {memberId ? (
-            <img src={IMG_URL + "/" + { profileImage }} />
+          <div className="profile_nickname">{userInfo?.name} 님</div>
+          {userInfo ? (
+            <img src={IMG_URL + "/" + userInfo.profile} />
           ) : (
             <img src={defaultImage} />
           )}
         </div>
         <S.DropDownContainer isDropped={DropdownIsOpen ? true : false}>
           <ul>
-            {role === "user" ? (
-              <Link to="/mypage" onClick={DropdownHandler}>
-                <li>마이페이지</li>
-              </Link>
+            {userInfo?.role === "user" ? (
+              <>
+                <Link to="/mypage" onClick={DropdownHandler}>
+                  <li>마이페이지</li>
+                </Link>
+                <Link to="/cart" onClick={DropdownHandler}>
+                  <li>장바구니</li>
+                </Link>
+              </>
             ) : (
               <Link to="/admin/products" onClick={DropdownHandler}>
                 <li>관리자페이지</li>

@@ -5,13 +5,19 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL, IMG_URL } from "@/constants/constants";
 import { getToken } from "@/utils/token";
-import { ProductTypes } from "@/types/shared";
+import { CartItemTypes, LoginUserInfo } from "@/types/shared";
 import ProductItem from "@/components/Item_product/ProductItem";
+import { useRecoilValue } from "recoil";
+import { userInfoSelector } from "@/recoil/selector";
+import ProfileDropdown from "@/components/Dropdown_profile/ProfileDropdown";
 
 const MyproductsPage = () => {
   const [sortValue, setSortValue] = useState("productsf");
   const sortOptions = ["판매완료", "판매중", "등록대기", "등록거절"];
-  const [productData, setProductData] = useState<ProductTypes[]>([]);
+  const [productData, setProductData] = useState<CartItemTypes[]>([]);
+  const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
+
+  console.log(productData);
 
   const [authorization, refresh] = getToken();
 
@@ -41,7 +47,11 @@ const MyproductsPage = () => {
 
   return (
     <>
-      <MypageHeader title={"마이페이지"} username={"user100"} point={1000} />
+      <MypageHeader
+        title={"마이페이지"}
+        username={userInfo?.name}
+        point={userInfo?.money}
+      />
       <S.Section>
         <S.PageTitle>
           <h2>내가 등록한 상품</h2>
@@ -54,14 +64,14 @@ const MyproductsPage = () => {
 
         <S.ContentBox>
           {productData.map(item => (
-            <div className="product_wrapper" key={item.product_id}>
+            <div className="product_wrapper" key={item.productId}>
               <ProductItem
-                url={IMG_URL + "/" + item.image_link}
+                url={IMG_URL + "/" + item.imageLink}
                 isSell={false}
                 like={false}
                 title={item.name}
-                price={"null"}
-                product_id={item.product_id}
+                price={item.price}
+                product_id={item.productId}
               />
             </div>
           ))}
