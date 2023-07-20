@@ -225,3 +225,30 @@ export const RemainPoint = styled.div<{ total: number }>`
     }
   }
 `;
+
+export const CheckBox = styled.input`
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+
+  &:checked + label {
+    background-color: var(--color-darkblue);
+    color: var(--color-white);
+  }
+`;
+
+export const CheckboxLabel = styled.label`
+  padding: 4px 7px;
+  height: 15px;
+  cursor: pointer;
+  border-radius: 40px;
+  background-color: #f2f4f6;
+  font-size: var(--font-size-12);
+  color: #383838;
+  border: 1px solid var(--color-darkblue);
+`;

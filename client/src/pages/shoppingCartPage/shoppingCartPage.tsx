@@ -110,8 +110,10 @@ const ShoppingCartPage = () => {
   };
 
   const removeCartItemHandler = (id: number) => {
-    setCartItems(cartItems.filter(item => item.productId !== id));
-    setCheckedItems(checkedItems.filter(item => item !== id));
+    if (confirm("장바구니에서 삭제하시겠습니까?")) {
+      setCartItems(cartItems.filter(item => item.productId !== id));
+      setCheckedItems(checkedItems.filter(item => item !== id));
+    }
   };
 
   const handleAllCheck = (checked: boolean) => {
@@ -160,20 +162,22 @@ const ShoppingCartPage = () => {
         <S.CartLayout>
           <S.ItemBox>
             <div className="cart_label">
-              <input
+              <S.CheckBox
                 type="checkbox"
+                id="cart_all"
                 checked={
                   checkedItems.length === cartItems.length ? true : false
                 }
                 onChange={e => handleAllCheck(e.target.checked)}
-              ></input>
-              <label>전체 선택</label>
+              ></S.CheckBox>
+              <S.CheckboxLabel htmlFor="cart_all">전체 선택</S.CheckboxLabel>
             </div>
             <S.CartItems>
               {cartItems.map(item => (
                 <li key={item.productId}>
-                  <input
+                  <S.CheckBox
                     type="checkbox"
+                    id={"cart_" + item.productId}
                     checked={
                       checkedItems.includes(item.productId) ? true : false
                     }
@@ -181,6 +185,9 @@ const ShoppingCartPage = () => {
                       handleCheckHandler(e.target.checked, item.productId)
                     }
                   />
+                  <S.CheckboxLabel htmlFor={"cart_" + item.productId}>
+                    ✔
+                  </S.CheckboxLabel>
                   <div className="cart_image">
                     <img src={`${IMG_URL}/${item.imageLink}`} />
                   </div>
