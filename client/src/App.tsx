@@ -17,6 +17,7 @@ import ManageUserPage from "./pages/adminpage/manageUserPage/manageUserPage";
 import ManageApprovalPage from "./pages/adminpage/manageApproval/manageApprovalPage";
 import MyinfoPage from "./pages/myinfoPage/myinfoPage";
 import ShoppingCartPage from "./pages/shoppingCartPage/shoppingCartPage";
+import NoticeDetailPage from "./pages/noticeDetailPage/noticeDetailPage";
 import { RecoilRoot } from "recoil";
 
 function App() {
@@ -41,9 +42,9 @@ function App() {
             <Route element={<MyinfoPage />} path="/mypage/info" />
             <Route element={<ShoppingCartPage />} path="/cart" />
             <Route
-            element={<NoticeDetailPage />}
-            path="/notice/detail/:boardId"
-          />
+              element={<NoticeDetailPage />}
+              path="/notice/detail/:boardId"
+            />
           </Routes>
         </AppContainer>
         <Footer />
