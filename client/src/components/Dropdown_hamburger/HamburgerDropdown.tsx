@@ -14,7 +14,7 @@ import { createPortal } from "react-dom";
 import Backdrop from "./Backdrop";
 import LoginModal from "../Modal_login/LoginModal";
 import SignupModal from "../Modal_signup/SignupModal";
-import { delCookie, getId, getRoles, getToken } from "@/utils/token";
+import { delCookie, getId, getName, getRoles, getToken } from "@/utils/token";
 import axios from "axios";
 import { BASE_URL, IMG_URL } from "@/constants/constants";
 import { LoginUserInfo } from "@/types/shared";
@@ -43,12 +43,13 @@ const HamburgerDropdown = ({
     userInfoState
   );
   const role = getRoles();
-  const memberId = getId();
+  const memberId = Number(getId());
+  const username = getName();
 
   const barRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (memberId) {
+    if (role === "user") {
       const [authorization, refresh] = getToken();
 
       axios
@@ -59,6 +60,17 @@ const HamburgerDropdown = ({
           },
         })
         .then(res => setUserInfo({ ...res.data.data, role: role }));
+    } else if (role === "admin") {
+      setUserInfo({
+        email: "",
+        isBan: false,
+        memberId: memberId,
+        money: 0,
+        name: username,
+        phone: "000-0000-0000",
+        profile: "",
+        role: "admin",
+      });
     } else {
       setUserInfo(null);
     }
@@ -123,7 +135,7 @@ const HamburgerDropdown = ({
                 </>
               ) : (
                 <>
-                  {userInfo ? (
+                  {userInfo.role === "user" ? (
                     <img src={IMG_URL + "/" + userInfo.profile} />
                   ) : (
                     <img src={defaultImage} />
