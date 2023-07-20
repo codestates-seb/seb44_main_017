@@ -31,7 +31,8 @@ const CustomPagination = ({ pageCount, page, setPage }: Props) => {
           color: "white", // 현재 선택된 페이지 버튼 텍스트 색상
         },
         "& .MuiPaginationItem-root.Mui-disabled": {
-          color: "#2b475c", // 비활성화된 페이지 버튼 색상
+          color: "white", // 비활성화된 페이지 버튼 색상
+          opacity: 100,
         },
       }}
       count={pageCount} // 전체 페이지 수
