@@ -18,7 +18,7 @@ interface Data {
     name: string;
   };
 }
-
+        
 function NoticeDetailPage() {
   const { boardId } = useParams();
   const [data, setData] = useState<Data>({
