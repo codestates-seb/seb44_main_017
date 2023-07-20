@@ -6,12 +6,12 @@ import DeleteButton from "../../assets/icons/DeleteButton";
 import elapsedTime from "../../utils/elapsedTime";
 import { useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
-import { CommentTypes } from "@/types/shared";
+import { QnACommentTypes } from "@/types/shared";
 import { useEffect, useState, useRef } from "react";
 import { getRoles, getToken } from "@/utils/token";
 
 interface CommentProps {
-  comments: CommentTypes[];
+  comments: QnACommentTypes[];
   setComplete: React.Dispatch<React.SetStateAction<boolean>> | any;
 }
 
@@ -129,7 +129,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
         {comments.length === 0 ? (
           <div className="none_comment">작성된 댓글이 없습니다.</div>
         ) : (
-          comments.map((e: CommentTypes) => (
+          comments.map((e: QnACommentTypes) => (
             <S.CommentBox key={e.commentId}>
               <div className="comment_info_box">
                 <div className="comment_info">

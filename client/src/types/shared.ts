@@ -1,9 +1,17 @@
-export interface CommentTypes {
+export interface QnACommentTypes {
   commentId: number | string;
   content: string;
   createAt: string;
   modifyAt: string;
   writer: AdminTypes;
+}
+
+export interface ProductCommentTypes {
+  productCommentId: number;
+  content: string;
+  createAt: string;
+  modifyAt: string;
+  wrtier: WriterTypes;
 }
 
 export interface WriterTypes {
@@ -24,7 +32,7 @@ export interface QnaTypes {
   modifyAt: string;
   view: number | string;
   writer?: WriterTypes;
-  qcomments?: CommentTypes[];
+  qcomments?: QnACommentTypes[];
 }
 
 export interface ProductTypes {
@@ -41,6 +49,25 @@ export interface ProductTypes {
   productlike: number | string;
   view: number | string;
   condition_value: null;
+}
+
+export interface ProductDetailTypes {
+  productId: number;
+  name: string;
+  title: string | null;
+  content: string;
+  price: number | null;
+  category: string;
+  memberId: number;
+  view: number;
+  productLike: boolean | null;
+  imageLink: string | null;
+  issell: boolean;
+  createAt: string;
+  modifyAt: string;
+  conditionValue: number | null;
+  pointValue: number | null;
+  comments: [];
 }
 
 export interface CartItemTypes {
