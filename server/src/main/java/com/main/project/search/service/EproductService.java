@@ -83,7 +83,7 @@ public class EproductService {
     public Page<Eproduct> searchProductByName(String title, int page, int size){
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("name.nori_mixed",  title))
-                .must(QueryBuilders.matchPhraseQuery("sell","wait")));
+                .must(QueryBuilders.matchPhraseQuery("sell","sale")));
         List<Eproduct> productList = getProductList(searchSourceBuilder);
         PageRequest pageRequest = PageRequest.of(page, size);
         int start = (int) pageRequest.getOffset();
