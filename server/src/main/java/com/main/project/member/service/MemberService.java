@@ -94,6 +94,11 @@ public class MemberService {
 
         return memberRepository.save(fm);
     }
+
+    public Member addMemberMoney(Member member, Integer pointValue){
+        member.setMoney(member.getMoney() + pointValue);
+        return memberRepository.save(member);
+    }
     public Member findVerifiedMember(long memberId) {
         Optional<Member> optionalMember = memberRepository.findById(memberId);
         Member findMember = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
