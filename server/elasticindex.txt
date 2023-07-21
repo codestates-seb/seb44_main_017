@@ -1,0 +1,49 @@
+PUT product
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "nori_mixed": {
+          "tokenizer": "nori_t_mixed"
+        }
+      },
+      "tokenizer": {
+        "nori_t_mixed": {
+          "type": "nori_tokenizer",
+          "decompound_mode": "mixed"
+        }
+      }
+    }
+  },
+  "mappings": {
+    "properties": {
+      "product" : {"type" : "long"},
+      "name": {
+        "type": "text",
+        "fields": {
+          "nori_mixed": {
+            "type": "text",
+            "analyzer": "nori_mixed"
+          }
+        }
+      },
+      "title": {
+        "type": "text",
+        "fields": {
+          "nori_mixed": {
+            "type": "text",
+            "analyzer": "nori_mixed"
+          }
+        }
+      },
+      "content": {"type":"keyword"},
+      "price" : {"type":"integer"},
+      "category" : {"type" : "keyword"},
+      "imageLink" : {"type" : "keyword"},
+      "sell" : {"type" : "keyword"},
+      "conditionValue" : {"type":"integer"},
+      "productlike": {"type":"integer"},
+      "view" : {"type":"integer"}
+    }
+  }
+}
