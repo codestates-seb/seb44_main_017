@@ -2,10 +2,11 @@ import axios from "axios";
 import * as S from "./styled";
 import { ChangeEvent, useEffect, useState } from "react";
 import { BASE_URL, IMG_URL } from "@/constants/constants";
-import { Collapse, Dialog, DialogActions, DialogContent } from "@mui/material";
+import { Collapse, Dialog, DialogActions } from "@mui/material";
 import SelectBox from "../SelectBox/SelectBox";
 import { getToken } from "@/utils/token";
 import { insertComma } from "@/utils/inssertComma";
+import { useNavigate } from "react-router";
 
 interface ApprovalTableProps {
   product: {
@@ -53,8 +54,10 @@ const ApprovalTable: React.FC<ApprovalTableProps> = ({
   idx,
   page,
 }) => {
+  const navigate = useNavigate();
   const [listOpen, setListOpen] = useState<boolean>(false);
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [denycontent, setDenycontent] = useState<string>("");
   const [productData, setProductData] = useState({
     name: product.name,
     title: "title",
@@ -66,6 +69,7 @@ const ApprovalTable: React.FC<ApprovalTableProps> = ({
     pointValue: "0",
   });
   const handleClick = () => setListOpen(!listOpen);
+  const handleOpen = () => setDialogOpen(true);
   const handleClose = () => setDialogOpen(false);
   const handleProductData = (ev: ChangeEvent<HTMLInputElement>) => {
     if (ev.target.name === "price") {
@@ -79,30 +83,38 @@ const ApprovalTable: React.FC<ApprovalTableProps> = ({
       setProductData({ ...productData, [ev.target.name]: ev.target.value });
     }
   };
-  const approvalClick = () => {
-    (async () => {
-      try {
-        console.log(productData);
-        console.log(`${BASE_URL}/products/${product.productId}`);
-        console.log(getToken()[1]);
-        await axios.patch(
-          `${BASE_URL}/products/${product.productId}`,
-          productData,
-          {
-            headers: {
-              refresh: getToken()[1],
-            },
-          }
-        );
-        console.log("성공~");
-      } catch (err) {
-        console.error("Error uploading product.", err);
-      }
-    })();
+  const approvalClick = async () => {
+    try {
+      await axios.patch(
+        `${BASE_URL}/products/${product.productId}`,
+        productData,
+        {
+          headers: {
+            refresh: getToken()[1],
+          },
+        }
+      );
+      navigate("/admin/approval");
+    } catch (err) {
+      console.error("Error uploading product.", err);
+    }
   };
-  function valuetext(value: number) {
-    return `${value}`;
-  }
+  const returnClick = async () => {
+    try {
+      await axios.post(
+        `${BASE_URL}/products/deny/${product.productId}`,
+        { denycontent },
+        {
+          headers: {
+            refresh: getToken()[1],
+          },
+        }
+      );
+      navigate("/admin/approval");
+    } catch (error) {
+      console.error("Error posting return reason.", error);
+    }
+  };
   useEffect(() => {
     setListOpen(false);
   }, [page]);
@@ -129,7 +141,6 @@ const ApprovalTable: React.FC<ApprovalTableProps> = ({
               <S.InfoTitle>상품 컨디션</S.InfoTitle>
               <S.CustomSlider
                 defaultValue={0}
-                getAriaValueText={valuetext}
                 step={null}
                 marks={marks}
                 onChange={(ev: any) => {
@@ -183,18 +194,30 @@ const ApprovalTable: React.FC<ApprovalTableProps> = ({
               <S.ApprovalBtn approval={true} onClick={approvalClick}>
                 등록하기
               </S.ApprovalBtn>
-              <S.ApprovalBtn approval={false}>반려하기</S.ApprovalBtn>
+              <S.ApprovalBtn approval={false} onClick={handleOpen}>
+                반려하기
+              </S.ApprovalBtn>
             </S.BtnConatiner>
           </S.Content_2>
         </S.Field>
       </Collapse>
       <Dialog open={dialogOpen} onClose={handleClose}>
-        <DialogContent>해당 상품을 반송처리 하시겠습니까?</DialogContent>
+        <S.DialogContainer>
+          <S.InfoTitle>반송 사유 작성하기</S.InfoTitle>
+          <S.ReturnTextField
+            multiline
+            rows={13}
+            value={denycontent}
+            onChange={(ev) => {
+              setDenycontent(ev.target.value);
+            }}
+          />
+        </S.DialogContainer>
         <DialogActions>
-          <S.CancelBtn onClick={handleClose}>취소</S.CancelBtn>
-          <S.AgreeBtn onClick={approvalClick} autoFocus>
+          <S.AgreeBtn onClick={returnClick} autoFocus>
             반송
           </S.AgreeBtn>
+          <S.CancelBtn onClick={handleClose}>취소</S.CancelBtn>
         </DialogActions>
       </Dialog>
     </S.Container>

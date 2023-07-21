@@ -4,7 +4,7 @@ import axios from "axios";
 import ProductItem from "@/components/Item_product/ProductItem";
 import FadeIn from "@/components/FadeIn/FadeIn";
 import { useNavigate } from "react-router";
-import { IMG_URL } from "@/constants/constants";
+import { BASE_URL, IMG_URL } from "@/constants/constants";
 
 interface Data {
   image_link: string;
@@ -30,13 +30,12 @@ const ClothesList = () => {
       />
     );
   });
-
   useEffect(() => {
     (async () => {
       try {
         const res = await axios({
           method: "GET",
-          url: `http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/products?page=1&size=12&sort=newest&issell=false`,
+          url: `${BASE_URL}/products?page=1&size=12&sort=newest&issell=false`,
         });
         setClothesList(res.data.data);
       } catch (err) {
