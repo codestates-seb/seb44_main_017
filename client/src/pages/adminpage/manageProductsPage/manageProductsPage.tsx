@@ -12,7 +12,8 @@ interface Product {
   productlike: boolean;
   name: string;
   price: string;
-  product_id: string | number;
+  productId: string | number;
+  issell: boolean;
 }
 
 const options = [
@@ -34,22 +35,23 @@ const ManageProductsPage = () => {
       <ProductItem
         key={`product_${idx}`}
         url={`${IMG_URL}/${product.image_link}`}
-        isSell={false}
+        isSell={product.issell}
         like={product.productlike}
         title={product.name}
         price={product.price}
-        product_id={product.product_id}
+        productId={product.productId}
       />
     );
   });
   useEffect(() => {
     (async () => {
       try {
-        const list = await axios.get(
+        const res = await axios.get(
           `${BASE_URL}/products?page=${page}&size=24&sort=${filter}&issell=false`
         );
-        setClothesList(list.data.data);
-        setTotalPage(list.data.pageInfo.totalPages);
+        console.log(res.data)
+        setClothesList(res.data.data);
+        setTotalPage(res.data.pageInfo.totalPages);
         window.scrollTo(0, 0);
       } catch (err) {
         console.error("Error getting clothes list", err);

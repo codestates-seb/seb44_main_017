@@ -10,9 +10,17 @@ export const ContentConatiner = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
-  max-width: 880px;
+  width: 880px;
   padding: 56px 0;
+  @media (max-width: 479px) {
+    width: 342px;
+  }
+  @media (min-width: 480px) and (max-width: 767px) {
+    width: 468px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 612px;
+  }
 `;
 export const SubTitleContainer = styled.div`
   display: flex;
@@ -23,7 +31,6 @@ export const ProductsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-content: flex-start;
-  justify-content: center;
   margin-bottom: 36px;
 `;
 export const EmptyList = styled.p`
