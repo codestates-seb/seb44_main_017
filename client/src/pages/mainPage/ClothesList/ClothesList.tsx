@@ -12,7 +12,7 @@ interface Data {
   productlike: boolean;
   name: string;
   price: string;
-  product_id: number;
+  productId: number;
 }
 const ClothesList = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const ClothesList = () => {
         like={data.productlike}
         title={data.name}
         price={data.price}
-        product_id={data.product_id}
+        productId={data.productId}
       />
     );
   });
@@ -54,7 +54,7 @@ const ClothesList = () => {
         </FadeIn>
       </S.ContainerPC>
       <S.ContainerMobile>
-      <S.UppserListContainer>
+        <S.UppserListContainer>
           {clothesList.length ? (
             products
           ) : (

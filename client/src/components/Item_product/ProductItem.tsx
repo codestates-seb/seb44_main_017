@@ -8,7 +8,7 @@ interface ProductInfo {
   like: boolean;
   title: string;
   price: number | string | null;
-  product_id: number | string;
+  productId: number | string;
 }
 
 const ProductItem: React.FC<ProductInfo> = ({
@@ -17,7 +17,7 @@ const ProductItem: React.FC<ProductInfo> = ({
   like,
   title,
   price,
-  product_id,
+  productId,
 }) => {
   const navigate = useNavigate();
   const [isLike, setIsLike] = useState(like);
@@ -42,7 +42,7 @@ const ProductItem: React.FC<ProductInfo> = ({
   return (
     <S.ProductContainer
       onClick={() => {
-        navigate(`/products/${product_id}`);
+        navigate(`/products/${productId}`);
       }}
     >
       <S.ImageContainer>

@@ -13,6 +13,7 @@ const ProfileDropdown = () => {
   const [DropdownIsOpen, Ref, DropdownHandler] = useDetectClose();
   const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
   const navigate = useNavigate();
+  console.log(document.cookie);
   const logoutHandler = () => {
     if (confirm("로그아웃 하시겠습니까?")) {
       delCookie();
