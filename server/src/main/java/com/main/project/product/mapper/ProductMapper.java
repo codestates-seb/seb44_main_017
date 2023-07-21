@@ -48,5 +48,20 @@ public interface ProductMapper {
 
     Product NproductPatchDtotoProduct(ProductDto.UserPP requestbody);
 
-    Eproduct productToEproduct(Product product);
+    default Eproduct productToEproduct(Product product){
+        return Eproduct.builder()
+                .product_id(product.getProductId())
+                .name(product.getName())
+                .price(product.getPrice())
+                .content(product.getContent())
+                .view(product.getView())
+                .productlike(product.getProductlike())
+                .conditionValue(product.getConditionValue())
+                .imageLink(product.getImageLink())
+                .category(product.getCategory())
+                .issell(product.getIssell())
+                .title(product.getTitle())
+                .build();
+    }
+
 }
