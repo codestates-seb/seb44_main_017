@@ -4,10 +4,10 @@ type Props = [string | undefined, string | undefined];
 export const getToken = (): Props => {
   const cookie: string[] = document.cookie.split(";");
   const authorization: string | undefined = cookie
-    .find(c => c.includes("authorization="))
+    .find((c) => c.includes("authorization="))
     ?.replace("authorization=", "");
   const refresh: string | undefined = cookie
-    .find(c => c.includes("refresh="))
+    .find((c) => c.includes("refresh="))
     ?.replace(" refresh=", "");
 
   return [authorization, refresh];
@@ -17,7 +17,7 @@ export const getToken = (): Props => {
 export const getName = () => {
   const cookie: string[] = document.cookie.split(";");
   const name: string | undefined = cookie
-    .find(c => c.includes("name="))
+    .find((c) => c.includes("name="))
     ?.replace(" name=", "");
   return name;
 };
@@ -26,7 +26,7 @@ export const getName = () => {
 export const getId = () => {
   const cookie: string[] = document.cookie.split(";");
   const id: string | undefined = cookie
-    .find(c => c.includes("id="))
+    .find((c) => c.includes("id="))
     ?.replace(" id=", "");
   return id;
 };
@@ -37,7 +37,7 @@ export const getId = () => {
 export const getRoles = () => {
   const cookie: string[] = document.cookie.split(";");
   const roles: string | undefined = cookie
-    .find(c => c.includes("roles="))
+    .find((c) => c.includes("roles="))
     ?.replace(" roles=", "");
   return roles;
 };

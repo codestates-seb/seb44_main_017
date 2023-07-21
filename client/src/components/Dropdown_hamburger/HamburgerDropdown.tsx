@@ -8,6 +8,7 @@ import clothes from "../../assets/clothes.svg";
 import askQuestion from "../../assets/askQuestion.svg";
 import magnifier from "../../assets/magnifier.svg";
 import cart from "@/assets/cart.svg";
+import managerIcon from "@/assets/managerIcon.svg";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
@@ -161,16 +162,6 @@ const HamburgerDropdown = ({
                     </li>
                     <li
                       onClick={() => {
-                        navigate("/mypage");
-                        toggleMenu();
-                      }}
-                    >
-                      <img src={magnifier} title="마이페이지" />
-                      <h3 className="nav_text">마이페이지</h3>
-                      <div className="nav_description">마이페이지</div>
-                    </li>
-                    <li
-                      onClick={() => {
                         navigate("/cart");
                         toggleMenu();
                       }}
@@ -178,6 +169,16 @@ const HamburgerDropdown = ({
                       <img src={cart} title="장바구니" />
                       <h3 className="nav_text">장바구니</h3>
                       <div className="nav_description">장바구니</div>
+                    </li>
+                    <li
+                      onClick={() => {
+                        navigate("/mypage");
+                        toggleMenu();
+                      }}
+                    >
+                      <img src={magnifier} title="마이페이지" />
+                      <h3 className="nav_text">마이페이지</h3>
+                      <div className="nav_description">마이페이지</div>
                     </li>
                     {userInfo.role === "user" ? (
                       <></>
@@ -188,7 +189,7 @@ const HamburgerDropdown = ({
                           toggleMenu();
                         }}
                       >
-                        <img src={magnifier} title="관리자페이지" />
+                        <img src={managerIcon} title="관리자페이지" />
                         <h3 className="nav_text">관리자페이지</h3>
                         <div className="nav_description">관리자페이지</div>
                       </li>

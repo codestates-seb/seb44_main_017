@@ -1,5 +1,5 @@
 import MypageHeader from "@/components/Mypage_header/MypageHeader";
-import { BASE_URL, CART_ITEMS, IMG_URL } from "@/constants/constants";
+import { BASE_URL, IMG_URL } from "@/constants/constants";
 import { CartItemTypes, LoginUserInfo } from "@/types/shared";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
@@ -22,46 +22,15 @@ const ShoppingCartPage = () => {
 
   const [authorization, refresh] = getToken();
 
-  const init = () => {
-    const initialValues = [
-      {
-        name: "노랑바지22222",
-        price: 1000,
-        productId: 2,
-        memberId: 5,
-        category: "상의",
-        title: null,
-        content:
-          "이 상품은 영국에서 최초로 시작되어 일년에 한바퀴를 돌면서 받는 사람에게 행운을 주었고 지금은 당신에게로 옮겨진 이 상품은 4일 안에 당신 곁을 떠나야 하는",
-        imageLink: "ccc2cca4-4503-45e4-b51f-c76a54276bb1.jpg",
-        modifyAt: "",
-        createAt: "",
-        productlike: 0,
-        view: 0,
-        conditionValue: null,
-      },
-      {
-        name: "하이요",
-        price: 1000,
-        productId: 4,
-        memberId: 5,
-        category: "하의",
-        title: null,
-        content: "방가방가",
-        imageLink: "ccc2cca4-4503-45e4-b51f-c76a54276bb1.jpg",
-        modifyAt: "",
-        createAt: "",
-        productlike: 0,
-        view: 0,
-        conditionValue: null,
-      },
-    ];
-
-    if (localStorage.getItem(CART_ITEMS)) {
-      localStorage.removeItem(CART_ITEMS);
-    }
-
-    localStorage.setItem(CART_ITEMS, JSON.stringify(initialValues));
+  const getCartItems = () => {
+    axios
+      .get(BASE_URL + "/orderproducts/bucket?page=1&size=100&sort=newest", {
+        headers: {
+          Authorization: authorization,
+          Refresh: refresh,
+        },
+      })
+      .then(res => setCartItems(res.data.data));
   };
 
   const orderItems = async () => {
@@ -83,36 +52,42 @@ const ShoppingCartPage = () => {
     );
 
     if ((data && status === 200) || 201) {
-      localStorage.removeItem(CART_ITEMS);
       window.open(data);
       return data;
     }
   };
 
-  const addToCart = (productId: number) => {
-    axios.post(
-      BASE_URL + `/orderproducts/${productId}`,
-      {},
-      {
+  const deleteItem = (id: number) => {
+    try {
+      axios.delete(BASE_URL + `/orderproducts/${id}`, {
         headers: {
           Authorization: authorization,
           Refresh: refresh,
         },
-      }
-    );
+      });
+      setCartItems(cartItems.filter(item => item.productId !== id));
+      setCheckedItems(checkedItems.filter(item => item !== id));
+    } catch (e) {
+      console.error("Failed delete item", e);
+    }
   };
 
   const checkedItemsOrderHandler = () => {
-    for (let i = 0; i < checkedItems.length; i++) {
-      addToCart(checkedItems[i]);
+    if (cartItems.length !== checkedItems.length) {
+      const idList = cartItems.map(item => item.productId);
+
+      for (let i = 0; i < idList.length; i++) {
+        if (checkedItems.indexOf(idList[i]) === -1) {
+          deleteItem(idList[i]);
+        }
+      }
     }
     orderItems();
   };
 
   const removeCartItemHandler = (id: number) => {
     if (confirm("장바구니에서 삭제하시겠습니까?")) {
-      setCartItems(cartItems.filter(item => item.productId !== id));
-      setCheckedItems(checkedItems.filter(item => item !== id));
+      deleteItem(id);
     }
   };
 
@@ -148,8 +123,8 @@ const ShoppingCartPage = () => {
 
   useEffect(() => {
     setTotal(getTotal());
-    init();
-  }, [, checkedItems]);
+    getCartItems();
+  }, [, checkedItems, cartItems.length]);
 
   return (
     <>
@@ -173,46 +148,50 @@ const ShoppingCartPage = () => {
               <S.CheckboxLabel htmlFor="cart_all">전체 선택</S.CheckboxLabel>
             </div>
             <S.CartItems>
-              {cartItems.map(item => (
-                <li key={item.productId}>
-                  <S.CheckBox
-                    type="checkbox"
-                    id={"cart_" + item.productId}
-                    checked={
-                      checkedItems.includes(item.productId) ? true : false
-                    }
-                    onChange={e =>
-                      handleCheckHandler(e.target.checked, item.productId)
-                    }
-                  />
-                  <S.CheckboxLabel htmlFor={"cart_" + item.productId}>
-                    ✔
-                  </S.CheckboxLabel>
-                  <div className="cart_image">
-                    <img src={`${IMG_URL}/${item.imageLink}`} />
-                  </div>
-                  <S.ItemInfo>
-                    <div className="info_left">
-                      <span className="info_category">{item.category}</span>
-                      <span>{item.name}</span>
+              {Array.isArray(cartItems) && cartItems.length > 0 ? (
+                cartItems.map(item => (
+                  <li key={item.productId}>
+                    <S.CheckBox
+                      type="checkbox"
+                      id={"cart_" + item.productId}
+                      checked={
+                        checkedItems.includes(item.productId) ? true : false
+                      }
+                      onChange={e =>
+                        handleCheckHandler(e.target.checked, item.productId)
+                      }
+                    />
+                    <S.CheckboxLabel htmlFor={"cart_" + item.productId}>
+                      ✔
+                    </S.CheckboxLabel>
+                    <div className="cart_image">
+                      <img src={`${IMG_URL}/${item.imageLink}`} />
                     </div>
-                    <div className="info_right">
-                      <div className="point_icon_price">
-                        <PointIcon color={"#2b475c"} />
-                        <span className="item_price">
-                          {item.price.toLocaleString()}
-                        </span>
+                    <S.ItemInfo>
+                      <div className="info_left">
+                        <span className="info_category">{item.category}</span>
+                        <span>{item.name}</span>
                       </div>
-                      <div
-                        className="delete_icon"
-                        onClick={() => removeCartItemHandler(item.productId)}
-                      >
-                        <DeleteIcon />
+                      <div className="info_right">
+                        <div className="point_icon_price">
+                          <PointIcon color={"#2b475c"} />
+                          <span className="item_price">
+                            {item.price.toLocaleString()}
+                          </span>
+                        </div>
+                        <div
+                          className="delete_icon"
+                          onClick={() => removeCartItemHandler(item.productId)}
+                        >
+                          <DeleteIcon />
+                        </div>
                       </div>
-                    </div>
-                  </S.ItemInfo>
-                </li>
-              ))}
+                    </S.ItemInfo>
+                  </li>
+                ))
+              ) : (
+                <S.EmptyCart>장바구니에 상품이 없습니다.</S.EmptyCart>
+              )}
             </S.CartItems>
           </S.ItemBox>
 

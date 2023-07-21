@@ -40,9 +40,8 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
 
   useEffect(() => {
     comments.map((item: any) => {
-      qPath
-        ? item.commentId
-        : item.productId === selectedId && setUpdateValue(item.content);
+      (qPath ? item.commentId : item.productId) === selectedId &&
+        setUpdateValue(item.content);
     });
   }, [selectedId]);
 
@@ -101,7 +100,9 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
           )
           .then(setComplete(true));
 
-        navigate(`/questions/${questionId}`);
+        qPath
+          ? navigate(`/questions/${questionId}`)
+          : navigate(`/products/${productsID}`);
       } catch (e) {
         console.log("failed delete comment", e);
       }
@@ -158,7 +159,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
           <div className="none_comment">작성된 댓글이 없습니다.</div>
         ) : (
           comments.map((e: QnACommentTypes | ProductCommentTypes | any) => (
-            <S.CommentBox key={qPath ? e.commentId : e.productId}>
+            <S.CommentBox key={qPath ? e.commentId : e.productCommentId}>
               <div className="comment_info_box">
                 <div className="comment_info">
                   <span>작성자 : {e.writer.name}</span>
@@ -195,7 +196,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
                     <button
                       className="comment_modify_btn"
                       onClick={() =>
-                        updateHandler(qPath ? e.commentId : e.productId)
+                        updateHandler(qPath ? e.commentId : e.productCommentId)
                       }
                     >
                       수정완료
@@ -204,14 +205,18 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
                     <>
                       <button
                         onClick={() =>
-                          handleEditComment(qPath ? e.commentId : e.productId)
+                          handleEditComment(
+                            qPath ? e.commentId : e.productCommentId
+                          )
                         }
                       >
                         <EditButton />
                       </button>
                       <button
                         onClick={() =>
-                          handleDeleteComment(qPath ? e.commentId : e.productId)
+                          handleDeleteComment(
+                            qPath ? e.commentId : e.productCommentId
+                          )
                         }
                       >
                         <DeleteButton />

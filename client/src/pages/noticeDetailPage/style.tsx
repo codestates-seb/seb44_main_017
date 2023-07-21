@@ -1,8 +1,5 @@
 import styled from "styled-components";
 import { BsEye } from "react-icons/bs";
-import { PiNotePencilLight } from "react-icons/pi";
-import { AiOutlineClose } from "react-icons/ai";
-import { RiDeleteBin6Line } from "react-icons/ri";
 
 export const Container = styled.main`
   display: flex;
@@ -59,6 +56,7 @@ export const ContentBox = styled.div`
   padding: 16px 20px;
   border-top: 3px solid var(--color-black);
   font-size: 16px;
+  position: relative;
   @media (max-width: 767px) {
     font-size: 12px;
     margin-bottom: 8px;
@@ -84,7 +82,6 @@ export const NoticeMove = styled.div`
   font-weight: 700;
   font-size: 16px;
   margin-right: 48px;
-  /* width: 100%; */
   @media (max-width: 767px) {
     font-size: 12px;
   }
@@ -114,6 +111,20 @@ export const NoticeMoveDate = styled.div`
   @media (min-width: 1024px) {
   }
 `;
+export const NoneNotice = styled.div`
+  display: flex;
+  justify-content: center;
+  max-width: 1200px;
+  width: 80%;
+  border-top: 1px solid #727272;
+  border-bottom: 1px solid #727272;
+  padding: 28px;
+  font-size: 16px;
+  color: #727272;
+  @media (max-width: 767px) {
+    font-size: 12px;
+  }
+`;
 export const ListButton = styled.button`
   border-radius: 16px;
   width: 96px;
@@ -133,4 +144,20 @@ export const ListButton = styled.button`
 export const ViewIcon = styled(BsEye)`
   width: 30px;
   height: 20px;
+`;
+export const SpeedDialContainer = styled.div`
+  position: absolute;
+
+  @media (max-width: 767px) {
+    bottom: 16px;
+    right: 0px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    bottom: 36px;
+    right: 0px;
+  }
+  @media (min-width: 1024px) {
+    bottom: 48px;
+    right: -72px;
+  }
 `;

@@ -6,7 +6,7 @@ export const SideBar = styled.nav<{ isOpen: boolean }>`
   height: 100vh;
   gap: 20px;
   color: var(--color-darkblue);
-  width: 20%;
+  width: 25%;
   z-index: 999;
   position: fixed;
   top: 43px;
