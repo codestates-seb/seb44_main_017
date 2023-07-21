@@ -1,10 +1,10 @@
-import { useNavigate, useParams } from "react-router-dom";
-import * as S from "@/pages/noticeDetailPage/style";
-import { BASE_URL } from "@/constants/constants";
 import axios from "axios";
+import { getRoles } from "@/utils/token";
 import { useEffect, useState } from "react";
 import { koreanDate } from "@/utils/koreanTime";
-import { getRoles } from "@/utils/token";
+import { BASE_URL } from "@/constants/constants";
+import * as S from "@/pages/noticeDetailPage/style";
+import { useNavigate, useParams } from "react-router-dom";
 import SpeedDialCustom from "@/components/SpeedDialCustom/SpeedDialCustom";
 
 interface Data {
