@@ -8,6 +8,7 @@ import com.main.project.product.repository.ProductLikeCountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -38,6 +39,7 @@ public class ProductLikeCountService {
         productLikeCountRepository.delete(productLikeCount);
     }
 
+    @Transactional
     public void updateProductLikeCount(Product product, int i) {
         ProductLikeCount findProductLikeCount = findVerifiedProductLikeCount(product);
         findProductLikeCount.setLikeCount(findProductLikeCount.getLikeCount() + i);

@@ -189,16 +189,6 @@ public class ProductController {
 
         List<ProductComment> comments = productCommentRepository.findByProductProductId(productId);
 
-//        List<ProductCommentDto.Response> commentResponses = comments.stream()
-//                .map(comment -> new ProductCommentDto.Response(
-//                        comment.getProductCommentId(),
-//                        comment.getContent(),
-//                        comment.getCreateAt(),
-//                        comment.getModifyAt(),
-////                        co
-//                ))
-//                .collect(Collectors.toList());
-
         List<ProductCommentDto.Response> commentResponses = productCommentMapper
                 .productCommentsToProductCommentResponseDto(comments);
 
@@ -210,7 +200,9 @@ public class ProductController {
                     .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
                     .getMemberId();
             if(productService.findProduct(productId).getMember().getMemberId() == memberId) {
-                Product product = productService.updateProduct(productId, productMapper.productPatchDtotoProduct(productPatchDto));
+                Product product = productService.updateProduct(productId,
+                        productMapper.productPatchDtotoProduct(productPatchDto));
+
                 response = productMapper.productToProductResponseWithComment(product, memberId);
             }
             throw new BusinessLogicException(ExceptionCode.NOT_WRITER);
@@ -218,7 +210,9 @@ public class ProductController {
             Long AdminId = refreshToken
                     .orElseThrow( () -> new BusinessLogicException(ExceptionCode.ADMIN_NOT_FOUND))
                     .getAdminId();
-            Product product = productService.updateProduct(productId, productMapper.productPatchDtotoProduct(productPatchDto));
+            Product product = productService.updateProduct(productId,
+                    productMapper.productPatchDtotoProduct(productPatchDto),
+                    productService.findProduct(productId).getMember());
             response = productMapper.productToProductResponseWithComment(product);
         }else{
             throw new BusinessLogicException(ExceptionCode.REFRESH_NOT_FOUND);

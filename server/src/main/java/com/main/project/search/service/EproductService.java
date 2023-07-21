@@ -28,6 +28,7 @@ import reactor.core.publisher.Mono;
 import java.io.IOException;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.elasticsearch.index.query.QueryBuilders.matchPhraseQuery;
@@ -43,7 +44,8 @@ public class EproductService {
     public void addEproduct(Eproduct eproduct)  {
 
         IndexRequest indexRequest = new IndexRequest("product").id(eproduct.getProductId().toString())
-                .source("name", eproduct.getName(),
+                .source("product", eproduct.getProductId(),
+                        "name", eproduct.getName(),
                         "title", eproduct.getTitle(),
                         "content", eproduct.getContent(),
                         "price", eproduct.getPrice(),
@@ -80,11 +82,9 @@ public class EproductService {
 
     public Page<Eproduct> searchProductByName(String title, int page, int size){
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.boolQuery().should(QueryBuilders.wildcardQuery("name", "*" + title + "*"))
-                .should(QueryBuilders.wildcardQuery("title", "*"+ title + "*"))
-                .must(QueryBuilders.matchPhraseQuery("sell","sale")));
-        Flux<Eproduct> productFlux = getProductFlux(searchSourceBuilder);
-        List<Eproduct> productList = productFlux.collectList().block();
+        searchSourceBuilder.query(QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("name.nori_mixed",  title))
+                .must(QueryBuilders.matchPhraseQuery("sell","wait")));
+        List<Eproduct> productList = getProductList(searchSourceBuilder);
         PageRequest pageRequest = PageRequest.of(page, size);
         int start = (int) pageRequest.getOffset();
         int end = Math.min((start + pageRequest.getPageSize()), productList.size());
@@ -92,7 +92,30 @@ public class EproductService {
         return eproductPage;
     }
 
+    private List<Eproduct> getProductList(SearchSourceBuilder searchSourceBuilder) {
+        SearchRequest searchRequest = new SearchRequest("product");
+        searchRequest.source(searchSourceBuilder);
 
+        List<Eproduct> eproductList = new ArrayList<>();
+
+        try {
+            SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+            for(SearchHit hit: searchResponse.getHits()){
+                ObjectMapper objectMapper = new ObjectMapper();
+                try {
+                    Eproduct eproduct = objectMapper.readValue(hit.getSourceAsString(), Eproduct.class);
+                    eproductList.add(eproduct);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (IOException e){
+            throw new BusinessLogicException(ExceptionCode.ELASTIC_IOException);
+        }
+        return eproductList;
+    }
+
+    /*
     private Flux<Eproduct> getProductFlux(SearchSourceBuilder searchSourceBuilder) {
         SearchRequest searchRequest = new SearchRequest("product");
         searchRequest.source(searchSourceBuilder);
@@ -122,4 +145,6 @@ public class EproductService {
             restHighLevelClient.searchAsync(searchRequest, RequestOptions.DEFAULT, actionListener);
         });
     }
+
+     */
 }

@@ -30,7 +30,8 @@ public enum ExceptionCode {
     MEMBER_IS_BAN(409, "Member is ban"),
     ELASTIC_IOException(404, "elastic_ioexception"),
     ALARM_NOT_FOUND(404, "alarm_not_found"),
-    PRODUCTLIKE_NOT_FOUND(404, "Productlike does not exists" );
+    PRODUCTLIKE_NOT_FOUND(404, "Productlike does not exists" ),
+    WRONG_FORMAT(400, "Invalid format accepted");
 
     private final int status;
     private final String message;

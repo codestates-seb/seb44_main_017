@@ -12,57 +12,65 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query(value = "select product_id,member_id,category,name,title," +
             "content,image_link,modify_at,create_at,price,view,condition_value " +
-            "from product where issell=:issell",nativeQuery = true)
+            "from product where price!=0 and issell=:issell",nativeQuery = true)
     Page<queryget.product> findByIssell(Boolean issell, PageRequest of);
 
-    @Query(value = "select product_id,member_id,category,name,title," +
+    @Query(value = "select product_id,member_id,category,name,title, " +
             "content,image_link,modify_at,create_at,price,view,condition_value " +
-            "from product order by create_at ASC",nativeQuery = true)
+            "from product where price!=0 " +
+            "order by create_at ASC",nativeQuery = true)
     Page<queryget.product> findByCreatedAtAsc(Pageable pageable);
     @Query(value = "select product_id,member_id,category,name,title," +
             "content,image_link,modify_at,create_at,price,view,condition_value " +
-            "from product order by create_at DESC",nativeQuery = true)
+            "from product where price!=0 " +
+            "order by create_at DESC",nativeQuery = true)
     Page<queryget.product> findByCreatedAtDesc(Pageable pageable);
 
     @Query(value = "select product_id,member_id,category,name,title," +
             "content,image_link,modify_at,create_at,price,view,condition_value " +
-            "from product order by price ASC",nativeQuery = true)
+            "from product where price!=0 " +
+            "order by price ASC",nativeQuery = true)
     Page<queryget.product> findByPriceAsc(Pageable pageable);
 
     @Query(value = "select product_id,member_id,category,name,title," +
             "content,image_link,modify_at,create_at,price,view,condition_value " +
-            "from product order by price DESC",nativeQuery = true)
+            "from product where price!=0 " +
+            "order by price DESC",nativeQuery = true)
     Page<queryget.product> findByPriceDesc(Pageable pageable);
 
-    @Query(value = "select p.product_id,p.member_id,p.category,p.name,p.title,p.content," +
-            "p.image_link,p.modify_at,p.create_at,p.price,p.view,p.condition_value "+
-            "from product p     " +
-            "left outer join member_product_like mpl " +
-            "on p.product_id = mpl.product_id " +
-            "order by count(mpl.member_id) DESC ",nativeQuery = true)
+    @Query(value = "SELECT product_id, member_id, category, name, " +
+            "title, content, image_link, modify_at, create_at, price, " +
+            "view, condition_value " +
+            "FROM product where price!=0" +
+            "ORDER BY productlike desc",nativeQuery = true)
     Page<queryget.product> findByLikedMembersDesc(Pageable pageable);
 
-    @Query(value = "select product_id,member_id,category,name,title," +
+    @Query(value = "select product_id,member_id,category,name,title, " +
             "content,image_link,modify_at,create_at,price,view,condition_value " +
-            "from product where issell=:issell order by create_at ASC",nativeQuery = true)
+            "from product where issell=:issell and price!=0 " +
+            "order by create_at ASC",nativeQuery = true)
     Page<queryget.product> findByCreatedAtAsc(Boolean issell, Pageable pageable);
-    @Query(value = "select product_id,member_id,category,name,title," +
+    @Query(value = "select product_id,member_id,category,name,title, " +
             "content,image_link,modify_at,create_at,price,view,condition_value " +
-            "from product where issell=:issell order by create_at DESC",nativeQuery = true)
+            "from product where where issell=:issell and price!=0 " +
+            " order by create_at DESC",nativeQuery = true)
     Page<queryget.product> findByCreatedAtDesc(Boolean issell,Pageable pageable);
-    @Query(value = "select product_id,member_id,category,name,title," +
+    @Query(value = "select product_id,member_id,category,name,title, " +
             "content,image_link,modify_at,create_at,price,view,condition_value " +
-            "from product where issell=:issell order by price ASC",nativeQuery = true)
+            "from product where issell=:issell and price!=0 " +
+            "order by price ASC",nativeQuery = true)
     Page<queryget.product> findByPriceAsc(Boolean issell,Pageable pageable);
 
     @Query(value = "select product_id,member_id,category,name,title," +
             "content,image_link,modify_at,create_at,price,view,condition_value " +
-            "from product where issell=:issell order by price DESC",nativeQuery = true)
+            "from product where issell=:issell and price!=0 " +
+            "order by price DESC",nativeQuery = true)
     Page<queryget.product> findByPriceDesc(Boolean issell,Pageable pageable);
-    @Query(value = "SELECT p.product_id, p.member_id, p.category, p.name, p.title, p.content, p.image_link, p.modify_at, p.create_at, p.price, p.view, p.condition_value " +
-            "FROM product p   " +
-            "LEFT OUTER JOIN member_product_like mpl ON p.product_id = mpl.product_id " +
-            "GROUP BY p.product_id, p.member_id, p.category, p.name, p.title, p.content, p.image_link, p.modify_at, p.create_at, p.price, p.view, p.condition_value " +
-            "ORDER BY COUNT(mpl.member_id) DESC",nativeQuery = true)
+    @Query(value = "SELECT product_id, member_id, category, name, " +
+            "title, content, image_link, modify_at, create_at, price, " +
+            "view, condition_value " +
+            "FROM product where price!=0 and issell=:issell" +
+            "ORDER BY productlike desc",nativeQuery = true)
     Page<queryget.product> findByLikedMembersDesc(Boolean issell,Pageable pageable);
+
 }
