@@ -95,7 +95,7 @@ const ApprovalTable: React.FC<ApprovalTableProps> = ({
           },
         }
       );
-      navigate("/admin/approval");
+      window.location.reload();
     } catch (err) {
       console.error("Error uploading product.", err);
     }
@@ -111,7 +111,7 @@ const ApprovalTable: React.FC<ApprovalTableProps> = ({
           },
         }
       );
-      navigate("/admin/approval");
+      window.location.reload();
     } catch (error) {
       console.error("Error posting return reason.", error);
     }
