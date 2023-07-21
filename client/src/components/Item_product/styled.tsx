@@ -39,9 +39,14 @@ export const ProdcutImage = styled.img<ImageProps>`
   object-fit: cover;
   border: 2px solid var(--color-darkblue);
   border-radius: 16px;
-  @media (max-width: 767px) {
-    width: 156px;
-    height: 156px;
+  @media (max-width: 479px) {
+    border: 1px solid var(--color-darkblue);
+    width: 104px;
+    height: 104px;
+  }
+  @media (min-width: 480px) and (max-width: 767px) {
+    width: 136px;
+    height: 136px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     width: 184px;
@@ -57,7 +62,6 @@ export const ImageErrorIcon = styled(HideImageIcon)`
   @media (max-width: 479px) {
     border: 1px solid var(--color-darkblue);
     font-size: 24px !important;
-    border-radius: 16px;
     padding: 40px;
   }
   @media (min-width: 480px) and (max-width: 767px) {

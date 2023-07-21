@@ -8,7 +8,7 @@ import CustomPagination from "@/components/Pagination/CustomPagination";
 import SelectBox from "@/components/SelectBox/SelectBox";
 
 interface Product {
-  image_link: string;
+  imageLink: string;
   productlike: boolean;
   name: string;
   price: string;
@@ -31,10 +31,11 @@ const ManageProductsPage = () => {
   const [totalPage, setTotalPage] = useState<number>(1);
   const [filter, setFilter] = useState<string>("newest");
   const products = clothesList.map((product, idx) => {
+    console.log(product)
     return (
       <ProductItem
         key={`product_${idx}`}
-        url={`${IMG_URL}/${product.image_link}`}
+        url={`${IMG_URL}/${product.imageLink}`}
         isSell={product.issell}
         like={product.productlike}
         title={product.name}
@@ -49,7 +50,6 @@ const ManageProductsPage = () => {
         const res = await axios.get(
           `${BASE_URL}/products?page=${page}&size=24&sort=${filter}&issell=false`
         );
-        console.log(res.data)
         setClothesList(res.data.data);
         setTotalPage(res.data.pageInfo.totalPages);
         window.scrollTo(0, 0);

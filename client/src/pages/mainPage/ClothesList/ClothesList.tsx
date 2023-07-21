@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import { BASE_URL, IMG_URL } from "@/constants/constants";
 
 interface Data {
-  image_link: string;
+  imageLink: string;
   isSell: boolean;
   productlike: boolean;
   name: string;
@@ -21,7 +21,7 @@ const ClothesList = () => {
     return (
       <ProductItem
         key={`product_${idx}`}
-        url={`${IMG_URL}/${data.image_link}`}
+        url={`${IMG_URL}/${data.imageLink}`}
         isSell={false}
         like={data.productlike}
         title={data.name}
