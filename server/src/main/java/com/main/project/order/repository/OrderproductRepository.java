@@ -25,10 +25,10 @@ public interface OrderproductRepository extends JpaRepository<Orderproduct, Long
     @Query(value = "select * from orderproduct o where o.member_id=:MID and o.product_id=:PID",nativeQuery = true)
     Optional<Orderproduct> findOrderproductsig(@Param("MID") Long MID, @Param("PID") Long PID);
 
-    @Query(value = "select P.product_id from orderproduct o join product p on o.product_id = p.product_id where o.member_id=:ID and issell=false", nativeQuery = true)
+    @Query(value = "select p.product_id from orderproduct o join product p on o.product_id = p.product_id where o.member_id=:ID and issell=false", nativeQuery = true)
     List<queryget.findbypid> findAllByMemberId(@Param("ID") Long ID);
 
-    @Query(value = "select P.product_id,P.member_id,P.name,P.price,P.issell from orderproduct o join product p on o.product_id = p.product_id where o.member_id=:ID and issell=false",nativeQuery = true)
+    @Query(value = "select p.product_id,p.member_id,p.name,p.price,p.issell from orderproduct o join product p on o.product_id = p.product_id where o.member_id=:ID and issell=false",nativeQuery = true)
     List<queryget.orderproductlist> getorderproductlist(@Param("ID") Long ID);
 
 }
