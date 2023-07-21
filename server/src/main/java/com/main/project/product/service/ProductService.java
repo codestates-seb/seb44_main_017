@@ -127,6 +127,33 @@ public class ProductService {
         eproductService.addEproduct(eproduct);
         return saveproduct;
     }
+
+    public Product updateProduct(Long productId, Product product, Member member) {
+        Product findProduct = findProduct(productId);
+        // 초기 등록시에만 OK, 차후 수정시에는 포인트 지급 안함
+        boolean flag = false;
+        if(findProduct.getPrice() == 0)
+            flag = true;
+
+        Optional.ofNullable(product.getName()).ifPresent(findProduct::setName);
+        Optional.ofNullable(product.getTitle()).ifPresent(findProduct::setTitle);
+        Optional.ofNullable(product.getContent()).ifPresent(findProduct::setContent);
+        Optional.ofNullable(product.getPrice()).ifPresent(findProduct::setPrice);
+        Optional.ofNullable(product.getImageLink()).ifPresent(findProduct::setImageLink);
+        Optional.ofNullable(product.getConditionValue()).ifPresent(findProduct::setConditionValue);
+        Optional.ofNullable(product.getCategory()).ifPresent(findProduct::setCategory);
+        Optional.ofNullable(product.getIssell()).ifPresent(findProduct::setIssell);
+        Optional.ofNullable(product.getPointValue()).ifPresent(findProduct::setPointValue);
+        Optional.ofNullable(product.getView()).ifPresent(findProduct::setView);
+        Product saveproduct = productRepository.save(findProduct);
+        Eproduct eproduct = mapper.productToEproduct(saveproduct);
+        eproduct.setSell("sale");
+        eproductService.addEproduct(eproduct);
+
+        if (flag) memberService.addMemberMoney(member, findProduct.getPointValue());
+        return saveproduct;
+    }
+
     public Product updateProductview(Long productId, Product product){
         Product findProduct = findProduct(productId);
         Optional.ofNullable(product.getView()).ifPresent(findProduct::setView);
