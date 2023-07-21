@@ -6,6 +6,7 @@ import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.search.document.Eproduct;
 import lombok.RequiredArgsConstructor;
 import org.elasticsearch.action.ActionListener;
+import org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
@@ -41,49 +42,12 @@ public class EproductService {
     private final RestHighLevelClient restHighLevelClient;
 
 
-    public void addEproduct(Eproduct eproduct)  {
-
-        IndexRequest indexRequest = new IndexRequest("product").id(eproduct.getProductId().toString())
-                .source("product", eproduct.getProductId(),
-                        "name", eproduct.getName(),
-                        "title", eproduct.getTitle(),
-                        "content", eproduct.getContent(),
-                        "price", eproduct.getPrice(),
-                        "category", eproduct.getCategory(),
-                        "imageLink", eproduct.getImageLink(),
-                        "sell", eproduct.getSell(),
-                        "conditionValue", eproduct.getConditionValue(),
-                        "productlike", eproduct.getProductlike(),
-                        "view", eproduct.getView());
-
-        try {
-            IndexResponse indexResponse = restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
-        } catch (IOException e){
-            throw new BusinessLogicException(ExceptionCode.ELASTIC_IOException);
-        }
-
-
-        /*
-        return Mono.create(sink -> {
-            ActionListener<IndexResponse> actionListener = new ActionListener<IndexResponse>() {
-                @Override
-                public void onResponse(IndexResponse indexResponse) {
-                    sink.success();
-                }
-                @Override
-                public void onFailure(Exception e) {
-                }
-            };
-            restHighLevelClient.indexAsync(indexRequest, RequestOptions.DEFAULT, actionListener);
-        });
-
-         */
-    }
-
     public Page<Eproduct> searchProductByName(String title, int page, int size){
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("name.nori_mixed",  title))
-                .must(QueryBuilders.matchPhraseQuery("sell","sale")));
+                        .mustNot(QueryBuilders.matchPhraseQuery("price",0))
+                        .must(QueryBuilders.existsQuery("price"))
+                        .must(QueryBuilders.matchPhraseQuery("issell", false)));
         List<Eproduct> productList = getProductList(searchSourceBuilder);
         PageRequest pageRequest = PageRequest.of(page, size);
         int start = (int) pageRequest.getOffset();
@@ -115,36 +79,4 @@ public class EproductService {
         return eproductList;
     }
 
-    /*
-    private Flux<Eproduct> getProductFlux(SearchSourceBuilder searchSourceBuilder) {
-        SearchRequest searchRequest = new SearchRequest("product");
-        searchRequest.source(searchSourceBuilder);
-
-        return Flux.<Eproduct>create(sink -> {
-            ActionListener<SearchResponse> actionListener = new ActionListener<SearchResponse>() {
-                @Override
-                public void onResponse(SearchResponse searchResponse) {
-
-                    for(SearchHit hit : searchResponse.getHits()) {
-                        ObjectMapper objectMapper = new ObjectMapper();
-                        try {
-                            Eproduct eproduct = objectMapper.readValue(hit.getSourceAsString(), Eproduct.class);
-                            sink.next(eproduct);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    sink.complete();
-                }
-
-                @Override
-                public void onFailure(Exception e) {
-                }
-            };
-
-            restHighLevelClient.searchAsync(searchRequest, RequestOptions.DEFAULT, actionListener);
-        });
-    }
-
-     */
 }
