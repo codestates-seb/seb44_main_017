@@ -3,6 +3,7 @@ package com.main.project.product.service;
 import com.main.project.admin.entity.Admin;
 import com.main.project.admin.service.AdminService;
 import com.main.project.dto.queryget;
+import com.main.project.dto.queryresponse.ProductResponse;
 import com.main.project.member.entity.Member;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
@@ -13,6 +14,7 @@ import com.main.project.product.entity.Product;
 import com.main.project.product.entity.Productdeny;
 import com.main.project.product.mapper.ProductMapper;
 import com.main.project.product.repository.ProductLikeCountRepository;
+import com.main.project.product.repository.ProductQueryRepository;
 import com.main.project.product.repository.ProductRepository;
 import com.main.project.productComment.ProductComment;
 import com.main.project.productComment.repository.ProductCommentRepository;
@@ -34,6 +36,8 @@ import java.util.Optional;
 @Transactional
 public class ProductService {
     private final ProductRepository productRepository;
+
+    private final ProductQueryRepository productQueryRepository;
     private final MemberService memberService;
     private final ProductCommentRepository productCommentRepository;
     private final AdminService adminService;
@@ -46,10 +50,11 @@ public class ProductService {
 
     private final ProductMapper mapper;
 
-    public ProductService(ProductRepository productRepository, MemberService memberService, ProductCommentRepository productCommentRepository
+    public ProductService(ProductRepository productRepository, ProductQueryRepository productQueryRepository, MemberService memberService, ProductCommentRepository productCommentRepository
             , AdminService adminService, ProductdenyService productdenyService, AwsS3Service awsS3Service
             , ProductLikeCountService productLikeCountService, ProductLikeCountRepository productLikeCountRepository, ProductMapper mapper, EproductService eproductService) {
         this.productRepository = productRepository;
+        this.productQueryRepository = productQueryRepository;
         this.memberService = memberService;
         this.productCommentRepository = productCommentRepository;
         this.adminService = adminService;
@@ -230,51 +235,16 @@ public class ProductService {
         }
     }
 
-    public Page<queryget.product> findProducts(int page, int size,
-                                               Boolean issell, String sort) {
+    public Page<ProductResponse> findProducts(int page, int size,
+                                              Boolean issell, String sort) {
 
-        if (issell != null) {
-            // Todo : sort properties implementation
-            switch (sort){
-                case "newest":
-                    return productRepository.findByCreatedAtDesc(issell, PageRequest.of(page, size));
-                case "oldest":
-                    return productRepository.findByCreatedAtAsc(issell, PageRequest.of(page, size));
-                case "mostlike":
-                    return productRepository.findByLikedMembersDesc(issell, PageRequest.of(page, size));
-                case "pricedesc":
-                    return productRepository.findByPriceDesc(issell, PageRequest.of(page, size));
-                case "priceasc":
-                    return productRepository.findByPriceAsc(issell, PageRequest.of(page, size));
-                default:
-                    throw new BusinessLogicException(ExceptionCode.INVALID_SORT_PARAMETER);
-            }
-
-//            return productRepository.findByIssell(issell, PageRequest.of(page, size));
-        }
-
-        throw new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND);
+        return productQueryRepository.getProducts(PageRequest.of(page, size), sort, issell);
     }
 
-    public Page<queryget.product> findProducts(int page, int size,
+    public Page<ProductResponse> findProducts(int page, int size,
                                                String sort) {
-        // Todo : sort properties implementation
 
-        switch (sort){
-            case "newest":
-                return productRepository.findByCreatedAtDesc(PageRequest.of(page, size));
-            case "oldest":
-                return productRepository.findByCreatedAtAsc(PageRequest.of(page, size));
-            case "mostlike":
-                return productRepository.findByLikedMembersDesc(PageRequest.of(page, size));
-            case "pricedesc":
-                return productRepository.findByPriceDesc(PageRequest.of(page, size));
-            case "priceasc":
-                return productRepository.findByPriceAsc(PageRequest.of(page, size));
-            default:
-                throw new BusinessLogicException(ExceptionCode.INVALID_SORT_PARAMETER);
-//            return productRepository.findAll(PageRequest.of(page, size));
-        }
+        return productQueryRepository.getProducts(PageRequest.of(page, size), sort);
     }
 
     public Product updateProductLike(Product product, Long memberId) {
