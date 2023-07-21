@@ -5,14 +5,36 @@ export const ProductInfo = styled.section`
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
-  padding: 36px;
+  padding: 36px 36px 8px 36px;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
   /* border: 4px solid red; */
+
+  & .back_btn {
+    position: relative;
+    top: 24px;
+    border-radius: 16px;
+    width: 96px;
+    height: 32px;
+    font-weight: var(--font-weight-700);
+    font-size: var(--font-size-12);
+    border: 2px solid var(--color-darkblue);
+    background-color: var(--color-white);
+    color: var(--color-darkblue);
+
+    &:hover {
+      background-color: var(--color-darkblue);
+      color: var(--color-white);
+    }
+  }
 `;
 
 export const ContetntsWrapper = styled.div`
   display: flex;
-  /* justify-content: space-between; */
   width: 100%;
+  gap: 40px;
+
   /* border: 4px solid red; */
 
   @media (max-width: 872px) {
@@ -24,11 +46,7 @@ export const ContetntsWrapper = styled.div`
 export const ProductImageBox = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  width: 100%;
   max-width: 440px;
-  height: 424px;
-  margin-right: 40px;
   /* border: 4px solid red; */
 
   @media (max-width: 872px) {
@@ -40,16 +58,17 @@ export const ProductImage = styled.img`
   width: 400px;
   height: 400px;
   object-fit: contain;
+  border: 2px solid var(--color-darkblue);
+  border-radius: 16px;
 `;
 
 export const ProductDetailContainer = styled.div`
   width: 100%;
   max-width: 772px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   /* border: 4px solid red; */
-
-  & > * {
-    margin-top: 24px;
-  }
 `;
 
 export const ProductUpperPart = styled.div`
@@ -152,7 +171,7 @@ export const ProductDescription = styled.div`
   justify-content: center;
   align-items: center;
   max-width: 756px;
-  height: 157px;
+  height: 251px;
   border: 1px solid var(--color-gray200);
   border-radius: 20px;
 `;
@@ -161,32 +180,54 @@ export const PurchaseButtonWrapper = styled.div`
   display: flex;
   /* flex-direction: row-reverse; */
   justify-content: flex-end;
+  align-items: center;
   width: 100%;
-  border-bottom: 4px solid var(--color-gray200);
+  border-bottom: 2px solid var(--color-black);
   font-size: 1.2rem;
+  gap: 24px;
+  padding: 12px 0;
+  max-width: 1200px;
   /* border: 4px solid red; */
 `;
 
-export const FourBox = styled.div`
-  width: 440px;
-  border: 4px solid red;
+export const CartBtn = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  width: 138px;
+  height: 38px;
+  font-weight: var(--font-weight-700);
+  font-size: var(--font-size-12);
+  border: 2px solid var(--color-darkgreen);
+  background-color: var(--color-white);
+  color: var(--color-darkgreen);
+  cursor: pointer;
+  gap: 4px;
+
+  &:hover {
+    background-color: var(--color-darkgreen);
+    color: var(--color-white);
+
+    & svg {
+      stroke: var(--color-white);
+    }
+  }
 `;
 
 export const PaymentBtn = styled.button`
   width: 100%;
-  max-width: 160px;
-  height: 48px;
+  max-width: 140px;
+  height: 40px;
   border-radius: 20px;
   font-weight: var(--font-weight-700);
-  margin-bottom: 36px;
-  font-size: var(--font-size-24);
+  font-size: var(--font-size-20);
   border: 0;
   color: white;
   font-family: "Roboto";
   background-color: var(--color-darkblue);
   /* border: 4px solid red; */
   @media (max-width: 872px) {
-    margin-top: 20px;
   }
 
   &:hover {
@@ -194,10 +235,4 @@ export const PaymentBtn = styled.button`
   }
 `;
 
-export const CommentContainer = styled.div`
-  /* display: flex; */
-  /* width: 100%; */
-  /* justify-content: center; */
-  padding-top: 36px;
-  /* border: 4px solid black; */
-`;
+export const CommentContainer = styled.div``;

@@ -1,9 +1,10 @@
 import * as S from "./style";
-import { useState } from "react";
 import { getRoles } from "@/utils/token";
-import { QnACommentTypes } from "@/types/shared";
 import Comment from "@/components/Comment/Comment";
 import ConditionImg from "@/assets/icons/Condition.svg";
+import { ProductCommentTypes } from "@/types/shared";
+import { useNavigate } from "react-router-dom";
+import CartIcon from "@/assets/icons/CartIcon";
 
 type ProductProps = {
   name: string;
@@ -13,6 +14,8 @@ type ProductProps = {
   imageLink: string;
   handlePayment: () => void;
   handleDeletePost: () => void;
+  comments: ProductCommentTypes[];
+  setComplete: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ProductInfo = (props: ProductProps) => {
@@ -24,9 +27,11 @@ const ProductInfo = (props: ProductProps) => {
     imageLink,
     handlePayment,
     handleDeletePost,
+    comments,
+    setComplete,
   } = props;
-  const [commentData, setCommentData] = useState<QnACommentTypes[]>([]);
   const role = getRoles();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -56,12 +61,18 @@ const ProductInfo = (props: ProductProps) => {
           </S.ProductDetailContainer>
         </S.ContetntsWrapper>
         <S.PurchaseButtonWrapper>
-          {/* <S.FourBox></S.FourBox> */}
+          <S.CartBtn>
+            <CartIcon />
+            <span>장바구니 담기</span>
+          </S.CartBtn>
           <S.PaymentBtn onClick={handlePayment}>구매하기</S.PaymentBtn>
         </S.PurchaseButtonWrapper>
+        <button className="back_btn" onClick={() => navigate("/productlist")}>
+          목록으로
+        </button>
       </S.ProductInfo>
       <S.CommentContainer>
-        <Comment comments={commentData} setComplete={setCommentData} />
+        <Comment comments={comments} setComplete={setComplete} />
       </S.CommentContainer>
     </>
   );

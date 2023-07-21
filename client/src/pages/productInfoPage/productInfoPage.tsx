@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 import { IMG_URL } from "@/constants/constants";
+import { ProductCommentTypes, QnACommentTypes } from "@/types/shared";
 
 export type ProductType = {
   productId: number;
@@ -29,6 +30,8 @@ export type ProductType = {
 export const ProductInfoPage = () => {
   const { productsID } = useParams();
   const [data, setData] = useState<ProductType | null>(null);
+  const [commentData, setCommentData] = useState<ProductCommentTypes[]>([]);
+  const [complete, setComplete] = useState(false);
   const [authorization, refresh] = getToken();
   const navigate = useNavigate();
 
@@ -37,6 +40,8 @@ export const ProductInfoPage = () => {
       const response = await axios.get(`${BASE_URL}/products/${productsID}`);
       console.log(response.data);
       setData(response.data.data);
+      setCommentData(response.data.data.comments);
+      setComplete(false);
     } catch (e) {
       console.log(e);
     }
@@ -44,7 +49,7 @@ export const ProductInfoPage = () => {
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, [, complete]);
 
   const deletePost = async () => {
     try {
@@ -107,6 +112,8 @@ export const ProductInfoPage = () => {
           imageLink={IMG_URL + "/" + data.imageLink}
           handlePayment={handlePayment}
           handleDeletePost={handleDeletePost}
+          comments={commentData}
+          setComplete={setComplete}
         />
       )}
     </div>
