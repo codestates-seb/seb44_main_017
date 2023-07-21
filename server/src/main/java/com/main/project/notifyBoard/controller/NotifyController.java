@@ -64,6 +64,24 @@ public class NotifyController {
         return new ResponseEntity(service.getNotify(boardId,refreshToken),HttpStatus.OK);
     }
 
+
+    //상세 공지 조회 (다음글)
+    @GetMapping("/{board-id}/next")
+    public ResponseEntity getNextNotify(@PathVariable("board-id") @Positive long boardId,
+                                        @RequestHeader(value = "refresh",required = false)String refreshToken){
+
+        return new ResponseEntity(service.getNextNotify(boardId,refreshToken),HttpStatus.OK);
+    }
+
+
+    //상세 공지 조회 (이전글)
+    @GetMapping("/{board-id}/pre")
+    public ResponseEntity getPreNotify(@PathVariable("board-id") @Positive long boardId,
+                                       @RequestHeader(value = "refresh",required = false)String refreshToken){
+
+        return new ResponseEntity(service.getPreNotify(boardId,refreshToken),HttpStatus.OK);
+    }
+
     //질문 삭제
     @DeleteMapping("/{board-id}")
     public ResponseEntity deleteNotify(@PathVariable("board-id") @Positive long boardId){

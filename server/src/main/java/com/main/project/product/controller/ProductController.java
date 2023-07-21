@@ -4,6 +4,7 @@ import com.main.project.admin.entity.Admin;
 import com.main.project.admin.service.AdminService;
 import com.main.project.dto.MultiResponseDto;
 import com.main.project.dto.queryget;
+import com.main.project.dto.queryresponse.ProductResponse;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.dto.MemberDto;
@@ -132,17 +133,17 @@ public class ProductController {
         if (issell != null) {
             // when issell is not null...
 
-            Page<queryget.product> pageProducts = productService
+            Page<ProductResponse> pageProducts = productService
                     .findProducts(page-1, size, issell, sort);
-            List<queryget.product> products = pageProducts.getContent();
+            List<ProductResponse> products = pageProducts.getContent();
             return ResponseEntity.ok(new MultiResponseDto(products, pageProducts));
 
         } else {
             // when issell property is not given
 
-            Page<queryget.product> pageProducts = productService
+            Page<ProductResponse> pageProducts = productService
                     .findProducts(page-1, size, sort);
-            List<queryget.product> products = pageProducts.getContent();
+            List<ProductResponse> products = pageProducts.getContent();
 
             return ResponseEntity.ok(new MultiResponseDto<>(products, pageProducts));
         }
