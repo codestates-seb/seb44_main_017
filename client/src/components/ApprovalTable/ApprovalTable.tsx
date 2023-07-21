@@ -7,6 +7,7 @@ import SelectBox from "../SelectBox/SelectBox";
 import { getToken } from "@/utils/token";
 import { insertComma } from "@/utils/inssertComma";
 import { useNavigate } from "react-router";
+import { koreanTime } from "@/utils/koreanTime";
 
 interface ApprovalTableProps {
   product: {
@@ -124,7 +125,7 @@ const ApprovalTable: React.FC<ApprovalTableProps> = ({
         <S.productsInfo name="idx">{24 * (page - 1) + idx + 1}</S.productsInfo>
         <S.productsInfo name="name">{product.name}</S.productsInfo>
         <S.productsInfo name="category">{product.category}</S.productsInfo>
-        <S.productsInfo name="phone">{product.modifyAt}</S.productsInfo>
+        <S.productsInfo name="phone">{koreanTime(product.modifyAt)}</S.productsInfo>
       </S.ProductsTable>
       <Collapse in={listOpen} timeout="auto" unmountOnExit>
         <S.Field>
