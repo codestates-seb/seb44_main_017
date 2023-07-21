@@ -81,9 +81,6 @@ public class ProductService {
         productLikeCountService.createProductLikeCount(product);
         product.setProductlike(0);
         Product saveproduct = productRepository.save(product);
-        Eproduct eproduct = mapper.productToEproduct(saveproduct);
-        eproduct.setSell("sale");
-        eproductService.addEproduct(eproduct);
         return saveproduct;
     }
 
@@ -95,11 +92,8 @@ public class ProductService {
         product.setPrice(0);
         product.setIssell(false);
         product.setView(0);
-        Product saveproduct = productRepository.save(product);
+        productRepository.save(product);
 
-        Eproduct eproduct = mapper.productToEproduct(saveproduct);
-        eproduct.setSell("wait");
-        eproductService.addEproduct(eproduct);
     }
 
     public Product updatedenyProduct(List<ProductDto.UserPP> productlists, Long productId){
@@ -127,9 +121,6 @@ public class ProductService {
         Optional.ofNullable(product.getPointValue()).ifPresent(findProduct::setPointValue);
         Optional.ofNullable(product.getView()).ifPresent(findProduct::setView);
         Product saveproduct = productRepository.save(findProduct);
-        Eproduct eproduct = mapper.productToEproduct(saveproduct);
-        eproduct.setSell("sale");
-        eproductService.addEproduct(eproduct);
         return saveproduct;
     }
 
@@ -151,9 +142,6 @@ public class ProductService {
         Optional.ofNullable(product.getPointValue()).ifPresent(findProduct::setPointValue);
         Optional.ofNullable(product.getView()).ifPresent(findProduct::setView);
         Product saveproduct = productRepository.save(findProduct);
-        Eproduct eproduct = mapper.productToEproduct(saveproduct);
-        eproduct.setSell("sale");
-        eproductService.addEproduct(eproduct);
 
         if (flag) memberService.addMemberMoney(member, findProduct.getPointValue());
         return saveproduct;
@@ -163,8 +151,6 @@ public class ProductService {
         Product findProduct = findProduct(productId);
         Optional.ofNullable(product.getView()).ifPresent(findProduct::setView);
         Product saveproduct = productRepository.save(findProduct);
-        Eproduct eproduct = mapper.productToEproduct(saveproduct);
-        eproductService.addEproduct(eproduct);
         return saveproduct;
     }
 
@@ -269,8 +255,6 @@ public class ProductService {
 
         memberService.updateMember(findMember);
         Product saveproduct = productRepository.save(product);
-        Eproduct eproduct = mapper.productToEproduct(saveproduct);
-        eproductService.addEproduct(eproduct);
         return saveproduct;
     }
 
