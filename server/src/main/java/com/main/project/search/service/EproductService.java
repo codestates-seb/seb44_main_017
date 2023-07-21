@@ -42,6 +42,45 @@ public class EproductService {
     private final RestHighLevelClient restHighLevelClient;
 
 
+    public void addEproduct(Eproduct eproduct)  {
+
+        IndexRequest indexRequest = new IndexRequest("product")
+                .source("product_id", eproduct.getProductId(),
+                        "name", eproduct.getName(),
+                        "title", eproduct.getTitle(),
+                        "content", eproduct.getContent(),
+                        "price", eproduct.getPrice(),
+                        "category", eproduct.getCategory(),
+                        "imageLink", eproduct.getImageLink(),
+                        "sell", eproduct.getSell(),
+                        "conditionValue", eproduct.getConditionValue(),
+                        "productlike", eproduct.getProductlike(),
+                        "view", eproduct.getView());
+
+        try {
+            IndexResponse indexResponse = restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+        } catch (IOException e){
+            throw new BusinessLogicException(ExceptionCode.ELASTIC_IOException);
+        }
+
+
+        /*
+        return Mono.create(sink -> {
+            ActionListener<IndexResponse> actionListener = new ActionListener<IndexResponse>() {
+                @Override
+                public void onResponse(IndexResponse indexResponse) {
+                    sink.success();
+                }
+                @Override
+                public void onFailure(Exception e) {
+                }
+            };
+            restHighLevelClient.indexAsync(indexRequest, RequestOptions.DEFAULT, actionListener);
+        });
+
+         */
+    }
+
     public Page<Eproduct> searchProductByName(String title, int page, int size){
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.boolQuery().should(QueryBuilders.matchQuery("name.nori_mixed",  title))
