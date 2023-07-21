@@ -23,12 +23,15 @@ const ProductItem: React.FC<ProductInfo> = ({
   const navigate = useNavigate();
   const [isLike, setIsLike] = useState(like);
   const [imageError, setImageError] = useState(false);
-  const handleLike = async () => {
+  const handleLike = async (
+    event: React.MouseEvent<SVGSVGElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
     try {
-      await axios({
-        method: "PATCH",
-        url: "",
-      });
+      // await axios({
+      //   method: "PATCH",
+      //   url: "",
+      // });
       setIsLike(!isLike);
     } catch (err) {
       console.error("Error updating data", err);
@@ -55,9 +58,17 @@ const ProductItem: React.FC<ProductInfo> = ({
         <S.Content>
           <S.Title>{title}</S.Title>
           {isLike ? (
-            <S.HeartIcon onClick={handleLike} />
+            <S.HeartIcon
+              onClick={(ev) => {
+                handleLike(ev);
+              }}
+            />
           ) : (
-            <S.HeartIcon_empty onClick={handleLike} />
+            <S.HeartIcon_empty
+              onClick={(ev) => {
+                handleLike(ev);
+              }}
+            />
           )}
         </S.Content>
         <S.Price>{`${price} 원`}</S.Price>
