@@ -4,7 +4,7 @@ interface TimesProps {
 }
 
 const elapsedTime = (date: Date) => {
-  const start = new Date(date);
+  const start = new Date(date.setHours(date.getHours() + 9));
   const end = new Date();
 
   const diff = (end.getTime() - start.getTime()) / 1000;

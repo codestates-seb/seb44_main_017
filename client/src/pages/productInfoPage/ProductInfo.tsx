@@ -1,6 +1,10 @@
 import * as S from "./style";
-import ConditionImg from "@/assets/icons/Condition.svg";
 import { getRoles } from "@/utils/token";
+import Comment from "@/components/Comment/Comment";
+import ConditionImg from "@/assets/icons/Condition.svg";
+import { ProductCommentTypes } from "@/types/shared";
+import { useNavigate } from "react-router-dom";
+import CartIcon from "@/assets/icons/CartIcon";
 
 type ProductProps = {
   name: string;
@@ -9,11 +13,27 @@ type ProductProps = {
   category: string;
   imageLink: string;
   handlePayment: () => void;
+  handleDeletePost: () => void;
+  comments: ProductCommentTypes[];
+  setComplete: React.Dispatch<React.SetStateAction<boolean>>;
+  addToCart: () => void;
 };
 
 const ProductInfo = (props: ProductProps) => {
-  const { name, content, price, category, imageLink, handlePayment } = props;
+  const {
+    name,
+    content,
+    price,
+    category,
+    imageLink,
+    handlePayment,
+    handleDeletePost,
+    comments,
+    setComplete,
+    addToCart,
+  } = props;
   const role = getRoles();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -25,7 +45,9 @@ const ProductInfo = (props: ProductProps) => {
           <S.ProductDetailContainer>
             <S.ProductUpperPart>
               <S.SalesBox>판매중</S.SalesBox>
-              {role === "admin" ? <S.DeleteBtn>삭제</S.DeleteBtn> : undefined}
+              {role === "admin" ? (
+                <S.DeleteBtn onClick={handleDeletePost}>삭제</S.DeleteBtn>
+              ) : undefined}
             </S.ProductUpperPart>
             <S.ProductMiddlePart>
               <S.LeftWrapper>
@@ -41,12 +63,18 @@ const ProductInfo = (props: ProductProps) => {
           </S.ProductDetailContainer>
         </S.ContetntsWrapper>
         <S.PurchaseButtonWrapper>
+          <S.CartBtn onClick={addToCart}>
+            <CartIcon />
+            <span>장바구니 담기</span>
+          </S.CartBtn>
           <S.PaymentBtn onClick={handlePayment}>구매하기</S.PaymentBtn>
         </S.PurchaseButtonWrapper>
+        <button className="back_btn" onClick={() => navigate("/productlist")}>
+          목록으로
+        </button>
       </S.ProductInfo>
       <S.CommentContainer>
-        코멘트
-        {/* <Comment comments={commentData} setComplete={setCommentData} /> */}
+        <Comment comments={comments} setComplete={setComplete} />
       </S.CommentContainer>
     </>
   );

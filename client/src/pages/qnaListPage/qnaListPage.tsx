@@ -48,8 +48,8 @@ const QnaListPage = () => {
       <SubTitleBar
         title={title}
         isButton={true}
-        btnTitle={"질문하기"}
-        btnLink={"/questions"}
+        btnTitle="질문하기"
+        btnLink={"/question_register"}
       />
       <QnaListComponent
         data={qnaList}

@@ -3,7 +3,7 @@ import * as S from "./style";
 import { useState } from "react";
 
 import { Logo } from "../../assets/logoSimple";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 
 interface Props {
@@ -11,6 +11,7 @@ interface Props {
 }
 
 const LoginModal = ({ closeModal }: Props) => {
+  const path = useLocation().pathname;
   const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   // 유효성 검사
@@ -54,7 +55,11 @@ const LoginModal = ({ closeModal }: Props) => {
 
         const response: any = await axios.post(`${BASE_URL}/user/login`, data);
         if (response.status === 200) {
-          navigate("/");
+          if (path === "/") {
+            window.location.reload();
+          } else {
+            navigate("/");
+          }
           closeModal(false);
           const authorization = response.headers.get("authorization");
           const refresh = response.headers.get("refresh");
@@ -77,7 +82,11 @@ const LoginModal = ({ closeModal }: Props) => {
         const data = { email: userName, password };
         const response: any = await axios.post(`${BASE_URL}/admin/login`, data);
         if (response.status === 200) {
-          navigate("/");
+          if (path === "/") {
+            window.location.reload();
+          } else {
+            navigate("/");
+          }
           closeModal(false);
           const authorization = response.headers.get("authorization");
           const refresh = response.headers.get("refresh");

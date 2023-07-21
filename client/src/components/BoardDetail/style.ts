@@ -12,9 +12,9 @@ export const HeaderBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 36px 36px 8px;
+  padding: 36px 20px 8px;
   max-width: 1200px;
-  width: 100%;
+  width: 90%;
   gap: 24px;
 
   @media (max-width: 767px) {
@@ -23,6 +23,7 @@ export const HeaderBox = styled.div`
 
   & .detail_title {
     font-size: var(--font-size-36);
+    width: max-content;
 
     @media (max-width: 767px) {
       font-size: var(--font-size-16);

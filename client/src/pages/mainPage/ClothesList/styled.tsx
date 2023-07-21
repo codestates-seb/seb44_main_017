@@ -21,6 +21,7 @@ export const ContainerMobile = styled.div`
     overflow: hidden;
     width: 100%;
     margin-top: 36px;
+    justify-content: center;
   }
 `;
 export const UppserListContainer = styled.div`
@@ -55,6 +56,25 @@ export const LowerListContainer = styled.div`
     100% {
       transform: translateX(-100%);
     }
+  }
+`;
+export const EmptyList = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60vh;
+  color: var(--color-gray200);
+  border: 1px dashed var(--color-gray200);
+  border-radius: 16px;
+  @media (max-width: 534px) {
+    width: 340px;
+  }
+  @media (min-width: 535px) and (max-width: 713px) {
+    width: 514px;
+  }
+  @media (min-width: 714px) and (max-width: 767px) {
+    width: 692px;
   }
 `;
 export const ListpageBtn = styled.button`

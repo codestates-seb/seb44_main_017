@@ -1,13 +1,12 @@
 import axios from "axios";
+import ProductInfo from "./ProductInfo";
+import { getToken } from "@/utils/token";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 import { IMG_URL } from "@/constants/constants";
-import { getToken } from "@/utils/token";
-import ProductInfo from "./ProductInfo";
-
-// import ProductItem from "@/components/Item_product/ProductItem";
-// import Comment from "@/components/Comment/Comment";
+import { ProductCommentTypes } from "@/types/shared";
 
 export type ProductType = {
   productId: number;
@@ -30,16 +29,65 @@ export type ProductType = {
 
 export const ProductInfoPage = () => {
   const { productsID } = useParams();
-  const [data, setData] = useState<ProductType | null>(null);
+  const [data, setData] = useState<ProductType>();
+  const [commentData, setCommentData] = useState<ProductCommentTypes[]>([]);
+  const [complete, setComplete] = useState(false);
   const [authorization, refresh] = getToken();
+  const navigate = useNavigate();
+
+  const addToCart = async () => {
+    const { data, status } = await axios.post(
+      BASE_URL + `/orderproducts/${productsID}`,
+      {},
+      {
+        headers: {
+          Authorization: authorization,
+          Refresh: refresh,
+        },
+      }
+    );
+
+    if ((data && status === 200) || 201) {
+      alert("장바구니에 추가하였습니다.");
+    }
+  };
 
   const getUser = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/products/${productsID}`);
       console.log(response.data);
       setData(response.data.data);
+      setCommentData(response.data.data.comments);
+      setComplete(false);
     } catch (e) {
       console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, [, complete]);
+
+  const deletePost = async () => {
+    try {
+      const delRes = await axios.delete(`${BASE_URL}/products/${productsID}`, {
+        headers: {
+          Authorization: `${authorization}`,
+          Refresh: `${refresh}`,
+        },
+      });
+      console.log(delRes.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleDeletePost = () => {
+    const confirmDelete = window.confirm("게시물을 삭제하시겠습니까?");
+    if (confirmDelete) {
+      deletePost();
+      alert("삭제가 완료되었습니다.");
+      navigate("/productlist");
     }
   };
 
@@ -69,10 +117,6 @@ export const ProductInfoPage = () => {
     }
   };
 
-  useEffect(() => {
-    getUser();
-  }, []);
-
   return (
     <div>
       {data && (
@@ -84,6 +128,10 @@ export const ProductInfoPage = () => {
           category={data.category}
           imageLink={IMG_URL + "/" + data.imageLink}
           handlePayment={handlePayment}
+          handleDeletePost={handleDeletePost}
+          comments={commentData}
+          setComplete={setComplete}
+          addToCart={addToCart}
         />
       )}
     </div>

@@ -46,7 +46,7 @@ export interface ProductTypes {
   image_link: string;
   modify_at: string;
   create_at: string;
-  productlike: number | string;
+  productlike: boolean | null;
   view: number | string;
   condition_value: null;
 }
@@ -81,7 +81,7 @@ export interface CartItemTypes {
   imageLink: string;
   modifyAt: string;
   createAt: string;
-  productlike: number;
+  productlike: boolean | null;
   view: number;
   conditionValue: null;
 }

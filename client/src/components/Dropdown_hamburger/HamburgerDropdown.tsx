@@ -8,17 +8,17 @@ import clothes from "../../assets/clothes.svg";
 import askQuestion from "../../assets/askQuestion.svg";
 import magnifier from "../../assets/magnifier.svg";
 import cart from "@/assets/cart.svg";
-import { useNavigate } from "react-router-dom";
+import managerIcon from "@/assets/managerIcon.svg";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import Backdrop from "./Backdrop";
 import LoginModal from "../Modal_login/LoginModal";
 import SignupModal from "../Modal_signup/SignupModal";
-import { delCookie, getId, getName, getRoles, getToken } from "@/utils/token";
-import axios from "axios";
-import { BASE_URL, IMG_URL } from "@/constants/constants";
+import { delCookie } from "@/utils/token";
+import { IMG_URL } from "@/constants/constants";
 import { LoginUserInfo } from "@/types/shared";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { userInfoState } from "@/recoil/atom";
 
 interface Props {
@@ -34,53 +34,23 @@ const HamburgerDropdown = ({
   toggleMenu,
   headerRef,
 }: Props) => {
-  const portalElement = document.getElementById("modal") as HTMLElement;
   const navigate = useNavigate();
-
+  const path = useLocation().pathname;
+  const barRef = useRef<HTMLDivElement | null>(null);
+  const portalElement = document.getElementById("modal") as HTMLElement;
+  const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoState);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [signupModallOpen, setSignupModalOpen] = useState(false);
-  const [userInfo, setUserInfo] = useRecoilState<LoginUserInfo | null>(
-    userInfoState
-  );
-  const role = getRoles();
-  const memberId = Number(getId());
-  const username = getName();
-
-  const barRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (role === "user") {
-      const [authorization, refresh] = getToken();
-
-      axios
-        .get(BASE_URL + `/members/${memberId}`, {
-          headers: {
-            Authorization: authorization,
-            Refresh: refresh,
-          },
-        })
-        .then(res => setUserInfo({ ...res.data.data, role: role }));
-    } else if (role === "admin") {
-      setUserInfo({
-        email: "",
-        isBan: false,
-        memberId: memberId,
-        money: 0,
-        name: username,
-        phone: "000-0000-0000",
-        profile: "",
-        role: "admin",
-      });
-    } else {
-      setUserInfo(null);
-    }
-  }, [isOpen]);
 
   const logoutHandler = () => {
     if (confirm("로그아웃 하시겠습니까?")) {
       toggleMenu();
       delCookie();
-      navigate("/");
+      if (path === "/") {
+        window.location.reload();
+      } else {
+        navigate("/");
+      }
     }
   };
 
@@ -135,7 +105,7 @@ const HamburgerDropdown = ({
                 </>
               ) : (
                 <>
-                  {userInfo.role === "user" ? (
+                  {userInfo.profile ? (
                     <img src={IMG_URL + "/" + userInfo.profile} />
                   ) : (
                     <img src={defaultImage} />
@@ -190,29 +160,28 @@ const HamburgerDropdown = ({
                       <h3 className="nav_text">Q & A</h3>
                       <div className="nav_description">Q&A</div>
                     </li>
-                    {role === "user" ? (
-                      <>
-                        <li
-                          onClick={() => {
-                            navigate("/mypage");
-                            toggleMenu();
-                          }}
-                        >
-                          <img src={magnifier} title="마이페이지" />
-                          <h3 className="nav_text">마이페이지</h3>
-                          <div className="nav_description">마이페이지</div>
-                        </li>
-                        <li
-                          onClick={() => {
-                            navigate("/cart");
-                            toggleMenu();
-                          }}
-                        >
-                          <img src={cart} title="장바구니" />
-                          <h3 className="nav_text">장바구니</h3>
-                          <div className="nav_description">장바구니</div>
-                        </li>
-                      </>
+                    <li
+                      onClick={() => {
+                        navigate("/cart");
+                        toggleMenu();
+                      }}
+                    >
+                      <img src={cart} title="장바구니" />
+                      <h3 className="nav_text">장바구니</h3>
+                      <div className="nav_description">장바구니</div>
+                    </li>
+                    <li
+                      onClick={() => {
+                        navigate("/mypage");
+                        toggleMenu();
+                      }}
+                    >
+                      <img src={magnifier} title="마이페이지" />
+                      <h3 className="nav_text">마이페이지</h3>
+                      <div className="nav_description">마이페이지</div>
+                    </li>
+                    {userInfo.role === "user" ? (
+                      <></>
                     ) : (
                       <li
                         onClick={() => {
@@ -220,7 +189,7 @@ const HamburgerDropdown = ({
                           toggleMenu();
                         }}
                       >
-                        <img src={magnifier} title="관리자페이지" />
+                        <img src={managerIcon} title="관리자페이지" />
                         <h3 className="nav_text">관리자페이지</h3>
                         <div className="nav_description">관리자페이지</div>
                       </li>
