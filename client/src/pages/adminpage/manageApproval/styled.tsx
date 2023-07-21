@@ -22,6 +22,7 @@ export const TableNameContainer = styled.div`
 export const ProductListContainer = styled.ul`
   display: flex;
   flex-direction: column;
+  min-height: 60vh;
 `;
 export const Title = styled.p`
   font-size: var(--font-size-24);
