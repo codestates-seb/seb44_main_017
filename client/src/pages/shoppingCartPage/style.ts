@@ -87,7 +87,7 @@ export const CartItems = styled.div`
     display: flex;
     justify-content: start;
     align-items: center;
-    gap: 16px;
+    gap: 24px;
     border-bottom: 1px solid var(--color-lightivory);
     padding: 12px;
 
@@ -99,6 +99,8 @@ export const CartItems = styled.div`
   & img {
     width: 150px;
     height: 150px;
+    border: 2px solid var(--color-darkblue);
+    border-radius: 16px;
   }
 `;
 
@@ -247,8 +249,14 @@ export const CheckboxLabel = styled.label`
   height: 15px;
   cursor: pointer;
   border-radius: 40px;
-  background-color: #f2f4f6;
+  background-color: rgb(224 230 235);
   font-size: var(--font-size-12);
   color: #383838;
-  border: 1px solid var(--color-darkblue);
+`;
+
+export const EmptyCart = styled.div`
+  font-size: 24px;
+  color: var(--color-darkblue);
+  text-align: center;
+  line-height: 300px;
 `;

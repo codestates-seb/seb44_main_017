@@ -1,8 +1,5 @@
 import styled from "styled-components";
 import { BsEye } from "react-icons/bs";
-import { PiNotePencilLight } from "react-icons/pi";
-import { AiOutlineClose } from "react-icons/ai";
-import { RiDeleteBin6Line } from "react-icons/ri";
 
 export const Container = styled.main`
   display: flex;

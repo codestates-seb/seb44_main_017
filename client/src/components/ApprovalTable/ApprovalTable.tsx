@@ -6,7 +6,6 @@ import { Collapse, Dialog, DialogActions } from "@mui/material";
 import SelectBox from "../SelectBox/SelectBox";
 import { getToken } from "@/utils/token";
 import { insertComma } from "@/utils/inssertComma";
-import { useNavigate } from "react-router";
 import { koreanTime } from "@/utils/koreanTime";
 
 interface ApprovalTableProps {
@@ -55,7 +54,6 @@ const ApprovalTable: React.FC<ApprovalTableProps> = ({
   idx,
   page,
 }) => {
-  const navigate = useNavigate();
   const [listOpen, setListOpen] = useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [denycontent, setDenycontent] = useState<string>("");
@@ -125,7 +123,9 @@ const ApprovalTable: React.FC<ApprovalTableProps> = ({
         <S.productsInfo name="idx">{24 * (page - 1) + idx + 1}</S.productsInfo>
         <S.productsInfo name="name">{product.name}</S.productsInfo>
         <S.productsInfo name="category">{product.category}</S.productsInfo>
-        <S.productsInfo name="phone">{koreanTime(product.modifyAt)}</S.productsInfo>
+        <S.productsInfo name="phone">
+          {koreanTime(product.modifyAt)}
+        </S.productsInfo>
       </S.ProductsTable>
       <Collapse in={listOpen} timeout="auto" unmountOnExit>
         <S.Field>
@@ -134,7 +134,7 @@ const ApprovalTable: React.FC<ApprovalTableProps> = ({
             <SelectBox
               usage={"카테고리"}
               options={options}
-              setOption={(value) => {
+              setOption={value => {
                 setProductData({ ...productData, category: value });
               }}
             />
@@ -209,7 +209,7 @@ const ApprovalTable: React.FC<ApprovalTableProps> = ({
             multiline
             rows={13}
             value={denycontent}
-            onChange={(ev) => {
+            onChange={ev => {
               setDenycontent(ev.target.value);
             }}
           />

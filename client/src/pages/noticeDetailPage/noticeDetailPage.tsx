@@ -4,7 +4,6 @@ import { BASE_URL } from "@/constants/constants";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { koreanDate } from "@/utils/koreanTime";
-import { getToken } from "@/utils/token";
 
 interface Data {
   boardId: number;
@@ -18,7 +17,7 @@ interface Data {
     name: string;
   };
 }
-        
+
 function NoticeDetailPage() {
   const { boardId } = useParams();
   const [data, setData] = useState<Data>({

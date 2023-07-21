@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router";
 import * as S from "./styled";
 import React, { useState } from "react";
-import axios from "axios";
 
 interface ProductInfo {
   url: string;
@@ -59,13 +58,13 @@ const ProductItem: React.FC<ProductInfo> = ({
           <S.Title>{title}</S.Title>
           {isLike ? (
             <S.HeartIcon
-              onClick={(ev) => {
+              onClick={ev => {
                 handleLike(ev);
               }}
             />
           ) : (
             <S.HeartIcon_empty
-              onClick={(ev) => {
+              onClick={ev => {
                 handleLike(ev);
               }}
             />
