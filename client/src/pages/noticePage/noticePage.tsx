@@ -89,7 +89,7 @@ export const NoticePage = () => {
           title={"공지사항"}
           isButton={isButton}
           btnTitle={"공지하기"}
-          btnLink={""}
+          btnLink={"/notice_register"}
         ></SubTitleBar>
       </S.SubTitleBarContainer>
       <S.Container>
