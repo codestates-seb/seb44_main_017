@@ -16,6 +16,7 @@ type ProductProps = {
   handleDeletePost: () => void;
   comments: ProductCommentTypes[];
   setComplete: React.Dispatch<React.SetStateAction<boolean>>;
+  addToCart: () => void;
 };
 
 const ProductInfo = (props: ProductProps) => {
@@ -29,6 +30,7 @@ const ProductInfo = (props: ProductProps) => {
     handleDeletePost,
     comments,
     setComplete,
+    addToCart,
   } = props;
   const role = getRoles();
   const navigate = useNavigate();
@@ -61,7 +63,7 @@ const ProductInfo = (props: ProductProps) => {
           </S.ProductDetailContainer>
         </S.ContetntsWrapper>
         <S.PurchaseButtonWrapper>
-          <S.CartBtn>
+          <S.CartBtn onClick={addToCart}>
             <CartIcon />
             <span>장바구니 담기</span>
           </S.CartBtn>

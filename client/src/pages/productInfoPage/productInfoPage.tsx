@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 import { IMG_URL } from "@/constants/constants";
-import { ProductCommentTypes, QnACommentTypes } from "@/types/shared";
+import { ProductCommentTypes } from "@/types/shared";
 
 export type ProductType = {
   productId: number;
@@ -29,11 +29,28 @@ export type ProductType = {
 
 export const ProductInfoPage = () => {
   const { productsID } = useParams();
-  const [data, setData] = useState<ProductType | null>(null);
+  const [data, setData] = useState<ProductType>();
   const [commentData, setCommentData] = useState<ProductCommentTypes[]>([]);
   const [complete, setComplete] = useState(false);
   const [authorization, refresh] = getToken();
   const navigate = useNavigate();
+
+  const addToCart = async () => {
+    const { data, status } = await axios.post(
+      BASE_URL + `/orderproducts/${productsID}`,
+      {},
+      {
+        headers: {
+          Authorization: authorization,
+          Refresh: refresh,
+        },
+      }
+    );
+
+    if ((data && status === 200) || 201) {
+      alert("장바구니에 추가하였습니다.");
+    }
+  };
 
   const getUser = async () => {
     try {
@@ -114,6 +131,7 @@ export const ProductInfoPage = () => {
           handleDeletePost={handleDeletePost}
           comments={commentData}
           setComplete={setComplete}
+          addToCart={addToCart}
         />
       )}
     </div>
