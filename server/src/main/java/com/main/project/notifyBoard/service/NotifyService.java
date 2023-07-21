@@ -85,6 +85,30 @@ public class NotifyService {
         return response;
     }
 
+    //상세 공지 찾기 다음글
+    public NotifyDto.Response getNextNotify(long boardId,String refreshToken){
+        Long nextBoardId = notifyRepository.findByBoardIdGreaterThan(boardId).orElse(null);
+
+        if (nextBoardId == null){
+            return null;
+        }else{
+            return getNotify(nextBoardId,refreshToken);
+        }
+    }
+
+    //상세 공지 찾기 이전글
+    public NotifyDto.Response getPreNotify(long boardId,String refreshToken){
+        Long preBoardId = notifyRepository.findByBoardIdLessThan(boardId).orElse(null);
+
+        if(preBoardId == null){
+            return null;
+        }else{
+            return getNotify(preBoardId,refreshToken);
+        }
+
+    }
+
+
     //전체 공지 페이지 조회
     public List<NotifyDto.Response> getNotifies(int page, int size, String sort){
         Page<NotifyBoard> pageNotifies = sortingNotifies(page,size,sort);
