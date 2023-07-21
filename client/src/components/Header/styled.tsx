@@ -10,7 +10,8 @@ export const Spacing = styled.div`
   }
 `;
 export const HeaderContainer = styled.div`
-  position: relative;
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
