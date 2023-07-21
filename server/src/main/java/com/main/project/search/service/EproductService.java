@@ -43,8 +43,8 @@ public class EproductService {
 
     public void addEproduct(Eproduct eproduct)  {
 
-        IndexRequest indexRequest = new IndexRequest("product").id(eproduct.getProductId().toString())
-                .source("product", eproduct.getProductId(),
+        IndexRequest indexRequest = new IndexRequest("product")
+                .source("product_id", eproduct.getProductId(),
                         "name", eproduct.getName(),
                         "title", eproduct.getTitle(),
                         "content", eproduct.getContent(),
