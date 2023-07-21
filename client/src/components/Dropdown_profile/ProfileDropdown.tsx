@@ -1,5 +1,5 @@
 import useDetectClose from "../../hooks/useDetectClose";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import * as S from "./style";
 import defaultImage from "/images/cat.jpg";
 import { delCookie } from "@/utils/token";
@@ -9,25 +9,26 @@ import { LoginUserInfo } from "@/types/shared";
 import { userInfoSelector } from "@/recoil/selector";
 
 const ProfileDropdown = () => {
+  const path = useLocation().pathname;
   const [DropdownIsOpen, Ref, DropdownHandler] = useDetectClose();
   const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
   const navigate = useNavigate();
-
-  console.log(userInfo);
-
   const logoutHandler = () => {
     if (confirm("로그아웃 하시겠습니까?")) {
       delCookie();
-      navigate("/");
+      if (path === "/") {
+        window.location.reload();
+      } else {
+        navigate("/");
+      }
     }
   };
-
   return (
     <>
       <S.ProfileContainer>
         <div ref={Ref} onClick={DropdownHandler}>
           <div className="profile_nickname">{userInfo?.name} 님</div>
-          {userInfo ? (
+          {userInfo?.profile ? (
             <img src={IMG_URL + "/" + userInfo.profile} />
           ) : (
             <img src={defaultImage} />
@@ -35,15 +36,14 @@ const ProfileDropdown = () => {
         </div>
         <S.DropDownContainer isDropped={DropdownIsOpen ? true : false}>
           <ul>
+            <Link to="/mypage" onClick={DropdownHandler}>
+              <li>마이페이지</li>
+            </Link>
+            <Link to="/cart" onClick={DropdownHandler}>
+              <li>장바구니</li>
+            </Link>
             {userInfo?.role === "user" ? (
-              <>
-                <Link to="/mypage" onClick={DropdownHandler}>
-                  <li>마이페이지</li>
-                </Link>
-                <Link to="/cart" onClick={DropdownHandler}>
-                  <li>장바구니</li>
-                </Link>
-              </>
+              <></>
             ) : (
               <Link to="/admin/products" onClick={DropdownHandler}>
                 <li>관리자페이지</li>
