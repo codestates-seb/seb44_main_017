@@ -46,8 +46,8 @@ export const EmptyList = styled.div`
   border-radius: 16px;
 `;
 export const EmptyContent = styled.p`
-    color: gray;
-`
+  color: gray;
+`;
 export const CustomDivider = styled(Divider)`
   border-bottom-width: 2px !important;
   width: 100%;
