@@ -1,13 +1,11 @@
 import axios from "axios";
+import ProductInfo from "./ProductInfo";
+import { getToken } from "@/utils/token";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 import { IMG_URL } from "@/constants/constants";
-import { getToken } from "@/utils/token";
-import ProductInfo from "./ProductInfo";
-
-// import ProductItem from "@/components/Item_product/ProductItem";
-// import Comment from "@/components/Comment/Comment";
 
 export type ProductType = {
   productId: number;
@@ -32,6 +30,7 @@ export const ProductInfoPage = () => {
   const { productsID } = useParams();
   const [data, setData] = useState<ProductType | null>(null);
   const [authorization, refresh] = getToken();
+  const navigate = useNavigate();
 
   const getUser = async () => {
     try {
@@ -40,6 +39,33 @@ export const ProductInfoPage = () => {
       setData(response.data.data);
     } catch (e) {
       console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  const deletePost = async () => {
+    try {
+      const delRes = await axios.delete(`${BASE_URL}/products/${productsID}`, {
+        headers: {
+          Authorization: `${authorization}`,
+          Refresh: `${refresh}`,
+        },
+      });
+      console.log(delRes.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleDeletePost = () => {
+    const confirmDelete = window.confirm("게시물을 삭제하시겠습니까?");
+    if (confirmDelete) {
+      deletePost();
+      alert("삭제가 완료되었습니다.");
+      navigate("/productlist");
     }
   };
 
@@ -69,10 +95,6 @@ export const ProductInfoPage = () => {
     }
   };
 
-  useEffect(() => {
-    getUser();
-  }, []);
-
   return (
     <div>
       {data && (
@@ -84,6 +106,7 @@ export const ProductInfoPage = () => {
           category={data.category}
           imageLink={IMG_URL + "/" + data.imageLink}
           handlePayment={handlePayment}
+          handleDeletePost={handleDeletePost}
         />
       )}
     </div>
