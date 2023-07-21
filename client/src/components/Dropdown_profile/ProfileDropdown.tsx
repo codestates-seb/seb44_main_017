@@ -27,7 +27,7 @@ const ProfileDropdown = () => {
     <>
       <S.ProfileContainer>
         <div ref={Ref} onClick={DropdownHandler}>
-          <div className="profile_nickname">{userInfo?.name} 님</div>
+          <div className="profile_nickname">{userInfo?.name}</div>
           {userInfo?.profile ? (
             <img src={IMG_URL + "/" + userInfo.profile} />
           ) : (

@@ -7,15 +7,19 @@ export const ProfileContainer = styled.div`
   & div:first-child {
     display: flex;
     align-items: center;
-    font-size: var(--font-size-12);
-    font-weight: var(--font-weight-700);
+    font-size: var(--font-size-16);
+    font-weight: 900;
     margin-right: 8px;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-darkgreen);
+    }
   }
 
   & img {
     width: 40px;
     height: 40px;
-    cursor: pointer;
   }
 
   & .profile_nickname {
@@ -38,6 +42,7 @@ export const DropDownContainer = styled.div<{ isDropped: boolean }>`
   visibility: hidden;
   min-width: 95px;
   position: absolute;
+  background-color: var(--color-white);
 
   &::before {
     content: "";
@@ -59,16 +64,17 @@ export const DropDownContainer = styled.div<{ isDropped: boolean }>`
 
   & > ul {
     font-size: var(--font-size-16);
-    padding: 12px 24px;
+    padding: 12px 16px;
     margin: 0;
     display: flex;
-    gap: 8px;
+    gap: 12px;
     flex-direction: column;
     align-items: center;
     color: var(--color-darkblue);
 
     & li {
       cursor: pointer;
+      padding: 4px;
 
       &:hover {
         color: var(--color-darkgreen);
