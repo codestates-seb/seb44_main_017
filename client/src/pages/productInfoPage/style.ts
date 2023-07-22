@@ -10,7 +10,6 @@ export const ProductInfo = styled.section`
   width: 90%;
   max-width: 1200px;
   margin: 0 auto;
-  /* border: 4px solid red; */
 
   & .back_btn {
     position: relative;
@@ -34,26 +33,22 @@ export const ProductInfo = styled.section`
 export const ContetntsWrapper = styled.div`
   display: flex;
   width: 100%;
-  gap: 40px;
   max-height: 404px;
 
-  /* border: 4px solid red; */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    max-height: 354px;
+  }
 
-  @media (max-width: 872px) {
+  @media (max-width: 767px) {
     flex-direction: column;
-    align-items: center;
+    gap: 8px;
   }
 `;
 
 export const ProductImageBox = styled.div`
   display: flex;
   justify-content: center;
-  max-width: 440px;
-  /* border: 4px solid red; */
-
-  @media (max-width: 872px) {
-    margin: 0;
-  }
+  padding: 0 20px;
 `;
 
 export const ProductImage = styled.img`
@@ -62,6 +57,16 @@ export const ProductImage = styled.img`
   object-fit: contain;
   border: 2px solid var(--color-darkblue);
   border-radius: 16px;
+
+  @media (max-width: 767px) {
+    width: 300px;
+    height: 300px;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 350px;
+    height: 350px;
+  }
 `;
 
 export const ProductDetailContainer = styled.div`
@@ -70,7 +75,7 @@ export const ProductDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  /* border: 4px solid red; */
+  padding: 0 20px;
 `;
 
 export const ProductUpperPart = styled.div`
@@ -78,7 +83,6 @@ export const ProductUpperPart = styled.div`
   justify-content: space-between;
   width: 100%;
   max-width: 757px;
-  /* border: 4px solid red; */
 `;
 
 export const SalesBox = styled.div`
@@ -94,7 +98,6 @@ export const SalesBox = styled.div`
   color: white;
   font-family: "Roboto";
   background-color: var(--color-orange);
-  /* border: 4px solid red; */
 `;
 
 export const DeleteBtn = styled.button`
@@ -118,7 +121,6 @@ export const ProductMiddlePart = styled.div`
   width: 100%;
   max-width: 757px;
   align-items: center;
-  /* border: 4px solid red; */
 `;
 
 export const LeftWrapper = styled.div`
@@ -131,7 +133,6 @@ export const LeftWrapper = styled.div`
     font-size: 2rem;
     font-weight: 700;
     color: var(--gray-title);
-    /* border: 4px solid red; */
   }
 `;
 
@@ -159,7 +160,6 @@ export const ProductLowerPart = styled.div`
   justify-content: flex-end;
   width: 100%;
   max-width: 757px;
-  /* border: 4px solid red; */
 
   & > h2 {
     font-size: var(--font-size-24);
@@ -185,20 +185,22 @@ export const ProductDescription = styled.div`
   border: 1px solid var(--color-gray200);
   border-radius: 20px;
   padding: 20px;
+
+  @media (max-width: 767px) {
+    height: 150px;
+  }
 `;
 
 export const PurchaseButtonWrapper = styled.div`
   display: flex;
-  /* flex-direction: row-reverse; */
   justify-content: flex-end;
   align-items: center;
   width: 100%;
   border-bottom: 1px solid var(--color-black);
   font-size: 1.2rem;
   gap: 12px;
-  padding: 20px 0;
+  padding: 20px;
   max-width: 1200px;
-  /* border: 4px solid red; */
 `;
 
 export const CartBtn = styled.div`
@@ -234,8 +236,6 @@ export const PaymentBtn = styled.button`
   font-family: "Roboto";
   background-color: var(--color-darkblue);
   /* border: 4px solid red; */
-  @media (max-width: 872px) {
-  }
 
   &:hover {
     background-color: #385c78;
