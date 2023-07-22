@@ -157,7 +157,7 @@ const SignupModal = ({ closeModal }: Props) => {
           <S.VisibilityButton onClick={checkPasswordVisibility} />
         </S.PasswordLabel>
         <S.InputBox
-          style={{ marginBottom: "4px" }}
+          style={{ marginBottom: "16px" }}
           placeholder="핸드폰 번호를 입력해주세요."
           value={phone}
           onChange={(e) => setPhone(e.target.value)}

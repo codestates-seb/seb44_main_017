@@ -99,6 +99,7 @@ export const PasswordLabel = styled.label`
 export const VisibilityButton = styled(VisibilityIcon)`
   width: 16px;
   height: 10px;
+  padding-right: 4px;
   color: var(--color-darkblue);
   position: absolute;
   top: 0px;
