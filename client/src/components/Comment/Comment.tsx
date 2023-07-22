@@ -38,7 +38,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
 
   useEffect(() => {
     comments.map((item: any) => {
-      (qPath ? item.commentId : item.productId) === selectedId &&
+      (qPath ? item.commentId : item.productCommentId) === selectedId &&
         setUpdateValue(item.content);
     });
   }, [selectedId]);
@@ -171,7 +171,8 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
                     {elapsedTime(new Date(e.createAt))}
                   </span>
                 </S.CommentInfo>
-                {isEditMode && e.commentId === selectedId ? (
+                {isEditMode &&
+                (qPath ? e.commentId : e.productCommentId) === selectedId ? (
                   <S.ModifyBox>
                     <input
                       className="comment_modify_form"
