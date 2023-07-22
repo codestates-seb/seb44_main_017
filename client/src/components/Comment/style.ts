@@ -18,7 +18,7 @@ export const InputLayout = styled.form`
   color: var(--color-black);
   border-radius: 5px;
   gap: 10px;
-  border-bottom: 1px solid var(--color-gray100);
+  /* border-bottom: 1px solid var(--color-gray100); */
 
   & > input {
     width: 100%;
@@ -82,9 +82,6 @@ export const CommentBox = styled.div`
   border-bottom: 1px solid var(--color-lightivory);
   justify-content: space-between;
   padding-top: 8px;
-
-  & > .comment_update_btn {
-  }
 `;
 
 export const CommentInfoBox = styled.div`

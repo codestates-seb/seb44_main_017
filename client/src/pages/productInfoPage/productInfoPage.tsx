@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
-import { IMG_URL } from "@/constants/constants";
 import { ProductCommentTypes } from "@/types/shared";
 
 export type ProductType = {
@@ -19,18 +18,17 @@ export type ProductType = {
   productLike: boolean | null;
   imageLink: string;
   issell: boolean;
-  createdAt: string;
-  modifiedAt: string;
-  conditionValue: number | null;
+  createAt: string;
+  modifyAt: string;
+  conditionValue: number;
   pointValue: number | null;
   view: number;
-  comments: [];
+  comments: ProductCommentTypes[];
 };
 
 export const ProductInfoPage = () => {
   const { productsID } = useParams();
   const [data, setData] = useState<ProductType>();
-  const [commentData, setCommentData] = useState<ProductCommentTypes[]>([]);
   const [complete, setComplete] = useState(false);
   const [authorization, refresh] = getToken();
   const navigate = useNavigate();
@@ -57,7 +55,6 @@ export const ProductInfoPage = () => {
       const response = await axios.get(`${BASE_URL}/products/${productsID}`);
       console.log(response.data);
       setData(response.data.data);
-      setCommentData(response.data.data.comments);
       setComplete(false);
     } catch (e) {
       console.log(e);
@@ -121,15 +118,9 @@ export const ProductInfoPage = () => {
     <div>
       {data && (
         <ProductInfo
-          key={data.productId}
-          name={data.name}
-          content={data.content}
-          price={data.price}
-          category={data.category}
-          imageLink={IMG_URL + "/" + data.imageLink}
+          productData={data}
           handlePayment={handlePayment}
           handleDeletePost={handleDeletePost}
-          comments={commentData}
           setComplete={setComplete}
           addToCart={addToCart}
         />

@@ -1,34 +1,24 @@
 import * as S from "./style";
 import { getRoles } from "@/utils/token";
 import Comment from "@/components/Comment/Comment";
-import ConditionImg from "@/assets/icons/Condition.svg";
-import { ProductCommentTypes } from "@/types/shared";
 import { useNavigate } from "react-router-dom";
-import CartIcon from "@/assets/icons/CartIcon";
+import { ProductType } from "./productInfoPage";
+import { IMG_URL } from "@/constants/constants";
+import elapsedTime from "./../../utils/elapsedTime";
 
 type ProductProps = {
-  name: string;
-  content: string;
-  price: number;
-  category: string;
-  imageLink: string;
+  productData: ProductType;
   handlePayment: () => void;
   handleDeletePost: () => void;
-  comments: ProductCommentTypes[];
   setComplete: React.Dispatch<React.SetStateAction<boolean>>;
   addToCart: () => void;
 };
 
 const ProductInfo = (props: ProductProps) => {
   const {
-    name,
-    content,
-    price,
-    category,
-    imageLink,
+    productData,
     handlePayment,
     handleDeletePost,
-    comments,
     setComplete,
     addToCart,
   } = props;
@@ -40,7 +30,7 @@ const ProductInfo = (props: ProductProps) => {
       <S.ProductInfo>
         <S.ContetntsWrapper>
           <S.ProductImageBox>
-            <S.ProductImage src={imageLink} />
+            <S.ProductImage src={IMG_URL + "/" + productData.imageLink} />
           </S.ProductImageBox>
           <S.ProductDetailContainer>
             <S.ProductUpperPart>
@@ -51,22 +41,40 @@ const ProductInfo = (props: ProductProps) => {
             </S.ProductUpperPart>
             <S.ProductMiddlePart>
               <S.LeftWrapper>
-                <S.CategoryBox>{category}</S.CategoryBox>
-                <h2>{name}</h2>
+                {/* <h2>{productData.category}</h2> */}
+                <h2>{productData.name}</h2>
               </S.LeftWrapper>
-              <S.Condition src={ConditionImg} />
+              <S.CustomSlider
+                defaultValue={productData.conditionValue}
+                marks={true}
+                step={2}
+                min={0}
+                max={10}
+                disabled
+                sx={{
+                  width: 100,
+                  "& .MuiSlider-thumb": {
+                    width: 15,
+                    height: 15,
+                  },
+                }}
+              />
             </S.ProductMiddlePart>
             <S.ProductLowerPart>
-              <h2>{price}</h2>
+              <h2>{productData.price} 원</h2>
             </S.ProductLowerPart>
-            <S.ProductDescription>{content}</S.ProductDescription>
+            <S.PostInfo>
+              <span className="post_created_at">
+                {elapsedTime(new Date(productData.createAt))}
+              </span>
+              <span className="post_dot">·</span>
+              <span className="post_view">조회 {productData.view}</span>
+            </S.PostInfo>
+            <S.ProductDescription>{productData.content}</S.ProductDescription>
           </S.ProductDetailContainer>
         </S.ContetntsWrapper>
         <S.PurchaseButtonWrapper>
-          <S.CartBtn onClick={addToCart}>
-            <CartIcon />
-            <span>장바구니 담기</span>
-          </S.CartBtn>
+          <S.CartBtn onClick={addToCart}>장바구니</S.CartBtn>
           <S.PaymentBtn onClick={handlePayment}>구매하기</S.PaymentBtn>
         </S.PurchaseButtonWrapper>
         <button className="back_btn" onClick={() => navigate("/productlist")}>
@@ -74,7 +82,7 @@ const ProductInfo = (props: ProductProps) => {
         </button>
       </S.ProductInfo>
       <S.CommentContainer>
-        <Comment comments={comments} setComplete={setComplete} />
+        <Comment comments={productData.comments} setComplete={setComplete} />
       </S.CommentContainer>
     </>
   );
