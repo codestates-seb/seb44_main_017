@@ -42,12 +42,14 @@ export const DropDownContainer = styled.div<{ isDropped: boolean }>`
   visibility: hidden;
   min-width: 95px;
   position: absolute;
+  right: 16px;
   background-color: var(--color-white);
+  width: max-content;
 
   &::before {
     content: "";
     position: absolute;
-    top: -4%;
+    top: -3%;
     left: 80%;
     border: 10px solid transparent;
     border-width: 0px 5px 5px;
