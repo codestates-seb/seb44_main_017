@@ -145,7 +145,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         return UriComponentsBuilder
                 .newInstance()
                 .scheme("https")
-                .host("recloset-git-fe-dev-7eleven.vercel.app ")
+                .host("recloset-git-fe-dev-7eleven.vercel.app")
                 .port(443)
                 .path("/")
                 .queryParams(queryParams)
