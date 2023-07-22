@@ -2,9 +2,7 @@ import axios from "axios";
 import * as S from "./style";
 import { BASE_URL } from "@/constants/constants";
 import { useState, useEffect, useRef } from "react";
-import arrowLeftIcon from "../../assets/arrowLeftIcon.svg";
 import SelectBox from "../../components/SelectBox/SelectBox";
-import arrowRightIcon from "../../assets/arrowRightIcon.svg";
 import ProductItem from "../../components/Item_product/ProductItem";
 import CustomPagination from "@/components/Pagination/CustomPagination";
 import CategoryButton from "../../components/CategoryButton/CategoryButton";
@@ -164,7 +162,7 @@ export const ProductListPage = () => {
           <S.SubTitle>추천 상품</S.SubTitle>
         </S.SubTitleBox>
         <S.ProductsBox>
-          <S.ArrowLeftIcon src={arrowLeftIcon} onClick={handlePrev} />
+          <S.ArrowLeftIcon onClick={handlePrev} />
           <S.ProductsCarousel>
             {recommendData.map((recommendData) => (
               <S.Product
@@ -182,11 +180,11 @@ export const ProductListPage = () => {
               </S.Product>
             ))}
           </S.ProductsCarousel>
-          <S.ArrowRightIcon src={arrowRightIcon} onClick={handleNext} />
+          <S.ArrowRightIcon onClick={handleNext} />
         </S.ProductsBox>
       </S.SubTitleContainer>
       <S.CategoryBar>
-        {categories.map(category => (
+        {categories.map((category) => (
           <CategoryButton
             onClick={handleBtnCategory}
             btnSelect={btnCategory === category.name}
@@ -198,7 +196,7 @@ export const ProductListPage = () => {
         <SelectBox usage={"정렬"} options={sortOptions} setOption={setValue} />
       </S.SelectBar>
       <S.ProductsContainer>
-        {data.map(data => (
+        {data.map((data) => (
           <S.Product>
             <ProductItem
               url={`${data.image_link}`}

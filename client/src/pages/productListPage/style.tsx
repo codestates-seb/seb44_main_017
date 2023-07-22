@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 
 export const Container = styled.main`
   display: flex;
@@ -16,8 +17,8 @@ export const SubTitleBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 24px;
+  margin-bottom: 12px;
 `;
 export const SubTitle = styled.div`
   font-weight: var(--font-weight-700);
@@ -57,8 +58,8 @@ export const Product = styled.div`
     cursor: pointer;
   }
 `;
-export const ArrowLeftIcon = styled.img`
-  color: var(--color-darkblue);
+export const ArrowLeftIcon = styled(BsChevronDoubleLeft)`
+  color: white;
   margin-right: 16px;
   @media (max-width: 767px) {
     width: 24px;
@@ -76,8 +77,8 @@ export const ArrowLeftIcon = styled.img`
     cursor: pointer;
   }
 `;
-export const ArrowRightIcon = styled.img`
-  color: var(--color-darkblue);
+export const ArrowRightIcon = styled(BsChevronDoubleRight)`
+  color: white;
   margin-left: 16px;
   @media (max-width: 767px) {
     width: 24px;
