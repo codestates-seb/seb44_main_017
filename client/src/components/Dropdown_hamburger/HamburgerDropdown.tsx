@@ -130,16 +130,22 @@ const HamburgerDropdown = ({
                       <h3 className="nav_text">상품 보기</h3>
                       <div className="nav_description">상품 보기</div>
                     </li>
-                    <li
-                      onClick={() => {
-                        navigate("/collection");
-                        toggleMenu();
-                      }}
-                    >
-                      <img src={clothes} title="수거 요청" />
-                      <h3 className="nav_text">수거 요청</h3>
-                      <div className="nav_description">수거 요청</div>
-                    </li>
+                    {userInfo.role === "admin" ? (
+                      <></>
+                    ) : (
+                      <>
+                        <li
+                          onClick={() => {
+                            navigate("/collection");
+                            toggleMenu();
+                          }}
+                        >
+                          <img src={clothes} title="수거 요청" />
+                          <h3 className="nav_text">수거 요청</h3>
+                          <div className="nav_description">수거 요청</div>
+                        </li>
+                      </>
+                    )}
                     <li
                       onClick={() => {
                         navigate("/notice");

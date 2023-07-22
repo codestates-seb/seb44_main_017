@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
-  padding: 36px 16px 8px;
+  padding: 36px 0;
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
@@ -82,6 +82,15 @@ export const CartItems = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  padding: 100px;
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    padding: 80px;
+  }
+
+  @media (max-width: 767px) {
+    padding: 40px 0 20px;
+  }
 
   & li {
     display: flex;
@@ -258,5 +267,8 @@ export const EmptyCart = styled.div`
   font-size: 24px;
   color: var(--color-darkblue);
   text-align: center;
-  line-height: 300px;
+
+  @media (max-width: 767px) {
+    font-size: var(--font-size-16);
+  }
 `;

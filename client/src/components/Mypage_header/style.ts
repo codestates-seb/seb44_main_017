@@ -6,6 +6,7 @@ export const Container = styled.section`
   background-color: var(--color-darkblue);
   justify-content: center;
   align-items: center;
+  width: 100%;
 `;
 
 export const ProfileImage = styled.img`
@@ -41,11 +42,13 @@ export const InfoBox = styled.div`
   @media (max-width: 767px) {
     padding: 24px 0px;
     min-height: 64px;
+    min-width: 0;
   }
 
   @media (min-width: 768px) and (max-width: 1120px) {
     padding: 40px 80px;
     min-height: 64px;
+    min-width: 0;
   }
 `;
 
