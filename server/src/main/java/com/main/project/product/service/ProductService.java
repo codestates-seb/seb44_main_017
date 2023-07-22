@@ -147,6 +147,7 @@ public class ProductService {
             Admin admin = adminService.findAdminById(AdminId);
             findProduct.setAdmin(admin);
         }
+
         Product saveproduct = productRepository.save(findProduct);
 
         return saveproduct;
@@ -244,12 +245,10 @@ public class ProductService {
         if(product.getLikedByMembers().contains(findMember)){
             product.removeLikeByMembers(findMember);
             findMember.removeLikedProducts(product);
-
             productLikeCountService.updateProductLikeCount(product, -1);
         }else{
             product.addLikeByMembers(findMember);
             findMember.addLikedProducts(product);
-
             productLikeCountService.updateProductLikeCount(product, +1);
         }
 
