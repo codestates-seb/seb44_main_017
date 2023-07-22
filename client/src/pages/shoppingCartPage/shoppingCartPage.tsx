@@ -10,7 +10,6 @@ import axios from "axios";
 import { getToken } from "@/utils/token";
 import DeleteIcon from "@/assets/icons/DeleteIcon";
 import PointIcon from "@/assets/icons/PointIcon";
-import SubTitleBar from "@/components/SubTItleBar/SubTitleBar";
 
 const ShoppingCartPage = () => {
   const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
