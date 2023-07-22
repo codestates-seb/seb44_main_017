@@ -13,7 +13,7 @@ import CustomPagination from "@/components/Pagination/CustomPagination";
 import CategoryButton from "../../components/CategoryButton/CategoryButton";
 
 interface Data {
-  product_id: string;
+  productId: string;
   image_link: string;
   isSell: boolean;
   isLike: boolean;
@@ -21,35 +21,55 @@ interface Data {
   price: string;
   category: string;
 }
+
+interface RecommendData {
+  productId: string;
+  image_link: string;
+  isSell: boolean;
+  isLike: boolean;
+  name: string;
+  price: string;
+  category: string;
+}
+
 interface Category {
   name: string;
   value: string;
 }
+
 export const ProductListPage = () => {
   const [btnSelect, setBtnSelect] = useState<boolean>(false);
   const [btnCategory, setBtnCategory] = useState<string>("전체");
   const [data, setData] = useState<Data[]>([]);
+  const [recommendData, setRecommendData] = useState<RecommendData[]>([]);
   const isLike = false;
   const ref = useRef<HTMLDivElement>(null);
   const [translate, setTranslate] = useState<number>(0);
   const [value, setValue] = useState<string>("newest");
   const isSell = false;
   const [page, setPage] = useState<any>(1);
+  const [size, setSize] = useState<number>(1);
 
-  const getProducts = async () => {
-    const [authorization, refresh] = getToken();
+  const getRecommendProducts = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/products?page=${page}&size=20&sort=${value}&issell=false`,
-        {
-          // 서버 수정 후 사용 안함
-          headers: {
-            Authorization: `${authorization}`,
-            Refresh: `${refresh}`,
-          },
-        }
+        `${BASE_URL}/products?page=1&size=20&sort="newest"&issell=false`
       );
       const data = response.data.data;
+      console.log(data);
+      setRecommendData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getProducts = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/products?page=${page}&size=${size}&sort=${value}`
+      );
+      const data = response.data.data;
+      console.log(data);
       let filteredData = [];
 
       if (btnCategory === "전체") {
@@ -59,9 +79,7 @@ export const ProductListPage = () => {
           (product: any) => product.category === btnCategory
         );
       }
-
       setData(filteredData);
-      // setData(data);
     } catch (error) {
       console.log(error);
     }
@@ -89,9 +107,34 @@ export const ProductListPage = () => {
     setBtnSelect(!btnSelect);
   };
 
+  const productCount = () => {
+    const width = window.innerWidth;
+    let size = 0;
+    if (width > 1023) {
+      size = 20;
+    } else if (width < 1023 && width > 767) {
+      size = 18;
+    } else if (width < 766) {
+      size = 10;
+    }
+    setSize(size);
+  };
+
   useEffect(() => {
+    productCount();
     getProducts();
-  }, [value, btnCategory, page]);
+    getRecommendProducts();
+
+    const handleResize = () => {
+      productCount();
+      getProducts();
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [value, btnCategory, page, size]);
 
   const handlePrev = () => {
     if (ref.current) {
@@ -128,18 +171,18 @@ export const ProductListPage = () => {
         <S.ProductsBox>
           <S.ArrowLeftIcon src={arrowLeftIcon} onClick={handlePrev} />
           <S.ProductsCarousel>
-            {data.map((data) => (
+            {recommendData.map((recommendData) => (
               <S.Product
                 ref={ref}
                 style={{ transform: `translateX(${translate}px)` }}
               >
                 <ProductItem
-                  url={`${IMG_URL}/${data.image_link}`}
+                  url={`${recommendData.image_link}`}
                   isSell={false}
                   like={isLike}
-                  title={data.name}
-                  price={data.price}
-                  product_id={data.product_id}
+                  title={recommendData.name}
+                  price={recommendData.price}
+                  productId={recommendData.productId}
                 ></ProductItem>
               </S.Product>
             ))}
@@ -163,12 +206,12 @@ export const ProductListPage = () => {
         {data.map((data) => (
           <S.Product>
             <ProductItem
-              url={`https://s3.ap-northeast-2.amazonaws.com/mainproject.bucket/${data.image_link}`}
+              url={`${data.image_link}`}
               isSell={isSell}
               like={isLike}
               title={data.name}
               price={data.price}
-              product_id={data.product_id}
+              productId={data.productId}
             ></ProductItem>
           </S.Product>
         ))}
