@@ -4,14 +4,18 @@ import styled from "styled-components";
 
 interface SearchBarProps {
   searchValue: string;
-  setSearchValue: React.Dispatch<React.SetStateAction<string>>;
-  submitHandler: () => void;
+  changeHandler: (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => void;
+  searchHandler: (e: React.FormEvent) => void;
 }
 
 const SearchBar = ({
   searchValue,
-  setSearchValue,
-  submitHandler,
+  changeHandler,
+  searchHandler,
 }: SearchBarProps) => {
   const [isFocus, setIsFocus] = useState(false);
 
@@ -23,11 +27,11 @@ const SearchBar = ({
           type="text"
           value={searchValue}
           placeholder="Search..."
-          onChange={e => setSearchValue(e.target.value)}
+          onChange={changeHandler}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
         />
-        <button onClick={submitHandler}>검색</button>
+        <button onClick={searchHandler}>검색</button>
       </SearchElement>
     </Form>
   );
