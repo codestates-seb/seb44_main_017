@@ -120,7 +120,7 @@ export const Spacing = styled.div`
   }
 `;
 
-export const NavButton = styled.a<{ href: string }>`
+export const NavButton = styled.a<{ path: string }>`
   color: var(--color-gray200);
   text-decoration: none;
   ${({ href }) => {

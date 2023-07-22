@@ -94,7 +94,7 @@ export const SubTitleButton = styled.a`
     margin-bottom: -152px;
   }
 `;
-export const NavButton = styled.a<{ href: string }>`
+export const NavButton = styled.a<{ path: string }>`
   color: var(--color-gray200);
   text-decoration: none;
   ${({ href }) => {
