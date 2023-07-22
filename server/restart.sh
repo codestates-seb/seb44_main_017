@@ -18,4 +18,4 @@ echo "Application Restart"
 echo $1
 
 # nohup executes server on background
-nohup java -jar build/libs/project-0.0.1-SNAPSHOT.war --spring.profiles.active=dev > ~/logs/logfile.log 2>&1 &
+nohup java -jar build/libs/project-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev > ~/logs/logfile.log 2>&1 &
