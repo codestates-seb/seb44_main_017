@@ -213,7 +213,8 @@ public class ProductController {
                     .getAdminId();
             Product product = productService.updateProduct(productId,
                     productMapper.productPatchDtotoProduct(productPatchDto),
-                    productService.findProduct(productId).getMember());
+                    productService.findProduct(productId).getMember()
+                    , AdminId);
             response = productMapper.productToProductResponseWithComment(product);
         }else{
             throw new BusinessLogicException(ExceptionCode.REFRESH_NOT_FOUND);
