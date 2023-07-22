@@ -147,7 +147,7 @@ const ShoppingCartPage = () => {
               ></S.CheckBox>
               <S.CheckboxLabel htmlFor="cart_all">전체 선택</S.CheckboxLabel>
             </div>
-            <S.CartItems>
+            <S.CartItems isEmpty={cartItems.length === 0}>
               {Array.isArray(cartItems) && cartItems.length > 0 ? (
                 cartItems.map(item => (
                   <li key={item.productId}>
