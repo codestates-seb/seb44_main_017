@@ -78,18 +78,18 @@ export const ItemBox = styled.div`
   }
 `;
 
-export const CartItems = styled.div`
+export const CartItems = styled.div<{ isEmpty: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: 100px;
+  padding: ${props => (props.isEmpty ? "100px" : 0)};
 
   @media (min-width: 768px) and (max-width: 1023px) {
-    padding: 80px;
+    padding: ${props => (props.isEmpty ? "80px" : 0)};
   }
 
   @media (max-width: 767px) {
-    padding: 40px 0 20px;
+    padding: ${props => (props.isEmpty ? "40px 0 20px" : 0)};
   }
 
   & li {
