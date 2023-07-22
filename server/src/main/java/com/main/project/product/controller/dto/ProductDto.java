@@ -68,6 +68,7 @@ public class ProductDto {
 
     @Getter
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class Post{
         @NotBlank(message = "공백이 아니어야 합니다.")
         private String name;
