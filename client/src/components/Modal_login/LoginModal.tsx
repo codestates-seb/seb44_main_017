@@ -156,11 +156,11 @@ const LoginModal = ({ closeModal }: Props) => {
         <S.OAuthButtonContainer>
           <S.KakaoButton onClick={kakaoLoginRequestHandler}>
             <S.KakaoIcon />
-            카카오
+            카카오 로그인
           </S.KakaoButton>
           <S.GoogleButton onClick={googleLoginRequestHandler}>
             <S.GoogleIcon />
-            구글
+            구글 로그인
           </S.GoogleButton>
         </S.OAuthButtonContainer>
         <S.LoginButton onClick={handleLogin}>LOGIN</S.LoginButton>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const CategoryButton = styled.button<{ btnSelect: boolean }>`
-  background-color: ${(props) => (props.btnSelect ? "#2b475c" : "#e9e6e1")};
+  background-color: ${(props) => (props.btnSelect ? "#2b475c" : "white")};
   color: ${(props) => (props.btnSelect ? "#ffffff" : "#2b475c")};
   border: solid 2px #2b475c;
   border-radius: 30px;
@@ -13,6 +13,9 @@ export const CategoryButton = styled.button<{ btnSelect: boolean }>`
   @media (max-width: 767px) {
     font-size: 10px;
     width: 48px;
+    :nth-child(-n + 4) {
+      margin-right: 12px;
+    }
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     font-size: 12px;
