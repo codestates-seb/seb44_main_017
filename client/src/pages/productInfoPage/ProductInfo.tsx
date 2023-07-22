@@ -26,7 +26,7 @@ const ProductInfo = (props: ProductProps) => {
   const navigate = useNavigate();
 
   return (
-    <>
+    <div>
       <S.ProductInfo>
         <S.ContetntsWrapper>
           <S.ProductImageBox>
@@ -84,7 +84,7 @@ const ProductInfo = (props: ProductProps) => {
       <S.CommentContainer>
         <Comment comments={productData.comments} setComplete={setComplete} />
       </S.CommentContainer>
-    </>
+    </div>
   );
 };
 

@@ -115,7 +115,7 @@ export const ProductInfoPage = () => {
   };
 
   return (
-    <div>
+    <>
       {data && (
         <ProductInfo
           productData={data}
@@ -125,6 +125,6 @@ export const ProductInfoPage = () => {
           addToCart={addToCart}
         />
       )}
-    </div>
+    </>
   );
 };
