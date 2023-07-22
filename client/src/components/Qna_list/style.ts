@@ -19,10 +19,21 @@ export const PageTitle = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 36px 16px 20px;
+
+  & h2 {
+    @media (max-width: 767px) {
+      font-size: var(--font-size-16);
+    }
+
+    @media (min-width: 768px) and (max-width: 1120px) {
+      font-size: 20px;
+    }
+  }
 `;
 
 export const SortBox = styled.div`
   align-self: end;
+  margin-bottom: 16px;
 `;
 
 export const BoardContainer = styled.table`

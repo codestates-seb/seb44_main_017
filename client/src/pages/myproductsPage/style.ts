@@ -4,6 +4,11 @@ export const Section = styled.section`
   display: flex;
   flex-direction: column;
   padding: 36px;
+`;
+
+export const Container = styled.article`
+  display: flex;
+  flex-direction: column;
   max-width: 1200px;
   width: 90%;
   margin: 0 auto;
@@ -13,24 +18,34 @@ export const PageTitle = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 36px 16px 20px;
+
+  & h2 {
+    @media (max-width: 767px) {
+      font-size: var(--font-size-16);
+    }
+
+    @media (min-width: 768px) and (max-width: 1120px) {
+      font-size: 20px;
+    }
+  }
 `;
 
 export const ContentBox = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border-top: 2px solid var(--color-black);
-  padding: 24px;
+  padding-top: 24px;
   grid-row-gap: 12px;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1070px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 830px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media (max-width: 520px) {
+  @media (max-width: 580px) {
     grid-template-columns: repeat(1, 1fr);
   }
 
@@ -40,8 +55,8 @@ export const ContentBox = styled.div`
   }
 
   & img {
-    width: 250px;
-    height: 250px;
+    width: 230px;
+    height: 230px;
 
     @media (max-width: 1200px) {
       width: 200px;

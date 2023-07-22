@@ -57,42 +57,44 @@ const MyproductsPage = () => {
         point={userInfo?.money}
       />
       <S.Section>
-        <S.PageTitle>
-          <h2>내가 등록한 상품</h2>
-          <SelectBox
-            usage={"상태"}
-            options={sortOptions}
-            setOption={setSortValue}
-          />
-        </S.PageTitle>
+        <S.Container>
+          <S.PageTitle>
+            <h2>내가 등록한 상품</h2>
+            <SelectBox
+              usage={"상태"}
+              options={sortOptions}
+              setOption={setSortValue}
+            />
+          </S.PageTitle>
 
-        {Array.isArray(productData) && productData.length < 1 ? (
-          <S.NoneItemsBox>
-            <div className="none_items">등록한 상품이 없습니다.</div>
-          </S.NoneItemsBox>
-        ) : (
-          <S.ContentBox>
-            {productData.map(item => (
-              <div className="product_wrapper" key={item.productId}>
-                <ProductItem
-                  url={IMG_URL + "/" + item.imageLink}
-                  isSell={false}
-                  like={false}
-                  title={item.name}
-                  price={item.price}
-                  productId={item.productId}
-                />
-              </div>
-            ))}
-          </S.ContentBox>
-        )}
-        <S.PaginationBox>
-          <CustomPagination
-            pageCount={totalPage}
-            page={page}
-            setPage={setPage}
-          />
-        </S.PaginationBox>
+          {Array.isArray(productData) && productData.length < 1 ? (
+            <S.NoneItemsBox>
+              <div className="none_items">등록한 상품이 없습니다.</div>
+            </S.NoneItemsBox>
+          ) : (
+            <S.ContentBox>
+              {productData.map(item => (
+                <div className="product_wrapper" key={item.productId}>
+                  <ProductItem
+                    url={IMG_URL + "/" + item.imageLink}
+                    isSell={false}
+                    like={false}
+                    title={item.name}
+                    price={item.price}
+                    productId={item.productId}
+                  />
+                </div>
+              ))}
+            </S.ContentBox>
+          )}
+          <S.PaginationBox>
+            <CustomPagination
+              pageCount={totalPage}
+              page={page}
+              setPage={setPage}
+            />
+          </S.PaginationBox>
+        </S.Container>
       </S.Section>
     </>
   );
