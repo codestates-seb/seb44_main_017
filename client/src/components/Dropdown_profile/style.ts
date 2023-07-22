@@ -47,7 +47,7 @@ export const DropDownContainer = styled.div<{ isDropped: boolean }>`
   &::before {
     content: "";
     position: absolute;
-    top: -3%;
+    top: -4%;
     left: 80%;
     border: 10px solid transparent;
     border-width: 0px 5px 5px;
