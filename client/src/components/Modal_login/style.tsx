@@ -14,14 +14,15 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 999;
+  animation: 2s ease 0s 1 normal forwards running showview;
 `;
 
 export const Content = styled.div`
   width: 360px;
   padding: 36px 0px;
   background-color: rgba(247, 247, 247, 0.7);
-  backdrop-filter: 10px;
-  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(5px);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
   border-radius: 16px;
   display: flex;
   justify-content: center;
@@ -67,9 +68,9 @@ export const InputBox = styled.input`
   border-color: var(--color-darkblue);
   outline: none;
   background-color: transparent;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   ::placeholder {
-    color: var(--color-gray200);
+    color: #545454;
     font-weight: var(--font-weight-700);
   }
 `;
@@ -133,18 +134,18 @@ export const ErrorMsg = styled.div`
 
 export const OAuthButtonContainer = styled.div`
   display: flex;
-  margin-bottom: 16px;
+  flex-direction: column;
 `;
 export const KakaoButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 12px 0px;
-  width: 120px;
+  width: 280px;
   font-weight: 700;
   background-color: #fee500;
   color: #000000;
-  margin-right: 16px;
+  margin-bottom: 16px;
   border-radius: 12px;
   border: none;
 `;
@@ -159,7 +160,8 @@ export const GoogleButton = styled.button`
   justify-content: center;
   align-items: center;
   padding: 12px 0px;
-  width: 120px;
+  margin-bottom: 16px;
+  width: 280px;
   font-weight: 700;
   background-color: white;
   color: #000000;
