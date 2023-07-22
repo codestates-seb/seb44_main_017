@@ -13,7 +13,7 @@ const QnaListPage = () => {
   const [qnaList, setQnaList] = useState<QnaTypes[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
-  const title = "무엇이 궁금한가요?";
+  const title = "Q & A";
 
   const [authorization, refresh] = getToken();
 

@@ -35,7 +35,8 @@ export const InfoBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 48px 140px;
+  padding: 48px 100px;
+  min-width: 500px;
 
   @media (max-width: 767px) {
     padding: 24px 0px;

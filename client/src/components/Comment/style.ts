@@ -103,7 +103,7 @@ export const CommentInfoBox = styled.div`
   }
 `;
 
-export const CommentInfo = styled.div`
+export const CommentInfo = styled.div<{ isWriter: boolean }>`
   font-size: 14px;
   display: flex;
   gap: 20px;
@@ -116,6 +116,7 @@ export const CommentInfo = styled.div`
 
   & .comment_writer {
     font-weight: var(--font-weight-700);
+    color: ${props => props.isWriter && "#2b475c"};
   }
 `;
 
@@ -170,6 +171,9 @@ export const UpdateBtnBox = styled.div`
   & button {
     background: none;
     border: none;
+    @media (max-width: 767px) {
+      font-size: var(--font-size-12);
+    }
   }
 
   & svg:hover {

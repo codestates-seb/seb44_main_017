@@ -159,7 +159,13 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
           comments.map((e: QnACommentTypes | ProductCommentTypes | any) => (
             <S.CommentBox key={qPath ? e.commentId : e.productCommentId}>
               <S.CommentInfoBox>
-                <S.CommentInfo>
+                <S.CommentInfo
+                  isWriter={
+                    qPath
+                      ? e.writer.adminId === userInfo?.memberId
+                      : e.writer.memberId === userInfo?.memberId
+                  }
+                >
                   <span className="comment_writer">{e.writer.name}</span>
                   <span className="comment_created_at">
                     {elapsedTime(new Date(e.createAt))}

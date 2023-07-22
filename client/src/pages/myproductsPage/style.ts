@@ -12,7 +12,7 @@ export const Section = styled.section`
 export const PageTitle = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 36px 16px 8px 16px;
+  padding: 36px 16px 20px;
 `;
 
 export const ContentBox = styled.div`
@@ -48,4 +48,28 @@ export const ContentBox = styled.div`
       height: 200px;
     }
   }
+`;
+
+export const NoneItemsBox = styled.div`
+  border-top: 2px solid var(--color-black);
+
+  & .none_items {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+    border: 1px dashed var(--color-gray100);
+    border-radius: 16px;
+    margin-bottom: 36px;
+    color: var(--color-gray200);
+    margin-top: 24px;
+  }
+`;
+
+export const PaginationBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 36px 0;
 `;
