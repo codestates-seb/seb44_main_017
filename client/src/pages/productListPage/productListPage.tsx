@@ -128,7 +128,7 @@ export const ProductListPage = () => {
         <S.ProductsBox>
           <S.ArrowLeftIcon src={arrowLeftIcon} onClick={handlePrev} />
           <S.ProductsCarousel>
-            {data.map((data) => (
+            {data.map(data => (
               <S.Product
                 ref={ref}
                 style={{ transform: `translateX(${translate}px)` }}
@@ -139,7 +139,7 @@ export const ProductListPage = () => {
                   like={isLike}
                   title={data.name}
                   price={data.price}
-                  product_id={data.product_id}
+                  productId={data.product_id}
                 ></ProductItem>
               </S.Product>
             ))}
@@ -148,7 +148,7 @@ export const ProductListPage = () => {
         </S.ProductsBox>
       </S.SubTitleContainer>
       <S.CategoryBar>
-        {categories.map((category) => (
+        {categories.map(category => (
           <CategoryButton
             onClick={handleBtnCategory}
             btnSelect={btnCategory === category.name}
@@ -160,7 +160,7 @@ export const ProductListPage = () => {
         <SelectBox usage={"정렬"} options={sortOptions} setOption={setValue} />
       </S.SelectBar>
       <S.ProductsContainer>
-        {data.map((data) => (
+        {data.map(data => (
           <S.Product>
             <ProductItem
               url={`https://s3.ap-northeast-2.amazonaws.com/mainproject.bucket/${data.image_link}`}
@@ -168,7 +168,7 @@ export const ProductListPage = () => {
               like={isLike}
               title={data.name}
               price={data.price}
-              product_id={data.product_id}
+              productId={data.product_id}
             ></ProductItem>
           </S.Product>
         ))}
