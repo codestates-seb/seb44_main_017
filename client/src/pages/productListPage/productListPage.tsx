@@ -186,7 +186,7 @@ export const ProductListPage = () => {
         </S.ProductsBox>
       </S.SubTitleContainer>
       <S.CategoryBar>
-        {categories.map((category) => (
+        {categories.map(category => (
           <CategoryButton
             onClick={handleBtnCategory}
             btnSelect={btnCategory === category.name}
@@ -198,7 +198,7 @@ export const ProductListPage = () => {
         <SelectBox usage={"정렬"} options={sortOptions} setOption={setValue} />
       </S.SelectBar>
       <S.ProductsContainer>
-        {data.map((data) => (
+        {data.map(data => (
           <S.Product>
             <ProductItem
               url={`${data.image_link}`}
