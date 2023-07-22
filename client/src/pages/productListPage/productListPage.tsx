@@ -1,9 +1,6 @@
 import axios from "axios";
 import * as S from "./style";
-import { getToken } from "@/utils/token";
 import { BASE_URL } from "@/constants/constants";
-import { IMG_URL } from "@/constants/constants";
-import Logo from "../../assets/logo_subtitle.svg";
 import { useState, useEffect, useRef } from "react";
 import arrowLeftIcon from "../../assets/arrowLeftIcon.svg";
 import SelectBox from "../../components/SelectBox/SelectBox";
@@ -164,8 +161,6 @@ export const ProductListPage = () => {
     <S.Container>
       <S.SubTitleContainer>
         <S.SubTitleBox>
-          <S.SubTitle style={{ color: "#2b475c" }}>RECLOSET</S.SubTitle>
-          <S.SubTitleLogo src={Logo}></S.SubTitleLogo>
           <S.SubTitle>추천 상품</S.SubTitle>
         </S.SubTitleBox>
         <S.ProductsBox>
