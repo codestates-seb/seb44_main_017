@@ -40,14 +40,13 @@ export const Imagebox = styled.div`
   & > .image_background {
     border-radius: 20px;
     border: 2px solid var(--dark-blue, #2b475c);
-    background: #d9d9d9;
+    background: var(--color-white);
     width: 292px;
     height: 292px;
     display: flex;
     justify-content: center;
     align-items: center;
-    backdrop-filter: blur(5px);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     cursor: pointer;
 
     @media (min-width: 768px) and (max-width: 1023px) {
@@ -68,16 +67,22 @@ export const Imagebox = styled.div`
     border-radius: 40px;
     width: 160px;
     height: 35px;
-    background: radial-gradient(
+    background-color: var(--color-white);
+    /* background: radial-gradient(
       190.97% 141.42% at 100% 100%,
       rgba(247, 247, 247, 0.7) 0%,
       rgba(247, 247, 247, 0.7) 100%
     );
-    backdrop-filter: blur(5px);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(5px); */
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     color: var(--color-darkblue);
     font-size: 16px;
     font-weight: 700;
+
+    &:hover {
+      background-color: var(--color-darkblue);
+      color: var(--color-white);
+    }
 
     @media (min-width: 768px) and (max-width: 1023px) {
       width: 120px;
@@ -107,12 +112,7 @@ export const ContentBox = styled.div`
     padding: 7px 10px;
     border: 2px solid var(--color-darkblue);
     border-radius: 12px;
-    background: radial-gradient(
-      190.97% 141.42% at 100% 100%,
-      rgba(247, 247, 247, 0.7) 0%,
-      rgba(247, 247, 247, 0.7) 100%
-    );
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 
     &:focus {
       outline: 1px solid var(--color-darkblue);
@@ -122,15 +122,10 @@ export const ContentBox = styled.div`
   & > textarea {
     border-radius: 12px;
     border: 2px solid var(--color-darkblue);
-    background: radial-gradient(
-      190.97% 141.42% at 100% 100%,
-      rgba(247, 247, 247, 0.7) 0%,
-      rgba(247, 247, 247, 0.7) 100%
-    );
     resize: none;
     padding: 8px 12px;
     height: 180px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
 
     @media (min-width: 768px) and (max-width: 1023px) {
       height: 150px;

@@ -7,12 +7,7 @@ export const SelectBox = styled.div`
   flex-shrink: 0;
   border: 2px solid var(--color-darkblue);
   border-radius: 40px;
-  background: radial-gradient(
-    190.97% 141.42% at 100% 100%,
-    rgba(247, 247, 247, 0.7) 0%,
-    rgba(247, 247, 247, 0.7) 100%
-  );
-  backdrop-filter: blur(5px);
+  background-color: var(--color-white);
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   display: flex;
@@ -63,11 +58,7 @@ export const SelectOptions = styled.ul<{ isOpen: boolean }>`
   border: ${props =>
     props.isOpen ? "2px solid var(--color-darkblue)" : "none"};
   border-radius: 8px;
-  background: radial-gradient(
-    190.97% 141.42% at 100% 100%,
-    rgba(247, 247, 247, 1) 0%,
-    rgba(247, 247, 247, 1) 100%
-  );
+  background-color: var(--color-white);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   color: #111;
 
