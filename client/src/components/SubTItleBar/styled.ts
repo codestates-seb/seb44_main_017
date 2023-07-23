@@ -97,9 +97,9 @@ export const SubTitleButton = styled.a`
 export const NavButton = styled.a<{ path: string }>`
   color: var(--color-gray200);
   text-decoration: none;
-  ${({ href }) => {
+  ${({ path }) => {
     const location = useLocation();
-    return href === location.pathname
+    return path === location.pathname
       ? `color: var(--color-darkblue);
       font-weight: var(--font-weight-700);
       border-bottom : 2px solid var(--color-darkblue)`
