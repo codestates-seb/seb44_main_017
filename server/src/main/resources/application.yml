@@ -10,7 +10,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-    show-sql: false
+    show-sql: true
     open-in-view: true
     profiles:
       include: create

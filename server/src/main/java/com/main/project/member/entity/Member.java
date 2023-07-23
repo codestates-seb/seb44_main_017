@@ -59,6 +59,12 @@ public class Member {
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> likedProducts = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(name = "MemberProductView",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> viewedProducts = new ArrayList<>();
+
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
     private List<Orderproduct> orderproducts = new ArrayList<>();
 
@@ -101,6 +107,16 @@ public class Member {
     public void removeLikedProducts(Product product){
         if(this.likedProducts.contains(product))
             this.likedProducts.remove(product);
+    }
+
+    public void addViewedProducts(Product product){
+        if(!this.viewedProducts.contains(product))
+            this.viewedProducts.add(product);
+    }
+
+    public void removeViewedProducts(Product product){
+        if(this.viewedProducts.contains(product))
+            this.viewedProducts.remove(product);
     }
 
     public void addProductComments(ProductComment productComment){
