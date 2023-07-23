@@ -1,7 +1,6 @@
 import axios from "axios";
 import * as S from "./style";
 import { useState } from "react";
-
 import { Logo } from "../../assets/logoSimple";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
@@ -30,15 +29,11 @@ const LoginModal = ({ closeModal }: Props) => {
   };
 
   const googleLoginRequestHandler = () => {
-    window.location.assign(
-      "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google"
-    );
+    window.location.assign(`${BASE_URL}/oauth2/authorization/google`);
   };
 
   const kakaoLoginRequestHandler = () => {
-    window.location.assign(
-      "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/kakao"
-    );
+    window.location.assign(`${BASE_URL}/oauth2/authorization/kakao`);
   };
 
   const handleLogin = async () => {
