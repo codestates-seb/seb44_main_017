@@ -144,9 +144,9 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         // 추후 프론트 준비 왼료시 바꿈
         return UriComponentsBuilder
                 .newInstance()
-                .scheme("http")
-                .host("localhost")
-                .port(5173)
+                .scheme("https")
+                .host("recloset-git-fe-dev-7eleven.vercel.app")
+                //.port(443)
                 .path("/")
                 .queryParams(queryParams)
                 .build()
