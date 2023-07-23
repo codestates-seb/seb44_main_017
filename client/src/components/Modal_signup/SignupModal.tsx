@@ -101,7 +101,8 @@ const SignupModal = ({ closeModal }: Props) => {
       !nameError &&
       !passwordError &&
       !phoneError &&
-      !isAdmin
+      !isAdmin &&
+      duplicateCheckName
     ) {
       try {
         const data = {
@@ -127,7 +128,8 @@ const SignupModal = ({ closeModal }: Props) => {
       !nameError &&
       !passwordError &&
       !phoneError &&
-      isAdmin
+      isAdmin &&
+      duplicateCheckName
     ) {
       try {
         const data = {

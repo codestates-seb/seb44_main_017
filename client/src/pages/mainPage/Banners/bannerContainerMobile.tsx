@@ -1,7 +1,9 @@
 import * as S from "./styled";
-import { mobileBannerImage } from "../../../assets"
-
-const BannerContainerMobile = () => {
+import { mobileBannerImage } from "../../../assets";
+interface Props {
+  clickCollection: () => void;
+}
+const BannerContainerMobile: React.FC<Props> = ({ clickCollection }) => {
   return (
     <S.BannerContainerMobile>
       <S.MobileBannerImage src={mobileBannerImage} />
@@ -11,7 +13,7 @@ const BannerContainerMobile = () => {
           <S.MainTitle>RECLOSET</S.MainTitle>
           <S.RecycleIcon />
         </S.TitleContainer>
-        <S.CollectionBtn>
+        <S.CollectionBtn onClick={clickCollection}>
           수거 신청하기
         </S.CollectionBtn>
       </S.TitleContainerMobile>

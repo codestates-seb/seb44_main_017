@@ -104,3 +104,20 @@ export const ContentBox = styled.div`
     }
   }
 `;
+
+export const SpeedDialContainer = styled.div`
+  position: absolute;
+
+  @media (max-width: 767px) {
+    bottom: 16px;
+    right: 0px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    bottom: 36px;
+    right: 0px;
+  }
+  @media (min-width: 1024px) {
+    bottom: 48px;
+    right: -24px;
+  }
+`;
