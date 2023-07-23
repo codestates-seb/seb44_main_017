@@ -15,7 +15,7 @@ const Modify = (props: ModifyProps) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [authorization, refresh] = getToken();
-  const { questionId, noticeID } = useParams();
+  const { questionId, boardId } = useParams();
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
@@ -25,7 +25,7 @@ const Modify = (props: ModifyProps) => {
     try {
       const res = await axios.patch(
         path
-          ? `${BASE_URL}/notify/${noticeID}`
+          ? `${BASE_URL}/notify/${boardId}`
           : `${BASE_URL}/questions/${questionId}`,
         {
           title: title,
@@ -55,7 +55,7 @@ const Modify = (props: ModifyProps) => {
       modifyPost();
       alert("수정이 완료되었습니다.");
       navigate("/notice");
-    } else {
+    } else if (confirmDelete) {
       modifyPost();
       alert("수정이 완료되었습니다.");
       navigate("/questions");

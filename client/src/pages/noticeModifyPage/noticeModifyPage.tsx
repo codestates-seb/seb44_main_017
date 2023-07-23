@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { getToken } from "@/utils/token";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Modify from "@/components/Modify/Modify";
@@ -20,7 +19,6 @@ type NoticeType = {
 
 const NoticeModifyPage = () => {
   const { boardId } = useParams();
-  // const [authorization, refresh] = getToken();
   const [data, setData] = useState<NoticeType>({
     boardId: "",
     title: "",
