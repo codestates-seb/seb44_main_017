@@ -88,7 +88,7 @@ export const ProductListPage = () => {
       console.log(error);
     }
   };
-  console.log(data);
+
   const getProductsFalse = async () => {
     try {
       const response = await axios.get(
@@ -160,7 +160,6 @@ export const ProductListPage = () => {
     } else if (width < 766) {
       size = 9;
     }
-    console.log(data.length);
     setPageTotal(data.length / size + 1);
     setSize(size);
   };
