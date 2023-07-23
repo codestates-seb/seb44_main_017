@@ -49,7 +49,7 @@ const HamburgerDropdown = ({
       if (path === "/") {
         window.location.reload();
       } else {
-        navigate("/");
+        window.location.href = "/";
       }
     }
   };
