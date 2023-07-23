@@ -87,10 +87,10 @@ public class MemberService {
     public Member updateMember(Member member) {
         Optional<Member> optionalMember = memberRepository.findById(member.getMemberId());
         Member fm = optionalMember.orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-
+        String encryptedPassword = passwordEncoder.encode(member.getPassword());
         Optional.ofNullable(member.getName()).ifPresent(name -> fm.setName(member.getName()));
         Optional.ofNullable(member.getPhone()).ifPresent(phone -> fm.setPhone(member.getPhone()));
-        Optional.ofNullable(member.getPassword()).ifPresent(birthday -> fm.setPassword(member.getPassword()));
+        Optional.ofNullable(member.getPassword()).ifPresent(password -> fm.setPassword(encryptedPassword));
 
         return memberRepository.save(fm);
     }
@@ -138,5 +138,6 @@ public class MemberService {
     public Member findMember(String email){
         return  memberRepository.findByEmail(email).get();
     }
+
 
 }
