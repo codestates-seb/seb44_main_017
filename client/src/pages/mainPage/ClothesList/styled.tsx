@@ -18,22 +18,22 @@ export const ContainerMobile = styled.div`
   flex-wrap: wrap;
   overflow: hidden;
   margin-top: 36px;
-  @media (max-width: 479px) {
-    width: 342px;
+  @media (max-width: 534px) {
+    width: 340px;
   }
-  @media (min-width: 480px) and (max-width: 639px) {
-    width: 468px;
+  @media (min-width: 535px) and (max-width: 713px) {
+    width: 514px;
   }
-  @media (min-width: 640px) and (max-width: 767px) {
-    width: 624px;
+  @media (min-width: 714px) and (max-width: 767px) {
+    width: 692px;
   }
   @media (min-width: 768px) {
     display: none;
   }
 `;
-export const ClothesListContainer =styled.div`
+export const ClothesListContainer = styled.div`
   display: flex;
-`
+`;
 export const UppserListContainer = styled.div`
   display: flex;
   justify-content: center;
