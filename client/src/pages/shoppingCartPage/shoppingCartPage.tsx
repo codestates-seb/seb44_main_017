@@ -23,12 +23,14 @@ const ShoppingCartPage = () => {
     reciver: "",
     reciverphone: "",
     pointspend: 0,
+    productlist: "",
   });
   const [cartItems, setCartItems] =
     useRecoilState<CartItemTypes[]>(cartItemState);
   const [checkedItems, setCheckedItems] = useState<number[]>(
     cartItems.map(item => item.productId)
   );
+  const [paymentList, setPaymentList] = useState(",");
 
   const [authorization, refresh] = getToken();
   const [isOpenPostPopup, setIsOpenPostcode] = useState(false);
@@ -36,6 +38,10 @@ const ShoppingCartPage = () => {
   const handlePostCode = () => {
     setIsOpenPostcode(!isOpenPostPopup);
   };
+
+  console.log(paymentList);
+  console.log("cartItems = ", cartItems);
+  console.log("checkedItems = ", checkedItems);
 
   const getCartItems = () => {
     axios
@@ -57,6 +63,7 @@ const ShoppingCartPage = () => {
         reciver: userInfo?.name,
         reciverphone: userInfo?.phone,
         pointspend: spendPoints,
+        productlist: paymentList,
       },
       {
         headers: {
@@ -68,8 +75,8 @@ const ShoppingCartPage = () => {
 
     if ((data && status === 200) || 201) {
       window.open(data);
+      alert("결제가 완료되었습니다.");
       window.location.reload();
-      return data;
     }
   };
 
@@ -91,12 +98,16 @@ const ShoppingCartPage = () => {
   const checkedItemsOrderHandler = () => {
     if (cartItems.length !== checkedItems.length) {
       const idList = cartItems.map(item => item.productId);
+      const unCheckedList = [];
 
       for (let i = 0; i < idList.length; i++) {
         if (checkedItems.indexOf(idList[i]) === -1) {
-          deleteItem(idList[i]);
+          unCheckedList.push(idList[i]);
+          console.log("unCheckedList = ", unCheckedList);
         }
       }
+
+      setPaymentList(unCheckedList.toString());
     }
     orderItems();
   };
@@ -140,7 +151,7 @@ const ShoppingCartPage = () => {
   useEffect(() => {
     setTotal(getTotal());
     getCartItems();
-  }, [, checkedItems, cartItems.length]);
+  }, [, checkedItems, cartItems.length, paymentList]);
 
   return (
     <>
