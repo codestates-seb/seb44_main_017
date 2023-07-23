@@ -100,10 +100,24 @@ function NoticeDetailPage() {
     getNotice();
     getPreNotice();
     getNextNotice();
-    preData === null ? setPreNoticeBox(true) : setPreNoticeBox(false);
-    nextData === null ? setNextNoticeBox(true) : setNextNoticeBox(false);
     roles === "admin" ? setIsAdmin(true) : setIsAdmin(false);
   }, []);
+
+  useEffect(() => {
+    if (Object.keys(preData).length === 0) {
+      setPreNoticeBox(true);
+    } else {
+      setPreNoticeBox(false);
+    }
+  }, [preData]);
+
+  useEffect(() => {
+    if (Object.keys(nextData).length === 0) {
+      setNextNoticeBox(true);
+    } else {
+      setNextNoticeBox(false);
+    }
+  }, [nextData]);
 
   const handlePreNotice = () => {
     navigate(`/notice/detail/${preData.boardId}/`);
