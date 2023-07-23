@@ -90,7 +90,7 @@ const slideFromTop = keyframes`
 `;
 const CustomAlert = styled(Alert)`
   position: absolute;
-  top: 80px;
+  top: 40px;
   border-radius: 99px !important;
   animation: ${slideFromTop} 1s ease;
   z-index: 99;
