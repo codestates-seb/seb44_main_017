@@ -1,6 +1,8 @@
 import { PostCodeTypes } from "@/types/shared";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import styled from "styled-components";
+import { useState } from "react";
+import CustomPrompt from "./../../utils/customPrompt";
 
 interface PostCodeProps {
   postCode: PostCodeTypes;
@@ -8,18 +10,32 @@ interface PostCodeProps {
 }
 
 const Postcode = ({ postCode, setPostCode }: PostCodeProps) => {
-  console.log(postCode);
+  const [detailValue, setDetailValue] = useState("");
+  const [isOpenPrompt, setIsOpenPrompt] = useState(false);
+  const promptElement = {
+    title: "상세 주소 입력",
+    content: "상세 주소를 입력해주세요.",
+    label: "상세 주소",
+  };
 
+  console.log(postCode.address);
   const selectDetailAddress = () => {
-    return prompt("상세 주소를 입력해주세요,");
+    setPostCode({
+      ...postCode,
+      address: postCode.address + " " + detailValue,
+    });
+
+    setIsOpenPrompt(false);
   };
 
   const selectAddress = (data: any) => {
     setPostCode({
       ...postCode,
-      address: data.address + " " + selectDetailAddress(),
+      address: data.address,
       postnum: data.zonecode,
     });
+
+    setIsOpenPrompt(true);
   };
 
   const themeObj = {
@@ -42,6 +58,17 @@ const Postcode = ({ postCode, setPostCode }: PostCodeProps) => {
           autoClose
         />
       </PostCodeBox>
+      {isOpenPrompt && (
+        <CustomPrompt
+          promptElement={promptElement}
+          isOpenPrompt={isOpenPrompt}
+          setIsOpenPrompt={setIsOpenPrompt}
+          detailValue={detailValue}
+          setValue={setDetailValue}
+          selectDetailAddress={selectDetailAddress}
+          postCode={postCode}
+        />
+      )}
     </>
   );
 };

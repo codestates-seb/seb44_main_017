@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { getToken } from "@/utils/token";
 import QnaListComponent from "@/components/Qna_list/qnaListComponent";
 import SubTitleBar from "@/components/SubTItleBar/SubTitleBar";
+import styled from "styled-components";
 
 const QnaListPage = () => {
   const PAGE_LIMIT = 7;
@@ -13,7 +14,7 @@ const QnaListPage = () => {
   const [qnaList, setQnaList] = useState<QnaTypes[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
-  const title = "Q & A";
+  const title = "질문 받아요";
 
   const [authorization, refresh] = getToken();
 
@@ -45,12 +46,14 @@ const QnaListPage = () => {
 
   return (
     <>
-      <SubTitleBar
-        title={title}
-        isButton={true}
-        btnTitle="질문하기"
-        btnLink={"/question_register"}
-      />
+      <SubTitleBarBox>
+        <SubTitleBar
+          title={title}
+          isButton={true}
+          btnTitle="질문하기"
+          btnLink={"/question_register"}
+        />
+      </SubTitleBarBox>
       <QnaListComponent
         data={qnaList}
         setPage={setPage}
@@ -63,3 +66,16 @@ const QnaListPage = () => {
 };
 
 export default QnaListPage;
+
+const SubTitleBarBox = styled.section`
+  width: 100%;
+  @media (max-width: 767px) {
+    margin-bottom: 16px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    margin-bottom: 62px;
+  }
+  @media (min-width: 1024px) {
+    margin-bottom: 60px;
+  }
+`;
