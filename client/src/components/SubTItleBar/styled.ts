@@ -97,6 +97,7 @@ export const SubTitleButton = styled.a`
 export const NavButton = styled.a<{ path: string }>`
   color: var(--color-gray200);
   text-decoration: none;
+  cursor: pointer;
   ${({ path }) => {
     const location = useLocation();
     return path === location.pathname
