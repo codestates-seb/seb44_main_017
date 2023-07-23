@@ -15,10 +15,12 @@ import com.main.project.questionComment.entity.QComment;
 import com.main.project.questionComment.mapper.QCommentMapper;
 import com.main.project.questionComment.repository.QCommentRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 public class QCommentService {
     private final AdminService adminService;
     private final MemberService memberService;

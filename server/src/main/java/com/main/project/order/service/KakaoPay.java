@@ -45,7 +45,7 @@ public class KakaoPay {
     private final MemberRepository memberRepository;
     private final MemberService memberService;
 
-    public String kakaoPayReadybucket(List<queryget.orderproductlist> productList, Order order) {
+    public String kakaoPayReadybucket(List<queryget.orderproductlist> productList, Order order, String nproductlist) {
         String productname;
         if(productList.size() == 0){
             throw new BusinessLogicException(ExceptionCode.NO_PRODUCTS);
@@ -72,7 +72,7 @@ public class KakaoPay {
         params.add("partner_order_id", String.valueOf(order.getOrderId()));
         params.add("partner_user_id", order.getMember().getEmail());
         params.add("item_name", productname);
-        params.add("item_code", "multi");
+        params.add("item_code", nproductlist);
         params.add("quantity", String.valueOf(productList.size()));
         params.add("total_amount", String.valueOf(order.getMoneycount()-order.getPointspend()));
         params.add("tax_free_amount", "100");
