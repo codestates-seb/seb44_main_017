@@ -70,20 +70,34 @@ public class KakaoController {
 
     @PostMapping("/kakaoPaybucket")
     public ResponseEntity kakaoPaybucket(@RequestHeader(name = "Refresh") String token,
-                                 @Valid @RequestBody OrderDto.Post requestBody){
+                                 @Valid @RequestBody OrderDto.Postbucket requestBody){
         Long memberId = findmemberId(token);
         Member member = memberService.findVerifiedMember(memberId);
+
+
+
         List<queryget.orderproductlist> productList = orderproductRepository.getorderproductlist(memberId);
         if(productList.size() == 0){
             throw new BusinessLogicException(ExceptionCode.NO_PRODUCTS);
         }
-        Order order = orderMapper.orderPostToOrder(requestBody);
+
+        String norder = requestBody.getProductlist();
+        String[] array = norder.split(",");
+        for(int j = 0; j<array.length; j++){
+            for(int i = 0; i < productList.size(); i++){
+                if(productList.get(i).getproduct_id() == Long.valueOf(array[j])){
+                    productList.remove(i);
+                }
+            }
+        }
+
+        Order order = orderMapper.orderPostbucketToOrder(requestBody);
         int sum = 0;
         for(int i = 0; i < productList.size(); i++){
             sum += productList.get(i).getprice();
         }
         Order createdorder = orderService.createOrder(order,member,sum,Long.valueOf(0));
-        return ResponseEntity.ok(kakaopay.kakaoPayReadybucket(productList, createdorder));
+        return ResponseEntity.ok(kakaopay.kakaoPayReadybucket(productList, createdorder, norder));
     }
 
     @PostMapping("/kakaoPay/{product-id}")
@@ -133,6 +147,15 @@ public class KakaoController {
         }
         else{
             List<queryget.findbypid> productIdList = orderproductRepository.findAllByMemberId(member.getMemberId());
+            String norder = kakaoPayApprovalVO.getItem_code();
+            String[] array = norder.split(",");
+            for(int j = 0; j<array.length; j++){
+                for(int i = 0; i < productIdList.size(); i++){
+                    if(productIdList.get(i).getproduct_id() == Long.valueOf(array[j])){
+                        productIdList.remove(i);
+                    }
+                }
+            }
             productIdList.forEach(productId -> {
                 Product product = productService.findProduct(productId.getproduct_id());
                 product.setIssell(true);

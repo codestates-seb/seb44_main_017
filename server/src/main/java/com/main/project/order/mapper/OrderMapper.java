@@ -11,4 +11,5 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
     Order orderPostToOrder(OrderDto.Post requestBody);
+    Order orderPostbucketToOrder(OrderDto.Postbucket requestBody);
 }
