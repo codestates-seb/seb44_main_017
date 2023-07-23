@@ -169,6 +169,14 @@ public class MemberController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @GetMapping("/point")
+    public ResponseEntity getMemberpoint(@RequestHeader("Refresh") @Positive String refreshtoken){
+        Long memberId = findmemberId(refreshtoken);
+        Member member = memberService.findVerifiedMember(memberId);
+
+        return ResponseEntity.ok(member.getMoney());
+    }
+
     public Long findmemberId(String token) {
         Optional<RefreshToken> refresht = refreshTokenRepository.findByValue(token);
         RefreshToken findtoken = refresht.orElseThrow(()-> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));

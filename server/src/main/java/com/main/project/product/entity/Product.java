@@ -36,8 +36,7 @@ public class Product extends Auditable {
 
     private String name;
 
-    @ColumnDefault("")
-    private String title = "";
+    private String title;
 
     private String content;
 
@@ -47,7 +46,7 @@ public class Product extends Auditable {
     private String category;
 
     @ColumnDefault("0")
-    private Integer view = 0;
+    private Integer view;
 
 //    Todo: image deployment
     private String imageLink;

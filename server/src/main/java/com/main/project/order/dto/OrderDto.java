@@ -31,4 +31,16 @@ public class OrderDto {
         private Integer pointspend;
 
     }
+
+    @Getter
+    @AllArgsConstructor
+    public static class Postbucket{
+        private String postnum;
+        private String address;
+        private String reciver;
+        private String reciverphone;
+        private Integer pointspend;
+        private String productlist;
+
+    }
 }
