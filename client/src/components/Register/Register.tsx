@@ -47,7 +47,7 @@ const Register = () => {
       registerPost();
       alert("등록이 완료되었습니다.");
       navigate("/notice");
-    } else {
+    } else if (confirmDelete) {
       registerPost();
       alert("등록이 완료되었습니다.");
       navigate("/questions");
