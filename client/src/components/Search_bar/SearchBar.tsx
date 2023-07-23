@@ -21,17 +21,16 @@ const SearchBar = ({
 
   return (
     <Form isFocus={isFocus}>
-      <SearchIcon />
       <SearchElement>
         <input
           type="text"
           value={searchValue}
-          placeholder="Search..."
+          placeholder="어떤 상품을 찾고 있나요?"
           onChange={changeHandler}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
         />
-        <button onClick={searchHandler}>검색</button>
+        <SearchIcon onClick={searchHandler} />
       </SearchElement>
     </Form>
   );
@@ -44,22 +43,25 @@ const Form = styled.form<{ isFocus: boolean }>`
   align-items: center;
   max-width: 800px;
   width: 90%;
-  border: ${props =>
+  border: ${(props) =>
     props.isFocus
       ? "2px solid var(--color-black)"
       : "1px solid var(--color-gray100)"};
-  border-radius: 4px;
-  padding: 4px;
+  border-radius: 20px;
   background-color: var(--color-white);
   margin: 0 auto;
-
-  position: relative;
-  top: 50px;
-  left: 50px;
+  @media (max-width: 767px) {
+    padding: 4px 8px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    padding: 8px 8px;
+  }
+  @media (min-width: 1024px) {
+    padding: 12px 12px;
+  }
 
   & svg {
     outline: none;
-    padding: 4px;
   }
 `;
 
@@ -72,10 +74,12 @@ const SearchElement = styled.div`
   & input {
     border: none;
     border-radius: 4px;
-    padding: 8px 16px 8px 8px;
     width: 80%;
-    font-size: 14px;
+    font-size: 16px;
     outline: none;
+    @media (max-width: 767px) {
+      font-size: 10px;
+    }
   }
 
   & button {

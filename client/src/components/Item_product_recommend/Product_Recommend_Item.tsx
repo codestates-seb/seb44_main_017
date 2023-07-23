@@ -11,7 +11,7 @@ interface ProductInfo {
   productId: number | string;
 }
 
-const ProductItem: React.FC<ProductInfo> = ({
+const ProductItemRecommend: React.FC<ProductInfo> = ({
   url,
   isSell,
   like,
@@ -76,4 +76,4 @@ const ProductItem: React.FC<ProductInfo> = ({
   );
 };
 
-export default ProductItem;
+export default ProductItemRecommend;

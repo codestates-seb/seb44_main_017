@@ -24,8 +24,9 @@ const sortOptions = ["최신순", "오래된순", "조회수순"];
 export const NoticePage = () => {
   const [data, setData] = useState<ItemType[]>([]);
   const [value, setValue] = useState<string>("newest");
-  const [size, setSize] = useState<number>(1);
+  const [size, setSize] = useState<number>(8);
   const [page, setPage] = useState<any>(1);
+  const [pageTotal, setPageTotal] = useState<number>(1);
   const [isButton, setIsButton] = useState<boolean>(false);
 
   const getNotice = async () => {
@@ -33,12 +34,14 @@ export const NoticePage = () => {
       const response = await axios.get(
         `${BASE_URL}/notify/board?page=${page}&size=${size}&sort=${value}`
       );
+      const data = response.data.data;
       const now = new Date();
       const yesterday = new Date(now.setDate(now.getDate() - 1));
-      const updatedData = response.data.data.map((item: any) => ({
+      const updatedData = data.map((item: any) => ({
         ...item,
         isNew: new Date(item.createAt) > yesterday,
       }));
+      console.log(updatedData);
       setData(updatedData);
     } catch (e) {
       console.log(e);
@@ -55,21 +58,16 @@ export const NoticePage = () => {
     } else if (width < 766) {
       size = 3;
     }
+    setPageTotal(data.length / size + 1);
     setSize(size);
   };
 
-  const roles = () => {
-    let value: string | boolean | undefined = getRoles();
-    if (value === "admin") {
-      value = true;
-    } else value = false;
-    setIsButton(value);
-  };
+  const roles = getRoles();
 
   useEffect(() => {
-    noticeCount();
     getNotice();
-    roles();
+    noticeCount();
+    roles === "admin" ? setIsButton(true) : setIsButton(false);
 
     const handleResize = () => {
       noticeCount();
@@ -115,7 +113,11 @@ export const NoticePage = () => {
           ))}
         </S.NoticeContainer>
         <S.PaginationBar>
-          <CustomPagination pageCount={5} page={page} setPage={setPage} />
+          <CustomPagination
+            pageCount={pageTotal}
+            page={page}
+            setPage={setPage}
+          />
         </S.PaginationBar>
       </S.Container>
     </div>
