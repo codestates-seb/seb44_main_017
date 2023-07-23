@@ -6,6 +6,7 @@ export const Container = styled.section`
   background-color: var(--color-darkblue);
   justify-content: center;
   align-items: center;
+  width: 100%;
 `;
 
 export const ProfileImage = styled.img`
@@ -35,16 +36,19 @@ export const InfoBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 48px 140px;
+  padding: 48px 100px;
+  min-width: 500px;
 
   @media (max-width: 767px) {
     padding: 24px 0px;
     min-height: 64px;
+    min-width: 0;
   }
 
   @media (min-width: 768px) and (max-width: 1120px) {
     padding: 40px 80px;
     min-height: 64px;
+    min-width: 0;
   }
 `;
 
@@ -119,12 +123,13 @@ export const Spacing = styled.div`
   }
 `;
 
-export const NavButton = styled.a<{ href: string }>`
+export const NavButton = styled.a<{ path: string }>`
   color: var(--color-gray200);
   text-decoration: none;
-  ${({ href }) => {
+  cursor: pointer;
+  ${({ path }) => {
     const location = useLocation();
-    return href === location.pathname
+    return path === location.pathname
       ? `color: var(--color-darkblue);
       font-weight: var(--font-weight-700);
       border-bottom : 2px solid var(--color-darkblue)`

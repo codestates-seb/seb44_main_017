@@ -7,6 +7,8 @@ import { useState } from "react";
 import { QnACommentTypes, QnaTypes } from "@/types/shared";
 import Comment from "@/components/Comment/Comment";
 import { getToken } from "@/utils/token";
+import * as S from "@/pages/qnaDetailPage/style";
+import SpeedDialCustom from "@/components/SpeedDialCustom/SpeedDialCustom";
 
 const initialValue: QnaTypes = {
   questionId: "",
@@ -46,10 +48,12 @@ const QnaDetailPage = () => {
       const { data, status } = await axios.get(
         BASE_URL + `/questions/${questionId}`,
         {
-          headers: {
-            Authorization: `${authorization}`,
-            Refresh: `${refresh}`,
-          },
+          headers: authorization
+            ? {
+                Authorization: `${authorization}`,
+                Refresh: `${refresh}`,
+              }
+            : {},
         }
       );
 
@@ -76,6 +80,9 @@ const QnaDetailPage = () => {
         createdAt={qnaData.createAt.slice(0, 10)}
         content={qnaData.content}
       />
+      <S.SpeedDialContainer>
+        <SpeedDialCustom />
+      </S.SpeedDialContainer>
       <div style={{ paddingTop: "36px" }}>
         <Comment comments={commentData} setComplete={setComplete} />
       </div>

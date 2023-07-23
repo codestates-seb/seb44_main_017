@@ -1,20 +1,24 @@
-import * as S from "./style";
 import axios from "axios";
+import * as S from "./style";
 import { getToken } from "@/utils/token";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
-import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [authorization, refresh] = getToken();
   const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const location = useLocation();
+  const path = location.pathname.startsWith("/notice");
 
+  console.log(location.pathname);
   const registerPost = async () => {
     try {
       const res = await axios.post(
-        `${BASE_URL}/notify`,
+        path ? `${BASE_URL}/notify` : `${BASE_URL}/questions`,
         {
           title: title,
           content: content,
@@ -32,12 +36,21 @@ const Register = () => {
       console.log("등록 요청 실패:", e);
     }
   };
+
+  const handleWrapperClick = () => {
+    inputRef.current?.focus();
+  };
+
   const handleSubmit = () => {
     const confirmDelete = window.confirm("게시물을 등록하시겠습니까?");
-    if (confirmDelete) {
+    if (confirmDelete && path) {
       registerPost();
       alert("등록이 완료되었습니다.");
       navigate("/notice");
+    } else {
+      registerPost();
+      alert("등록이 완료되었습니다.");
+      navigate("/questions");
     }
   };
 
@@ -51,8 +64,9 @@ const Register = () => {
           onChange={(e) => setTitle(e.target.value)}
         />
       </S.TitleWrapper>
-      <S.ContentsWrapper>
+      <S.ContentsWrapper onClick={handleWrapperClick}>
         <S.InputContents
+          ref={inputRef}
           type="text"
           placeholder="내용을 입력해주세요."
           value={content}

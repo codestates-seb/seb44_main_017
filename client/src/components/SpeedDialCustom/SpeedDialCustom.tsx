@@ -16,6 +16,7 @@ function SpeedDialCustom() {
   const location = useLocation();
   const { boardId } = useParams();
   const { questionId } = useParams();
+  console.log(location);
 
   const actions = [
     { key: "modify", name: "수정하기", icon: <S.ModifyIcon /> },
@@ -24,6 +25,7 @@ function SpeedDialCustom() {
   const handleAction = (action: ActionType) => {
     const notice = location.pathname.includes("/notice/detail/");
     const question = location.pathname.includes("/questions/");
+    console.log(notice);
 
     if (notice) {
       if (action.key === "modify") {
@@ -33,7 +35,7 @@ function SpeedDialCustom() {
       }
     } else if (question) {
       if (action.key === "modify") {
-        navigate(`/notice/modify/${questionId}`);
+        navigate(`/question/modify/${questionId}`);
       } else if (action.key === "delete") {
         confirm("정말 삭제하시겠어요?") ? deleteQuestion() : "";
       }

@@ -1,5 +1,7 @@
+import Register from "@/components/Register/Register";
+
 const QnaRegisterPage = () => {
-  return <div>QnaRegisterPage</div>;
+  return <Register />;
 };
 
 export default QnaRegisterPage;

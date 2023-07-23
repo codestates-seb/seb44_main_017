@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 
 export const Container = styled.main`
   display: flex;
@@ -9,18 +10,19 @@ export const SubTitleContainer = styled.section`
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: var(--color-gray100);
+  background-color: var(--color-darkblue);
   width: 100%;
 `;
 export const SubTitleBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 24px;
+  margin-bottom: 12px;
 `;
 export const SubTitle = styled.div`
   font-weight: var(--font-weight-700);
+  color: white;
   @media (max-width: 767px) {
     font-size: 16px;
   }
@@ -29,21 +31,6 @@ export const SubTitle = styled.div`
   }
   @media (min-width: 1024px) {
     font-size: 36px;
-  }
-`;
-export const SubTitleLogo = styled.img`
-  margin: 0px 8px 0px 4px;
-  @media (max-width: 767px) {
-    width: 16px;
-    height: 16px;
-  }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    width: 24px;
-    height: 24px;
-  }
-  @media (min-width: 1024px) {
-    width: 36px;
-    height: 36px;
   }
 `;
 export const ProductsBox = styled.div`
@@ -55,7 +42,7 @@ export const ProductsCarousel = styled.div`
   flex-wrap: none;
   overflow: hidden;
   @media (max-width: 767px) {
-    width: 280px;
+    width: 312px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     width: 660px;
@@ -71,8 +58,8 @@ export const Product = styled.div`
     cursor: pointer;
   }
 `;
-export const ArrowLeftIcon = styled.img`
-  color: var(--color-darkblue);
+export const ArrowLeftIcon = styled(BsChevronDoubleLeft)`
+  color: white;
   margin-right: 16px;
   @media (max-width: 767px) {
     width: 24px;
@@ -90,8 +77,8 @@ export const ArrowLeftIcon = styled.img`
     cursor: pointer;
   }
 `;
-export const ArrowRightIcon = styled.img`
-  color: var(--color-darkblue);
+export const ArrowRightIcon = styled(BsChevronDoubleRight)`
+  color: white;
   margin-left: 16px;
   @media (max-width: 767px) {
     width: 24px;
@@ -127,7 +114,7 @@ export const SelectBar = styled.div`
   justify-content: flex-end;
   margin-top: 8px;
   @media (max-width: 767px) {
-    width: 340px;
+    width: 294px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     width: 594px;
@@ -140,7 +127,7 @@ export const ProductsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   @media (max-width: 767px) {
-    width: 356px;
+    width: 312px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     width: 612px;

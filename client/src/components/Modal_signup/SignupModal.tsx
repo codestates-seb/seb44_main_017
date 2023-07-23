@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as S from "./style";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../../assets/logoSimple";
 import { BASE_URL } from "@/constants/constants";
@@ -8,16 +8,27 @@ import { BASE_URL } from "@/constants/constants";
 interface Props {
   closeModal: any;
 }
+interface Input {
+  email: string;
+  name: string;
+  password: string;
+  checkPassword: string;
+  phone: string;
+}
 const SignupModal = ({ closeModal }: Props) => {
   // 인풋 값
-  const [email, setEmail] = useState<string>("");
-  const [name, setName] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [checkPassword, setCheckPassword] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
+  const [inputs, setInputs] = useState<Input>({
+    email: "",
+    name: "",
+    password: "",
+    checkPassword: "",
+    phone: "",
+  });
+
   // 유효성 검사
   const [emailError, setEmailError] = useState<boolean>(false);
   const [nameError, setNameError] = useState<boolean>(false);
+  const [duplicateCheckName, setDuplicateCheckName] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<boolean>(false);
   const [checkPasswordError, setCheckPasswordError] = useState<boolean>(false);
   const [phoneError, setPhoneError] = useState<boolean>(false);
@@ -37,12 +48,31 @@ const SignupModal = ({ closeModal }: Props) => {
     setCheckShowPassword(!showCheckPassword);
   };
 
+  const inputOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    let formattedValue = value;
+
+    if (name === "phone") {
+      formattedValue = formattedValue.replace(/-/g, "");
+      formattedValue = formattedValue
+        .replace(/^(\d{0,3})-?(\d{0,4})-?(\d{0,4}).*$/, "$1-$2-$3")
+        .replace(/^(.{13}).*$/, "$1");
+    }
+    setInputs({
+      ...inputs,
+      [name]: formattedValue,
+    });
+  };
+
   // 닉네임 중복 여부 체크
   const handleDuplicateCheckName = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/members/namecheck/${name}`);
+      const response = await axios.get(
+        `${BASE_URL}/members/namecheck/${inputs.name}`
+      );
       if (response.data === false) {
         alert("사용 가능한 닉네임입니다.");
+        setDuplicateCheckName(true);
       } else if (response.data === true) {
         alert("이미 사용중인 닉네임입니다.");
       }
@@ -55,15 +85,16 @@ const SignupModal = ({ closeModal }: Props) => {
     const passwordReg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,40}$/;
     const phoneReg = /^010-\d{4}-\d{4}$/;
 
-    !email.includes("@") ? setEmailError(true) : setEmailError(false);
-    name === "" ? setNameError(true) : setNameError(false);
-    !passwordReg.test(password)
+    !inputs.email.includes("@") ? setEmailError(true) : setEmailError(false);
+    inputs.name === "" ? setNameError(true) : setNameError(false);
+    !passwordReg.test(inputs.password)
       ? setPasswordError(true)
       : setPasswordError(false);
-    password !== checkPassword
+    inputs.password !== inputs.checkPassword
       ? setCheckPasswordError(true)
       : setCheckPasswordError(false);
-    !phoneReg.test(phone) ? setPhoneError(true) : setPhoneError(false);
+    !phoneReg.test(inputs.phone) ? setPhoneError(true) : setPhoneError(false);
+    !duplicateCheckName ? alert("닉네임 중복 검사를 진행해주세요.") : "";
 
     if (
       !emailError &&
@@ -73,8 +104,13 @@ const SignupModal = ({ closeModal }: Props) => {
       !isAdmin
     ) {
       try {
-        const data = { email, name, password, phone };
-
+        const data = {
+          email: inputs.email,
+          name: inputs.name,
+          password: inputs.password,
+          phone: inputs.phone,
+        };
+        console.log(data);
         const response = await axios.post(`${BASE_URL}/members`, data);
         if (response.status === 201) {
           alert("회원가입을 축하합니다!");
@@ -94,7 +130,12 @@ const SignupModal = ({ closeModal }: Props) => {
       isAdmin
     ) {
       try {
-        const data = { email, name, password, phone };
+        const data = {
+          email: inputs.email,
+          name: inputs.name,
+          password: inputs.password,
+          phone: inputs.phone,
+        };
 
         const response = await axios.post(`${BASE_URL}/admin`, data);
         if (response.status === 201) {
@@ -123,16 +164,18 @@ const SignupModal = ({ closeModal }: Props) => {
         </S.Explanation>
         <S.InputBox
           type="text"
-          value={email}
+          name="email"
+          value={inputs.email}
           placeholder="이메일을 입력해주세요."
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={inputOnChange}
         />
         <S.NameLabel>
           <S.InputBox
             type="text"
-            value={name}
+            name="name"
+            value={inputs.name}
             placeholder="닉네임을 입력해주세요."
-            onChange={(e) => setName(e.target.value)}
+            onChange={inputOnChange}
           />
           <S.DuplicateCheck onClick={handleDuplicateCheckName}>
             중복 검사
@@ -141,26 +184,29 @@ const SignupModal = ({ closeModal }: Props) => {
         <S.PasswordLabel>
           <S.InputBox
             type={showPassword ? "text" : "password"}
-            value={password}
+            name="password"
+            value={inputs.password}
             placeholder="비밀번호를 입력해주세요."
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={inputOnChange}
           />
           <S.VisibilityButton onClick={passwordVisibility} />
         </S.PasswordLabel>
         <S.PasswordLabel>
           <S.InputBox
             type={showCheckPassword ? "text" : "password"}
-            value={checkPassword}
+            name="checkPassword"
+            value={inputs.checkPassword}
             placeholder="비밀번호를 확인합니다."
-            onChange={(e) => setCheckPassword(e.target.value)}
+            onChange={inputOnChange}
           />
           <S.VisibilityButton onClick={checkPasswordVisibility} />
         </S.PasswordLabel>
         <S.InputBox
-          style={{ marginBottom: "4px" }}
+          style={{ marginBottom: "16px" }}
           placeholder="핸드폰 번호를 입력해주세요."
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          name="phone"
+          value={inputs.phone}
+          onChange={inputOnChange}
         />
         {emailError && (
           <S.ErrorMsg>이메일은 '@'이 포함되어야합니다.</S.ErrorMsg>

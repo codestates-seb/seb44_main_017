@@ -1,8 +1,6 @@
 import useInput from "../../hooks/useInput";
 import axios from "axios";
 import * as S from "./style";
-import EditButton from "../../assets/icons/EditButton";
-import DeleteButton from "../../assets/icons/DeleteButton";
 import elapsedTime from "../../utils/elapsedTime";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
@@ -15,6 +13,7 @@ import { useEffect, useState, useRef } from "react";
 import { getToken } from "@/utils/token";
 import { useRecoilValue } from "recoil";
 import { userInfoSelector } from "@/recoil/selector";
+import CustomConfirm from "@/utils/customConfirm";
 
 interface CommentProps {
   comments: QnACommentTypes[] | ProductCommentTypes[] | any;
@@ -27,7 +26,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [updateValue, setUpdateValue] = useState("");
   const [selectedId, setSelectedId] = useState<number | string>(-1);
-
+  const [isOpenConfirm, setIsOpenConfirm] = useState(false);
   const { questionId, productsID } = useParams();
 
   const navigate = useNavigate();
@@ -40,7 +39,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
 
   useEffect(() => {
     comments.map((item: any) => {
-      (qPath ? item.commentId : item.productId) === selectedId &&
+      (qPath ? item.commentId : item.productCommentId) === selectedId &&
         setUpdateValue(item.content);
     });
   }, [selectedId]);
@@ -75,8 +74,8 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   };
 
   const handleEditComment = (id: number | string) => {
-    setIsEditMode(true);
     setSelectedId(id);
+    setIsEditMode(true);
 
     setTimeout(() => {
       inputRef.current && inputRef.current.focus();
@@ -84,28 +83,26 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   };
 
   const handleDeleteComment = (commentId: string | number) => {
-    if (confirm("정말 삭제하시겠습니까?")) {
-      try {
-        axios
-          .delete(
-            qPath
-              ? BASE_URL + `/questions/${questionId}/comments/${commentId}`
-              : BASE_URL + `/products/${productsID}/comments/${commentId}`,
-            {
-              headers: {
-                Authorization: `${authorization}`,
-                Refresh: `${refresh}`,
-              },
-            }
-          )
-          .then(setComplete(true));
+    try {
+      axios
+        .delete(
+          qPath
+            ? BASE_URL + `/questions/${questionId}/comments/${commentId}`
+            : BASE_URL + `/products/${productsID}/comments/${commentId}`,
+          {
+            headers: {
+              Authorization: `${authorization}`,
+              Refresh: `${refresh}`,
+            },
+          }
+        )
+        .then(setComplete(true));
 
-        qPath
-          ? navigate(`/questions/${questionId}`)
-          : navigate(`/products/${productsID}`);
-      } catch (e) {
-        console.log("failed delete comment", e);
-      }
+      qPath
+        ? navigate(`/questions/${questionId}`)
+        : navigate(`/products/${productsID}`);
+    } catch (e) {
+      console.log("failed delete comment", e);
     }
   };
 
@@ -147,7 +144,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
             type="text"
             onChange={changeHandler}
             value={commentValue}
-            placeholder="Add Comment..."
+            placeholder="댓글을 작성해주세요."
           />
           <button>댓글 쓰기</button>
         </S.InputLayout>
@@ -160,13 +157,22 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
         ) : (
           comments.map((e: QnACommentTypes | ProductCommentTypes | any) => (
             <S.CommentBox key={qPath ? e.commentId : e.productCommentId}>
-              <div className="comment_info_box">
-                <div className="comment_info">
-                  <span>작성자 : {e.writer.name}</span>
-                  <span>{elapsedTime(new Date(e.createAt))}</span>
-                </div>
-                {isEditMode && e.commentId === selectedId ? (
-                  <div className="modify_box">
+              <S.CommentInfoBox>
+                <S.CommentInfo
+                  isWriter={
+                    qPath
+                      ? e.writer.adminId === userInfo?.memberId
+                      : e.writer.memberId === userInfo?.memberId
+                  }
+                >
+                  <span className="comment_writer">{e.writer.name}</span>
+                  <span className="comment_created_at">
+                    {elapsedTime(new Date(e.createAt))}
+                  </span>
+                </S.CommentInfo>
+                {isEditMode &&
+                (qPath ? e.commentId : e.productCommentId) === selectedId ? (
+                  <S.ModifyBox>
                     <input
                       className="comment_modify_form"
                       type="text"
@@ -175,55 +181,64 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
                       onChange={e => setUpdateValue(e.target.value)}
                       onKeyUp={onkeyHandler}
                     />
-                  </div>
-                ) : (
-                  <div className="comment_content">{e.content}</div>
-                )}
-              </div>
-
-              {/*
-               * [수정, 삭제 버튼 보이는 조건]
-               * QnA: 작성한 관리자인 경우
-               * Product: 작성한 관리자 & 사용자인 경우
-               */}
-              {(qPath &&
-                userInfo?.role === "admin" &&
-                userInfo?.memberId === e.writer.adminId) ||
-              (userInfo?.role === "user" &&
-                userInfo?.memberId === e.writer.memberId) ? (
-                <div className="comment_update_btn">
-                  {isEditMode && e.commentId === selectedId ? (
                     <button
-                      className="comment_modify_btn"
+                      className="modify_complete_btn"
                       onClick={() =>
                         updateHandler(qPath ? e.commentId : e.productCommentId)
                       }
                     >
                       수정완료
                     </button>
-                  ) : (
-                    <>
-                      <button
-                        onClick={() =>
-                          handleEditComment(
-                            qPath ? e.commentId : e.productCommentId
-                          )
-                        }
-                      >
-                        <EditButton />
-                      </button>
-                      <button
-                        onClick={() =>
-                          handleDeleteComment(
-                            qPath ? e.commentId : e.productCommentId
-                          )
-                        }
-                      >
-                        <DeleteButton />
-                      </button>
-                    </>
-                  )}
-                </div>
+                  </S.ModifyBox>
+                ) : (
+                  <div className="comment_content">{e.content}</div>
+                )}
+              </S.CommentInfoBox>
+
+              {/*
+               * [수정, 삭제 버튼 보이는 조건]
+               * QnA: 작성한 관리자인 경우
+               * Product: 작성한 관리자 & 사용자인 경우
+               */}
+
+              {(!isEditMode &&
+                qPath &&
+                userInfo?.role === "admin" &&
+                userInfo?.memberId === e.writer.adminId) ||
+              (!isEditMode &&
+                userInfo?.role === "user" &&
+                userInfo?.memberId === e.writer.memberId) ? (
+                <S.UpdateBtnBox>
+                  <>
+                    <button
+                      className="modify_btn"
+                      onClick={() =>
+                        handleEditComment(
+                          qPath ? e.commentId : e.productCommentId
+                        )
+                      }
+                    >
+                      수정
+                      {/* <EditButton /> */}
+                    </button>
+                    <button
+                      className="delete_btn"
+                      onClick={() => setIsOpenConfirm(true)}
+                    >
+                      삭제
+                      {/* <DeleteButton /> */}
+                    </button>
+                    {isOpenConfirm && (
+                      <CustomConfirm
+                        content={"정말 삭제하시겠습니까?"}
+                        isOpenConfirm={isOpenConfirm}
+                        setIsOpenConfirm={setIsOpenConfirm}
+                        handleDeleteComment={handleDeleteComment}
+                        id={qPath ? e.commentId : e.productCommentId}
+                      />
+                    )}
+                  </>
+                </S.UpdateBtnBox>
               ) : (
                 ""
               )}

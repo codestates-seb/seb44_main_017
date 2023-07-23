@@ -15,7 +15,6 @@ export const PageTitle = styled.div`
   text-align: center;
   padding-bottom: 40px;
   gap: 12px;
-  width: 67%;
 
   & > h1 {
     font-size: 36px;
@@ -51,10 +50,6 @@ export const ContentHeader = styled.div`
   align-items: center;
   margin-bottom: 12px;
 
-  @media (max-width: 767px) {
-    justify-content: space-around;
-  }
-
   & > .product_no {
     font-size: 14px;
     font-weight: 700;
@@ -79,24 +74,43 @@ export const AddFormBtn = styled(LoginBtn)`
   width: 150px;
   height: 50px;
   border-radius: 40px;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 2px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 4px;
 
   &:hover {
     background-color: #355873;
   }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 140px;
+    height: 45px;
+  }
+
+  @media (max-width: 767px) {
+    width: 120px;
+    height: 40px;
+  }
 `;
 
 export const AddBtnBox = styled.div`
-  padding: 60px 0;
+  padding-bottom: 60px;
 `;
 
 export const SubmitBox = styled.div`
   display: flex;
   margin-bottom: 40px;
   align-items: center;
-  width: 67%;
   justify-content: end;
   gap: 12px;
+  max-width: 750px;
+  width: 100%;
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    max-width: 634px;
+  }
+
+  @media (max-width: 767px) {
+    max-width: 300px;
+  }
 
   & > .total_product {
     font-size: 14px;

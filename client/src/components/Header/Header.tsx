@@ -12,8 +12,10 @@ import { LoginUserInfo } from "@/types/shared";
 import { getId, getName, getRoles, getToken } from "@/utils/token";
 import axios from "axios";
 import { BASE_URL } from "@/constants/constants";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   const headerRef = useRef<HTMLButtonElement | null>(null);
   const role = getRoles();
   const memberId = Number(getId());
@@ -35,7 +37,7 @@ const Header = () => {
             Refresh: refresh,
           },
         })
-        .then((res) => setUserInfo({ ...res.data.data, role: role }));
+        .then(res => setUserInfo({ ...res.data.data, role: role }));
     } else if (role === "admin") {
       setUserInfo({
         email: "",
@@ -54,16 +56,16 @@ const Header = () => {
   return (
     <S.HeaderContainer>
       <S.Spacing />
-      <S.LogoContainer href="/">
+      <S.LogoContainer onClick={() => navigate("/")}>
         <S.LogoIcon>
           <Logo />
         </S.LogoIcon>
         <S.LogoText>RECLOSET</S.LogoText>
       </S.LogoContainer>
       <S.NavBarContainer>
-        <NavBtn href="/productlist">상품보기</NavBtn>
-        <NavBtn href="/notice">공지사항</NavBtn>
-        <NavBtn href="/questions">Q&A</NavBtn>
+        <NavBtn onClick={() => navigate("/productlist")}>상품보기</NavBtn>
+        <NavBtn onClick={() => navigate("/notice")}>공지사항</NavBtn>
+        <NavBtn onClick={() => navigate("/questions")}>Q&A</NavBtn>
         {role ? (
           <ProfileDropdown />
         ) : (

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
-  padding: 36px 16px 8px;
+  padding: 36px 0;
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
@@ -48,6 +48,7 @@ export const CartLayout = styled.article`
   display: flex;
   gap: 36px;
   padding: 36px;
+  height: 100%;
 
   @media (max-width: 1023px) {
     flex-direction: column;
@@ -64,8 +65,13 @@ export const ItemBox = styled.div`
   min-width: 200px;
   background-color: rgb(250, 250, 250);
 
-  @media (max-width: 1023px) {
+  @media (max-width: 767px) {
     width: 90%;
+    min-width: 280px;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    min-width: 720px;
   }
 
   & .cart_label {
@@ -78,10 +84,16 @@ export const ItemBox = styled.div`
   }
 `;
 
-export const CartItems = styled.div`
+export const CartItems = styled.div<{ isEmpty: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-height: fill-available;
+  justify-content: ${props => props.isEmpty && "center"};
+
+  @media (max-width: 1023px) {
+    min-height: 200px;
+  }
 
   & li {
     display: flex;
@@ -147,14 +159,21 @@ export const ItemInfo = styled.div`
   }
 `;
 
+export const InfoContainer = styled.article`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: sticky;
+  top: 72px;
+  height: 100%;
+`;
+
 export const OrderInfoBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 25%;
-  position: sticky;
+  /* width: 25%; */
   height: max-content;
   gap: 24px;
-  top: 0;
 
   @media (max-width: 1023px) {
     width: 90%;
@@ -169,7 +188,43 @@ export const OrderInfoBox = styled.div`
       width: 150px;
       height: 32px;
       font-weight: var(--font-weight-700);
-      margin-right: 16px;
+      font-size: var(--font-size-12);
+      border: 0;
+      background-color: var(--color-darkblue);
+      color: var(--color-white);
+
+      &:hover {
+        background-color: #355873;
+      }
+    }
+  }
+`;
+
+export const AddressInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background-color: rgb(250, 250, 250);
+  padding: 30px 20px;
+  min-width: 280px;
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    min-width: 728px;
+  }
+
+  & .post_address {
+    line-height: 28px;
+  }
+
+  & .postcode_btn {
+    display: flex;
+    justify-content: center;
+
+    & button {
+      border-radius: 8px;
+      width: 150px;
+      height: 32px;
+      font-weight: var(--font-weight-700);
       font-size: var(--font-size-12);
       border: 0;
       background-color: var(--color-darkblue);
@@ -187,14 +242,19 @@ export const OrderInfo = styled.div`
   flex-direction: column;
   gap: 16px;
   background-color: rgb(250, 250, 250);
-  padding: 40px 20px;
-  min-width: 200px;
+  padding: 30px 20px;
+  min-width: 280px;
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    min-width: 728px;
+  }
 
   & .order_info {
     display: flex;
     justify-content: space-between;
     font-size: var(--font-size-16);
     font-weight: var(--font-weight-500);
+    align-items: center;
 
     @media (max-width: 1200px) {
       font-size: 14px;
@@ -215,6 +275,22 @@ export const OrderInfoSum = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  & .order_info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    & .order_price {
+      align-self: flex-start;
+    }
+  }
+
+  & .order_info > :nth-child(2) {
+    font-size: 20px;
+    font-weight: var(--font-weight-700);
+    align-self: flex-end;
+  }
 `;
 
 export const RemainPoint = styled.div<{ total: number }>`
@@ -258,5 +334,8 @@ export const EmptyCart = styled.div`
   font-size: 24px;
   color: var(--color-darkblue);
   text-align: center;
-  line-height: 300px;
+
+  @media (max-width: 767px) {
+    font-size: var(--font-size-16);
+  }
 `;

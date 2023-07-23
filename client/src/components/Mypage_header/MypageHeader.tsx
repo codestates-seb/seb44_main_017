@@ -1,7 +1,7 @@
 import PointIcon from "@/assets/icons/PointIcon";
 import * as S from "./style";
 import defaultImage from "@/assets/icons/default_image.png";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { LoginUserInfo } from "@/types/shared";
 import { userInfoSelector } from "@/recoil/selector";
@@ -15,6 +15,7 @@ interface MypageHeaderProps {
 
 const MypageHeader = ({ username, title, point }: MypageHeaderProps) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const shouldRenderDiv = location.pathname.startsWith("/mypage");
   const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
 
@@ -26,7 +27,11 @@ const MypageHeader = ({ username, title, point }: MypageHeaderProps) => {
 
   const list = navButtonList.map(nav => {
     return (
-      <S.NavButton key={`${nav.name} button`} href={nav.href}>
+      <S.NavButton
+        key={`${nav.name} button`}
+        path={nav.href}
+        onClick={() => navigate(nav.href)}
+      >
         {nav.name}
       </S.NavButton>
     );

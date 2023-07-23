@@ -99,3 +99,11 @@ export interface UserInfoTypes {
 export interface LoginUserInfo extends UserInfoTypes {
   role: string;
 }
+
+export interface PostCodeTypes {
+  postnum: string;
+  address: string;
+  reciver: string;
+  reciverphone: string;
+  pointspend: number;
+}
