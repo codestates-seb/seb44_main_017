@@ -31,7 +31,8 @@ export const SelectBox = styled.div`
     width: 80px;
     height: 20px;
     border: 2px solid var(--color-darkblue);
-    font-weight: 500;
+    font-size: 10px;
+    font-weight: 700;
   }
 
   @media (min-width: 768px) and (max-width: 1023px) {
@@ -53,9 +54,9 @@ export const SelectOptions = styled.ul<{ isOpen: boolean }>`
   width: 100%;
   overflow: hidden;
   height: max-content;
-  max-height: ${props => (props.isOpen ? "none" : "0")};
+  max-height: ${(props) => (props.isOpen ? "none" : "0")};
   padding: 0;
-  border: ${props =>
+  border: ${(props) =>
     props.isOpen ? "2px solid var(--color-darkblue)" : "none"};
   border-radius: 8px;
   background-color: var(--color-white);

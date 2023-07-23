@@ -62,12 +62,15 @@ function SpeedDialCustom() {
 
   const deleteQuestion = async () => {
     try {
-      const response = await axios.delete(`${BASE_URL}/questions/${boardId}`, {
-        headers: {
-          Authorization: `${authorization}`,
-          Refresh: `${refresh}`,
-        },
-      });
+      const response = await axios.delete(
+        `${BASE_URL}/questions/${questionId}`,
+        {
+          headers: {
+            Authorization: `${authorization}`,
+            Refresh: `${refresh}`,
+          },
+        }
+      );
       if (response.status === 204) {
         alert("게시글이 삭제되었습니다.");
         navigate("/questions");
