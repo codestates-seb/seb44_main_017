@@ -31,11 +31,13 @@ export const ContainerMobile = styled.div`
     display: none;
   }
 `;
+export const ClothesListContainer = styled.div`
+  display: flex;
+`;
 export const UppserListContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1px;
   @media (max-width: 767px) {
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -66,23 +68,28 @@ export const LowerListContainer = styled.div`
     }
   }
 `;
+export const BtnContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+`;
 export const EmptyList = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 60vh;
+  height: 30vh;
   color: var(--color-gray200);
   border: 1px dashed var(--color-gray200);
   border-radius: 16px;
-  @media (max-width: 534px) {
-    width: 340px;
+  @media (max-width: 479px) {
+    width: 452px;
   }
-  @media (min-width: 535px) and (max-width: 713px) {
+  @media (min-width: 480px) and (max-width: 639px) {
     width: 514px;
   }
-  @media (min-width: 714px) and (max-width: 767px) {
-    width: 692px;
+  @media (min-width: 640px) and (max-width: 767px) {
+    width: 608px;
   }
 `;
 export const ListpageBtn = styled.button`
@@ -90,14 +97,14 @@ export const ListpageBtn = styled.button`
   padding: 12px;
   border: 2px solid var(--color-gray100);
   margin-top: 16px;
-  @media (max-width: 534px) {
-    width: 340px;
+  @media (max-width: 479px) {
+    width: 326px;
   }
-  @media (min-width: 535px) and (max-width: 713px) {
-    width: 514px;
+  @media (min-width: 480px) and (max-width: 639px) {
+    width: 452px;
   }
-  @media (min-width: 714px) and (max-width: 767px) {
-    width: 692px;
+  @media (min-width: 640px) and (max-width: 767px) {
+    width: 608px;
   }
   @media (min-width: 768px) {
     display: none;
