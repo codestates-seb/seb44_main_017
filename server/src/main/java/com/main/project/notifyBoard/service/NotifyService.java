@@ -11,6 +11,7 @@ import com.main.project.notifyBoard.dto.NotifyDto;
 import com.main.project.notifyBoard.entity.NotifyBoard;
 import com.main.project.notifyBoard.mapper.NotifyMapper;
 import com.main.project.notifyBoard.repository.NotifyRepository;
+import com.main.project.notifyView.repository.NotifyViewRepository;
 import com.main.project.notifyView.service.NotifyViewService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,14 +31,17 @@ public class NotifyService {
     private final NotifyRepository notifyRepository;
     private final NotifyMapper mapper;
 
+    private final NotifyViewRepository notifyViewRepository;
+
     public NotifyService(NotifyViewService notifyViewService, RefreshTokenService refreshTokenService,
                          AdminService adminService, NotifyRepository notifyRepository,
-                         NotifyMapper mapper) {
+                         NotifyMapper mapper, NotifyViewRepository notifyViewRepository) {
         this.notifyViewService = notifyViewService;
         this.refreshTokenService = refreshTokenService;
         this.adminService = adminService;
         this.notifyRepository = notifyRepository;
         this.mapper = mapper;
+        this.notifyViewRepository = notifyViewRepository;
     }
 
     // 공지 등록
@@ -140,8 +144,10 @@ public class NotifyService {
 
     //공지 삭제
     public void removeNotify(long boardId){
-
         findExistsNotify(boardId);
+
+        notifyViewRepository.deleteAllByIdInQuery(boardId);
+
         notifyRepository.deleteById(boardId);
     }
 
