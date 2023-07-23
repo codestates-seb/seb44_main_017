@@ -7,9 +7,7 @@ import { useState } from "react";
 import { QnACommentTypes, QnaTypes } from "@/types/shared";
 import Comment from "@/components/Comment/Comment";
 import { getToken } from "@/utils/token";
-import { getRoles } from "@/utils/token";
-import * as S from "@/pages/qnaDetailPage/style";
-import SpeedDialCustom from "@/components/SpeedDialCustom/SpeedDialCustom";
+// import { getRoles } from "@/utils/token";
 
 const initialValue: QnaTypes = {
   questionId: "",
@@ -41,8 +39,8 @@ const QnaDetailPage = () => {
   const [qnaData, setQnaData] = useState<QnaTypes>(initialValue);
   const [commentData, setCommentData] = useState<QnACommentTypes[]>([]);
   const [complete, setComplete] = useState(false);
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  const roles = getRoles();
+  // const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  // const roles = getRoles();
 
   const [authorization, refresh] = getToken();
 
@@ -81,9 +79,6 @@ const QnaDetailPage = () => {
         createdAt={qnaData.createAt.slice(0, 10)}
         content={qnaData.content}
       />
-      <S.SpeedDialContainer>
-        <SpeedDialCustom />
-      </S.SpeedDialContainer>
       <div style={{ paddingTop: "36px" }}>
         <Comment comments={commentData} setComplete={setComplete} />
       </div>

@@ -46,7 +46,7 @@ function App() {
             <Route element={<QnaRegisterPage />} path="/question_register" />
             <Route
               element={<QnaModifyPage />}
-              path="question/modify/:questionId"
+              path="questions/modify/:questionId"
             />
             <Route element={<MyproductsPage />} path="/mypage" />
             <Route element={<MyQnaPage />} path="/mypage/posts" />

@@ -1,6 +1,7 @@
 import ViewCount from "@/assets/icons/ViewCount";
 import * as S from "./style";
 import { useNavigate } from "react-router-dom";
+import SpeedDialCustom from "../SpeedDialCustom/SpeedDialCustom";
 
 interface BoardDetailTypes {
   title: string;
@@ -43,6 +44,9 @@ const BoardDetail = ({
       </S.HeaderBox>
       <S.ContentBox>
         <div>{content}</div>
+        <S.SpeedDialContainer>
+          <SpeedDialCustom />
+        </S.SpeedDialContainer>
         <button className="back_btn" onClick={() => navigate(-1)}>
           목록으로
         </button>

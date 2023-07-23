@@ -5,7 +5,13 @@ import { useState, useRef } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 
-const Modify = () => {
+type ModifyProps = {
+  originalTitle: string;
+  originalContents: string;
+};
+
+const Modify = (props: ModifyProps) => {
+  const { originalTitle, originalContents } = props;
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [authorization, refresh] = getToken();
@@ -15,7 +21,7 @@ const Modify = () => {
   const location = useLocation();
   const path = location.pathname.startsWith("/notice");
 
-  console.log(location.pathname);
+  console.log(location);
   const registerPost = async () => {
     try {
       const res = await axios.patch(
@@ -63,7 +69,7 @@ const Modify = () => {
         <S.InputTitle
           type="text"
           placeholder="제목을 입력해주세요."
-          value={title}
+          value={originalTitle}
           onChange={(e) => setTitle(e.target.value)}
         />
       </S.TitleWrapper>
@@ -72,7 +78,7 @@ const Modify = () => {
           ref={inputRef}
           type="text"
           placeholder="내용을 입력해주세요."
-          value={content}
+          value={originalContents}
           onChange={(e) => setContent(e.target.value)}
         />
       </S.ContentsWrapper>
