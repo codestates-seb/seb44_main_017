@@ -69,7 +69,14 @@ function NoticeDetailPage() {
   const createDate = koreanDate(data.createAt);
   const getNotice = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/notify/${boardId}`);
+      const response = await axios.get(`${BASE_URL}/notify/${boardId}`, {
+        headers: authorization
+          ? {
+              Authorization: `${authorization}`,
+              Refresh: `${refresh}`,
+            }
+          : {},
+      });
       setData(response.data);
     } catch (error) {
       console.log(error);
@@ -97,7 +104,14 @@ function NoticeDetailPage() {
   const nextNoticeCreateDate = koreanDate(nextData.createAt);
   const getNextNotice = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/notify/${boardId}/next`);
+      const response = await axios.get(`${BASE_URL}/notify/${boardId}/next`, {
+        headers: authorization
+          ? {
+              Authorization: `${authorization}`,
+              Refresh: `${refresh}`,
+            }
+          : {},
+      });
       setNextData(response.data);
     } catch (error) {
       console.log(error);
