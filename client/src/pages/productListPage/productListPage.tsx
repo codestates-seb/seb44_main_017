@@ -39,8 +39,6 @@ export const ProductListPage = () => {
   const [btnSelect, setBtnSelect] = useState<boolean>(false);
   const [btnCategory, setBtnCategory] = useState<string>("전체");
   const [data, setData] = useState<Data[]>([]);
-  const [dataTrue, setDataTrue] = useState<Data[]>([]);
-  const [dataFalse, setDataFalse] = useState<Data[]>([]);
   const [recommendData, setRecommendData] = useState<RecommendData[]>([]);
   const ref = useRef<HTMLDivElement>(null);
   const [translate, setTranslate] = useState<number>(0);
@@ -62,34 +60,7 @@ export const ProductListPage = () => {
     }
   };
 
-  const getProductsTrue = async () => {
-    try {
-      const response = await axios.get(
-        `${BASE_URL}/products?page=${page}&size=${size}&sort=${value}&issell=true`
-      );
-      const data = response.data.data;
-      let filteredData = [];
-
-      if (btnCategory === "전체") {
-        filteredData = data;
-      } else {
-        filteredData = data.filter(
-          (product: any) => product.category === btnCategory
-        );
-      }
-
-      const modifiedData = filteredData.map((item: any) => ({
-        ...item,
-        isSell: true,
-      }));
-
-      setDataTrue(modifiedData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getProductsFalse = async () => {
+  const getProducts = async () => {
     try {
       const response = await axios.get(
         `${BASE_URL}/products?page=${page}&size=${size}&sort=${value}&issell=false`
@@ -107,10 +78,13 @@ export const ProductListPage = () => {
 
       const modifiedData = filteredData.map((item: any) => ({
         ...item,
-        isSell: false,
+        isSell: true,
       }));
 
-      setDataFalse(modifiedData);
+      const pageInfo = response.data.pageInfo.totalElements;
+      setPageTotal(Math.ceil(pageInfo / size));
+
+      setData(modifiedData);
     } catch (error) {
       console.log(error);
     }
@@ -160,20 +134,17 @@ export const ProductListPage = () => {
     } else if (width < 766) {
       size = 9;
     }
-    setPageTotal(data.length / size + 1);
     setSize(size);
   };
 
   useEffect(() => {
     productCount();
-    getProductsTrue();
-    getProductsFalse();
+    getProducts();
     getRecommendProducts();
 
     const handleResize = () => {
       productCount();
-      getProductsTrue();
-      getProductsFalse();
+      getProducts();
     };
 
     window.addEventListener("resize", handleResize);
@@ -181,11 +152,6 @@ export const ProductListPage = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, [value, btnCategory, page, size]);
-
-  useEffect(() => {
-    const combinedData = [...dataTrue, ...dataFalse];
-    setData(combinedData);
-  }, [dataTrue, dataFalse]);
 
   const handlePrev = () => {
     if (ref.current) {
@@ -272,23 +238,11 @@ export const ProductListPage = () => {
         </S.SelectBar>
       )}
       <S.ProductsContainer>
-        {dataFalse.map((data) => (
+        {data.map((data) => (
           <S.Product>
             <ProductItem
               url={`${IMG_URL}/${data.imageLink}`}
-              isSell={data.isSell}
-              like={data.isLike}
-              title={data.name}
-              price={data.price}
-              productId={data.productId}
-            ></ProductItem>
-          </S.Product>
-        ))}
-        {dataTrue.map((data) => (
-          <S.Product>
-            <ProductItem
-              url={`${IMG_URL}/${data.imageLink}`}
-              isSell={data.isSell}
+              isSell={false}
               like={data.isLike}
               title={data.name}
               price={data.price}

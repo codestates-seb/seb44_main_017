@@ -41,7 +41,9 @@ export const NoticePage = () => {
         ...item,
         isNew: new Date(item.createAt) > yesterday,
       }));
-      console.log(updatedData);
+      const pageInfo = response.data.pageInfo.totalElements;
+      setPageTotal(Math.ceil(pageInfo / size));
+      console.log(pageInfo / size);
       setData(updatedData);
     } catch (e) {
       console.log(e);
@@ -58,7 +60,6 @@ export const NoticePage = () => {
     } else if (width < 766) {
       size = 3;
     }
-    setPageTotal(data.length / size + 1);
     setSize(size);
   };
 
