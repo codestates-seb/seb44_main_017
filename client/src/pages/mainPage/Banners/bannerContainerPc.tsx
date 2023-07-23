@@ -2,8 +2,10 @@ import * as S from "./styled";
 import FadeIn from "@/components/FadeIn/FadeIn";
 import { analzy, shopping, shopping_1, sendClothes } from "../../../assets";
 import { useNavigate } from "react-router";
-
-const BannerContainerPc = () => {
+interface Props {
+  clickCollection: () => void;
+}
+const BannerContainerPc: React.FC<Props> = ({ clickCollection }) => {
   const navigate = useNavigate();
   return (
     <S.BannerContainer>
@@ -24,11 +26,7 @@ const BannerContainerPc = () => {
         </div>
         <S.BtnContainer>
           <FadeIn index={2}>
-            <S.CollectionBtn
-              onClick={() => {
-                navigate("/collection");
-              }}
-            >
+            <S.CollectionBtn onClick={clickCollection}>
               수거 신청하기
             </S.CollectionBtn>
           </FadeIn>

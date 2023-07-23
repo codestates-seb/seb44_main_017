@@ -54,21 +54,21 @@ const ClothesList = () => {
         </FadeIn>
       </S.ContainerPC>
       <S.ContainerMobile>
-        <S.UppserListContainer>
-          {clothesList.length ? (
-            products
-          ) : (
-            <S.EmptyList>상품 정보가 없습니다.</S.EmptyList>
-          )}
-        </S.UppserListContainer>
+        {clothesList.length ? (
+          <S.UppserListContainer>{products}</S.UppserListContainer>
+        ) : (
+          <S.EmptyList>상품 정보가 없습니다.</S.EmptyList>
+        )}
+        <S.BtnContainer>
+          <S.ListpageBtn
+            onClick={() => {
+              navigate("/productlist/");
+            }}
+          >
+            상품 전체 보기
+          </S.ListpageBtn>
+        </S.BtnContainer>
       </S.ContainerMobile>
-      <S.ListpageBtn
-        onClick={() => {
-          navigate("/productlist/");
-        }}
-      >
-        상품 전체 보기
-      </S.ListpageBtn>
     </S.Container>
   );
 };

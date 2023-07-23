@@ -7,7 +7,6 @@ import { useState } from "react";
 import { QnACommentTypes, QnaTypes } from "@/types/shared";
 import Comment from "@/components/Comment/Comment";
 import { getToken } from "@/utils/token";
-// import { getRoles } from "@/utils/token";
 
 const initialValue: QnaTypes = {
   questionId: "",
@@ -39,8 +38,6 @@ const QnaDetailPage = () => {
   const [qnaData, setQnaData] = useState<QnaTypes>(initialValue);
   const [commentData, setCommentData] = useState<QnACommentTypes[]>([]);
   const [complete, setComplete] = useState(false);
-  // const [isAdmin, setIsAdmin] = useState<boolean>(false);
-  // const roles = getRoles();
 
   const [authorization, refresh] = getToken();
 
@@ -49,10 +46,12 @@ const QnaDetailPage = () => {
       const { data, status } = await axios.get(
         BASE_URL + `/questions/${questionId}`,
         {
-          headers: {
-            Authorization: `${authorization}`,
-            Refresh: `${refresh}`,
-          },
+          headers: authorization
+            ? {
+                Authorization: `${authorization}`,
+                Refresh: `${refresh}`,
+              }
+            : {},
         }
       );
 

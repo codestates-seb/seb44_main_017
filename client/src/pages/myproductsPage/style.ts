@@ -79,6 +79,10 @@ export const NoneItemsBox = styled.div`
     margin-bottom: 36px;
     color: var(--color-gray200);
     margin-top: 24px;
+
+    @media (max-width: 767) {
+      font-size: var(--font-size-12);
+    }
   }
 `;
 
