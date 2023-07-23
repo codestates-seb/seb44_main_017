@@ -25,7 +25,7 @@ function SpeedDialCustom() {
   const handleAction = (action: ActionType) => {
     const notice = location.pathname.includes("/notice/detail/");
     const question = location.pathname.includes("/questions/");
-    console.log(notice);
+    console.log(questionId);
 
     if (notice) {
       if (action.key === "modify") {
@@ -35,7 +35,7 @@ function SpeedDialCustom() {
       }
     } else if (question) {
       if (action.key === "modify") {
-        navigate(`/question/modify/${questionId}`);
+        navigate(`/questions/modify/${questionId}`);
       } else if (action.key === "delete") {
         confirm("정말 삭제하시겠어요?") ? deleteQuestion() : "";
       }
@@ -62,12 +62,15 @@ function SpeedDialCustom() {
 
   const deleteQuestion = async () => {
     try {
-      const response = await axios.delete(`${BASE_URL}/questions/${boardId}`, {
-        headers: {
-          Authorization: `${authorization}`,
-          Refresh: `${refresh}`,
-        },
-      });
+      const response = await axios.delete(
+        `${BASE_URL}/questions/${questionId}`,
+        {
+          headers: {
+            Authorization: `${authorization}`,
+            Refresh: `${refresh}`,
+          },
+        }
+      );
       if (response.status === 204) {
         alert("게시글이 삭제되었습니다.");
         navigate("/questions");
