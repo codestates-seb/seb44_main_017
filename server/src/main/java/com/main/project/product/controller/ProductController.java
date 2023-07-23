@@ -159,16 +159,11 @@ public class ProductController {
         Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshTokenOptional(tokenstr);
 
         Product product = productService.findProduct(productId);
-//        List<ProductComment> comments = productCommentRepository.findByProductProductId(productId);
-
-//        List<ProductCommentDto.Response> commentResponses =
-//                productCommentMapper.productCommentsToProductCommentResponseDto(comments);
 
         ProductDto.ResponseWithComments response;
 
         response = productService.getResponseWithComments(productId, refreshToken, product);
 
-//        response.setComments(commentResponses);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(

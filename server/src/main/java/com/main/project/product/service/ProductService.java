@@ -153,9 +153,19 @@ public class ProductService {
         return saveproduct;
     }
 
-    public Product updateProductview(Long productId, Product product){
+    public Product updateProductview(Long productId, Product product, Member findmember){
         Product findProduct = findProduct(productId);
+
         Optional.ofNullable(product.getView()).ifPresent(findProduct::setView);
+
+        if(!product.getViewedMembers().contains(findmember)){
+            // viewedmembers에 없을때만 view 올리도록 로직 변경
+            findProduct.addView();
+            findProduct.addViewedMembers(findmember);
+            findmember.addViewedProducts(product);
+        }
+
+        memberService.updateMember(findmember);
         Product saveproduct = productRepository.save(findProduct);
         return saveproduct;
     }
@@ -184,8 +194,10 @@ public class ProductService {
             Long memberId = refreshToken
                     .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
                     .getMemberId();
-            product.addView();
-            updateProductview(productId, product);
+
+            Member findmember = memberService.findVerifiedMember(memberId);
+            updateProductview(productId, product, findmember);
+
             response = mapper.productToProductResponseWithComment(product, memberId);
 
         }else if(refreshToken.get().getAdminId() != null){
