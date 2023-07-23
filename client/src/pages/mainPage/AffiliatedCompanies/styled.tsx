@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   padding: 160px 0px 200px 0px;
   @media (max-width: 479px) {
     padding: 100px 0px 160px 0px;
@@ -11,7 +12,7 @@ export const Container = styled.div`
 export const UpperContainer = styled.div`
   display: flex;
   overflow: hidden;
-  width: 100vw;
+  width: 100%;
   margin-top: 64px;
   @media (max-width: 479px) {
     margin-top: 40px;
@@ -20,7 +21,7 @@ export const UpperContainer = styled.div`
 export const LowerContainer = styled.div`
   display: flex;
   overflow: hidden;
-  width: 100vw;
+  width: 100%;
   margin-top: 16px;
 `;
 export const UppserListContainer = styled.div`
