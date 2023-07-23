@@ -1,5 +1,5 @@
 import useDetectClose from "../../hooks/useDetectClose";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import * as S from "./style";
 import defaultImage from "/images/cat.jpg";
 import { delCookie } from "@/utils/token";
@@ -12,15 +12,13 @@ const ProfileDropdown = () => {
   const path = useLocation().pathname;
   const [DropdownIsOpen, Ref, DropdownHandler] = useDetectClose();
   const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
-  const navigate = useNavigate();
-  console.log(document.cookie);
   const logoutHandler = () => {
     if (confirm("로그아웃 하시겠습니까?")) {
       delCookie();
       if (path === "/") {
         window.location.reload();
       } else {
-        navigate("/");
+        window.location.href = "/";
       }
     }
   };
@@ -28,7 +26,7 @@ const ProfileDropdown = () => {
     <>
       <S.ProfileContainer>
         <div ref={Ref} onClick={DropdownHandler}>
-          {/* <div className="profile_nickname">{userInfo?.name}</div> */}
+          <div className="profile_nickname">{userInfo?.name}</div>
           {userInfo?.profile ? (
             <img src={IMG_URL + "/" + userInfo.profile} />
           ) : (

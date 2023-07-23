@@ -134,7 +134,7 @@ const ApprovalTable: React.FC<ApprovalTableProps> = ({
             <SelectBox
               usage={"카테고리"}
               options={options}
-              setOption={value => {
+              setOption={(value) => {
                 setProductData({ ...productData, category: value });
               }}
             />
@@ -209,7 +209,7 @@ const ApprovalTable: React.FC<ApprovalTableProps> = ({
             multiline
             rows={13}
             value={denycontent}
-            onChange={ev => {
+            onChange={(ev) => {
               setDenycontent(ev.target.value);
             }}
           />

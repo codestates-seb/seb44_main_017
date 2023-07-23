@@ -13,6 +13,7 @@ import { useEffect, useState, useRef } from "react";
 import { getToken } from "@/utils/token";
 import { useRecoilValue } from "recoil";
 import { userInfoSelector } from "@/recoil/selector";
+import CustomConfirm from "@/utils/customConfirm";
 
 interface CommentProps {
   comments: QnACommentTypes[] | ProductCommentTypes[] | any;
@@ -25,7 +26,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [updateValue, setUpdateValue] = useState("");
   const [selectedId, setSelectedId] = useState<number | string>(-1);
-
+  const [isOpenConfirm, setIsOpenConfirm] = useState(false);
   const { questionId, productsID } = useParams();
 
   const navigate = useNavigate();
@@ -73,8 +74,8 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   };
 
   const handleEditComment = (id: number | string) => {
-    setIsEditMode(true);
     setSelectedId(id);
+    setIsEditMode(true);
 
     setTimeout(() => {
       inputRef.current && inputRef.current.focus();
@@ -82,28 +83,26 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   };
 
   const handleDeleteComment = (commentId: string | number) => {
-    if (confirm("정말 삭제하시겠습니까?")) {
-      try {
-        axios
-          .delete(
-            qPath
-              ? BASE_URL + `/questions/${questionId}/comments/${commentId}`
-              : BASE_URL + `/products/${productsID}/comments/${commentId}`,
-            {
-              headers: {
-                Authorization: `${authorization}`,
-                Refresh: `${refresh}`,
-              },
-            }
-          )
-          .then(setComplete(true));
+    try {
+      axios
+        .delete(
+          qPath
+            ? BASE_URL + `/questions/${questionId}/comments/${commentId}`
+            : BASE_URL + `/products/${productsID}/comments/${commentId}`,
+          {
+            headers: {
+              Authorization: `${authorization}`,
+              Refresh: `${refresh}`,
+            },
+          }
+        )
+        .then(setComplete(true));
 
-        qPath
-          ? navigate(`/questions/${questionId}`)
-          : navigate(`/products/${productsID}`);
-      } catch (e) {
-        console.log("failed delete comment", e);
-      }
+      qPath
+        ? navigate(`/questions/${questionId}`)
+        : navigate(`/products/${productsID}`);
+    } catch (e) {
+      console.log("failed delete comment", e);
     }
   };
 
@@ -224,15 +223,20 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
                     </button>
                     <button
                       className="delete_btn"
-                      onClick={() =>
-                        handleDeleteComment(
-                          qPath ? e.commentId : e.productCommentId
-                        )
-                      }
+                      onClick={() => setIsOpenConfirm(true)}
                     >
                       삭제
                       {/* <DeleteButton /> */}
                     </button>
+                    {isOpenConfirm && (
+                      <CustomConfirm
+                        content={"정말 삭제하시겠습니까?"}
+                        isOpenConfirm={isOpenConfirm}
+                        setIsOpenConfirm={setIsOpenConfirm}
+                        handleDeleteComment={handleDeleteComment}
+                        id={qPath ? e.commentId : e.productCommentId}
+                      />
+                    )}
                   </>
                 </S.UpdateBtnBox>
               ) : (

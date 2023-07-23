@@ -13,12 +13,13 @@ export const ProfileImage = styled.img`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  border: 4px solid var(--color-darkblue);
+  border: 6px solid var(--color-darkblue);
   border-radius: 100%;
   background-color: var(--color-white);
   position: relative;
   top: 30px;
   width: 150px;
+  height: 150px;
   margin-top: 30px;
 
   @media (max-width: 767px) {
@@ -126,9 +127,10 @@ export const Spacing = styled.div`
 export const NavButton = styled.a<{ path: string }>`
   color: var(--color-gray200);
   text-decoration: none;
-  ${({ href }) => {
+  cursor: pointer;
+  ${({ path }) => {
     const location = useLocation();
-    return href === location.pathname
+    return path === location.pathname
       ? `color: var(--color-darkblue);
       font-weight: var(--font-weight-700);
       border-bottom : 2px solid var(--color-darkblue)`

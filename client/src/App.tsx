@@ -19,7 +19,6 @@ import MyinfoPage from "./pages/myinfoPage/myinfoPage";
 import ShoppingCartPage from "./pages/shoppingCartPage/shoppingCartPage";
 import NoticeDetailPage from "./pages/noticeDetailPage/noticeDetailPage";
 import NoticeRegisterPage from "./pages/noticeRegisterPage/noticeRegisterPage";
-import NoticeModfiyPage from "./pages/noticeModifyPage/noticeModifyPage";
 import QnaModifyPage from "./pages/qnaModifyPage/qnaModifyPage";
 import QnaRegisterPage from "./pages/qnaRegisterPage/qnaRegisterPage";
 import { RecoilRoot } from "recoil";

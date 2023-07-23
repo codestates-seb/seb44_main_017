@@ -209,7 +209,7 @@ export const CartBtn = styled.div`
   justify-content: center;
   border-radius: 20px;
   width: 138px;
-  height: 38px;
+  height: 36px;
   font-weight: var(--font-weight-700);
   font-size: var(--font-size-20);
   border: 2px solid var(--color-darkgreen);
@@ -221,6 +221,16 @@ export const CartBtn = styled.div`
   &:hover {
     background-color: var(--color-darkgreen);
     color: var(--color-white);
+  }
+
+  @media (max-width: 767px) {
+    width: 130px;
+    height: 35px;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 120px;
+    height: 30px;
   }
 `;
 
@@ -239,6 +249,16 @@ export const PaymentBtn = styled.button`
 
   &:hover {
     background-color: #385c78;
+  }
+
+  @media (max-width: 767px) {
+    width: 130px;
+    height: 39px;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 120px;
+    height: 34px;
   }
 `;
 

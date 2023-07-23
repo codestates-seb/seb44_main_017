@@ -13,7 +13,7 @@ export const ProfileContainer = styled.div`
     cursor: pointer;
 
     &:hover {
-      color: var(--color-darkgreen);
+      color: var(--color-darkblue);
     }
   }
 
@@ -49,7 +49,7 @@ export const DropDownContainer = styled.div<{ isDropped: boolean }>`
   &::before {
     content: "";
     position: absolute;
-    top: -3%;
+    top: -4%;
     left: 80%;
     border: 10px solid transparent;
     border-width: 0px 5px 5px;
