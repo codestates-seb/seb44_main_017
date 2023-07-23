@@ -31,7 +31,6 @@ const ManageProductsPage = () => {
   const [totalPage, setTotalPage] = useState<number>(1);
   const [filter, setFilter] = useState<string>("newest");
   const products = clothesList.map((product, idx) => {
-    console.log(product)
     return (
       <ProductItem
         key={`product_${idx}`}
