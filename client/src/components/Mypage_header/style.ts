@@ -13,12 +13,13 @@ export const ProfileImage = styled.img`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  border: 4px solid var(--color-darkblue);
+  border: 6px solid var(--color-darkblue);
   border-radius: 100%;
   background-color: var(--color-white);
   position: relative;
   top: 30px;
   width: 150px;
+  height: 150px;
   margin-top: 30px;
 
   @media (max-width: 767px) {

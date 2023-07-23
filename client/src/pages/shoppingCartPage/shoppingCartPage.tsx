@@ -16,7 +16,7 @@ import useInput from "@/hooks/useInput";
 const ShoppingCartPage = () => {
   const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
   const [total, setTotal] = useState({ price: 0, quantity: 0 });
-  const [spendPoints, pointChangeHandler] = useInput("");
+  const [spendPoints, pointChangeHandler] = useInput(0);
   const [postCode, setPostCode] = useState<PostCodeTypes>({
     postnum: "",
     address: "",
@@ -30,7 +30,7 @@ const ShoppingCartPage = () => {
   const [checkedItems, setCheckedItems] = useState<number[]>(
     cartItems.map(item => item.productId)
   );
-  const [paymentList, setPaymentList] = useState(",");
+  let paymentList = ",";
 
   const [authorization, refresh] = getToken();
   const [isOpenPostPopup, setIsOpenPostcode] = useState(false);
@@ -38,10 +38,6 @@ const ShoppingCartPage = () => {
   const handlePostCode = () => {
     setIsOpenPostcode(!isOpenPostPopup);
   };
-
-  console.log(paymentList);
-  console.log("cartItems = ", cartItems);
-  console.log("checkedItems = ", checkedItems);
 
   const getCartItems = () => {
     axios
@@ -75,9 +71,10 @@ const ShoppingCartPage = () => {
 
     if ((data && status === 200) || 201) {
       window.open(data);
-      alert("결제가 완료되었습니다.");
-      window.location.reload();
     }
+    paymentList = ",";
+    alert("주문이 완료되었습니다.");
+    window.location.reload();
   };
 
   const deleteItem = (id: number) => {
@@ -103,11 +100,10 @@ const ShoppingCartPage = () => {
       for (let i = 0; i < idList.length; i++) {
         if (checkedItems.indexOf(idList[i]) === -1) {
           unCheckedList.push(idList[i]);
-          console.log("unCheckedList = ", unCheckedList);
         }
       }
 
-      setPaymentList(unCheckedList.toString());
+      paymentList = unCheckedList.toString();
     }
     orderItems();
   };
@@ -260,11 +256,10 @@ const ShoppingCartPage = () => {
 
                     <div className="order_info">
                       <span>차감 포인트</span>
-                      <input
-                        type="text"
+                      <S.PointInput
+                        type="number"
                         value={Number(spendPoints)}
                         onChange={pointChangeHandler}
-                        style={{ textAlign: "right" }}
                       />
                     </div>
                     <S.RemainPoint
