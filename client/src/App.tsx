@@ -36,7 +36,7 @@ function App() {
             <Route element={<NoticeRegisterPage />} path="notice_register" />
             <Route
               element={<NoticeModfiyPage />}
-              path="notice/modify/:noticeID"
+              path="notice/modify/:boardId"
             />
             <Route element={<ProductInfoPage />} path="/products/:productsID" />
             <Route element={<ProductListPage />} path="/productlist" />
