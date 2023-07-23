@@ -33,7 +33,6 @@ const MainPageContainer = styled.main`
 const MainContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   width: 100%;
   min-height: calc(100vh - 72px);
 `;

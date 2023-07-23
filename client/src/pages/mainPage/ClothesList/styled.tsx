@@ -7,21 +7,28 @@ export const Container = styled.div`
 `;
 export const ContainerPC = styled.div`
   display: none;
-  @media (min-width: 767px) {
+  @media (min-width: 768px) {
     display: flex;
     overflow: hidden;
     width: 100%;
   }
 `;
 export const ContainerMobile = styled.div`
-  display: none;
-  @media (max-width: 767px) {
-    display: flex;
-    flex-wrap: wrap;
-    overflow: hidden;
-    width: 100%;
-    margin-top: 36px;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+  margin-top: 36px;
+  @media (max-width: 534px) {
+    width: 340px;
+  }
+  @media (min-width: 535px) and (max-width: 713px) {
+    width: 514px;
+  }
+  @media (min-width: 714px) and (max-width: 767px) {
+    width: 692px;
+  }
+  @media (min-width: 768px) {
+    display: none;
   }
 `;
 export const UppserListContainer = styled.div`
@@ -30,6 +37,7 @@ export const UppserListContainer = styled.div`
   align-items: center;
   margin: 1px;
   @media (max-width: 767px) {
+    justify-content: flex-start;
     flex-wrap: wrap;
   }
   @media (min-width: 768px) {
