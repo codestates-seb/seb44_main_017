@@ -66,6 +66,9 @@ public class Product extends Auditable {
     @ManyToMany(mappedBy = "likedProducts")
     private List<Member> likedByMembers = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "viewedProducts")
+    private List<Member> viewedMembers = new ArrayList<>();
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<ProductComment> comments = new ArrayList<>();
 
@@ -85,9 +88,6 @@ public class Product extends Auditable {
         this.setView(this.getView() + 1);
     }
 
-//    @OneToOne(mappedBy = "product")
-//    private ProductView productView;
-
     public void addLikeByMembers(Member member){
         if(!this.likedByMembers.contains(member))
             this.likedByMembers.add(member);
@@ -98,12 +98,27 @@ public class Product extends Auditable {
             this.likedByMembers.remove(member);
     }
 
+    public void addViewedMembers(Member member){
+        if(!this.viewedMembers.contains(member))
+            this.viewedMembers.add(member);
+    }
+
+    public void removeViewedMembers(Member member){
+        if(this.viewedMembers.contains(member))
+            this.viewedMembers.remove(member);
+    }
+
     public int getLikeCount() {
         return likedByMembers.size();
     }
 
     public boolean isLikedByMember(Long memberId) {
         return likedByMembers.stream()
+                .anyMatch(member -> member.getMemberId().equals(memberId));
+    }
+
+    public boolean isViewedMembers(Long memberId) {
+        return this.viewedMembers.stream()
                 .anyMatch(member -> member.getMemberId().equals(memberId));
     }
 
