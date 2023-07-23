@@ -46,10 +46,12 @@ const QnaDetailPage = () => {
       const { data, status } = await axios.get(
         BASE_URL + `/questions/${questionId}`,
         {
-          headers: {
-            Authorization: `${authorization}`,
-            Refresh: `${refresh}`,
-          },
+          headers: authorization
+            ? {
+                Authorization: `${authorization}`,
+                Refresh: `${refresh}`,
+              }
+            : {},
         }
       );
 

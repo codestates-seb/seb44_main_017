@@ -73,8 +73,8 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   };
 
   const handleEditComment = (id: number | string) => {
-    setIsEditMode(true);
     setSelectedId(id);
+    setIsEditMode(true);
 
     setTimeout(() => {
       inputRef.current && inputRef.current.focus();
