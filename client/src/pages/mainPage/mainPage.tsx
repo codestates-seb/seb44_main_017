@@ -35,6 +35,22 @@ export const MainPage = () => {
       return () => clearTimeout(timer);
     }
   }, [open]);
+
+  // OAuth 토큰 저장
+  const searchParamsToken = new URLSearchParams(window.location.search);
+  const access = searchParamsToken.get("Authorization");
+
+  const searchParamsId = new URLSearchParams(window.location.search);
+  const refresh = searchParamsId.get("Refresh");
+
+  useEffect(() => {
+    if (access && refresh) {
+      document.cookie = `authorization=${access}; path=/`;
+      document.cookie = `refresh=${refresh}; path=/; SameSite=none; Secure`;
+      navigate("/");
+    }
+  }, []);
+
   return (
     <MainPageContainer>
       <MainContentContainer>
