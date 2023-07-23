@@ -36,7 +36,7 @@ public class Question extends Auditable {
     @JoinColumn(name = "member_id",nullable = false)
     private Member writer;
 
-    @OneToOne(mappedBy ="question",cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy ="question")
     private QuestionView QViews;
 
     @OneToMany(mappedBy = "question",cascade = CascadeType.REMOVE)
