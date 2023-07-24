@@ -1,8 +1,8 @@
 import axios from "axios";
-import { getRoles } from "@/utils/token";
 import { useEffect, useState } from "react";
 import { koreanDate } from "@/utils/koreanTime";
 import { BASE_URL } from "@/constants/constants";
+import { getRoles, getToken } from "@/utils/token";
 import * as S from "@/pages/noticeDetailPage/style";
 import { useNavigate, useParams } from "react-router-dom";
 import SpeedDialCustom from "@/components/SpeedDialCustom/SpeedDialCustom";
@@ -76,10 +76,18 @@ function NoticeDetailPage() {
     }
   };
 
+  const [authorization, refresh] = getToken();
   const preNoticeCreateDate = koreanDate(preData.createAt);
   const getPreNotice = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/notify/${boardId}/pre`);
+      const response = await axios.get(`${BASE_URL}/notify/${boardId}/pre`, {
+        headers: authorization
+          ? {
+              Authorization: `${authorization}`,
+              Refresh: `${refresh}`,
+            }
+          : {},
+      });
       setPreData(response.data);
     } catch (error) {
       console.log(error);
