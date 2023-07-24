@@ -109,5 +109,5 @@ const CustomAlert = styled(Alert)`
   top: 40px;
   border-radius: 99px !important;
   animation: ${slideFromTop} 1s ease;
-  z-index: 99;
+  z-index: 9999;
 `;
