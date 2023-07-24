@@ -69,7 +69,7 @@ export const ProductInfoPage = () => {
 
   useEffect(() => {
     getUser();
-  }, [, complete]);
+  }, [complete]);
 
   const deletePost = async () => {
     try {

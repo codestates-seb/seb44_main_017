@@ -109,6 +109,11 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (commentValue === "") {
+      alert("내용을 입력해주세요.");
+      return;
+    }
+
     try {
       axios
         .post(
@@ -219,24 +224,16 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
                       }
                     >
                       수정
-                      {/* <EditButton /> */}
                     </button>
                     <button
                       className="delete_btn"
-                      onClick={() => setIsOpenConfirm(true)}
+                      onClick={() => {
+                        setIsOpenConfirm(true);
+                        setSelectedId(qPath ? e.commentId : e.productCommentId);
+                      }}
                     >
                       삭제
-                      {/* <DeleteButton /> */}
                     </button>
-                    {isOpenConfirm && (
-                      <CustomConfirm
-                        content={"정말 삭제하시겠습니까?"}
-                        isOpenConfirm={isOpenConfirm}
-                        setIsOpenConfirm={setIsOpenConfirm}
-                        handleDeleteComment={handleDeleteComment}
-                        id={qPath ? e.commentId : e.productCommentId}
-                      />
-                    )}
                   </>
                 </S.UpdateBtnBox>
               ) : (
@@ -244,6 +241,15 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
               )}
             </S.CommentBox>
           ))
+        )}
+        {isOpenConfirm && (
+          <CustomConfirm
+            content={"정말 삭제하시겠습니까?"}
+            isOpenConfirm={isOpenConfirm}
+            setIsOpenConfirm={setIsOpenConfirm}
+            handleDeleteComment={handleDeleteComment}
+            id={selectedId}
+          />
         )}
       </S.CommentsLayout>
     </S.Container>
