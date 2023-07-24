@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router";
 import * as S from "./styled";
 import React, { useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "@/constants/constants";
+import { getToken } from "@/utils/token";
 
 interface ProductInfo {
   url: string;
@@ -26,11 +29,13 @@ const ProductItem: React.FC<ProductInfo> = ({
     event: React.MouseEvent<SVGSVGElement, MouseEvent>
   ) => {
     event.stopPropagation();
+    console.log("run")
     try {
-      // await axios({
-      //   method: "PATCH",
-      //   url: "",
-      // });
+      await axios.post(`${BASE_URL}/products/${productId}/like`, {
+        headers: {
+          refresh: getToken()[1],
+        },
+      });
       setIsLike(!isLike);
     } catch (err) {
       console.error("Error updating data", err);
