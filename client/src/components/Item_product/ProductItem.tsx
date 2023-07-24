@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router";
 import * as S from "./styled";
 import React, { useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "@/constants/constants";
+import { getToken } from "@/utils/token";
+import { commaNumber } from "@/utils/inssertComma";
 
 interface ProductInfo {
   url: string;
@@ -27,10 +31,23 @@ const ProductItem: React.FC<ProductInfo> = ({
   ) => {
     event.stopPropagation();
     try {
-      // await axios({
-      //   method: "PATCH",
-      //   url: "",
-      // });
+      console.log(getToken()[1]);
+      console.log(productId);
+      console.log(`${BASE_URL}/products/${productId}/like`);
+      await axios.post(`${BASE_URL}/products/${productId}/like`, {
+        headers: {
+          refresh: getToken()[1],
+        },
+      });
+      await axios.post(
+        `${BASE_URL}/products/${productId}/like`,
+        {},
+        {
+          headers: {
+            refresh: getToken()[1],
+          },
+        }
+      );
       setIsLike(!isLike);
     } catch (err) {
       console.error("Error updating data", err);
@@ -70,7 +87,7 @@ const ProductItem: React.FC<ProductInfo> = ({
             />
           )}
         </S.Content>
-        <S.Price>{`${price} 원`}</S.Price>
+        <S.Price>{price ? `${commaNumber(price)} 원` : ""}</S.Price>
       </S.ContentContainer>
     </S.ProductContainer>
   );
