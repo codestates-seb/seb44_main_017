@@ -243,7 +243,10 @@ public class ProductService {
     public Page<ProductWithLikedResponse> findProducts(int page, int size,
                                                        Boolean issell, String sort, Optional<RefreshToken> refreshToken) {
 
-        if (refreshToken.get().getMemberId() != null) {
+        if(refreshToken.isEmpty()){
+            return productQueryRepository.getProducts(PageRequest.of(page, size), sort, issell);
+        }
+        else if (refreshToken.get().getMemberId() != null) {
             Long memberId = refreshToken
                     .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
                     .getMemberId();
@@ -253,14 +256,17 @@ public class ProductService {
             return productQueryRepository.getProducts(PageRequest.of(page, size), sort, issell,findMember);
         }else{
             return productQueryRepository.getProducts(PageRequest.of(page, size), sort, issell);
-
         }
     }
 
     public Page<ProductWithLikedResponse> findProducts(int page, int size,
                                                        String sort, Optional<RefreshToken> refreshToken) {
 
-        if (refreshToken.get().getMemberId() != null) {
+
+        if(refreshToken.isEmpty()){
+            return productQueryRepository.getProducts(PageRequest.of(page, size), sort);
+        }
+        else if (refreshToken.get().getMemberId() != null) {
             Long memberId = refreshToken
                     .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
                     .getMemberId();
@@ -268,9 +274,8 @@ public class ProductService {
             Member findMember = memberService.findVerifiedMember(memberId);
 
             return productQueryRepository.getProducts(PageRequest.of(page, size), sort, findMember);
-        }else{
+        }else {
             return productQueryRepository.getProducts(PageRequest.of(page, size), sort);
-
         }
     }
 
