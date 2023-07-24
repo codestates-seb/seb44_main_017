@@ -339,3 +339,17 @@ export const EmptyCart = styled.div`
     font-size: var(--font-size-16);
   }
 `;
+
+export const PointInput = styled.input`
+  text-align: right;
+
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`;

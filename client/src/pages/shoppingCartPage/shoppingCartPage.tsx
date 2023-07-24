@@ -16,19 +16,21 @@ import useInput from "@/hooks/useInput";
 const ShoppingCartPage = () => {
   const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
   const [total, setTotal] = useState({ price: 0, quantity: 0 });
-  const [spendPoints, pointChangeHandler] = useInput("");
+  const [spendPoints, pointChangeHandler] = useInput(0);
   const [postCode, setPostCode] = useState<PostCodeTypes>({
     postnum: "",
     address: "",
     reciver: "",
     reciverphone: "",
     pointspend: 0,
+    productlist: "",
   });
   const [cartItems, setCartItems] =
     useRecoilState<CartItemTypes[]>(cartItemState);
   const [checkedItems, setCheckedItems] = useState<number[]>(
     cartItems.map(item => item.productId)
   );
+  let paymentList = ",";
 
   const [authorization, refresh] = getToken();
   const [isOpenPostPopup, setIsOpenPostcode] = useState(false);
@@ -57,6 +59,7 @@ const ShoppingCartPage = () => {
         reciver: userInfo?.name,
         reciverphone: userInfo?.phone,
         pointspend: spendPoints,
+        productlist: paymentList,
       },
       {
         headers: {
@@ -68,9 +71,10 @@ const ShoppingCartPage = () => {
 
     if ((data && status === 200) || 201) {
       window.open(data);
-      window.location.reload();
-      return data;
     }
+    paymentList = ",";
+    alert("주문이 완료되었습니다.");
+    window.location.reload();
   };
 
   const deleteItem = (id: number) => {
@@ -91,12 +95,15 @@ const ShoppingCartPage = () => {
   const checkedItemsOrderHandler = () => {
     if (cartItems.length !== checkedItems.length) {
       const idList = cartItems.map(item => item.productId);
+      const unCheckedList = [];
 
       for (let i = 0; i < idList.length; i++) {
         if (checkedItems.indexOf(idList[i]) === -1) {
-          deleteItem(idList[i]);
+          unCheckedList.push(idList[i]);
         }
       }
+
+      paymentList = unCheckedList.toString();
     }
     orderItems();
   };
@@ -140,7 +147,7 @@ const ShoppingCartPage = () => {
   useEffect(() => {
     setTotal(getTotal());
     getCartItems();
-  }, [, checkedItems, cartItems.length]);
+  }, [, checkedItems, cartItems.length, paymentList]);
 
   return (
     <>
@@ -249,11 +256,10 @@ const ShoppingCartPage = () => {
 
                     <div className="order_info">
                       <span>차감 포인트</span>
-                      <input
-                        type="text"
+                      <S.PointInput
+                        type="number"
                         value={Number(spendPoints)}
                         onChange={pointChangeHandler}
-                        style={{ textAlign: "right" }}
                       />
                     </div>
                     <S.RemainPoint

@@ -106,4 +106,5 @@ export interface PostCodeTypes {
   reciver: string;
   reciverphone: string;
   pointspend: number;
+  productlist: string;
 }
