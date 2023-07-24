@@ -28,8 +28,8 @@ const BoardDetail = ({
   const [isWriter, setIsWriter] = useState<boolean>(false);
 
   useEffect(() => {
-    userName === name ? setIsWriter(true) : setIsWriter(false);
-  }, []);
+    setIsWriter(userName === name);
+  }, [userName, name]);
 
   return (
     <S.Container>
