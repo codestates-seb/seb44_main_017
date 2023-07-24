@@ -20,6 +20,20 @@ interface Data {
   category: string;
 }
 
+interface SearchData {
+  product_id: number | string;
+  name: string;
+  title: string;
+  content: string;
+  price: number;
+  category: string;
+  image_link: string;
+  issell: false;
+  condition_value: number | string;
+  productlike: number;
+  view: number;
+}
+
 interface RecommendData {
   productId: string;
   imageLink: string;
@@ -39,14 +53,16 @@ export const ProductListPage = () => {
   const [btnSelect, setBtnSelect] = useState<boolean>(false);
   const [btnCategory, setBtnCategory] = useState<string>("전체");
   const [data, setData] = useState<Data[]>([]);
+  const [searchData, setSearchData] = useState<SearchData[]>([]);
   const [recommendData, setRecommendData] = useState<RecommendData[]>([]);
   const ref = useRef<HTMLDivElement>(null);
   const [translate, setTranslate] = useState<number>(0);
   const [value, setValue] = useState<string>("newest");
   const [page, setPage] = useState<any>(1);
   const [pageTotal, setPageTotal] = useState<number>(1);
-  const [size, setSize] = useState<number>(1);
-  const [searchValue, changeHandler] = useInput("");
+  const [size, setSize] = useState<number>(20);
+  const [searchValue, changeHandler, searchReset] = useInput("");
+  const [isSearch, setIsSearch] = useState(false);
 
   const getRecommendProducts = async () => {
     try {
@@ -91,15 +107,17 @@ export const ProductListPage = () => {
   };
 
   const searchHandler = async (e: React.FormEvent) => {
+    setIsSearch(true);
     e.preventDefault();
     try {
       const response = await axios.get(
         `${BASE_URL}/search?keyword=${searchValue}&page=${page}&size=${size}`
       );
-      setData(response.data.data);
+      setSearchData(response.data.data);
     } catch (error) {
       console.log(error);
     }
+    searchReset && searchReset();
   };
 
   const sortOptions = [
@@ -151,7 +169,7 @@ export const ProductListPage = () => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [value, btnCategory, page, size]);
+  }, [value, btnCategory, page, size, isSearch]);
 
   const handlePrev = () => {
     if (ref.current) {
@@ -186,7 +204,7 @@ export const ProductListPage = () => {
         <S.ProductsBox>
           <S.ArrowLeftIcon onClick={handlePrev} />
           <S.ProductsCarousel>
-            {recommendData.map((recommendData) => (
+            {recommendData.map(recommendData => (
               <S.Product
                 ref={ref}
                 style={{ transform: `translateX(${translate}px)` }}
@@ -210,10 +228,11 @@ export const ProductListPage = () => {
           searchValue={searchValue}
           changeHandler={changeHandler}
           searchHandler={searchHandler}
+          setIsSearch={setIsSearch}
         />
       </S.SearchBox>
       <S.CategoryBar>
-        {categories.map((category) => (
+        {categories.map(category => (
           <CategoryButton
             onClick={handleBtnCategory}
             btnSelect={btnCategory === category.name}
@@ -238,18 +257,31 @@ export const ProductListPage = () => {
         </S.SelectBar>
       )}
       <S.ProductsContainer>
-        {data.map((data) => (
-          <S.Product>
-            <ProductItem
-              url={`${IMG_URL}/${data.imageLink}`}
-              isSell={false}
-              like={data.isLike}
-              title={data.name}
-              price={data.price}
-              productId={data.productId}
-            ></ProductItem>
-          </S.Product>
-        ))}
+        {isSearch
+          ? searchData.map(data => (
+              <S.Product>
+                <ProductItem
+                  url={`${IMG_URL}/${data.image_link}`}
+                  isSell={false}
+                  like={false}
+                  title={data.name}
+                  price={data.price}
+                  productId={data.product_id}
+                ></ProductItem>
+              </S.Product>
+            ))
+          : data.map(data => (
+              <S.Product>
+                <ProductItem
+                  url={`${IMG_URL}/${data.imageLink}`}
+                  isSell={false}
+                  like={data.isLike}
+                  title={data.name}
+                  price={data.price}
+                  productId={data.productId}
+                ></ProductItem>
+              </S.Product>
+            ))}
       </S.ProductsContainer>
       <S.CustomPaginationBox>
         <CustomPagination pageCount={pageTotal} page={page} setPage={setPage} />

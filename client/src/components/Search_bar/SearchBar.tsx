@@ -10,15 +10,21 @@ interface SearchBarProps {
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => void;
   searchHandler: (e: React.FormEvent) => void;
+  setIsSearch: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SearchBar = ({
   searchValue,
   changeHandler,
   searchHandler,
+  setIsSearch,
 }: SearchBarProps) => {
   const [isFocus, setIsFocus] = useState(false);
-
+  const keyboardHandler = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      searchHandler(e);
+    }
+  };
   return (
     <Form isFocus={isFocus}>
       <SearchElement>
@@ -28,9 +34,14 @@ const SearchBar = ({
           placeholder="어떤 상품을 찾고 있나요?"
           onChange={changeHandler}
           onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
+          onBlur={() => {
+            setIsFocus(false);
+            setIsSearch(false);
+          }}
+          onKeyUp={keyboardHandler}
         />
-        <SearchIcon onClick={searchHandler} />
+        <input style={{ display: "none" }} />
+        <SearchIcon searchHandler={searchHandler} />
       </SearchElement>
     </Form>
   );
@@ -43,7 +54,7 @@ const Form = styled.form<{ isFocus: boolean }>`
   align-items: center;
   max-width: 800px;
   width: 90%;
-  border: ${(props) =>
+  border: ${props =>
     props.isFocus
       ? "2px solid var(--color-black)"
       : "1px solid var(--color-gray100)"};
@@ -62,6 +73,7 @@ const Form = styled.form<{ isFocus: boolean }>`
 
   & svg {
     outline: none;
+    cursor: pointer;
   }
 `;
 

@@ -176,18 +176,19 @@ const HamburgerDropdown = ({
                       <h3 className="nav_text">장바구니</h3>
                       <div className="nav_description">장바구니</div>
                     </li>
-                    <li
-                      onClick={() => {
-                        navigate("/mypage");
-                        toggleMenu();
-                      }}
-                    >
-                      <img src={magnifier} title="마이페이지" />
-                      <h3 className="nav_text">마이페이지</h3>
-                      <div className="nav_description">마이페이지</div>
-                    </li>
                     {userInfo.role === "user" ? (
-                      <></>
+                      <>
+                        <li
+                          onClick={() => {
+                            navigate("/mypage");
+                            toggleMenu();
+                          }}
+                        >
+                          <img src={magnifier} title="마이페이지" />
+                          <h3 className="nav_text">마이페이지</h3>
+                          <div className="nav_description">마이페이지</div>
+                        </li>
+                      </>
                     ) : (
                       <li
                         onClick={() => {
