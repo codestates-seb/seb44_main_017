@@ -93,6 +93,10 @@ export const SubTitleButton = styled.a`
   @media (min-width: 768px) and (max-width: 1120px) {
     margin-bottom: -152px;
   }
+  &:hover {
+    background-color: #385c78;
+    color: white;
+  }
 `;
 export const NavButton = styled.a<{ path: string }>`
   color: var(--color-gray200);

@@ -19,6 +19,7 @@ import MyinfoPage from "./pages/myinfoPage/myinfoPage";
 import ShoppingCartPage from "./pages/shoppingCartPage/shoppingCartPage";
 import NoticeDetailPage from "./pages/noticeDetailPage/noticeDetailPage";
 import NoticeRegisterPage from "./pages/noticeRegisterPage/noticeRegisterPage";
+import NoticeModifyPage from "./pages/noticeModifyPage/noticeModifyPage";
 import QnaModifyPage from "./pages/qnaModifyPage/qnaModifyPage";
 import QnaRegisterPage from "./pages/qnaRegisterPage/qnaRegisterPage";
 import { RecoilRoot } from "recoil";
@@ -33,6 +34,10 @@ function App() {
             <Route element={<MainPage />} path="/" />
             <Route element={<NoticePage />} path="/notice" />
             <Route element={<NoticeRegisterPage />} path="notice_register" />
+            <Route
+              element={<NoticeModifyPage />}
+              path="notice/modify/:boardId"
+            />
             <Route element={<ProductInfoPage />} path="/products/:productsID" />
             <Route element={<ProductListPage />} path="/productlist" />
             <Route element={<CollectionPage />} path="/collection" />

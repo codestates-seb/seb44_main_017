@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as S from "./style";
 import { getToken } from "@/utils/token";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 
@@ -15,18 +15,17 @@ const Modify = (props: ModifyProps) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [authorization, refresh] = getToken();
-  const { questionId, noticeID } = useParams();
+  const { questionId, boardId } = useParams();
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
   const path = location.pathname.startsWith("/notice");
 
-  console.log(location);
-  const registerPost = async () => {
+  const modifyPost = async () => {
     try {
       const res = await axios.patch(
         path
-          ? `${BASE_URL}/notify/${noticeID}`
+          ? `${BASE_URL}/notify/${boardId}`
           : `${BASE_URL}/questions/${questionId}`,
         {
           title: title,
@@ -53,15 +52,19 @@ const Modify = (props: ModifyProps) => {
   const handleSubmit = () => {
     const confirmDelete = window.confirm("게시물을 수정하시겠습니까?");
     if (confirmDelete && path) {
-      registerPost();
+      modifyPost();
       alert("수정이 완료되었습니다.");
       navigate("/notice");
-    } else {
-      registerPost();
+    } else if (confirmDelete) {
+      modifyPost();
       alert("수정이 완료되었습니다.");
       navigate("/questions");
     }
   };
+  useEffect(() => {
+    setTitle(originalTitle);
+    setContent(originalContents);
+  }, [originalTitle, originalContents]);
 
   return (
     <S.Container>
@@ -69,7 +72,7 @@ const Modify = (props: ModifyProps) => {
         <S.InputTitle
           type="text"
           placeholder="제목을 입력해주세요."
-          value={originalTitle}
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
       </S.TitleWrapper>
@@ -78,7 +81,7 @@ const Modify = (props: ModifyProps) => {
           ref={inputRef}
           type="text"
           placeholder="내용을 입력해주세요."
-          value={originalContents}
+          value={content}
           onChange={(e) => setContent(e.target.value)}
         />
       </S.ContentsWrapper>

@@ -25,7 +25,6 @@ function SpeedDialCustom() {
   const handleAction = (action: ActionType) => {
     const notice = location.pathname.includes("/notice/detail/");
     const question = location.pathname.includes("/questions/");
-    console.log(questionId);
 
     if (notice) {
       if (action.key === "modify") {
