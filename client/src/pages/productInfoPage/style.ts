@@ -2,18 +2,12 @@ import styled from "styled-components";
 import { Slider } from "@mui/material";
 
 export const ProductInfo = styled.section`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
   padding: 36px 36px 8px 36px;
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
 
   & .back_btn {
     position: relative;
     top: 24px;
+    left: 50%;
     border-radius: 16px;
     width: 96px;
     height: 32px;
@@ -32,14 +26,17 @@ export const ProductInfo = styled.section`
 
 export const ContetntsWrapper = styled.div`
   display: flex;
-  width: 100%;
   max-height: 404px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 36px;
 
-  @media (min-width: 768px) and (max-width: 1023px) {
+  @media (max-width: 1023px) {
     max-height: 354px;
   }
 
-  @media (max-width: 767px) {
+  @media (max-width: 900px) {
     flex-direction: column;
     gap: 8px;
   }
@@ -48,7 +45,6 @@ export const ContetntsWrapper = styled.div`
 export const ProductImageBox = styled.div`
   display: flex;
   justify-content: center;
-  padding: 0 20px;
 `;
 
 export const ProductImage = styled.img`
@@ -71,11 +67,9 @@ export const ProductImage = styled.img`
 
 export const ProductDetailContainer = styled.div`
   width: 100%;
-  max-width: 772px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 0 20px;
 `;
 
 export const ProductUpperPart = styled.div`
@@ -196,11 +190,12 @@ export const PurchaseButtonWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   width: 100%;
-  border-bottom: 1px solid var(--color-black);
   font-size: 1.2rem;
   gap: 12px;
-  padding: 20px;
+  padding: 20px 0;
   max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
 `;
 
 export const CartBtn = styled.div`
