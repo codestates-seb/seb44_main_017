@@ -1,4 +1,4 @@
-import { Collapse, Dialog, DialogActions, DialogContent } from "@mui/material";
+import { Collapse, Dialog } from "@mui/material";
 import * as S from "./styled";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -78,17 +78,17 @@ const UserTable: React.FC<UserTableProps> = ({ user, idx, page }) => {
         </S.Field>
       </Collapse>
       <Dialog open={dialogOpen} onClose={handleClose}>
-        <DialogContent>
+        <S.ContentContainer>
           {banState
             ? "해당 유저의 계정을 활성화 하시겠습니까?"
             : "해당 유저의 계정을 차단 하시겠습니까?"}
-        </DialogContent>
-        <DialogActions>
+        </S.ContentContainer>
+        <S.BtnConatiner>
           <S.CancelBtn onClick={handleClose}>취소</S.CancelBtn>
           <S.AgreeBtn banState={banState} onClick={banclick} autoFocus>
             {banState ? "활성화" : "차단"}
           </S.AgreeBtn>
-        </DialogActions>
+        </S.BtnConatiner>
       </Dialog>
     </S.Container>
   );

@@ -1,3 +1,4 @@
+import { DialogActions, DialogContent } from "@mui/material";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -64,3 +65,11 @@ export const CancelBtn = styled.button`
   border-radius: 16px;
   color: black;
 `;
+export const ContentContainer = styled(DialogContent)`
+  padding: 12px 24px!important;
+  margin-top: 12px;
+`
+export const BtnConatiner = styled(DialogActions)`
+  padding: 0px 24px 12px 24px !important;
+  margin-top: 24px;
+`
