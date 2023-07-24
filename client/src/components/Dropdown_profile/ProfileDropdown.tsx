@@ -35,14 +35,15 @@ const ProfileDropdown = () => {
         </div>
         <S.DropDownContainer isDropped={DropdownIsOpen ? true : false}>
           <ul>
-            <Link to="/mypage" onClick={DropdownHandler}>
-              <li>마이페이지</li>
-            </Link>
             <Link to="/cart" onClick={DropdownHandler}>
               <li>장바구니</li>
             </Link>
             {userInfo?.role === "user" ? (
-              <></>
+              <>
+                <Link to="/mypage" onClick={DropdownHandler}>
+                  <li>마이페이지</li>
+                </Link>
+              </>
             ) : (
               <Link to="/admin/products" onClick={DropdownHandler}>
                 <li>관리자페이지</li>

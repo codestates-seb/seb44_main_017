@@ -21,7 +21,7 @@ const QnaListComponent = ({
   totalPage,
 }: QnaListComponentProps) => {
   const options = ["최신순", "오래된순", "조회수순"];
-  const TITLE_MAX_LENGTH = 40;
+  const TITLE_MAX_LENGTH = 30;
   const location = useLocation();
   const qPath = location.pathname.startsWith("/mypage");
 
