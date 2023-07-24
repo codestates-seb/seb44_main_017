@@ -7,10 +7,15 @@ import com.main.project.dto.queryresponse.QProductWithLikedResponse;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.entity.Member;
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.elasticsearch.monitor.os.OsStats;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -40,7 +45,7 @@ public class ProductQueryRepository {
                         product.imageLink,
                         product.modifyAt,
                         product.createAt,
-                        product.likedByMembers.contains(new Member()),
+                        Expressions.asBoolean(false),
                         product.price,
                         product.view,
                         product.conditionValue)
@@ -97,6 +102,7 @@ public class ProductQueryRepository {
 
     public Page<ProductWithLikedResponse> getProducts(Pageable pageable, String keyword, boolean issell){
         OrderSpecifier orderSpecifiers = createOrderSpecifier(keyword);
+
         List<ProductWithLikedResponse> responses = jpaQueryFactory
                 .select(new QProductWithLikedResponse(
                         product.productId,
@@ -108,7 +114,7 @@ public class ProductQueryRepository {
                         product.imageLink,
                         product.modifyAt,
                         product.createAt,
-                        product.likedByMembers.contains(new Member()),
+                        Expressions.asBoolean(false),
                         product.price,
                         product.view,
                         product.conditionValue)
