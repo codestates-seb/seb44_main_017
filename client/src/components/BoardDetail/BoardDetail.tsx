@@ -1,6 +1,8 @@
-import ViewCount from "@/assets/icons/ViewCount";
 import * as S from "./style";
+import { getName } from "@/utils/token";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import ViewCount from "@/assets/icons/ViewCount";
 import SpeedDialCustom from "../SpeedDialCustom/SpeedDialCustom";
 
 interface BoardDetailTypes {
@@ -22,6 +24,12 @@ const BoardDetail = ({
   content,
 }: BoardDetailTypes) => {
   const navigate = useNavigate();
+  const userName = getName();
+  const [isWriter, setIsWriter] = useState<boolean>(false);
+
+  useEffect(() => {
+    userName === name ? setIsWriter(true) : setIsWriter(false);
+  }, []);
 
   return (
     <S.Container>
@@ -45,7 +53,7 @@ const BoardDetail = ({
       <S.ContentBox>
         <div>{content}</div>
         <S.SpeedDialContainer>
-          <SpeedDialCustom />
+          {isWriter && <SpeedDialCustom />}
         </S.SpeedDialContainer>
         <button className="back_btn" onClick={() => navigate(-1)}>
           목록으로
