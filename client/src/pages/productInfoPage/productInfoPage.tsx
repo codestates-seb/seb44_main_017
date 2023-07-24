@@ -52,8 +52,14 @@ export const ProductInfoPage = () => {
 
   const getUser = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/products/${productsID}`);
-      console.log(response.data);
+      const response = await axios.get(`${BASE_URL}/products/${productsID}`, {
+        headers: authorization
+          ? {
+              Authorization: `${authorization}`,
+              Refresh: `${refresh}`,
+            }
+          : {},
+      });
       setData(response.data.data);
       setComplete(false);
     } catch (e) {
@@ -63,7 +69,7 @@ export const ProductInfoPage = () => {
 
   useEffect(() => {
     getUser();
-  }, [, complete]);
+  }, [complete]);
 
   const deletePost = async () => {
     try {
