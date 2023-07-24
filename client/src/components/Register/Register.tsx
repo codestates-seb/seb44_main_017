@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as S from "./style";
 import { getToken } from "@/utils/token";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 
@@ -10,7 +10,6 @@ const Register = () => {
   const [content, setContent] = useState("");
   const [authorization, refresh] = getToken();
   const navigate = useNavigate();
-  const inputRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
   const path = location.pathname.startsWith("/notice");
 
@@ -37,10 +36,6 @@ const Register = () => {
     }
   };
 
-  const handleWrapperClick = () => {
-    inputRef.current?.focus();
-  };
-
   const handleSubmit = () => {
     const confirmDelete = window.confirm("게시물을 등록하시겠습니까?");
     if (confirmDelete && path) {
@@ -64,10 +59,8 @@ const Register = () => {
           onChange={(e) => setTitle(e.target.value)}
         />
       </S.TitleWrapper>
-      <S.ContentsWrapper onClick={handleWrapperClick}>
+      <S.ContentsWrapper>
         <S.InputContents
-          ref={inputRef}
-          type="text"
           placeholder="내용을 입력해주세요."
           value={content}
           onChange={(e) => setContent(e.target.value)}

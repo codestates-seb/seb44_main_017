@@ -1,7 +1,7 @@
 import axios from "axios";
 import * as S from "./style";
 import { getToken } from "@/utils/token";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 
@@ -17,7 +17,6 @@ const Modify = (props: ModifyProps) => {
   const [authorization, refresh] = getToken();
   const { questionId, boardId } = useParams();
   const navigate = useNavigate();
-  const inputRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
   const path = location.pathname.startsWith("/notice");
 
@@ -43,10 +42,6 @@ const Modify = (props: ModifyProps) => {
       // 등록 요청이 실패하였을 때 실행할 코드 작성
       console.log("등록 요청 실패:", e);
     }
-  };
-
-  const handleWrapperClick = () => {
-    inputRef.current?.focus();
   };
 
   const handleSubmit = () => {
@@ -76,10 +71,8 @@ const Modify = (props: ModifyProps) => {
           onChange={(e) => setTitle(e.target.value)}
         />
       </S.TitleWrapper>
-      <S.ContentsWrapper onClick={handleWrapperClick}>
+      <S.ContentsWrapper>
         <S.InputContents
-          ref={inputRef}
-          type="text"
           placeholder="내용을 입력해주세요."
           value={content}
           onChange={(e) => setContent(e.target.value)}
