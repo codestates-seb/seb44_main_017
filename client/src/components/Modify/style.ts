@@ -55,10 +55,11 @@ export const ContentsWrapper = styled.div`
   } */
 `;
 
-export const InputContents = styled.input`
+export const InputContents = styled.textarea`
   width: 100%;
+  resize: vertical;
   max-width: 1264px;
-  min-height: 16px;
+  min-height: 500px;
   border: none;
   outline: none;
   color: var(--gray200);
