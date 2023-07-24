@@ -31,23 +31,6 @@ const ProductItem: React.FC<ProductInfo> = ({
   ) => {
     event.stopPropagation();
     try {
-      console.log(getToken()[1]);
-      console.log(productId);
-      console.log(`${BASE_URL}/products/${productId}/like`);
-      await axios.post(`${BASE_URL}/products/${productId}/like`, {
-        headers: {
-          refresh: getToken()[1],
-        },
-      });
-      await axios.post(
-        `${BASE_URL}/products/${productId}/like`,
-        {},
-        {
-          headers: {
-            refresh: getToken()[1],
-          },
-        }
-      );
       setIsLike(!isLike);
     } catch (err) {
       console.error("Error updating data", err);
