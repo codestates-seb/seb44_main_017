@@ -28,7 +28,9 @@ const ManageApprovalPage = () => {
           url: `${BASE_URL}/admin/productwait?page=${page}&size=24&sort=oldest`,
         });
         setProducts(res.data.data);
-        setTotalPage(res.data.pageInfo.totalPages);
+        if (res.data.pageInfo.totalPages) {
+          setTotalPage(res.data.pageInfo.totalPages);
+        }
         window.scrollTo(0, 0);
       } catch (err) {
         console.error("Error getting users data.", err);

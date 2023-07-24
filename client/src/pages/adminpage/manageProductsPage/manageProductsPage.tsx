@@ -50,7 +50,9 @@ const ManageProductsPage = () => {
           `${BASE_URL}/products?page=${page}&size=24&sort=${filter}&issell=false`
         );
         setClothesList(res.data.data);
-        setTotalPage(res.data.pageInfo.totalPages);
+        if (res.data.pageInfo.totalPages) {
+          setTotalPage(res.data.pageInfo.totalPages);
+        }
         window.scrollTo(0, 0);
       } catch (err) {
         console.error("Error getting clothes list", err);

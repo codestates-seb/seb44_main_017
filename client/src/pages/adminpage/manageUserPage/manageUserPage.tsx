@@ -19,7 +19,7 @@ const ManageUserPage = () => {
   const [totalPage, setTotalPage] = useState<number>(1);
   const [page, setPage] = useState<number>(1);
   const userList = users.map((user, idx) => {
-    return <UserTable key={`user_${idx}`} user={user} idx={idx} page={page}/>;
+    return <UserTable key={`user_${idx}`} user={user} idx={idx} page={page} />;
   });
   useEffect(() => {
     (async () => {
@@ -29,7 +29,9 @@ const ManageUserPage = () => {
           url: `${BASE_URL}/members?page=${page}&size=24`,
         });
         setUsers(res.data.data);
-        setTotalPage(res.data.pageInfo.totalPages);
+        if (res.data.pageInfo.totalPages) {
+          setTotalPage(res.data.pageInfo.totalPages);
+        }
         window.scrollTo(0, 0);
       } catch (err) {
         console.error("Error getting users data.", err);
@@ -60,7 +62,7 @@ const ManageUserPage = () => {
           )}
         </S.UserListContainer>
       </S.ContentContainer>
-      <CustomPagination pageCount={totalPage} page={page} setPage={setPage}/>
+      <CustomPagination pageCount={totalPage} page={page} setPage={setPage} />
     </S.Container>
   );
 };

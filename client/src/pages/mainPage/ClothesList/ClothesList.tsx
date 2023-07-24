@@ -46,10 +46,10 @@ const ClothesList = () => {
   return (
     <S.Container>
       <S.ContainerPC>
-        <FadeIn index={3}>
+        <FadeIn index={2}>
           <S.UppserListContainer>{products}</S.UppserListContainer>
         </FadeIn>
-        <FadeIn index={3}>
+        <FadeIn index={2}>
           <S.LowerListContainer>{products}</S.LowerListContainer>
         </FadeIn>
       </S.ContainerPC>

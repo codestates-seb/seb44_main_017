@@ -31,6 +31,7 @@ export const LogoContainer = styled.a`
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
 `;
 export const NavBarContainer = styled.div`
   display: flex;

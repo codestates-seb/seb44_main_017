@@ -31,9 +31,9 @@ export const ContainerMobile = styled.div`
     display: none;
   }
 `;
-export const ClothesListContainer =styled.div`
+export const ClothesListContainer = styled.div`
   display: flex;
-`
+`;
 export const UppserListContainer = styled.div`
   display: flex;
   justify-content: center;
