@@ -23,7 +23,6 @@ export const HeaderBox = styled.div`
 
   & .detail_title {
     font-size: var(--font-size-36);
-    width: max-content;
 
     @media (max-width: 767px) {
       font-size: var(--font-size-16);
