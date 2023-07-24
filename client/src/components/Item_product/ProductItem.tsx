@@ -1,9 +1,6 @@
 import { useNavigate } from "react-router";
 import * as S from "./styled";
 import React, { useState } from "react";
-import axios from "axios";
-import { BASE_URL } from "@/constants/constants";
-import { getToken } from "@/utils/token";
 import { commaNumber } from "@/utils/inssertComma";
 
 interface ProductInfo {
