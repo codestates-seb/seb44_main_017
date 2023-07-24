@@ -94,7 +94,7 @@ export const SubTitleButton = styled.a`
     margin-bottom: -152px;
   }
   &:hover {
-    background-color: #385c78;
+    background-color: var(--color-darkblue);
     color: white;
   }
 `;
