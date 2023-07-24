@@ -5,6 +5,7 @@ import com.main.project.admin.service.AdminService;
 import com.main.project.dto.MultiResponseDto;
 import com.main.project.dto.queryget;
 import com.main.project.dto.queryresponse.ProductResponse;
+import com.main.project.dto.queryresponse.ProductWithLikedResponse;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
 import com.main.project.member.dto.MemberDto;
@@ -124,26 +125,28 @@ public class ProductController {
     // members can get products list
     @GetMapping
     public ResponseEntity getProducts(
-//            @RequestHeader(value = "Refresh", required = false) String tokenstr,
+            @RequestHeader(value = "Refresh", required = false) String tokenstr,
             @Positive @RequestParam int page,
             @Positive @RequestParam int size,
             @RequestParam(required = false, defaultValue = "") String sort,
             @RequestParam(required = false) Boolean issell){
 
+        Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshTokenOptional(tokenstr);
+
         if (issell != null) {
             // when issell is not null...
 
-            Page<ProductResponse> pageProducts = productService
-                    .findProducts(page-1, size, issell, sort);
-            List<ProductResponse> products = pageProducts.getContent();
+            Page<ProductWithLikedResponse> pageProducts = productService
+                    .findProducts(page-1, size, issell, sort, refreshToken);
+            List<ProductWithLikedResponse> products = pageProducts.getContent();
             return ResponseEntity.ok(new MultiResponseDto(products, pageProducts));
 
         } else {
             // when issell property is not given
 
-            Page<ProductResponse> pageProducts = productService
-                    .findProducts(page-1, size, sort);
-            List<ProductResponse> products = pageProducts.getContent();
+            Page<ProductWithLikedResponse> pageProducts = productService
+                    .findProducts(page-1, size, sort, refreshToken);
+            List<ProductWithLikedResponse> products = pageProducts.getContent();
 
             return ResponseEntity.ok(new MultiResponseDto<>(products, pageProducts));
         }
@@ -268,9 +271,9 @@ public class ProductController {
 
     @PatchMapping("/{product-id}/comments/{product-comment-id}")
     public ResponseEntity patchProductComment(@RequestHeader("Refresh") String tokenstr,
-                                               @PathVariable("product-id") @Positive Long productId,
-                                               @PathVariable("product-comment-id")
-                                               @Positive Long productCommentId,
+                                              @PathVariable("product-id") @Positive Long productId,
+                                              @PathVariable("product-comment-id")
+                                              @Positive Long productCommentId,
                                               @RequestBody @Valid ProductCommentDto.Patch productCommentDto){
         Product product = productService.findProduct(productId);
         Optional<RefreshToken> refreshToken = Optional.ofNullable(refreshTokenService.findRefreshToken(tokenstr));

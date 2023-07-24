@@ -4,6 +4,7 @@ import com.main.project.admin.entity.Admin;
 import com.main.project.admin.service.AdminService;
 import com.main.project.dto.queryget;
 import com.main.project.dto.queryresponse.ProductResponse;
+import com.main.project.dto.queryresponse.ProductWithLikedResponse;
 import com.main.project.member.entity.Member;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
@@ -239,16 +240,38 @@ public class ProductService {
         }
     }
 
-    public Page<ProductResponse> findProducts(int page, int size,
-                                              Boolean issell, String sort) {
+    public Page<ProductWithLikedResponse> findProducts(int page, int size,
+                                                       Boolean issell, String sort, Optional<RefreshToken> refreshToken) {
 
-        return productQueryRepository.getProducts(PageRequest.of(page, size), sort, issell);
+        if (refreshToken.get().getMemberId() != null) {
+            Long memberId = refreshToken
+                    .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
+                    .getMemberId();
+
+            Member findMember = memberService.findVerifiedMember(memberId);
+
+            return productQueryRepository.getProducts(PageRequest.of(page, size), sort, issell,findMember);
+        }else{
+            return productQueryRepository.getProducts(PageRequest.of(page, size), sort, issell);
+
+        }
     }
 
-    public Page<ProductResponse> findProducts(int page, int size,
-                                               String sort) {
+    public Page<ProductWithLikedResponse> findProducts(int page, int size,
+                                                       String sort, Optional<RefreshToken> refreshToken) {
 
-        return productQueryRepository.getProducts(PageRequest.of(page, size), sort);
+        if (refreshToken.get().getMemberId() != null) {
+            Long memberId = refreshToken
+                    .orElseThrow( () -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND))
+                    .getMemberId();
+
+            Member findMember = memberService.findVerifiedMember(memberId);
+
+            return productQueryRepository.getProducts(PageRequest.of(page, size), sort, findMember);
+        }else{
+            return productQueryRepository.getProducts(PageRequest.of(page, size), sort);
+
+        }
     }
 
     public Product updateProductLike(Product product, Long memberId) {
