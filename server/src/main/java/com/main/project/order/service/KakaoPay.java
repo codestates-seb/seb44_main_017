@@ -76,9 +76,9 @@ public class KakaoPay {
         params.add("quantity", String.valueOf(productList.size()));
         params.add("total_amount", String.valueOf(order.getMoneycount()-order.getPointspend()));
         params.add("tax_free_amount", "100");
-        params.add("approval_url", "https://recloset.store/kakaoPaySuccess");
-        params.add("cancel_url", "https://recloset.store/kakaoPayCancel");
-        params.add("fail_url", "https://recloset.store/kakaoPaySuccessFail");
+        params.add("approval_url", "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/kakaoPaySuccess");
+        params.add("cancel_url", "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/kakaoPayCancel");
+        params.add("fail_url", "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/kakaoPaySuccessFail");
 
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
 
@@ -127,9 +127,9 @@ public class KakaoPay {
         params.add("quantity", String.valueOf(productList.size()));
         params.add("total_amount", String.valueOf(order.getMoneycount()-order.getPointspend()));
         params.add("tax_free_amount", "100");
-        params.add("approval_url", "https://recloset.store/kakaoPaySuccess");
-        params.add("cancel_url", "https://recloset.store/kakaoPayCancel");
-        params.add("fail_url", "https://recloset.store/kakaoPaySuccessFail");
+        params.add("approval_url", "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/kakaoPaySuccess");
+        params.add("cancel_url", "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/kakaoPayCancel");
+        params.add("fail_url", "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/kakaoPaySuccessFail");
 
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
 
