@@ -45,7 +45,7 @@ spring:
             client-id: ${K_CLIENT_ID}
             client-secret: ${K_CLIENT_SECRET}
             client-name: Kakao
-            redirect-uri: http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com/login/oauth2/code/kakao
+            redirect-uri: http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/kakao
             authorization-grant-type: authorization_code
             client-authentication-method: POST
             scope:
@@ -82,6 +82,6 @@ elasticsearch:
 jwt:
   admin-key: ${Admin_key}
   key: ${JWT_SECRET_KEY}
-  access-token-expiration-minutes: 30
-  refresh-token-expiration-minutes: 420
+  access-token-expiration-minutes: 900000000
+  refresh-token-expiration-minutes: 90000000000
 

@@ -24,9 +24,9 @@ public class Eproduct {
     private String content;
     private Integer price;
     private String category;
-    private String imageLink;
+    private String image_link;
     private Boolean issell;
-    private Integer conditionValue;
+    private Integer condition_value;
     private Integer productlike;
     private Integer view;
 
