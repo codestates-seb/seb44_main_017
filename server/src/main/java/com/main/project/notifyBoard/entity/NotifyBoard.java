@@ -33,6 +33,6 @@ public class NotifyBoard extends Auditable {
     @JoinColumn(name = "admin_id",nullable = false)
     private Admin writer;
 
-    @OneToOne(mappedBy ="board",cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy ="board",fetch = FetchType.LAZY)
     private NotifyView NViews;
 }

@@ -10,16 +10,19 @@ import com.main.project.questionBorad.dto.QuestionDto;
 import com.main.project.questionBorad.entity.Question;
 import com.main.project.questionBorad.mapper.QuestionMapper;
 import com.main.project.questionBorad.repository.QuestionRepository;
+import com.main.project.questionView.repository.QuestionViewRepository;
 import com.main.project.questionView.service.QuestionViewService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class QuestionService {
     private final RefreshTokenService refreshTokenService;
     private final QuestionMapper mapper;
@@ -29,12 +32,15 @@ public class QuestionService {
 
     private final QuestionRepository questionRepository;
 
-    public QuestionService(RefreshTokenService refreshTokenService, QuestionMapper mapper, QuestionViewService questionViewService, MemberService memberService, QuestionRepository questionRepository) {
+    private final QuestionViewRepository questionViewRepository;
+
+    public QuestionService(RefreshTokenService refreshTokenService, QuestionMapper mapper, QuestionViewService questionViewService, MemberService memberService, QuestionRepository questionRepository, QuestionViewRepository questionViewRepository) {
         this.refreshTokenService = refreshTokenService;
         this.mapper = mapper;
         this.questionViewService = questionViewService;
         this.memberService = memberService;
         this.questionRepository = questionRepository;
+        this.questionViewRepository = questionViewRepository;
     }
 
     //질문 등록
@@ -121,9 +127,13 @@ public class QuestionService {
             //작성자 확인 여부
             userIsEqualWriter(refreshToken,questionId);
 
-            questionRepository.deleteById(questionId);
+            questionViewRepository.deleteAllByIdInQuery(questionId);
 
+            questionRepository.deleteById(questionId);
         }else {
+
+            questionViewRepository.deleteAllByIdInQuery(questionId);
+
             questionRepository.deleteById(questionId);
         }
     }
