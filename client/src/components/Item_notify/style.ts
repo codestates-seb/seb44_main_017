@@ -41,7 +41,7 @@ export const NotifyContents = styled.p`
 
   @media (max-width: 767px) {
     font-size: var(--font-size-10);
-    margin-bottom: 8px;
+    margin-bottom: 0px;
     margin-left: 8px;
   }
 `;
