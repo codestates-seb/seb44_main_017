@@ -1,6 +1,5 @@
 import * as S from "./style";
 import View from "@/assets/icons/view.svg";
-import Post from "@/assets/icons/Post.svg";
 import { useNavigate } from "react-router-dom";
 
 type NotifyProps = {
@@ -19,9 +18,6 @@ const NotifyItem = (props: NotifyProps) => {
   return (
     <S.Notifyitemcard onClick={() => navigate(`/notice/detail/${boardId}`)}>
       <S.NotifyTitle>{title}</S.NotifyTitle>
-      <div>
-        <S.PostIt src={Post} alt="포스트잇 이미지" />
-      </div>
       <S.NotifyContents>{contents}</S.NotifyContents>
       {isNew && <S.NewBadge>NEW</S.NewBadge>}
       <S.RegInfoWrapper>

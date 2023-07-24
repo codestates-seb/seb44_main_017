@@ -34,18 +34,6 @@ export const NotifyTitle = styled.h2`
   }
 `;
 
-export const PostIt = styled.img`
-  width: 28px;
-  height: 28px;
-  position: absolute;
-  top: 12px;
-  right: 16px;
-
-  @media (max-width: 767px) {
-    width: 26px;
-    height: 26px;
-  }
-`;
 export const NotifyContents = styled.p`
   font-size: var(--font-size-12);
   font-weight: var(--font-weight-400);
@@ -53,7 +41,7 @@ export const NotifyContents = styled.p`
 
   @media (max-width: 767px) {
     font-size: var(--font-size-10);
-    margin-bottom: 8px;
+    margin-bottom: 0px;
     margin-left: 8px;
   }
 `;
