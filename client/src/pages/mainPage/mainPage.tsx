@@ -43,10 +43,18 @@ export const MainPage = () => {
   const searchParamsId = new URLSearchParams(window.location.search);
   const refresh = searchParamsId.get("Refresh");
 
+  const searchParamsName = new URLSearchParams(window.location.search);
+  const roles = searchParamsName.get("roles");
+
+  const searchParamsMemberId = new URLSearchParams(window.location.search);
+  const memberId = searchParamsMemberId.get("memberId");
+
   useEffect(() => {
     if (access && refresh) {
       document.cookie = `authorization=${access}; path=/`;
-      document.cookie = `refresh=${refresh}; path=/; SameSite=none; Secure`;
+      document.cookie = `refresh=${refresh}; path=/`;
+      document.cookie = `id=${memberId}`;
+      document.cookie = `roles=${roles}`;
       navigate("/");
     }
   }, []);
