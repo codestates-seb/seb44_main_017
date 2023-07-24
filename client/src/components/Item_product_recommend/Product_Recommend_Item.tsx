@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import * as S from "./styled";
 import React, { useState } from "react";
+import { commaNumber } from "@/utils/inssertComma";
 
 interface ProductInfo {
   url: string;
@@ -70,7 +71,7 @@ const ProductItemRecommend: React.FC<ProductInfo> = ({
             />
           )}
         </S.Content>
-        <S.Price>{`${price} 원`}</S.Price>
+        <S.Price>{price ? `${commaNumber(price)} 원` : ""}</S.Price>
       </S.ContentContainer>
     </S.ProductContainer>
   );
