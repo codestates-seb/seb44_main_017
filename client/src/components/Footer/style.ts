@@ -81,7 +81,7 @@ export const ContentGithub = styled.div`
   }
 `;
 export const ContentTitle = styled.div`
-  color: var(--color-gray200);
+  color: white;
   font-weight: var(--font-weight-700);
   margin-bottom: 16px;
   @media (max-width: 767px) {
@@ -96,7 +96,7 @@ export const ContentTitle = styled.div`
   }
 `;
 export const Content = styled.li`
-  color: var(--color-gray200);
+  color: white;
   margin-bottom: 12px;
   display: flex;
   &:hover {
@@ -138,7 +138,7 @@ export const GitHubIcon = styled(AiFillGithub)`
   }
 `;
 export const GitHubLink = styled.a`
-  color: var(--color-gray200);
+  color: white;
   display: flex;
   align-items: center;
 `;

@@ -13,7 +13,6 @@ const Register = () => {
   const location = useLocation();
   const path = location.pathname.startsWith("/notice");
 
-  console.log(location.pathname);
   const registerPost = async () => {
     try {
       const res = await axios.post(

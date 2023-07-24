@@ -16,7 +16,6 @@ function SpeedDialCustom() {
   const location = useLocation();
   const { boardId } = useParams();
   const { questionId } = useParams();
-  console.log(location);
 
   const actions = [
     { key: "modify", name: "수정하기", icon: <S.ModifyIcon /> },
