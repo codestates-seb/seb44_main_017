@@ -4,7 +4,6 @@ export const Section = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 36px 0;
 `;
 
 export const QnaContainer = styled.article`
