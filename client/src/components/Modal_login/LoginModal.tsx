@@ -1,6 +1,7 @@
 import axios from "axios";
 import * as S from "./style";
 import { useState } from "react";
+
 import { Logo } from "../../assets/logoSimple";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
@@ -29,11 +30,15 @@ const LoginModal = ({ closeModal }: Props) => {
   };
 
   const googleLoginRequestHandler = () => {
-    window.location.assign(`${BASE_URL}/oauth2/authorization/google`);
+    window.location.assign(
+      "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/google"
+    );
   };
 
   const kakaoLoginRequestHandler = () => {
-    window.location.assign(`${BASE_URL}/oauth2/authorization/kakao`);
+    window.location.assign(
+      "http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/oauth2/authorization/kakao"
+    );
   };
 
   const handleLogin = async () => {
@@ -63,9 +68,9 @@ const LoginModal = ({ closeModal }: Props) => {
           const userName = response.data;
           document.cookie = `authorization=${authorization}; path=/;`;
           document.cookie = `refresh=${refresh}; path=/;`;
-          document.cookie = `name=${userName};`;
-          document.cookie = `id=${memberId};`;
-          document.cookie = `roles=${roles};`;
+          document.cookie = `name=${userName}; path=/;`;
+          document.cookie = `id=${memberId}; path=/;`;
+          document.cookie = `roles=${roles}; path=/;`;
         }
       } catch (error: any) {
         if (error.response.status === 404 || error.response.status === 500) {
@@ -90,9 +95,9 @@ const LoginModal = ({ closeModal }: Props) => {
           const adminName = response.data.data;
           document.cookie = `authorization=${authorization}; path=/;`;
           document.cookie = `refresh=${refresh}; path=/;`;
-          document.cookie = `name=${adminName};`;
-          document.cookie = `id=${adminId};`;
-          document.cookie = `roles=${roles};`;
+          document.cookie = `name=${adminName}; path=/;`;
+          document.cookie = `id=${adminId}; path=/;`;
+          document.cookie = `roles=${roles}; path=/;`;
         }
       } catch (error: any) {
         if (error.response.status === 404 || error.response.status === 500) {

@@ -51,10 +51,10 @@ export const MainPage = () => {
 
   useEffect(() => {
     if (access && refresh) {
-      document.cookie = `authorization=${access}; path=/`;
-      document.cookie = `refresh=${refresh}; path=/`;
-      document.cookie = `id=${memberId}`;
-      document.cookie = `roles=${roles}`;
+      document.cookie = `authorization=${access}; path=/;`;
+      document.cookie = `refresh=${refresh}; path=/;`;
+      document.cookie = `id=${memberId}; path=/;`;
+      document.cookie = `roles=${roles}; path=/;`;
       navigate("/");
     }
   }, []);
