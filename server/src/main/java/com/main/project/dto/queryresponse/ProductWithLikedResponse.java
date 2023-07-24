@@ -2,6 +2,7 @@ package com.main.project.dto.queryresponse;
 
 import com.main.project.product.entity.Product;
 import com.querydsl.core.annotations.QueryProjection;
+import com.querydsl.core.types.Expression;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -19,9 +20,11 @@ public class ProductWithLikedResponse {
     private final LocalDateTime modifyAt;
     private final LocalDateTime createAt;
     private final Boolean productLike;
+
     private final Integer price;
     private final Integer view;
     private final Integer conditionValue;
+
 
     @Builder
     @QueryProjection
