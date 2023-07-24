@@ -28,10 +28,6 @@ const ProductItemRecommend: React.FC<ProductInfo> = ({
   ) => {
     event.stopPropagation();
     try {
-      // await axios({
-      //   method: "PATCH",
-      //   url: "",
-      // });
       setIsLike(!isLike);
     } catch (err) {
       console.error("Error updating data", err);
