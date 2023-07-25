@@ -12,21 +12,32 @@ import { userInfoSelector } from "@/recoil/selector";
 import CustomPagination from "@/components/Pagination/CustomPagination";
 
 const MyproductsPage = () => {
-  const [sortValue, setSortValue] = useState("productsf");
-  const sortOptions = ["판매완료", "판매중", "등록대기", "등록거절"];
-  const [productData, setProductData] = useState<CartItemTypes[]>([]);
+  const PAGE_LIMIT = 24;
+  const statusOptions = ["판매완료", "판매중", "등록대기", "등록거절"];
+  const sortOptions = [
+    "최신순",
+    "오래된순",
+    "좋아요순",
+    "조회수순",
+    "가격낮은순",
+    "가격높은순",
+  ];
   const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
+  const [statusValue, setStatusValue] = useState("productsf");
+  const [sortValue, setSortValue] = useState("newest");
+  const [productData, setProductData] = useState<CartItemTypes[]>([]);
+  const [purchaseData, setPurchaseData] = useState<CartItemTypes[]>([]);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
-  const PAGE_LIMIT = 24;
+  const [isPurchase, setIsPurchase] = useState(false);
 
   const [authorization, refresh] = getToken();
 
-  const getMyProducts = async () => {
+  const getPurchaseProducts = async () => {
     try {
       const { data, status } = await axios.get(
         BASE_URL +
-          `/members/${sortValue}?page=${page}&size=${PAGE_LIMIT}&sort=newest`,
+          `/orderproducts/buybucket?page=${page}&size=${PAGE_LIMIT}&sort=${sortValue}`,
         {
           headers: {
             Authorization: authorization,
@@ -36,7 +47,28 @@ const MyproductsPage = () => {
       );
 
       if (data && status === 200) {
-        console.log(data);
+        setPurchaseData(data.data);
+        setTotalPage(Math.ceil(data.pageInfo.totalElements / PAGE_LIMIT));
+      }
+    } catch (e) {
+      console.error("Failed get purcharse products", e);
+    }
+  };
+
+  const getMyProducts = async () => {
+    try {
+      const { data, status } = await axios.get(
+        BASE_URL +
+          `/members/${statusValue}?page=${page}&size=${PAGE_LIMIT}&sort=${statusValue}`,
+        {
+          headers: {
+            Authorization: authorization,
+            Refresh: refresh,
+          },
+        }
+      );
+
+      if (data && status === 200) {
         setProductData(data.data);
         setTotalPage(Math.ceil(data.pageInfo.totalElements / PAGE_LIMIT));
       }
@@ -47,7 +79,8 @@ const MyproductsPage = () => {
 
   useEffect(() => {
     getMyProducts();
-  }, [sortValue]);
+    getPurchaseProducts();
+  }, [statusValue, sortValue]);
 
   return (
     <>
@@ -58,16 +91,51 @@ const MyproductsPage = () => {
       />
       <S.Section>
         <S.Container>
-          <S.PageTitle>
-            <h2>내가 등록한 상품</h2>
+          <S.PageTitle isPurchase={isPurchase}>
+            <div className="sub_title">
+              <h2
+                className="title_register"
+                onClick={() => setIsPurchase(false)}
+              >
+                등록한 상품
+              </h2>
+              <h2
+                className="title_purchase"
+                onClick={() => setIsPurchase(true)}
+              >
+                구매한 상품
+              </h2>
+            </div>
+
             <SelectBox
-              usage={"상태"}
-              options={sortOptions}
-              setOption={setSortValue}
+              usage={isPurchase ? "정렬" : "상태"}
+              options={isPurchase ? sortOptions : statusOptions}
+              setOption={isPurchase ? setSortValue : setStatusValue}
             />
           </S.PageTitle>
 
-          {Array.isArray(productData) && productData.length < 1 ? (
+          {isPurchase ? (
+            Array.isArray(purchaseData) && purchaseData.length < 1 ? (
+              <S.NoneItemsBox>
+                <div className="none_items">구매한 상품이 없습니다.</div>
+              </S.NoneItemsBox>
+            ) : (
+              <S.ContentBox>
+                {purchaseData.map(item => (
+                  <div className="product_wrapper" key={item.productId}>
+                    <ProductItem
+                      url={IMG_URL + "/" + item.imageLink}
+                      isSell={false}
+                      like={false}
+                      title={item.name}
+                      price={item.price}
+                      productId={item.productId}
+                    />
+                  </div>
+                ))}
+              </S.ContentBox>
+            )
+          ) : Array.isArray(productData) && productData.length < 1 ? (
             <S.NoneItemsBox>
               <div className="none_items">등록한 상품이 없습니다.</div>
             </S.NoneItemsBox>
