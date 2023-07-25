@@ -176,7 +176,7 @@ const HamburgerDropdown = ({
                       <h3 className="nav_text">장바구니</h3>
                       <div className="nav_description">장바구니</div>
                     </li>
-                    {userInfo.role === "user" ? (
+                    {userInfo.role !== "admin" ? (
                       <>
                         <li
                           onClick={() => {
