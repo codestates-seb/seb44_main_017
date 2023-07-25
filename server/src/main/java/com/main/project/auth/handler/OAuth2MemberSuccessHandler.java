@@ -83,6 +83,7 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         String accessToken = delegateAccessToken(member, authorities);
         String addedAccessToken = "Bearer " + accessToken;
 
+        /*
         if(refreshTokenRepository.existsByMemberId(member.getMemberId()) == true){
             Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByMemberId(member.getMemberId());
             RefreshToken findtoken = optionalRefreshToken.get();
@@ -95,6 +96,8 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
             refreshTokenService.addRefreshToken(refreshTokenEntity);
         }
 
+         */
+
         response.setHeader("Authorization", addedAccessToken);
         response.setHeader("Refresh", refreshToken);
         response.setHeader("roles", "user");
@@ -104,6 +107,11 @@ public class OAuth2MemberSuccessHandler extends SimpleUrlAuthenticationSuccessHa
         response.setCharacterEncoding("utf-8");
         Member fm = memberService.findVerifiedMember(member.getMemberId());
         response.getWriter().write(fm.getName());
+
+        RefreshToken refreshTokenEntity = new RefreshToken();
+        refreshTokenEntity.setValue(refreshToken);
+        refreshTokenEntity.setMemberId(member.getMemberId());
+        refreshTokenService.addRefreshToken(refreshTokenEntity);
 
 
         String uri = createURI(addedAccessToken, refreshToken).toString();

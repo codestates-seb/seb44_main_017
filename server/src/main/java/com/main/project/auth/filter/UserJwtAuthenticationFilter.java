@@ -61,6 +61,7 @@ public class UserJwtAuthenticationFilter extends UsernamePasswordAuthenticationF
         String accessToken = delegateAccessToken(member);
         String refreshToken = delegateRefreshToken(member);
 
+        /*
         if(refreshTokenRepository.existsByMemberId(member.getMemberId()) == true){
             Optional<RefreshToken> optionaltoken = refreshTokenRepository.findByMemberId(member.getMemberId());
             RefreshToken findtoken = optionaltoken.get();
@@ -72,6 +73,9 @@ public class UserJwtAuthenticationFilter extends UsernamePasswordAuthenticationF
             refreshTokenEntity.setMemberId(member.getMemberId());
             refreshTokenService.addRefreshToken(refreshTokenEntity);
         }
+
+         */
+
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.setHeader("Refresh", refreshToken);
         response.setHeader("roles", "user");
@@ -81,6 +85,11 @@ public class UserJwtAuthenticationFilter extends UsernamePasswordAuthenticationF
         response.setCharacterEncoding("utf-8");
         Member fm = memberService.findVerifiedMember(member.getMemberId());
         response.getWriter().write(fm.getName());
+
+        RefreshToken refreshTokenEntity = new RefreshToken();
+        refreshTokenEntity.setValue(refreshToken);
+        refreshTokenEntity.setMemberId(member.getMemberId());
+        refreshTokenService.addRefreshToken(refreshTokenEntity);
 
         this.getSuccessHandler().onAuthenticationSuccess(request, response, authResult);
     }

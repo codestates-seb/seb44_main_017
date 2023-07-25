@@ -18,4 +18,9 @@ public interface NotifyViewRepository extends JpaRepository<NotifyView,Long> {
     @Modifying
     @Query(value = "delete from notify_view n where n.board_id = :boardId",nativeQuery = true)
     void deleteAllByIdInQuery(@Param("boardId") Long boardId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from notify_view n where n.member_id = :memberId",nativeQuery = true)
+    void deleteAllByMemberIdInQuery(@Param("memberId") Long memberId);
 }
