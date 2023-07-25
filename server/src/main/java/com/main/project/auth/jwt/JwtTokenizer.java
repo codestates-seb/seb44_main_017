@@ -127,6 +127,7 @@ public class JwtTokenizer {
         String atk = delegateAccessToken(adminResponseDto);
         String rtk = delegateRefreshToken(adminResponseDto);
 
+        /*
         if(refreshTokenRepository.existsByAdminId(adminResponseDto.getAdminId()) == true){
             Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByAdminId(adminResponseDto.getAdminId());
             RefreshToken findtoken = optionalRefreshToken.get();
@@ -139,7 +140,11 @@ public class JwtTokenizer {
             refreshTokenEntity.setAdminId(adminResponseDto.getAdminId());
             refreshTokenService.addRefreshToken(refreshTokenEntity);
         }
-
+         */
+        RefreshToken refreshTokenEntity = new RefreshToken();
+        refreshTokenEntity.setValue(rtk);
+        refreshTokenEntity.setAdminId(adminResponseDto.getAdminId());
+        refreshTokenService.addRefreshToken(refreshTokenEntity);
         return new TokenResponseDto(atk, rtk);
     }
 
