@@ -12,8 +12,10 @@ import PointIcon from "@/assets/icons/PointIcon";
 import Postcode from "@/components/Postcode/Postcode";
 import { userInfoSelector } from "@/recoil/selector";
 import useInput from "@/hooks/useInput";
+import { useNavigate } from "react-router-dom";
 
 const ShoppingCartPage = () => {
+  const navigate = useNavigate();
   const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
   const [total, setTotal] = useState({ price: 0, quantity: 0 });
   const [spendPoints, pointChangeHandler] = useInput(0);
@@ -71,10 +73,9 @@ const ShoppingCartPage = () => {
 
     if ((data && status === 200) || 201) {
       window.open(data);
+      navigate("/productlist");
     }
     paymentList = ",";
-    alert("주문이 완료되었습니다.");
-    window.location.reload();
   };
 
   const deleteItem = (id: number) => {

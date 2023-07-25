@@ -18,7 +18,6 @@ const Postcode = ({ postCode, setPostCode }: PostCodeProps) => {
     label: "상세 주소",
   };
 
-  console.log(postCode.address);
   const selectDetailAddress = () => {
     setPostCode({
       ...postCode,
