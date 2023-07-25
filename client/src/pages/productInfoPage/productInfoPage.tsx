@@ -46,7 +46,11 @@ export const ProductInfoPage = () => {
     );
 
     if ((data && status === 200) || 201) {
-      alert("장바구니에 추가하였습니다.");
+      if (confirm("장바구니에 추가하였습니다. 장바구니로 이동하시겠습니까?")) {
+        navigate("/cart");
+      } else {
+        navigate("/productlist");
+      }
     }
   };
 
