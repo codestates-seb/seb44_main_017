@@ -18,4 +18,9 @@ public interface QuestionViewRepository extends JpaRepository<QuestionView,Long>
     @Modifying
     @Query(value = "delete from question_view v where v.question_id = :questionId",nativeQuery = true)
     void deleteAllByIdInQuery(@Param("questionId") Long questionId);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from question_view v where v.member_id = :memberId",nativeQuery = true)
+    void deleteAllByMemberIdInQuery(@Param("memberId") Long memberId);
 }

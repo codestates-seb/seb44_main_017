@@ -74,10 +74,10 @@ public class Member {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "users")
     private List<NotifyView> NViews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "users")
     private List<QuestionView> QViews = new ArrayList<>();
 
     @OneToMany(mappedBy = "writer",cascade = CascadeType.REMOVE)
