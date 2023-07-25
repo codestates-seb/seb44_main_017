@@ -38,7 +38,7 @@ const ProfileDropdown = () => {
             <Link to="/cart" onClick={DropdownHandler}>
               <li>장바구니</li>
             </Link>
-            {userInfo?.role === "user" ? (
+            {userInfo?.role !== "admin" ? (
               <>
                 <Link to="/mypage" onClick={DropdownHandler}>
                   <li>마이페이지</li>
