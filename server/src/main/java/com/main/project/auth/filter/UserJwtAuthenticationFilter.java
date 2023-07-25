@@ -42,8 +42,6 @@ public class UserJwtAuthenticationFilter extends UsernamePasswordAuthenticationF
 
         ObjectMapper objectMapper = new ObjectMapper();
         UserLoginDto loginDto = objectMapper.readValue(request.getInputStream(), UserLoginDto.class);
-        Member findmember = memberService.findMember(loginDto.getUsername());
-        memberService.checkisban(findmember);
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
