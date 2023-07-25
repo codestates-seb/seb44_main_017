@@ -9,7 +9,9 @@ import com.main.project.dto.queryget;
 import com.main.project.member.entity.Member;
 import com.main.project.member.repository.MemberQueryRepository;
 import com.main.project.member.repository.MemberRepository;
+import com.main.project.notifyView.repository.NotifyViewRepository;
 import com.main.project.product.entity.Product;
+import com.main.project.questionView.repository.QuestionViewRepository;
 import com.main.project.s3.service.AwsS3Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,6 +32,10 @@ public class MemberService {
     private final UserCustomAuthorityUtils authorityUtils;
     private final PasswordEncoder passwordEncoder;
     private final AwsS3Service awsS3Service;
+
+    private final QuestionViewRepository questionViewRepository;
+
+    private final NotifyViewRepository notifyViewRepository;
 
     public boolean verifyExistname(String name){
         return memberRepository.existsByName(name);
@@ -110,6 +116,11 @@ public class MemberService {
 
     public void deleteMember(long memberId) {
         Member findMember = findVerifiedMember(memberId);
+
+        notifyViewRepository.deleteAllByMemberIdInQuery(memberId);
+
+        questionViewRepository.deleteAllByMemberIdInQuery(memberId);
+
         memberRepository.delete(findMember);
     }
 
