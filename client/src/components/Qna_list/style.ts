@@ -17,7 +17,7 @@ export const QnaContainer = styled.article`
 export const PageTitle = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 36px 16px 20px;
+  padding: 24px 16px 20px;
 
   & h2 {
     @media (max-width: 767px) {

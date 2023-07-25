@@ -7,6 +7,7 @@ export const Container = styled.section`
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-bottom: 60px;
 `;
 
 export const ProfileImage = styled.img`

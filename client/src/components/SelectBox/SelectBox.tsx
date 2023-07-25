@@ -67,7 +67,7 @@ const SelectBox = ({ usage, options, setOption }: Props) => {
     <S.SelectBox ref={selectRef} onClick={selectHandler}>
       <S.Label>{viewValue}</S.Label>
       <S.SelectOptions isOpen={isSelected}>
-        {options.map((option) => (
+        {options.map(option => (
           <S.Option key={option} value={option} onClick={handleSelectValue}>
             {option}
           </S.Option>

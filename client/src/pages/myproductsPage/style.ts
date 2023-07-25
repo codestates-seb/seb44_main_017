@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
-  padding: 36px 0;
 `;
 
 export const Container = styled.article`
@@ -14,10 +13,29 @@ export const Container = styled.article`
   margin: 0 auto;
 `;
 
-export const PageTitle = styled.div`
+export const PageTitle = styled.div<{ isPurchase: boolean }>`
   display: flex;
   justify-content: space-between;
-  padding: 36px 16px 20px;
+  padding: 24px 16px 20px;
+
+  @media (max-width: 767px) {
+    padding: 24px 0 12px;
+  }
+
+  & .sub_title {
+    display: flex;
+    gap: 24px;
+
+    & .title_register {
+      color: ${props => (props.isPurchase ? "#d9d9d9" : "#191919")};
+      cursor: pointer;
+    }
+
+    & .title_purchase {
+      color: ${props => (props.isPurchase ? "#191919" : "#d9d9d9")};
+      cursor: pointer;
+    }
+  }
 
   & h2 {
     @media (max-width: 767px) {
