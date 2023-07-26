@@ -1,0 +1,20 @@
+<svg width="17" height="30" viewBox="0 0 17 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 268">
+<g id="Subtract" filter="url(#filter0_d_382_1516)">
+<path fillRule="evenodd" clipRule="evenodd" d="M12.071 1H4.09814V22L8.08459 18L12.071 22V1Z" fill="#AFD4CD"/>
+</g>
+<rect id="Rectangle 71" x="4.09814" width="7.97288" height="5" fill="#5E8A75"/>
+</g>
+<defs>
+<filter id="filter0_d_382_1516" x="0.0981445" y="1" width="15.9727" height="29" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="4"/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_382_1516"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_382_1516" result="shape"/>
+</filter>
+</defs>
+</svg>

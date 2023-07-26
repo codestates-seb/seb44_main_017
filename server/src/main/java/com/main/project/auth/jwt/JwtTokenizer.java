@@ -140,7 +140,7 @@ public class JwtTokenizer {
 
         RefreshToken refreshTokenEntity = new RefreshToken();
         refreshTokenEntity.setValue(rtk);
-        refreshTokenEntity.setAdminId(memberResponseDto.getMemberId());
+        refreshTokenEntity.setMemberId(memberResponseDto.getMemberId());
         refreshTokenService.addRefreshToken(refreshTokenEntity);
         return new TokenResponseDto(atk, rtk);
     }

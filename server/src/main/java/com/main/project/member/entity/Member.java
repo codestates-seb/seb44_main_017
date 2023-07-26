@@ -40,6 +40,8 @@ public class Member {
         this.email = email;
         this.name = name;
         this.password = password;
+        this.money = 0;
+        this.isban = false;
     }
 
 
