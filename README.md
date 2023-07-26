@@ -111,7 +111,7 @@
 ## 💫 Pages & Features
 |메인 페이지|로그인 / 회원가입|
 |:---:|:---:|
-|<img width="100%" alt="메인페이지" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/70eafdf0-9d8f-4fdf-9911-cfcb7f84861c"/>|<img width="100%" alt="로그인/회원가입" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/868811a6-bea2-446b-9f07-df1d6f27b4fc"/>|
+|<img width="100%" alt="메인페이지" src="https://blog.kakaocdn.net/dn/bWO2Gr/btso5YX3PRB/JohUQJbKlpAmjKozYlKUDk/img.gif"/>|<img width="100%" alt="로그인/회원가입" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/868811a6-bea2-446b-9f07-df1d6f27b4fc"/>|
 |**상품리스트**|**상품상세페이지**|
 |<img width="100%" alt="상품리스트" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/987292d3-f495-4977-86c4-c76866ce9bb0"/>|<img width="100%" alt="상품상세페이지" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/4449a292-c700-4609-baea-2edb01cf1f2a"/>|
 |**의류수거신청페이지**|**장바구니**|
