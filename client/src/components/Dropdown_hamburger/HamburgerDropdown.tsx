@@ -42,10 +42,10 @@ const HamburgerDropdown = ({
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [signupModallOpen, setSignupModalOpen] = useState(false);
 
-  const logoutHandler = () => {
+  const logoutHandler = async () => {
     if (confirm("로그아웃 하시겠습니까?")) {
       toggleMenu();
-      delCookie();
+      await delCookie();
       if (path === "/") {
         window.location.reload();
       } else {

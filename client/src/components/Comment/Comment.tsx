@@ -108,7 +108,6 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (commentValue === "") {
       alert("내용을 입력해주세요.");
       return;
