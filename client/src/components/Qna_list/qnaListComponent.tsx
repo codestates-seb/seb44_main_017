@@ -4,6 +4,8 @@ import { Link, useLocation } from "react-router-dom";
 import ViewCount from "@/assets/icons/ViewCount";
 import CustomPagination from "@/components/Pagination/CustomPagination";
 import { QnaTypes } from "@/types/shared";
+import { useRecoilValue } from "recoil";
+import { userInfoState } from "@/recoil/atom";
 
 interface QnaListComponentProps {
   data: QnaTypes[];
@@ -24,6 +26,7 @@ const QnaListComponent = ({
   const TITLE_MAX_LENGTH = 30;
   const location = useLocation();
   const qPath = location.pathname.startsWith("/mypage");
+  const userInfo = useRecoilValue(userInfoState);
 
   return (
     <>
@@ -96,7 +99,7 @@ const QnaListComponent = ({
                       {item.writer ? (
                         <td>{item.writer.name}</td>
                       ) : (
-                        <td>작성자</td>
+                        <td>{userInfo?.name}</td>
                       )}
                     </tr>
                   ))}

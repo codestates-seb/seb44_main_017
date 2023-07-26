@@ -6,6 +6,9 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 import { ProductCommentTypes } from "@/types/shared";
+import { CustomAlert } from "./style";
+import { useRecoilValue } from "recoil";
+import { userInfoState } from "@/recoil/atom";
 
 export type ProductType = {
   productId: number;
@@ -27,13 +30,26 @@ export type ProductType = {
 };
 
 export const ProductInfoPage = () => {
+  const navigate = useNavigate();
   const { productsID } = useParams();
   const [data, setData] = useState<ProductType>();
+  const userInfo = useRecoilValue(userInfoState);
   const [complete, setComplete] = useState(false);
+  const [errorOpen, setErrorOpen] = useState(false);
+  const [error, setError] = useState("");
   const [authorization, refresh] = getToken();
-  const navigate = useNavigate();
 
   const addToCart = async () => {
+    if (!userInfo) {
+      setError("로그인이 필요합니다.");
+      setErrorOpen(true);
+      return;
+    } else if (userInfo.role === "admin") {
+      setError("관리자는 사용할 수 없는 기능입니다.");
+      setErrorOpen(true);
+      return;
+    }
+
     const { data, status } = await axios.post(
       BASE_URL + `/orderproducts/${productsID}`,
       {},
@@ -71,10 +87,6 @@ export const ProductInfoPage = () => {
     }
   };
 
-  useEffect(() => {
-    getUser();
-  }, [complete]);
-
   const deletePost = async () => {
     try {
       const delRes = await axios.delete(`${BASE_URL}/products/${productsID}`, {
@@ -99,6 +111,16 @@ export const ProductInfoPage = () => {
   };
 
   const handlePayment = async () => {
+    if (!userInfo) {
+      setError("로그인이 필요합니다.");
+      setErrorOpen(true);
+      return;
+    } else if (userInfo.role === "admin") {
+      setError("관리자는 사용할 수 없는 기능입니다.");
+      setErrorOpen(true);
+      return;
+    }
+
     try {
       const res = await axios.post(
         `${BASE_URL}/kakaoPay/${productsID}`,
@@ -124,6 +146,19 @@ export const ProductInfoPage = () => {
     }
   };
 
+  useEffect(() => {
+    getUser();
+  }, [complete]);
+
+  useEffect(() => {
+    if (errorOpen) {
+      const timer = setTimeout(() => {
+        setErrorOpen(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [errorOpen]);
+
   return (
     <>
       {data && (
@@ -134,6 +169,13 @@ export const ProductInfoPage = () => {
           setComplete={setComplete}
           addToCart={addToCart}
         />
+      )}
+      {errorOpen ? (
+        <CustomAlert variant="filled" severity="error">
+          {error}
+        </CustomAlert>
+      ) : (
+        <></>
       )}
     </>
   );
