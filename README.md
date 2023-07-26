@@ -16,12 +16,12 @@
 ## <img width="18px" height="18px" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/9317d682-e804-4a3b-b6e0-57fd9aa0921b"> Team
 | 박준용<br>(BE, 팀장) | 신예림<br>(BE, 팀원) | 황호준<br>(BE, 팀원) 
 | :---: | :---: | :---: |
-| <img alt="박준용" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/905f09d5-c54e-478e-86e2-8a7ce52d12e5" height="150px" width="150px"> | <img alt="신예림" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/3275307f-ba45-4f9b-9695-1ae7e17471f1" height="150px" width="150px"> | <img alt="황호준" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/aeda5e06-5fe3-4393-a4bc-ae14c59ee5a0" height="150px" width="150px"> 
+| <img alt="박준용" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FJ1Mwf%2Fbtso0ssF9rt%2Fjsk635ZYKKgh5UlTZ3kqQ1%2Fimg.png" height="150px" width="150px"> | <img alt="신예림" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FLSMBJ%2Fbtso1uwWCsk%2F83RiXDRyZDTTVqyKkjFTb0%2Fimg.png" height="150px" width="150px"> | <img alt="황호준" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbpJDTU%2FbtsoZMydEGy%2Fg694EhvCrlO9A7woTNUbz0%2Fimg.png" height="150px" width="150px"> 
 |[@pparkjyy](https://github.com/pparkjyy) | [@yelm-212](https://github.com/yelm-212) | [@hwanghojun](https://github.com/hwanghojun) |
 
 | 강민승<br>(FE, 부팀장) | 안상우<br>(FE, 팀원) | 오승찬<br>(FE, 팀원) | 이현영<br>(FE, 팀원) |
 | :---: | :---: | :---: | :---: |
-| <img alt="강민승" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/2dbe70ee-a638-41ff-8d51-09b29d2b1220" height="150px" width="150px"> | <img alt="안상우" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/66ddb7f8-5d0c-4e49-8c82-d297b2ca5896" height="150px" width="150px"> | <img alt="오승찬" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/111149ca-2eb1-4cf7-8e8c-bc1ea37cdce8" height="150px" width="150px"> | <img alt="이현영" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/99892e61-741a-4785-88f8-8a13cf041193" height="150px" width="150px"> |
+| <img alt="강민승" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FZ1ugm%2Fbtso7RREX3G%2F8LlZiWgfMJdMs52IKRDKM0%2Fimg.png" height="150px" width="150px"> | <img alt="안상우" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdCtZej%2Fbtso22togvF%2FkExPLkbFnixTEZyT4bO7pK%2Fimg.png" height="150px" width="150px"> | <img alt="오승찬" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbJK9LH%2Fbtso5sZF42D%2FEdq6UaiDJvh8RzFsTK6rt1%2Fimg.png" height="150px" width="150px"> | <img alt="이현영" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb8U81n%2Fbtso6puAKsN%2FLrtBPu1a0pX5QTvY1pUhak%2Fimg.png" height="150px" width="150px"> |
 | [@g4dalcom](https://github.com/g4dalcom) | [@NonFungibleCode](https://github.com/NonFungibleCode) | [@FASTFOX24](https://github.com/FASTFOX24) | [@lhyjjg](https://github.com/lhyjjg)
 
 <details>
@@ -132,3 +132,4 @@
 ![image](https://github.com/codestates-seb/seb44_main_017/assets/92436863/c7041b32-5c9b-426c-a841-798575d94346)
 ## 🖥️ [Wireframe](https://www.figma.com/file/wO2Q0aUYVPyJhnDl5QSSXD/%EC%84%B8%EB%B8%90%EC%9D%BC%EB%A0%88%EB%B8%90_RECLOSET?type=design&node-id=0-1&mode=design)
 ## 🗨️ [Service Manual](https://github.com/codestates-seb/seb44_main_017/files/12168680/7Eleven_.pdf)
+
