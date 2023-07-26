@@ -54,7 +54,7 @@ const ShoppingCartPage = () => {
 
   const orderItems = async () => {
     if(postCode.address == ""){
-      alert("주소를 입력해 주세요.")
+      alert("주소를 입력해 주세요.");
     }else{
     try{
     const { data, status } = await axios.post(
@@ -74,7 +74,7 @@ const ShoppingCartPage = () => {
         },
       }
     );
-
+      
     if ((data && status === 200) || 201) {
       window.open(data);
       navigate("/productlist");

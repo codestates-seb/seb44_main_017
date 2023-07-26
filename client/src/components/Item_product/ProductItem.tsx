@@ -36,10 +36,26 @@ const ProductItem: React.FC<ProductInfo> = ({
   const handleImageError = () => {
     setImageError(true);
   };
+  const productstate =(isSell:any,price:any) =>{
+    let res = '';
+    if(isSell == true){
+      res = "판매완료";
+    }
+    else if(isSell == false && price != 0){
+      res = "판매중";
+    }else{
+      res = "승인대기";
+    }
+    return res;
+  }
   return (
     <S.ProductContainer
       onClick={() => {
-        navigate(`/products/${productId}`);
+        if(price == 0||isSell == true){
+          alert("판매중인 상품이 아닙니다.");
+        } else{
+          navigate(`/products/${productId}`);
+        }
       }}
     >
       <S.ImageContainer>
@@ -48,7 +64,7 @@ const ProductItem: React.FC<ProductInfo> = ({
         ) : (
           <S.ImageErrorIcon />
         )}
-        <S.IsSell>{isSell ? "판매완료" : "판매중"}</S.IsSell>
+        <S.IsSell>{productstate(isSell,price)}</S.IsSell>
       </S.ImageContainer>
       <S.ContentContainer>
         <S.Content>

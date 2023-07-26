@@ -75,8 +75,7 @@ const ProductInfo = (props: ProductProps) => {
             </S.ProductDetailContainer>
             {/* </S.ContetntsWrapper> */}
             <S.PurchaseButtonWrapper>
-              <S.CartBtn onClick={addToCart}>장바구니</S.CartBtn>
-              <S.PaymentBtn onClick={handlePayment}>구매하기</S.PaymentBtn>
+              <S.PaymentBtn onClick={addToCart}>장바구니&구매하기</S.PaymentBtn>
             </S.PurchaseButtonWrapper>
           </S.DetailAndButtons>
 

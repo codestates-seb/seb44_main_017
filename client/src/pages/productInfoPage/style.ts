@@ -263,7 +263,7 @@ export const CartBtn = styled.div`
 
 export const PaymentBtn = styled.button`
   width: 100%;
-  max-width: 140px;
+  max-width: 200px;
   height: 40px;
   border-radius: 20px;
   font-weight: var(--font-weight-700);
