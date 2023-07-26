@@ -111,21 +111,21 @@
 ## 💫 Pages & Features
 |메인 페이지|로그인 / 회원가입|
 |:---:|:---:|
-|<img width="100%" alt="메인페이지" src="https://blog.kakaocdn.net/dn/bWO2Gr/btso5YX3PRB/JohUQJbKlpAmjKozYlKUDk/img.gif"/>|<img width="100%" alt="로그인/회원가입" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/868811a6-bea2-446b-9f07-df1d6f27b4fc"/>|
+|<img width="100%" alt="메인페이지" src="https://blog.kakaocdn.net/dn/bWO2Gr/btso5YX3PRB/JohUQJbKlpAmjKozYlKUDk/img.gif"/>|<img width="100%" alt="로그인/회원가입" src="https://blog.kakaocdn.net/dn/vit8U/btso6pA3Onu/KXy1U9k0a3tw8GWK0R6BzK/img.gif"/>|
 |**상품리스트**|**상품상세페이지**|
-|<img width="100%" alt="상품리스트" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/987292d3-f495-4977-86c4-c76866ce9bb0"/>|<img width="100%" alt="상품상세페이지" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/4449a292-c700-4609-baea-2edb01cf1f2a"/>|
+|<img width="100%" alt="상품리스트" src="https://blog.kakaocdn.net/dn/5M1ME/btso7QSAD0c/Y5oRWlQd5XEKuJbTa8MCaK/img.gif"/>|<img width="100%" alt="상품상세페이지" src="https://blog.kakaocdn.net/dn/braSSH/btso1uQ2hPH/3SwFG6DMilt9xzbtRkKIGK/img.gif"/>|
 |**의류수거신청페이지**|**장바구니**|
-|<img width="100%" alt="의류수거신청페이지" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/8603642d-ab58-4e4d-ac2d-61732f83c190"/>|<img width="100%" alt="장바구니" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/24382b80-4a65-48fd-8f9e-8a40cd4edefa"/>|
+|<img width="100%" alt="의류수거신청페이지" src="https://blog.kakaocdn.net/dn/bgHHlQ/btso10voOd4/fgNhjx9m31MnjvOcypKXyK/img.gif"/>|<img width="100%" alt="장바구니" src="https://blog.kakaocdn.net/dn/dFZRG4/btso6kGGfey/zPgDbOJdqPegQwmKnoWGeK/img.gif"/>|
 |**마이페이지-상품관리**|**마이페이지-질문관리**|
-|<img width="100%" alt="마이페이지-상품관리" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/750d0441-7a99-4a70-b6b4-74ac066d02eb"/>|<img width="100%" alt="마이페이지-질문관리" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/cf076396-3ba1-4bef-acbf-3f863155065b"/>|
+|<img width="100%" alt="마이페이지-상품관리" src="https://blog.kakaocdn.net/dn/Ub0my/btso1t5CebI/NohtZEWwI6qjz0DUJV8FsK/img.gif"/>|<img width="100%" alt="마이페이지-질문관리" src="https://blog.kakaocdn.net/dn/dFZRG4/btso6kGGfey/zPgDbOJdqPegQwmKnoWGeK/img.gif"/>|
 |**마이페이지-회원정보수정**|**관리자페이지-상품관리**|
-|<img width="100%" alt="회원정보수정" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/7fa8ccd2-ae22-4142-8c0b-ec57fedb315d"/>|<img width="100%" alt="관리자페이지-상품관리" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/15e2b869-703a-40c7-a0a8-d603b31449ef"/>|
+|<img width="100%" alt="회원정보수정" src="https://blog.kakaocdn.net/dn/muZEX/btso112dAZP/2MM9QakkJGzfaIy6FfiRZK/img.gif"/>|<img width="100%" alt="관리자페이지-상품관리" src="https://blog.kakaocdn.net/dn/0X5Oi/btso4yS1twY/Fm6QsUQqCBc0tfjbkEEAJ1/img.gif"/>|
 |**관리자페이지-회원관리**|**관리자페이지-승인관리**|
-|<img width="100%" alt="관리자페이지-회원관리" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/e83b9398-9071-4fdc-9206-a0326755f595"/>|<img width="100%" alt="관리자페이지-승인관리" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/87e2a6e1-d057-460b-8417-caf2d122f2fb"/>|
+|<img width="100%" alt="관리자페이지-회원관리" src="https://blog.kakaocdn.net/dn/bxtT3g/btso6qz2nR7/GjciY0v8djEUvLsv4Mkqh1/img.gif"/>|<img width="100%" alt="관리자페이지-승인관리" src="https://blog.kakaocdn.net/dn/TmGa3/btso6jHLwSh/wCKmMoyfysNjI8jlAeSKck/img.gif"/>|
 |**공지사항**|**공지사항-상세**|
-|<img width="100%" alt="공지사항" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/6648a3f5-4680-4018-a266-50824d30fe55"/>|<img width="100%" alt="공지사항-상세" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/1a1da3ae-747c-4f5e-a629-655ad0b1cc1a"/>|
+|<img width="100%" alt="공지사항" src="https://blog.kakaocdn.net/dn/qPwRC/btso6axnGfh/W4Z0Y6isb59K9ZoyLN0sA0/img.gif"/>|<img width="100%" alt="공지사항-상세" src="https://blog.kakaocdn.net/dn/cA99RD/btso109ZVvV/ge0ftOkxnig3Nyvvkx8wjk/img.gif"/>|
 |**Q&A**|**Q&A-상세**|
-|<img width="100%" alt="Q&A" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/44c67721-f911-4291-a28c-65b15b8647d8"/>|<img width="100%" alt="Q&A-상세" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/10b66385-f994-440b-9cac-8caa28869e34"/>|
+|<img width="100%" alt="Q&A" src="https://blog.kakaocdn.net/dn/dKMF82/btsoZZ41sTZ/pnNObhkSzbJOi9NZyU6jzK/img.gif"/>|<img width="100%" alt="Q&A-상세" src="https://blog.kakaocdn.net/dn/b467G4/btso5YKB1cs/VEZRMBk5KfCZsOK3D2pztk/img.gif"/>|
 
 ## 📋 [API](https://documenter.getpostman.com/view/26572008/2s946mZpJT#fb9c8bdd-cad1-4990-b04c-05d1911361c6)
 ## 📙 Table
