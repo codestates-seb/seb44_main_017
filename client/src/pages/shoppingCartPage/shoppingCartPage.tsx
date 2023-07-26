@@ -53,6 +53,10 @@ const ShoppingCartPage = () => {
   };
 
   const orderItems = async () => {
+    if(postCode.address == ""){
+      alert("주소를 입력해 주세요.");
+    }else{
+    try{
     const { data, status } = await axios.post(
       BASE_URL + "/kakaoPaybucket",
       {
@@ -70,12 +74,23 @@ const ShoppingCartPage = () => {
         },
       }
     );
-
+      
     if ((data && status === 200) || 201) {
       window.open(data);
       navigate("/productlist");
     }
+    } catch (error: any) {
+      if (error.response.status === 409) {
+        console.log(error.response);
+        if(error.response.data.message == "No products in order"){
+          alert("결제할 물품을 선택해 주세요.")
+        }else if(error.response.data.message == "point_is_not_enough"){
+          alert("포인트가 부족합니다.");
+        }
+      }
+    }
     paymentList = ",";
+  }
   };
 
   const deleteItem = (id: number) => {

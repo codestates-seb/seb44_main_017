@@ -117,7 +117,6 @@ export const ProductListPage = () => {
     } catch (error) {
       console.log(error);
     }
-    searchReset && searchReset();
   };
 
   const sortOptions = [
