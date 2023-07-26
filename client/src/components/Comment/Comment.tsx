@@ -142,7 +142,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
        * QnA: 관리자인 경우
        * Product: 사용자, 관리자 모두
        */}
-      {userInfo?.role === "admin" || !qPath ? (
+      {userInfo?.role === "admin" || (!qPath && userInfo) ? (
         <S.InputLayout onSubmit={submitHandler}>
           <input
             type="text"

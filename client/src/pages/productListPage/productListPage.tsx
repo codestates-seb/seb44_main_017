@@ -111,7 +111,7 @@ export const ProductListPage = () => {
     e.preventDefault();
     try {
       const response = await axios.get(
-        `${BASE_URL}/search?keyword=${searchValue}&page=${page}&size=${size}`
+        `${BASE_URL}/search?keyword=${searchValue}&page=1&size=20`
       );
       setSearchData(response.data.data);
     } catch (error) {

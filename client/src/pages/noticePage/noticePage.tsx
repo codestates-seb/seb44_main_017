@@ -100,7 +100,7 @@ export const NoticePage = () => {
           />
         </S.SelectBar>
         <S.NoticeContainer>
-          {data.map((data) => (
+          {data.map(data => (
             <S.NoticeBox>
               <NotifyItem
                 boardId={data.boardId}

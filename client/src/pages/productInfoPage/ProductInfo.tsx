@@ -28,12 +28,12 @@ const ProductInfo = (props: ProductProps) => {
   return (
     <>
       <S.ProductInfo>
-        <div>
-          <S.ContetntsWrapper>
-            <S.ProductImageBox>
-              <S.ProductImage src={IMG_URL + "/" + productData.imageLink} />
-            </S.ProductImageBox>
-
+        <S.Container>
+          {/* <S.ContetntsWrapper> */}
+          <S.ProductImageBox>
+            <S.ProductImage src={IMG_URL + "/" + productData.imageLink} />
+          </S.ProductImageBox>
+          <S.DetailAndButtons>
             <S.ProductDetailContainer>
               <S.ProductUpperPart>
                 <S.SalesBox>판매중</S.SalesBox>
@@ -73,20 +73,17 @@ const ProductInfo = (props: ProductProps) => {
               </S.PostInfo>
               <S.ProductDescription>{productData.content}</S.ProductDescription>
             </S.ProductDetailContainer>
-          </S.ContetntsWrapper>
-          <S.PurchaseButtonWrapper>
-            <S.CartBtn onClick={addToCart}>장바구니</S.CartBtn>
-            <S.PaymentBtn onClick={handlePayment}>구매하기</S.PaymentBtn>
-          </S.PurchaseButtonWrapper>
-          <div>
-            <button
-              className="back_btn"
-              onClick={() => navigate("/productlist")}
-            >
-              목록으로
-            </button>
-          </div>
-        </div>
+            {/* </S.ContetntsWrapper> */}
+            <S.PurchaseButtonWrapper>
+              <S.CartBtn onClick={addToCart}>장바구니</S.CartBtn>
+              <S.PaymentBtn onClick={handlePayment}>구매하기</S.PaymentBtn>
+            </S.PurchaseButtonWrapper>
+          </S.DetailAndButtons>
+
+          <button className="back_btn" onClick={() => navigate("/productlist")}>
+            목록으로
+          </button>
+        </S.Container>
       </S.ProductInfo>
       <S.CommentContainer>
         <Comment comments={productData.comments} setComplete={setComplete} />
