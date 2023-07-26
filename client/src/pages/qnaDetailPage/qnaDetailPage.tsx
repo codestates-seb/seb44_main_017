@@ -4,7 +4,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { CommentTypes, QnaTypes } from "@/types/shared";
+import { QnACommentTypes, QnaTypes } from "@/types/shared";
 import Comment from "@/components/Comment/Comment";
 import { getToken } from "@/utils/token";
 
@@ -16,7 +16,7 @@ const initialValue: QnaTypes = {
   modifyAt: "",
   view: "",
   writer: {
-    adminId: "",
+    memberId: "",
     name: "",
   },
   qcomments: [
@@ -36,35 +36,47 @@ const initialValue: QnaTypes = {
 const QnaDetailPage = () => {
   const { questionId } = useParams();
   const [qnaData, setQnaData] = useState<QnaTypes>(initialValue);
-  const [commentData, setCommentData] = useState<CommentTypes[]>([]);
+  const [commentData, setCommentData] = useState<QnACommentTypes[]>([]);
   const [complete, setComplete] = useState(false);
 
   const [authorization, refresh] = getToken();
 
-  useEffect(() => {
-    axios
-      .get(BASE_URL + `/questions/${questionId}`, {
-        headers: {
-          Authorization: `${authorization}`,
-          Refresh: `${refresh}`,
-        },
-      })
-      .then((res) => {
-        setQnaData(res.data);
-        setCommentData(res.data.qcomments);
+  const getDetailData = async () => {
+    try {
+      const { data, status } = await axios.get(
+        BASE_URL + `/questions/${questionId}`,
+        {
+          headers: authorization
+            ? {
+                Authorization: `${authorization}`,
+                Refresh: `${refresh}`,
+              }
+            : {},
+        }
+      );
+
+      if (data && status === 200) {
+        setQnaData(data);
+        setCommentData(data.qcomments);
         setComplete(false);
-      });
+      }
+    } catch (e) {
+      console.error("Failed fetching data", e);
+    }
+  };
+
+  useEffect(() => {
+    getDetailData();
   }, [complete]);
 
   return (
     <>
       <BoardDetail
         title={qnaData.title}
-        name={qnaData.writer.name}
+        name={qnaData.writer?.name}
         viewCount={qnaData.view}
         createdAt={qnaData.createAt.slice(0, 10)}
         content={qnaData.content}
-        usage={"questions"}
       />
       <div style={{ paddingTop: "36px" }}>
         <Comment comments={commentData} setComplete={setComplete} />

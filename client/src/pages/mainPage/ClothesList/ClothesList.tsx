@@ -4,15 +4,15 @@ import axios from "axios";
 import ProductItem from "@/components/Item_product/ProductItem";
 import FadeIn from "@/components/FadeIn/FadeIn";
 import { useNavigate } from "react-router";
-import { IMG_URL } from "@/constants/constants";
+import { BASE_URL, IMG_URL } from "@/constants/constants";
 
 interface Data {
-  image_link: string;
+  imageLink: string;
   isSell: boolean;
   productlike: boolean;
   name: string;
   price: string;
-  product_id: number;
+  productId: number;
 }
 const ClothesList = () => {
   const navigate = useNavigate();
@@ -21,22 +21,21 @@ const ClothesList = () => {
     return (
       <ProductItem
         key={`product_${idx}`}
-        url={`${IMG_URL}/${data.image_link}`}
+        url={`${IMG_URL}/${data.imageLink}`}
         isSell={false}
         like={data.productlike}
         title={data.name}
         price={data.price}
-        product_id={data.product_id}
+        productId={data.productId}
       />
     );
   });
-
   useEffect(() => {
     (async () => {
       try {
         const res = await axios({
           method: "GET",
-          url: `http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/products?page=1&size=12&sort=newest&issell=false`,
+          url: `${BASE_URL}/products?page=1&size=12&sort=newest&issell=false`,
         });
         setClothesList(res.data.data);
       } catch (err) {
@@ -47,23 +46,37 @@ const ClothesList = () => {
   return (
     <S.Container>
       <S.ContainerPC>
-        <FadeIn index={3}>
+        <FadeIn index={2}>
           <S.UppserListContainer>{products}</S.UppserListContainer>
         </FadeIn>
-        <FadeIn index={3}>
+        <FadeIn index={2}>
           <S.LowerListContainer>{products}</S.LowerListContainer>
         </FadeIn>
+        {clothesList.length < 7 ? (
+          <FadeIn index={2}>
+            <S.LowerListContainer>{products}</S.LowerListContainer>
+          </FadeIn>
+        ) : (
+          <></>
+        )}
       </S.ContainerPC>
       <S.ContainerMobile>
         <S.UppserListContainer>{products}</S.UppserListContainer>
       </S.ContainerMobile>
-      <S.ListpageBtn
-        onClick={() => {
-          navigate("/productlist/");
-        }}
-      >
-        상품 전체 보기
-      </S.ListpageBtn>
+      {!clothesList.length ? (
+        <S.EmptyList>상품 정보가 없습니다.</S.EmptyList>
+      ) : (
+        <></>
+      )}
+      <S.BtnContainer>
+        <S.ListpageBtn
+          onClick={() => {
+            navigate("/productlist/");
+          }}
+        >
+          상품 전체 보기
+        </S.ListpageBtn>
+      </S.BtnContainer>
     </S.Container>
   );
 };

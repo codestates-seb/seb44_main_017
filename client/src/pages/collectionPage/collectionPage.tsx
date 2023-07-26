@@ -32,8 +32,9 @@ const CollectionPage = () => {
   const navigate = useNavigate();
 
   const deleteHandler = (id: number) => {
-    confirm("정말 삭제하시겠습니까?");
-    setContents(contents.filter(item => item.itemId !== id));
+    if (confirm("정말 삭제하시겠습니까?")) {
+      setContents(contents.filter(item => item.itemId !== id));
+    }
   };
 
   const submitHandler = async () => {
@@ -85,7 +86,7 @@ const CollectionPage = () => {
     <S.Section>
       <S.PageTitle>
         <h1>수거 신청하기</h1>
-        <h4>의류를 보내서 포인트도 얻고 친환경도 실천해보세요!</h4>
+        {/* <h4>의류를 보내서 포인트도 얻고 친환경도 실천해보세요!</h4> */}
       </S.PageTitle>
       <S.ContentsContainer>
         {contents.map((item, index) => (
@@ -125,6 +126,7 @@ const CollectionPage = () => {
           상품 추가
         </S.AddFormBtn>
       </S.AddBtnBox>
+
       <S.SubmitBox>
         <div className="total_product">TOTAL : {contents.length}개의 물품</div>
         <S.SubmitBtn onClick={() => submitHandler()}>보내기</S.SubmitBtn>

@@ -11,6 +11,9 @@ export const ProductContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 8px;
+  @media (max-width: 479px) {
+    padding: 4px;
+  }
 `;
 export const ImageContainer = styled.div`
   position: relative;
@@ -36,15 +39,18 @@ export const ProdcutImage = styled.img<ImageProps>`
   object-fit: cover;
   border: 2px solid var(--color-darkblue);
   border-radius: 16px;
-  @media (max-width: 767px) {
-    width: 156px;
-    height: 156px;
-    object-fit: cover;
+  @media (max-width: 479px) {
+    border: 1px solid var(--color-darkblue);
+    width: 104px;
+    height: 104px;
+  }
+  @media (min-width: 480px) and (max-width: 767px) {
+    width: 136px;
+    height: 136px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     width: 184px;
     height: 184px;
-    object-fit: cover;
   }
 `;
 export const ImageErrorIcon = styled(HideImageIcon)`
@@ -53,8 +59,13 @@ export const ImageErrorIcon = styled(HideImageIcon)`
   padding: 80px;
   border: 2px solid var(--color-darkblue);
   border-radius: 16px;
-  @media (max-width: 767px) {
-    padding: 58px;
+  @media (max-width: 479px) {
+    border: 1px solid var(--color-darkblue);
+    font-size: 24px !important;
+    padding: 40px;
+  }
+  @media (min-width: 480px) and (max-width: 767px) {
+    padding: 48px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     padding: 72px;
@@ -69,6 +80,12 @@ export const IsSell = styled.span`
   background-color: var(--color-orange);
   padding: 4px 8px;
   color: #fff;
+  @media (max-width: 479px) {
+    font-size: 8px;
+    top: 5px;
+    left: 5px;
+    padding: 2px 4px;
+  }
 `;
 export const Title = styled.span`
   font-size: var(--font-size-16);
@@ -77,8 +94,12 @@ export const Title = styled.span`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  @media (max-width: 767px) {
-    width: 132px;
+  @media (max-width: 479px) {
+    width: 60px;
+    font-size: 10px;
+  }
+  @media (min-width: 480px) and (max-width: 767px) {
+    width: 80px;
     font-size: 12px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
@@ -90,7 +111,10 @@ export const Price = styled.span`
   font-size: var(--font-size-16);
   font-weight: var(--font-weight-500);
   margin-top: 4px;
-  @media (max-width: 767px) {
+  @media (max-width: 479px) {
+    font-size: 10px;
+  }
+  @media (min-width: 480px) and (max-width: 767px) {
     font-size: 12px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {

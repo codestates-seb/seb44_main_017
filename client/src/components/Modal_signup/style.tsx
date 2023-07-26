@@ -11,14 +11,15 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999;
 `;
 
 export const Content = styled.div`
   width: 360px;
-  height: 500px;
+  padding: 36px 0px;
   background-color: rgba(247, 247, 247, 0.7);
-  backdrop-filter: 10px;
-  box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(5px);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
   border-radius: 16px;
   display: flex;
   justify-content: center;
@@ -56,17 +57,17 @@ export const Explanation = styled.div`
 
 export const InputBox = styled.input`
   width: 280px;
-  height: 24px;
+  padding: 4px 0px;
   border-left-width: 0;
   border-right-width: 0;
   border-top-width: 0;
   border-bottom-width: 2px;
   border-color: var(--color-darkblue);
   outline: none;
-  background-color: rgba(247, 247, 247, 0.7);
+  background-color: transparent;
   margin-bottom: 24px;
   ::placeholder {
-    color: var(--color-gray200);
+    color: #545454;
     font-weight: var(--font-weight-700);
   }
 `;
@@ -84,13 +85,13 @@ export const DuplicateCheck = styled.button`
   align-items: center;
   font-size: 12px;
   font-weight: 700;
-  background-color: var(--color-darkblue);
-  color: var(--color-white);
+  background-color: transparent;
+  color: var(--color-darkblue);
   border-radius: 16px;
   border: none;
   position: absolute;
   top: 4px;
-  right: 0px;
+  right: -8px;
 `;
 
 export const PasswordLabel = styled.label`
@@ -100,6 +101,7 @@ export const PasswordLabel = styled.label`
 export const VisibilityButton = styled(VisibilityIcon)`
   width: 16px;
   height: 10px;
+  padding-right: 4px;
   color: var(--color-darkblue);
   position: absolute;
   top: 0px;

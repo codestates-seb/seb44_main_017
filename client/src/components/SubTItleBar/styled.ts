@@ -6,6 +6,7 @@ export const Container = styled.div`
   background-color: var(--color-darkblue);
   justify-content: center;
   align-items: center;
+  width: 100%;
 `;
 export const SubTitleBox = styled.div`
   position: relative;
@@ -23,7 +24,7 @@ export const SubTitleBox = styled.div`
     min-height: 64px;
   }
 `;
-export const AdmitButtonContainer = styled.nav`
+export const AdminButtonContainer = styled.nav`
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -34,7 +35,8 @@ export const AdmitButtonContainer = styled.nav`
   padding: 16px 20px;
   border-radius: 99px;
   @media (max-width: 767px) {
-    margin-bottom: -128px;
+    width: 250px;
+    margin-bottom: -120px;
   }
   @media (min-width: 768px) and (max-width: 1120px) {
     margin-bottom: -152px;
@@ -91,13 +93,18 @@ export const SubTitleButton = styled.a`
   @media (min-width: 768px) and (max-width: 1120px) {
     margin-bottom: -152px;
   }
+  &:hover {
+    background-color: var(--color-darkblue);
+    color: white;
+  }
 `;
-export const NavButton = styled.a<{ href: string }>`
+export const NavButton = styled.a<{ path: string }>`
   color: var(--color-gray200);
   text-decoration: none;
-  ${({ href }) => {
+  cursor: pointer;
+  ${({ path }) => {
     const location = useLocation();
-    return href === location.pathname
+    return path === location.pathname
       ? `color: var(--color-darkblue);
       font-weight: var(--font-weight-700);
       border-bottom : 2px solid var(--color-darkblue)`

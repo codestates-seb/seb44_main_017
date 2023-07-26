@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import * as S from "./style";
-import { Logo } from "../../assets/logoSimple";
 import axios from "axios";
+import * as S from "./style";
+import { useState } from "react";
+
+import { Logo } from "../../assets/logoSimple";
+import { useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "@/constants/constants";
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const LoginModal = ({ closeModal }: Props) => {
+  const path = useLocation().pathname;
   const [userName, setUserName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   // 유효성 검사
@@ -53,12 +55,22 @@ const LoginModal = ({ closeModal }: Props) => {
 
         const response: any = await axios.post(`${BASE_URL}/user/login`, data);
         if (response.status === 200) {
-          navigate("/");
+          if (path === "/") {
+            window.location.reload();
+          } else {
+            navigate("/");
+          }
           closeModal(false);
           const authorization = response.headers.get("authorization");
           const refresh = response.headers.get("refresh");
+          const roles = response.headers.get("roles");
+          const memberId = response.headers.get("memberid");
+          const userName = response.data;
           document.cookie = `authorization=${authorization}; path=/;`;
-          document.cookie = `refresh=${refresh}; path=/; SameSite=none; Secure`;
+          document.cookie = `refresh=${refresh}; path=/;`;
+          document.cookie = `name=${userName}; path=/;`;
+          document.cookie = `id=${memberId}; path=/;`;
+          document.cookie = `roles=${roles}; path=/;`;
         }
       } catch (error: any) {
         if (error.response.status === 404 || error.response.status === 500) {
@@ -70,16 +82,28 @@ const LoginModal = ({ closeModal }: Props) => {
         const data = { email: userName, password };
         const response: any = await axios.post(`${BASE_URL}/admin/login`, data);
         if (response.status === 200) {
-          navigate("/");
+          if (path === "/") {
+            window.location.reload();
+          } else {
+            navigate("/");
+          }
           closeModal(false);
           const authorization = response.headers.get("authorization");
           const refresh = response.headers.get("refresh");
+          const roles = response.headers.get("roles");
+          const adminId = response.headers.get("adminid");
+          const adminName = response.data.data;
           document.cookie = `authorization=${authorization}; path=/;`;
-          document.cookie = `refresh=${refresh}; path=/; SameSite=none; Secure`;
+          document.cookie = `refresh=${refresh}; path=/;`;
+          document.cookie = `name=${adminName}; path=/;`;
+          document.cookie = `id=${adminId}; path=/;`;
+          document.cookie = `roles=${roles}; path=/;`;
         }
       } catch (error: any) {
         if (error.response.status === 404 || error.response.status === 500) {
           alert("회원 정보를 확인해주세요.");
+        } else {
+          console.log(error);
         }
       }
     }
@@ -129,9 +153,17 @@ const LoginModal = ({ closeModal }: Props) => {
           />
           관리자로 로그인하기
         </S.AdminLabel>
+        <S.OAuthButtonContainer>
+          <S.KakaoButton onClick={kakaoLoginRequestHandler}>
+            <S.KakaoIcon />
+            카카오 로그인
+          </S.KakaoButton>
+          <S.GoogleButton onClick={googleLoginRequestHandler}>
+            <S.GoogleIcon />
+            구글 로그인
+          </S.GoogleButton>
+        </S.OAuthButtonContainer>
         <S.LoginButton onClick={handleLogin}>LOGIN</S.LoginButton>
-        <S.ButtonTest onClick={googleLoginRequestHandler}>구글</S.ButtonTest>
-        <S.ButtonTest onClick={kakaoLoginRequestHandler}>카카오</S.ButtonTest>
       </S.Content>
     </S.Container>
   );

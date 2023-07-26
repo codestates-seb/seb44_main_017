@@ -10,7 +10,8 @@ export const Spacing = styled.div`
   }
 `;
 export const HeaderContainer = styled.div`
-  position: relative;
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,10 +27,11 @@ export const HeaderContainer = styled.div`
     padding: 12px 32px;
   }
 `;
-export const LogoContainer = styled.a<{ href: string }>`
+export const LogoContainer = styled.a`
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
 `;
 export const NavBarContainer = styled.div`
   display: flex;
@@ -78,7 +80,7 @@ export const SignupBtn = styled.button`
   background-color: var(--color-white);
   color: var(--color-darkblue);
 `;
-export const NavBtn = styled.a<{ href: string }>`
+export const NavBtn = styled.a`
   color: black;
   font-weight: var(--font-weight-700);
   font-size: var(--font-size-16);

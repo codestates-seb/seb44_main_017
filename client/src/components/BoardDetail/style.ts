@@ -12,9 +12,9 @@ export const HeaderBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 36px 36px 8px;
+  padding: 36px 20px 8px;
   max-width: 1200px;
-  width: 100%;
+  width: 90%;
   gap: 24px;
 
   @media (max-width: 767px) {
@@ -101,5 +101,22 @@ export const ContentBox = styled.div`
       background-color: var(--color-darkblue);
       color: var(--color-white);
     }
+  }
+`;
+
+export const SpeedDialContainer = styled.div`
+  position: absolute;
+
+  @media (max-width: 767px) {
+    bottom: 16px;
+    right: 0px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    bottom: 36px;
+    right: 0px;
+  }
+  @media (min-width: 1024px) {
+    bottom: 48px;
+    right: -24px;
   }
 `;

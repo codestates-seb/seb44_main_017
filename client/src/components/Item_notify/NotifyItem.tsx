@@ -1,23 +1,30 @@
-import * as S from "./NotifyItem.styles";
-import { NotifyProps } from "./NotifyItem.type";
+import * as S from "./style";
 import View from "@/assets/icons/view.svg";
-import Post from "@/assets/icons/Post.svg";
+import { useNavigate } from "react-router-dom";
+
+type NotifyProps = {
+  boardId: number;
+  title: string;
+  contents: string;
+  isNew?: boolean;
+  regDt: string;
+  viewCount: number;
+};
 
 const NotifyItem = (props: NotifyProps) => {
-  const { title, contents, isNew, regDt, viewCount } = props;
+  const { boardId, title, contents, isNew, regDt, viewCount } = props;
+  const navigate = useNavigate();
+
   return (
-    <S.Notifyitemcard>
+    <S.Notifyitemcard onClick={() => navigate(`/notice/detail/${boardId}`)}>
       <S.NotifyTitle>{title}</S.NotifyTitle>
-      <div>
-        <S.PostIt src={Post} alt="" />
-      </div>
       <S.NotifyContents>{contents}</S.NotifyContents>
       {isNew && <S.NewBadge>NEW</S.NewBadge>}
       <S.RegInfoWrapper>
-        <small>{regDt}</small>
+        <S.RegDt>{regDt.slice(0, 10)}</S.RegDt>
         <div>
           <S.ViewImg src={View} alt="조회수" />
-          <small>{viewCount}</small>
+          <S.ViewCount>{viewCount}</S.ViewCount>
         </div>
       </S.RegInfoWrapper>
     </S.Notifyitemcard>

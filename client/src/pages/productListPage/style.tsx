@@ -1,84 +1,80 @@
 import styled from "styled-components";
+import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
+import { FiSearch } from "react-icons/fi";
 
+export const Container = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 export const SubTitleContainer = styled.section`
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: var(--color-gray100);
+  background-color: var(--color-darkblue);
+  width: 100%;
   @media (max-width: 767px) {
-    padding: 48px 40px 48px 40px;
+    margin-bottom: 24px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
-    padding: 40px 48px 56px 48px;
+    margin-bottom: 36px;
   }
   @media (min-width: 1024px) {
-    padding: 40px 320px 62px 320px;
+    margin-bottom: 40px;
   }
 `;
 export const SubTitleBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  margin-top: 24px;
+  margin-bottom: 12px;
 `;
 export const SubTitle = styled.div`
-  font-weight: var(--font-weight-700);
+  color: white;
   @media (max-width: 767px) {
+    font-size: 16px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
     font-size: 24px;
   }
-  @media (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 1024px) {
     font-size: 36px;
-  }
-  @media (min-width: 1024px) {
-    font-size: 48px;
-  }
-`;
-export const SubTitleLogo = styled.img`
-  margin: 0px 16px 0px 4px;
-  @media (max-width: 767px) {
-    width: 24px;
-    height: 24px;
-  }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    width: 36px;
-    height: 36px;
-  }
-  @media (min-width: 1024px) {
-    width: 40px;
-    height: 40px;
   }
 `;
 export const ProductsBox = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 24px;
 `;
 export const ProductsCarousel = styled.div`
   display: flex;
   flex-wrap: none;
   overflow: hidden;
   @media (max-width: 767px) {
-    width: 234px;
+    width: 294px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
-    width: 740px;
+    width: 660px;
   }
   @media (min-width: 1024px) {
-    width: 1024px;
+    width: 972px;
   }
 `;
 export const Product = styled.div`
   display: flex;
-  transition: 0.5s;
+  transition: all ease 1s;
   :hover {
     cursor: pointer;
   }
 `;
-export const ArrowLeftIcon = styled.img`
-  color: var(--color-darkblue);
+export const ArrowLeftIcon = styled(BsChevronDoubleLeft)`
+  color: white;
   margin-right: 16px;
   @media (max-width: 767px) {
     width: 24px;
     height: 24px;
+    margin-right: 8px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     width: 36px;
@@ -92,12 +88,13 @@ export const ArrowLeftIcon = styled.img`
     cursor: pointer;
   }
 `;
-export const ArrowRightIcon = styled.img`
-  color: var(--color-darkblue);
+export const ArrowRightIcon = styled(BsChevronDoubleRight)`
+  color: white;
   margin-left: 16px;
   @media (max-width: 767px) {
     width: 24px;
     height: 24px;
+    margin-left: 8px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
     width: 36px;
@@ -114,43 +111,63 @@ export const ArrowRightIcon = styled.img`
 export const CategoryBar = styled.nav`
   display: flex;
   justify-content: center;
+  margin-bottom: 24px;
   @media (max-width: 767px) {
-    margin-top: 24px;
-  }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    margin-top: 36px;
-  }
-  @media (min-width: 1024px) {
-    margin-top: 40px;
+    margin-bottom: 16px;
+    nav.last-button {
+      margin-right: none;
+    }
   }
 `;
 export const SelectBar = styled.div`
+  width: 338px;
   display: flex;
   justify-content: flex-end;
-  @media (max-width: 767px) {
-    padding: 0px 40px;
-  }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    padding: 0px 48px;
-  }
-  @media (min-width: 1024px) {
-    padding: 0px 320px;
+  @media (min-width: 480px) and (max-width: 767px) {
+    width: 468px;
+    padding-right: 16px;
   }
 `;
 export const ProductsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  @media (max-width: 767px) {
-    padding: 0px 40px;
+  @media (max-width: 479px) {
+    width: 342px;
+  }
+  @media (min-width: 480px) and (max-width: 767px) {
+    width: 468px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
-    padding: 0px 48px;
+    width: 612px;
   }
   @media (min-width: 1024px) {
-    padding: 0px 320px;
+    width: 1100px;
   }
 `;
-export const Url = styled.a`
-  text-decoration: none;
-  color: var(--color-black);
+export const CustomPaginationBox = styled.div`
+  margin: 16px 0px;
+`;
+export const SearchBox = styled.div`
+  @media (max-width: 479px) {
+    width: 342px;
+    margin-bottom: 16px;
+  }
+  @media (min-width: 480px) and (max-width: 767px) {
+    width: 448px;
+    margin-bottom: 16px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 632px;
+    margin-bottom: 24px;
+  }
+  @media (min-width: 1024px) {
+    width: 1084px;
+    margin-bottom: 28px;
+  }
+`;
+export const SearchIcon = styled(FiSearch)`
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  right: 8px;
 `;

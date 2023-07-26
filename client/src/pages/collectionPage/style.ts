@@ -14,9 +14,7 @@ export const PageTitle = styled.div`
   flex-direction: column;
   text-align: center;
   padding-bottom: 40px;
-  border-bottom: 2px solid var(--color-black);
   gap: 12px;
-  width: 67%;
 
   & > h1 {
     font-size: 36px;
@@ -42,7 +40,8 @@ export const ContentsContainer = styled.article`
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin: 36px 0;
+  padding: 36px 0;
+  border-top: 2px solid var(--color-black);
 `;
 
 export const ContentHeader = styled.div`
@@ -50,10 +49,6 @@ export const ContentHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
-
-  @media (max-width: 767px) {
-    justify-content: space-around;
-  }
 
   & > .product_no {
     font-size: 14px;
@@ -67,6 +62,7 @@ export const DeleteBtn = styled(LoginBtn)`
   width: 75px;
   height: 27px;
   background-color: var(--color-lightred);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 2px;
 
   &:hover {
     background-color: #e35757;
@@ -78,23 +74,43 @@ export const AddFormBtn = styled(LoginBtn)`
   width: 150px;
   height: 50px;
   border-radius: 40px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 4px;
 
   &:hover {
     background-color: #355873;
   }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 140px;
+    height: 45px;
+  }
+
+  @media (max-width: 767px) {
+    width: 120px;
+    height: 40px;
+  }
 `;
 
 export const AddBtnBox = styled.div`
-  padding: 60px 0;
+  padding-bottom: 60px;
 `;
 
 export const SubmitBox = styled.div`
   display: flex;
   margin-bottom: 40px;
   align-items: center;
-  width: 67%;
   justify-content: end;
   gap: 12px;
+  max-width: 750px;
+  width: 100%;
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    max-width: 634px;
+  }
+
+  @media (max-width: 767px) {
+    max-width: 300px;
+  }
 
   & > .total_product {
     font-size: 14px;
@@ -109,6 +125,8 @@ export const SubmitBox = styled.div`
 
 export const SubmitBtn = styled(LoginBtn)`
   margin: 0;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 2px;
+
   &:hover {
     background-color: #355873;
   }
