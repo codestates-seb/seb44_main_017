@@ -129,6 +129,6 @@
 
 ## 📋 [API](https://documenter.getpostman.com/view/26572008/2s946mZpJT#fb9c8bdd-cad1-4990-b04c-05d1911361c6)
 ## 📙 Table
-![image](https://github.com/codestates-seb/seb44_main_017/assets/120166543/3f7257af-47f0-47ce-b781-95b3070dd61f)
+![image](https://github.com/codestates-seb/seb44_main_017/assets/92436863/c7041b32-5c9b-426c-a841-798575d94346)
 ## 🖥️ [Wireframe](https://www.figma.com/file/wO2Q0aUYVPyJhnDl5QSSXD/%EC%84%B8%EB%B8%90%EC%9D%BC%EB%A0%88%EB%B8%90_RECLOSET?type=design&node-id=0-1&mode=design)
 ## 🗨️ [Service Manual](https://github.com/codestates-seb/seb44_main_017/files/12168680/7Eleven_.pdf)
