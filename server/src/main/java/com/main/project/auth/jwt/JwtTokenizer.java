@@ -3,6 +3,7 @@ package com.main.project.auth.jwt;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.main.project.admin.dto.AdminDto;
 import com.main.project.auth.dto.TokenResponseDto;
+import com.main.project.member.dto.MemberDto;
 import com.main.project.member.entity.RefreshToken;
 import com.main.project.member.repository.RefreshTokenRepository;
 import com.main.project.member.service.RefreshTokenService;
@@ -127,23 +128,19 @@ public class JwtTokenizer {
         String atk = delegateAccessToken(adminResponseDto);
         String rtk = delegateRefreshToken(adminResponseDto);
 
-        /*
-        if(refreshTokenRepository.existsByAdminId(adminResponseDto.getAdminId()) == true){
-            Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByAdminId(adminResponseDto.getAdminId());
-            RefreshToken findtoken = optionalRefreshToken.get();
-            findtoken.setValue(rtk);
-            refreshTokenRepository.save(findtoken);
-
-        }else {
-            RefreshToken refreshTokenEntity = new RefreshToken();
-            refreshTokenEntity.setValue(rtk);
-            refreshTokenEntity.setAdminId(adminResponseDto.getAdminId());
-            refreshTokenService.addRefreshToken(refreshTokenEntity);
-        }
-         */
         RefreshToken refreshTokenEntity = new RefreshToken();
         refreshTokenEntity.setValue(rtk);
         refreshTokenEntity.setAdminId(adminResponseDto.getAdminId());
+        refreshTokenService.addRefreshToken(refreshTokenEntity);
+        return new TokenResponseDto(atk, rtk);
+    }
+    public TokenResponseDto createTokenByLoginUser(MemberDto.Response memberResponseDto) throws JsonProcessingException{
+        String atk = delegateAccessTokenUser(memberResponseDto);
+        String rtk = delegateRefreshTokenUser(memberResponseDto);
+
+        RefreshToken refreshTokenEntity = new RefreshToken();
+        refreshTokenEntity.setValue(rtk);
+        refreshTokenEntity.setAdminId(memberResponseDto.getMemberId());
         refreshTokenService.addRefreshToken(refreshTokenEntity);
         return new TokenResponseDto(atk, rtk);
     }
@@ -161,6 +158,23 @@ public class JwtTokenizer {
     }
     private String delegateRefreshToken(AdminDto.Response adminResponseDto){
         String subject = adminResponseDto.getEmail();
+        Date expiration = getTokenExpiration(refreshTokenExpirationMinutes);
+        String base64EncodedSecretKey = encodeBase64SecretKey(secretKey);
+        return generateAdminRefreshToken(subject, expiration, base64EncodedSecretKey);
+    }
+    private String delegateAccessTokenUser(MemberDto.Response memberResponseDto){
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("username", memberResponseDto.getEmail());
+        claims.put("memberId", memberResponseDto.getMemberId());
+
+        String subject = memberResponseDto.getEmail();
+        Date expiration = getTokenExpiration(accessTokenExpirationMinutes);
+        String base64EncodedSecretKey = encodeBase64SecretKey(secretKey);
+
+        return generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
+    }
+    private String delegateRefreshTokenUser(MemberDto.Response memberResponseDto){
+        String subject = memberResponseDto.getEmail();
         Date expiration = getTokenExpiration(refreshTokenExpirationMinutes);
         String base64EncodedSecretKey = encodeBase64SecretKey(secretKey);
         return generateAdminRefreshToken(subject, expiration, base64EncodedSecretKey);
