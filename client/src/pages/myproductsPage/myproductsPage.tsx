@@ -125,7 +125,7 @@ const MyproductsPage = () => {
                   <div className="product_wrapper" key={item.productId}>
                     <ProductItem
                       url={IMG_URL + "/" + item.imageLink}
-                      isSell={false}
+                      isSell={true}
                       like={false}
                       title={item.name}
                       price={item.price}

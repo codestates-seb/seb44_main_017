@@ -12,9 +12,9 @@ const ProfileDropdown = () => {
   const path = useLocation().pathname;
   const [DropdownIsOpen, Ref, DropdownHandler] = useDetectClose();
   const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
-  const logoutHandler = () => {
+  const logoutHandler = async () => {
     if (confirm("로그아웃 하시겠습니까?")) {
-      delCookie();
+      await delCookie();
       if (path === "/") {
         window.location.reload();
       } else {
