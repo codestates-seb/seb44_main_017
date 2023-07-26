@@ -6,7 +6,6 @@ buildscript {
 
 plugins {
 	id 'java'
-//	id 'jar'
 	id 'org.springframework.boot' version '2.7.13'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 	id "org.asciidoctor.jvm.convert" version "3.3.2"
