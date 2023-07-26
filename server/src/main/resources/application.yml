@@ -1,0 +1,87 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${MYSQL_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    open-in-view: true
+    profiles:
+      include: create
+  main:
+    allow-bean-definition-overriding: true
+
+  logging:
+    level:
+      org:
+        springframework:
+          orm:
+            jpa: DEBUG
+      com:
+        amazonaws:
+          util:
+            EC2MetadataUtils: ERROR
+  server:
+    servlet:
+      encoding:
+        force-response: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            clientId: ${Google_clientid}
+            clientSecret: ${Google_clientsecret}
+            scope:
+              - email
+              - profile
+          kakao:
+            client-id: ${K_CLIENT_ID}
+            client-secret: ${K_CLIENT_SECRET}
+            client-name: Kakao
+            redirect-uri: http://ec2-43-200-107-103.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/kakao
+            authorization-grant-type: authorization_code
+            client-authentication-method: POST
+            scope:
+              - profile_nickname
+              - account_email
+        provider:
+          kakao:
+            authorizationUri: https://kauth.kakao.com/oauth/authorize
+            tokenUri: https://kauth.kakao.com/oauth/token
+            userInfoUri: https://kapi.kakao.com/v2/user/me
+            userNameAttribute: id
+
+cloud:
+  aws:
+    s3:
+      bucket: mainproject.bucket
+    credentials:
+      accessKey: ${Access_key}
+      secretKey: ${Secret_access_key}
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
+
+mail:
+  address:
+    admin: admin@gmail.com
+
+elasticsearch:
+  host: mainproject.es.ap-northeast-2.aws.elastic-cloud.com
+  user-key: ${Elastic_key}
+
+jwt:
+  admin-key: ${Admin_key}
+  key: ${JWT_SECRET_KEY}
+  access-token-expiration-minutes: 9999
+  refresh-token-expiration-minutes: 99999
+

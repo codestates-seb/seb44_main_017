@@ -1,0 +1,33 @@
+input {
+  jdbc {
+    jdbc_driver_library => "C:\Users\jyp96\Desktop\search\logstash\logstash-core\lib\jars\mysql-connector-java-8.0.28.jar"
+    jdbc_driver_class => "com.mysql.jdbc.Driver"
+    jdbc_connection_string => "jdbc:mysql://main-project.chrp3bkonfze.ap-northeast-2.rds.amazonaws.com:3306/main_project"
+    jdbc_user => "admin"
+    jdbc_password => password
+    jdbc_paging_enabled => true
+    tracking_column => "unix_ts_in_secs"
+    use_column_value => true
+    tracking_column_type => "numeric"
+    schedule => "*/5 * * * * *"
+    statement => "SELECT * FROM product"
+  }
+}
+
+output {
+  stdout {
+    codec => rubydebug
+  }
+  file {
+    path => "/tmp/my_logstash.log"
+    codec => rubydebug
+  }
+  elasticsearch {
+    hosts => ["mainproject.es.ap-northeast-2.aws.elastic-cloud.com:443"]
+    ssl => true
+    index => "product"
+    user => "elastic"
+    password => password
+    ilm_enabled => false
+  }
+}

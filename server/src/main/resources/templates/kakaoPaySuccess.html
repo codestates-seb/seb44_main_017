@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>결제 확인서</title>
+</head>
+<body>
+<h1>결제 확인서</h1>
+<dt><strong>카카오페이 결제가 정상적으로 완료되었습니다.</strong><br/><br/>
+    <table border="1">
+        <caption><strong>결제 내역</strong></caption>
+        <thead>
+        <tr><th>제목</th><th>내용</th></tr>
+        </thead>
+        <tbody>
+        <tr><th>결제일시</th><th>[[${info.approved_at}]]</th></tr>
+        <tr><th>주문번호</th><th>[[${info.tid}]]</th></tr>
+        <tr><th>주문자이메일</th><th>[[${info.partner_user_id}]]</th></tr>
+        <tr><th>상품명</th><th>[[${info.item_name}]]</th></tr>
+        <tr><th>상품수량</th><th>[[${info.quantity}]]</th></tr>
+        <tr><th>결제금액</th><th>[[${info.amount.total}]]</th></tr>
+        <tr><th>결제방법</th><th>[[${info.payment_method_type}]]</th></tr>
+        </tbody>
+    </table><br/><br/>
+
+
+    <input type='BUTTON' value=" 창닫기" onClick='self.close()'>
+
+
+</body>
+</html>
+
