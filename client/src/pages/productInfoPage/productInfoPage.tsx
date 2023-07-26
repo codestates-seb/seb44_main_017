@@ -39,12 +39,15 @@ export const ProductInfoPage = () => {
   const [error, setError] = useState("");
   const [authorization, refresh] = getToken();
 
+
+
   const addToCart = async () => {
-    if (!userInfo) {
+    if (refresh == null) {
       setError("로그인이 필요합니다.");
       setErrorOpen(true);
       return;
-    } else if (userInfo.role === "admin") {
+    }
+    if (userInfo != null && userInfo.role === "admin") {
       setError("관리자는 사용할 수 없는 기능입니다.");
       setErrorOpen(true);
       return;
