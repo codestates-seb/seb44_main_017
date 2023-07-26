@@ -31,6 +31,7 @@ public enum ExceptionCode {
     ELASTIC_IOException(404, "elastic_ioexception"),
     ALARM_NOT_FOUND(404, "alarm_not_found"),
     PRODUCTLIKE_NOT_FOUND(404, "Productlike does not exists" ),
+    PASSWORD_ERROR(401,"Password error"),
     WRONG_FORMAT(400, "Invalid format accepted");
 
     private final int status;

@@ -68,8 +68,8 @@ public class SecurityConfiguration implements WebMvcConfigurer{
                 .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
                 .accessDeniedHandler(new MemberAccessDeniedHandler())
                 .and()
-                .apply(new UserCustomFilterConfigurer())
-                .and()
+                //.apply(new UserCustomFilterConfigurer())
+                //.and()
                 //.apply(new UserCustomFilterConfigurer())
                 //.and()
                 .authorizeHttpRequests(authorize -> authorize
