@@ -28,17 +28,7 @@ const Header = () => {
     setIsActive(!isActive);
   };
   useEffect(() => {
-    if (role === "user") {
-      const [authorization, refresh] = getToken();
-      axios
-        .get(BASE_URL + `/members/${memberId}`, {
-          headers: {
-            Authorization: authorization,
-            Refresh: refresh,
-          },
-        })
-        .then(res => setUserInfo({ ...res.data.data, role: role }));
-    } else if (role === "admin") {
+    if (role === "admin") {
       setUserInfo({
         email: "",
         isBan: false,
@@ -50,7 +40,15 @@ const Header = () => {
         role: "admin",
       });
     } else {
-      setUserInfo(null);
+      const [authorization, refresh] = getToken();
+      axios
+        .get(BASE_URL + `/members/${memberId}`, {
+          headers: {
+            Authorization: authorization,
+            Refresh: refresh,
+          },
+        })
+        .then(res => setUserInfo({ ...res.data.data, role: "user" }));
     }
   }, []);
   return (
