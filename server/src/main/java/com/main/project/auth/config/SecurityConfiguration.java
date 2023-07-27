@@ -68,10 +68,8 @@ public class SecurityConfiguration implements WebMvcConfigurer{
                 .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
                 .accessDeniedHandler(new MemberAccessDeniedHandler())
                 .and()
-                //.apply(new UserCustomFilterConfigurer())
-                //.and()
-                //.apply(new UserCustomFilterConfigurer())
-                //.and()
+                .apply(new UserCustomFilterConfigurer())
+                .and()
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers(HttpMethod.POST, "/members").permitAll()
                         .anyRequest().permitAll()
@@ -123,26 +121,6 @@ public class SecurityConfiguration implements WebMvcConfigurer{
         }
 
     }
-/*
-    public class AdminCustomFilterConfigurer extends AbstractHttpConfigurer<AdminCustomFilterConfigurer, HttpSecurity> {
-        @Override
-        public void configure(HttpSecurity builder) throws Exception {
-            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
-
-            AdminJwtAuthenticationFilter adminjwtAuthenticationFilter = new AdminJwtAuthenticationFilter(authenticationManager, jwtTokenizer, refreshTokenService);
-            adminjwtAuthenticationFilter.setFilterProcessesUrl("/admin/login");
-            adminjwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());
-            adminjwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
-
-            AdminJwtVerificationFilter adminjwtVerificationFilter = new AdminJwtVerificationFilter(jwtTokenizer, adminauthorityUtils, refreshTokenRepository);
-            builder
-                    .addFilter(adminjwtAuthenticationFilter)
-                    .addFilterAfter(adminjwtVerificationFilter, AdminJwtAuthenticationFilter.class);
-        }
-
-    }
-
- */
 
 
 
