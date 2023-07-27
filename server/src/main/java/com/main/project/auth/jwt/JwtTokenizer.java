@@ -134,16 +134,6 @@ public class JwtTokenizer {
         refreshTokenService.addRefreshToken(refreshTokenEntity);
         return new TokenResponseDto(atk, rtk);
     }
-    public TokenResponseDto createTokenByLoginUser(MemberDto.Response memberResponseDto) throws JsonProcessingException{
-        String atk = delegateAccessTokenUser(memberResponseDto);
-        String rtk = delegateRefreshTokenUser(memberResponseDto);
-
-        RefreshToken refreshTokenEntity = new RefreshToken();
-        refreshTokenEntity.setValue(rtk);
-        refreshTokenEntity.setMemberId(memberResponseDto.getMemberId());
-        refreshTokenService.addRefreshToken(refreshTokenEntity);
-        return new TokenResponseDto(atk, rtk);
-    }
 
     private String delegateAccessToken(AdminDto.Response adminResponseDto){
         Map<String, Object> claims = new HashMap<>();
@@ -158,23 +148,6 @@ public class JwtTokenizer {
     }
     private String delegateRefreshToken(AdminDto.Response adminResponseDto){
         String subject = adminResponseDto.getEmail();
-        Date expiration = getTokenExpiration(refreshTokenExpirationMinutes);
-        String base64EncodedSecretKey = encodeBase64SecretKey(secretKey);
-        return generateAdminRefreshToken(subject, expiration, base64EncodedSecretKey);
-    }
-    private String delegateAccessTokenUser(MemberDto.Response memberResponseDto){
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("username", memberResponseDto.getEmail());
-        claims.put("memberId", memberResponseDto.getMemberId());
-
-        String subject = memberResponseDto.getEmail();
-        Date expiration = getTokenExpiration(accessTokenExpirationMinutes);
-        String base64EncodedSecretKey = encodeBase64SecretKey(secretKey);
-
-        return generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
-    }
-    private String delegateRefreshTokenUser(MemberDto.Response memberResponseDto){
-        String subject = memberResponseDto.getEmail();
         Date expiration = getTokenExpiration(refreshTokenExpirationMinutes);
         String base64EncodedSecretKey = encodeBase64SecretKey(secretKey);
         return generateAdminRefreshToken(subject, expiration, base64EncodedSecretKey);
