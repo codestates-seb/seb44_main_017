@@ -10,7 +10,6 @@ import com.main.project.auth.dto.TokenResponseDto;
 import com.main.project.auth.jwt.JwtTokenizer;
 import com.main.project.dto.MultiResponseDto;
 import com.main.project.dto.SingleResponseDto;
-import com.main.project.dto.queryget;
 import com.main.project.dto.queryresponse.ProductResponse;
 import com.main.project.exception.businessLogicException.BusinessLogicException;
 import com.main.project.exception.businessLogicException.ExceptionCode;
@@ -24,8 +23,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;

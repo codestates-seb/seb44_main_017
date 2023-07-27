@@ -8,6 +8,7 @@ import com.main.project.admin.service.AdminService;
 import com.main.project.auth.dto.AdminLoginDto;
 import com.main.project.auth.dto.TokenResponseDto;
 import com.main.project.auth.jwt.JwtTokenizer;
+import com.main.project.dto.queryresponse.ProductResponse;
 import com.main.project.member.dto.MemberDto;
 import com.main.project.member.entity.Member;
 import com.main.project.member.mapper.MemberMapper;
@@ -75,6 +76,7 @@ public class AdminControllerTest {
     private AdminService adminService;
     @MockBean
     private JwtTokenizer jwtTokenizer;
+
     @DisplayName("유저 회원가입 테스트")
     @Test
     void postAdminTest() throws Exception {
@@ -98,6 +100,28 @@ public class AdminControllerTest {
         //then
         actions
                 .andExpect(status().isCreated());
+    }
+
+    @DisplayName("내가 승인한 물품중 팔린물품 list 출력")
+    @Test
+    void GetAdminProductst() throws Exception{
+        ProductResponse response1 = new ProductResponse(1L,1L,"바지","청바지","제목","내용","image-link", LocalDateTime.now(),LocalDateTime.now(),0,1000,10,8);
+        ProductResponse response2 = new ProductResponse(2L,1L,"바지","청바지","제목","내용","image-link", LocalDateTime.now(),LocalDateTime.now(),0,1000,10,8);
+        Page<ProductResponse> responses = new PageImpl<>(List.of(response1,response2), PageRequest.of(0,2,Sort.by("productId").descending()),2);
+
+        given(adminService.getAdminProduct(1L,0,2,"newest",true)).willReturn(responses);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Refresh","eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImRodG1kY2tzMTMyNUBuYXZlci5jb20iLCJpYXQiOjE2OTAyNzM1MDksImV4cCI6MTc1MDI3MzQ0OX0.Bi9m1reO4JrSFyO09VsZW5i__Q3epYRgRyBZygcljBA");
+        ResultActions actions =
+                mockMvc.perform(
+                        get("/admin/productst?page=1&size=2&sort=newest")
+                                .headers(headers)
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                );
+        //then
+        actions
+                .andExpect(status().isOk());
     }
 
     @DisplayName("관리자 로그인 테스트")
@@ -138,5 +162,7 @@ public class AdminControllerTest {
         actions
                 .andExpect(status().isOk());
     }
+
+
 
 }
