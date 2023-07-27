@@ -61,7 +61,7 @@ export const ProductListPage = () => {
   const [page, setPage] = useState<any>(1);
   const [pageTotal, setPageTotal] = useState<number>(1);
   const [size, setSize] = useState<number>(20);
-  const [searchValue, changeHandler, searchReset] = useInput("");
+  const [searchValue, changeHandler] = useInput("");
   const [isSearch, setIsSearch] = useState(false);
 
   const getRecommendProducts = async () => {

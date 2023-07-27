@@ -15,13 +15,7 @@ type ProductProps = {
 };
 
 const ProductInfo = (props: ProductProps) => {
-  const {
-    productData,
-    handlePayment,
-    handleDeletePost,
-    setComplete,
-    addToCart,
-  } = props;
+  const { productData, handleDeletePost, setComplete, addToCart } = props;
   const role = getRoles();
   const navigate = useNavigate();
 
