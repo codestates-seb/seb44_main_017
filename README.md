@@ -105,7 +105,7 @@
 
 ## 🔨 Skills
 <div align="center">
-  <img width="60%" src="https://github.com/codestates-seb/seb44_main_017/assets/120166543/ae3efb5e-d20f-449c-88e8-613cdd111361">
+  <img width="60%" src="https://github.com/codestates-seb/seb44_main_017/assets/92436863/013f4428-78b6-4cc4-b8d8-6944391781ba">
 </div>
 
 ## 💫 Pages & Features
