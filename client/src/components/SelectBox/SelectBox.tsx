@@ -3,11 +3,6 @@ import * as S from "./style";
 import SelectArrow from "../../assets/icons/SelectArrow";
 import useDetectClose from "../../hooks/useDetectClose";
 
-/**
- * @usage: "정렬" or "카테고리" or "상태"
- * @options: 정렬 = ["최신순", "오래된순", "좋아요순", "조회수순", "가격낮은순", "가격높은순"] 상태 = ["판매완료", "판매중", "등록대기", "등록거절"], 카테고리 = 제한없음
- * @setOption: state의 set 함수
- */
 interface Props {
   usage: "정렬" | "카테고리" | "상태";
   options: string[];
@@ -17,49 +12,37 @@ interface Props {
 const SelectBox = ({ usage, options, setOption }: Props) => {
   const [isSelected, selectRef, selectHandler] = useDetectClose();
   const [viewValue, setViewValue] = useState(usage);
+  const replaceValue = {
+    정렬: [
+      { view: "최신순", replace: "newest" },
+      { view: "오래된순", replace: "oldest" },
+      { view: "좋아요순", replace: "mostlike" },
+      { view: "조회수순", replace: "mostview" },
+      { view: "가격낮은순", replace: "priceasc" },
+      { view: "가격높은순", replace: "pricedesc" },
+    ],
+    상태: [
+      { view: "판매완료", replace: "productst" },
+      { view: "판매중", replace: "productsf" },
+      { view: "등록대기", replace: "productwait" },
+      { view: "등록거절", replace: "productdeny" },
+    ],
+    카테고리: [],
+  };
 
   const handleSelectValue = (e: any) => {
     const current = e.target.getAttribute("value");
     setViewValue(current);
 
-    if (usage === "정렬") {
-      switch (current) {
-        case "최신순":
-          setOption("newest");
-          break;
-        case "오래된순":
-          setOption("oldest");
-          break;
-        case "좋아요순":
-          setOption("mostlike");
-          break;
-        case "조회수순":
-          setOption("mostview");
-          break;
-        case "가격낮은순":
-          setOption("priceasc");
-          break;
-        case "가격높은순":
-          setOption("pricedesc");
-          break;
-      }
-    } else if (usage === "상태") {
-      switch (current) {
-        case "판매완료":
-          setOption("productst");
-          break;
-        case "판매중":
-          setOption("productsf");
-          break;
-        case "등록대기":
-          setOption("productwait");
-          break;
-        case "등록거절":
-          setOption("productdeny");
-          break;
-      }
-    } else {
-      setOption(current);
+    try {
+      if (replaceValue[usage].length > 0) {
+        const temp = replaceValue[usage].filter(
+          option => option.view === current
+        );
+        setOption(temp[0].replace);
+      } else setOption(current);
+    } catch (e) {
+      console.error("올바른 옵션인지 확인해주세요", e);
     }
   };
 
