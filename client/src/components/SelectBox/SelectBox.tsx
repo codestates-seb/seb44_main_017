@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { BaseSyntheticEvent, useState } from "react";
 import * as S from "./style";
 import SelectArrow from "../../assets/icons/SelectArrow";
 import useDetectClose from "../../hooks/useDetectClose";
@@ -30,7 +30,7 @@ const SelectBox = ({ usage, options, setOption }: Props) => {
     카테고리: [],
   };
 
-  const handleSelectValue = (e: any) => {
+  const handleSelectValue = (e: BaseSyntheticEvent) => {
     const current = e.target.getAttribute("value");
     setViewValue(current);
 

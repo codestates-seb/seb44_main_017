@@ -19,7 +19,7 @@ const CommentInput = (props: Props) => {
        * QnA: 관리자인 경우
        * Product: 사용자, 관리자 모두
        */}
-      {userInfo?.role === "admin" || (!qPath && userInfo) ? (
+      {(userInfo?.role === "admin" || (!qPath && userInfo)) && (
         <S.InputLayout onSubmit={submitHandler}>
           <input
             type="text"
@@ -29,8 +29,6 @@ const CommentInput = (props: Props) => {
           />
           <button>댓글 쓰기</button>
         </S.InputLayout>
-      ) : (
-        ""
       )}
     </>
   );
