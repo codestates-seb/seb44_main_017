@@ -68,7 +68,11 @@ const Comments = (props: Props) => {
         <div className="none_comment">작성된 댓글이 없습니다.</div>
       ) : (
         comments.map((e: QnACommentTypes | ProductCommentTypes | any) => (
-          <S.CommentBox key={qPath ? e.commentId : e.productCommentId}>
+          <S.CommentBox
+            key={
+              qPath ? `comment_${e.commentId}` : `product_${e.productCommentId}`
+            }
+          >
             <S.CommentInfoBox>
               <S.CommentInfo
                 isWriter={
