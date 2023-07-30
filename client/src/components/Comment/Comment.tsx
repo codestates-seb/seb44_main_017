@@ -12,6 +12,7 @@ import { useRecoilValue } from "recoil";
 import { userInfoSelector } from "@/recoil/selector";
 import CustomConfirm from "@/utils/customConfirm";
 import { createComment, deleteComment, updateComment } from "@/api/comment";
+import CommentInput from "./CommentInput";
 
 interface CommentProps {
   comments: QnACommentTypes[] | ProductCommentTypes[] | any;
@@ -123,24 +124,13 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
 
   return (
     <S.Container>
-      {/**
-       * [댓글 작성 레이아웃 보이는 조건]
-       * QnA: 관리자인 경우
-       * Product: 사용자, 관리자 모두
-       */}
-      {userInfo?.role === "admin" || (!qPath && userInfo) ? (
-        <S.InputLayout onSubmit={submitHandler}>
-          <input
-            type="text"
-            onChange={changeHandler}
-            value={commentValue}
-            placeholder="댓글을 작성해주세요."
-          />
-          <button>댓글 쓰기</button>
-        </S.InputLayout>
-      ) : (
-        ""
-      )}
+      <CommentInput
+        userInfo={userInfo}
+        qPath={qPath}
+        submitHandler={submitHandler}
+        changeHandler={changeHandler}
+        commentValue={commentValue}
+      />
       <S.CommentsLayout>
         {Array.isArray(comments) && comments.length === 0 ? (
           <div className="none_comment">작성된 댓글이 없습니다.</div>
