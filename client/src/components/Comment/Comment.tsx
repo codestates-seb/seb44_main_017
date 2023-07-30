@@ -14,6 +14,7 @@ import { getToken } from "@/utils/token";
 import { useRecoilValue } from "recoil";
 import { userInfoSelector } from "@/recoil/selector";
 import CustomConfirm from "@/utils/customConfirm";
+import { update } from "@/api/comment";
 
 interface CommentProps {
   comments: QnACommentTypes[] | ProductCommentTypes[] | any;
@@ -25,7 +26,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   const [commentValue, changeHandler, reset] = useInput("");
   const [isEditMode, setIsEditMode] = useState(false);
   const [updateValue, setUpdateValue] = useState("");
-  const [selectedId, setSelectedId] = useState<number | string>(-1);
+  const [selectedId, setSelectedId] = useState<number>(-1);
   const [isOpenConfirm, setIsOpenConfirm] = useState(false);
   const { questionId, productsID } = useParams();
 
@@ -50,22 +51,10 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
     }
   };
 
-  const updateHandler = (commentId: number | string) => {
+  const updateHandler = (commentId: number) => {
     try {
-      axios.patch(
-        qPath
-          ? BASE_URL + `/questions/${questionId}/comments/${commentId}`
-          : BASE_URL + `/products/${productsID}/comments/${commentId}`,
-        {
-          content: updateValue,
-        },
-        {
-          headers: {
-            Authorization: `${authorization}`,
-            Refresh: `${refresh}`,
-          },
-        }
-      );
+      const id = qPath ? questionId : productsID;
+      update({ id, commentId, qPath, updateValue });
       setComplete(true);
       setIsEditMode(false);
     } catch (e) {
@@ -73,7 +62,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
     }
   };
 
-  const handleEditComment = (id: number | string) => {
+  const handleEditComment = (id: number) => {
     setSelectedId(id);
     setIsEditMode(true);
 
