@@ -14,7 +14,7 @@ import { getToken } from "@/utils/token";
 import { useRecoilValue } from "recoil";
 import { userInfoSelector } from "@/recoil/selector";
 import CustomConfirm from "@/utils/customConfirm";
-import { updateComment } from "@/api/comment";
+import { deleteComment, updateComment } from "@/api/comment";
 
 interface CommentProps {
   comments: QnACommentTypes[] | ProductCommentTypes[] | any;
@@ -22,7 +22,6 @@ interface CommentProps {
 }
 
 const Comment = ({ comments, setComplete }: CommentProps) => {
-  const navigate = useNavigate();
   const location = useLocation();
   const inputRef = useRef<HTMLInputElement>(null);
   const qPath = location.pathname.startsWith("/questions");
@@ -52,6 +51,16 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
     }
   };
 
+  // 댓글 수정 폼 + input창 focus
+  const handleEditComment = (id: number) => {
+    setSelectedId(id);
+    setIsEditMode(true);
+
+    setTimeout(() => {
+      inputRef.current && inputRef.current.focus();
+    }, 0);
+  };
+
   // 댓글 수정 API
   const updateHandler = async (commentId: number) => {
     try {
@@ -68,39 +77,23 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
         setIsEditMode(false);
       }
     } catch (e) {
-      console.log("failed update!", e);
+      console.log("failed update comment", e);
     }
   };
 
-  // 댓글 수정 폼 + input창 focus
-  const handleEditComment = (id: number) => {
-    setSelectedId(id);
-    setIsEditMode(true);
-
-    setTimeout(() => {
-      inputRef.current && inputRef.current.focus();
-    }, 0);
-  };
-
-  const handleDeleteComment = (commentId: string | number) => {
+  // 댓글 삭제 API
+  const handleDeleteComment = async (commentId: number) => {
     try {
-      axios
-        .delete(
-          qPath
-            ? BASE_URL + `/questions/${questionId}/comments/${commentId}`
-            : BASE_URL + `/products/${productsID}/comments/${commentId}`,
-          {
-            headers: {
-              Authorization: `${authorization}`,
-              Refresh: `${refresh}`,
-            },
-          }
-        )
-        .then(setComplete(true));
-
-      qPath
-        ? navigate(`/questions/${questionId}`)
-        : navigate(`/products/${productsID}`);
+      const id = qPath ? questionId : productsID;
+      const props = {
+        id,
+        commentId,
+        qPath,
+      };
+      const { status } = await deleteComment(props);
+      if (status === 204) {
+        setComplete(true);
+      }
     } catch (e) {
       console.log("failed delete comment", e);
     }

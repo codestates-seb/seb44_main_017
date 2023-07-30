@@ -9,11 +9,9 @@ interface UpdateProps extends CommentProps {
   updateValue: string;
 }
 
-export const updateComment = async (
-  props: UpdateProps
-): Promise<{ data: any; status: number }> => {
+export const updateComment = async (props: UpdateProps) => {
   const { id, commentId, qPath, updateValue } = props;
-  const { data, status } = await authFetcher.patch(
+  const response = await authFetcher.patch(
     qPath
       ? `/questions/${id}/comments/${commentId}`
       : `/products/${id}/comments/${commentId}`,
@@ -22,20 +20,16 @@ export const updateComment = async (
     }
   );
 
-  return { data, status };
+  return response;
 };
 
-// export const deleteComment = (props: CommentProps) => {
-//   const { id, commentId, qPath } = props;
-//   fetcher.delete(
-//     qPath
-//       ? `/questions/${id}/comments/${commentId}`
-//       : `/products/${id}/comments/${commentId}`,
-//     {
-//       headers: {
-//         Authorization: authorization,
-//         Refresh: refresh,
-//       },
-//     }
-//   );
-// };
+export const deleteComment = async (props: CommentProps) => {
+  const { id, commentId, qPath } = props;
+  const response = await authFetcher.delete(
+    qPath
+      ? `/questions/${id}/comments/${commentId}`
+      : `/products/${id}/comments/${commentId}`
+  );
+
+  return response;
+};
