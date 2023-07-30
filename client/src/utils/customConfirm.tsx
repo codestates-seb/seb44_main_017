@@ -7,8 +7,8 @@ interface CustomConfirmProps {
   content: string;
   isOpenConfirm: boolean;
   setIsOpenConfirm: React.Dispatch<React.SetStateAction<boolean>>;
-  handleDeleteComment: (id: number | string) => void;
-  id: number | string;
+  handleDeleteComment: (id: number) => void;
+  id: number;
 }
 
 const CustomConfirm = ({

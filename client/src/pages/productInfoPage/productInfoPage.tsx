@@ -39,8 +39,6 @@ export const ProductInfoPage = () => {
   const [error, setError] = useState("");
   const [authorization, refresh] = getToken();
 
-
-
   const addToCart = async () => {
     if (refresh == null) {
       setError("로그인이 필요합니다.");
@@ -52,33 +50,40 @@ export const ProductInfoPage = () => {
       setErrorOpen(true);
       return;
     }
-    try{
-    const { data, status } = await axios.post(
-      BASE_URL + `/orderproducts/${productsID}`,
-      {},
-      {
-        headers: {
-          Authorization: authorization,
-          Refresh: refresh,
-        },
-      }
-    );
+    try {
+      const { data, status } = await axios.post(
+        BASE_URL + `/orderproducts/${productsID}`,
+        {},
+        {
+          headers: {
+            Authorization: authorization,
+            Refresh: refresh,
+          },
+        }
+      );
 
-    if ((data && status === 200) || 201) {
-      if (confirm("장바구니에 추가하였습니다. 장바구니 및 구매하기로 이동하시겠습니까?")) {
-        navigate("/cart");
-      } else {
-        navigate("/productlist");
+      if ((data && status === 200) || 201) {
+        if (
+          confirm(
+            "장바구니에 추가하였습니다. 장바구니 및 구매하기로 이동하시겠습니까?"
+          )
+        ) {
+          navigate("/cart");
+        } else {
+          navigate("/productlist");
+        }
+      }
+    } catch (error: any) {
+      if (error.response.status === 409) {
+        if (
+          confirm(
+            "이미 장바구니에 있는 물건입니다. 장바구니 및 구매하기로 이동하시겠습니까?"
+          )
+        ) {
+          navigate("/cart");
+        }
       }
     }
-  }
-  catch (error: any) {
-    if (error.response.status === 409) {
-      if(confirm("이미 장바구니에 있는 물건입니다. 장바구니 및 구매하기로 이동하시겠습니까?")){
-        navigate("/cart");
-      }
-    }
-  }
   };
 
   const getUser = async () => {
