@@ -1,29 +1,41 @@
-import { getToken } from "@/utils/token";
-import { fetcher } from ".";
+import { authFetcher } from ".";
 
-const [authorization, refresh] = getToken();
-
-interface updateProps {
+interface CommentProps {
   id: string | undefined;
   commentId: number;
   qPath: boolean;
+}
+interface UpdateProps extends CommentProps {
   updateValue: string;
 }
 
-export const update = (props: updateProps) => {
+export const updateComment = async (
+  props: UpdateProps
+): Promise<{ data: any; status: number }> => {
   const { id, commentId, qPath, updateValue } = props;
-  fetcher.patch(
+  const { data, status } = await authFetcher.patch(
     qPath
       ? `/questions/${id}/comments/${commentId}`
       : `/products/${id}/comments/${commentId}`,
     {
       content: updateValue,
-    },
-    {
-      headers: {
-        Authorization: authorization,
-        Refresh: refresh,
-      },
     }
   );
+
+  return { data, status };
 };
+
+// export const deleteComment = (props: CommentProps) => {
+//   const { id, commentId, qPath } = props;
+//   fetcher.delete(
+//     qPath
+//       ? `/questions/${id}/comments/${commentId}`
+//       : `/products/${id}/comments/${commentId}`,
+//     {
+//       headers: {
+//         Authorization: authorization,
+//         Refresh: refresh,
+//       },
+//     }
+//   );
+// };

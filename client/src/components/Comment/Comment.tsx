@@ -14,7 +14,7 @@ import { getToken } from "@/utils/token";
 import { useRecoilValue } from "recoil";
 import { userInfoSelector } from "@/recoil/selector";
 import CustomConfirm from "@/utils/customConfirm";
-import { update } from "@/api/comment";
+import { updateComment } from "@/api/comment";
 
 interface CommentProps {
   comments: QnACommentTypes[] | ProductCommentTypes[] | any;
@@ -22,22 +22,22 @@ interface CommentProps {
 }
 
 const Comment = ({ comments, setComplete }: CommentProps) => {
-  const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const qPath = location.pathname.startsWith("/questions");
+
   const [commentValue, changeHandler, reset] = useInput("");
   const [isEditMode, setIsEditMode] = useState(false);
   const [updateValue, setUpdateValue] = useState("");
   const [selectedId, setSelectedId] = useState<number>(-1);
   const [isOpenConfirm, setIsOpenConfirm] = useState(false);
-  const { questionId, productsID } = useParams();
-
-  const navigate = useNavigate();
-  const location = useLocation();
-  const qPath = location.pathname.startsWith("/questions");
-
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const [authorization, refresh] = getToken();
+  const { questionId, productsID } = useParams();
+  const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
 
+  // 선택된 댓글의 content 값으로 updateValue를 초기화
   useEffect(() => {
     comments.map((item: any) => {
       (qPath ? item.commentId : item.productCommentId) === selectedId &&
@@ -45,23 +45,34 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
     });
   }, [selectedId]);
 
+  // 엔터를 눌렀을 때 '수정완료'
   const onkeyHandler = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       updateHandler(selectedId);
     }
   };
 
-  const updateHandler = (commentId: number) => {
+  // 댓글 수정 API
+  const updateHandler = async (commentId: number) => {
     try {
       const id = qPath ? questionId : productsID;
-      update({ id, commentId, qPath, updateValue });
-      setComplete(true);
-      setIsEditMode(false);
+      const props = {
+        id,
+        commentId,
+        qPath,
+        updateValue,
+      };
+      const { data, status } = await updateComment(props);
+      if (data && status === 200) {
+        setComplete(true);
+        setIsEditMode(false);
+      }
     } catch (e) {
       console.log("failed update!", e);
     }
   };
 
+  // 댓글 수정 폼 + input창 focus
   const handleEditComment = (id: number) => {
     setSelectedId(id);
     setIsEditMode(true);
