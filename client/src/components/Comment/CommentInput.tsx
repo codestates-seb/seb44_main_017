@@ -1,6 +1,6 @@
-import { LoginUserInfo } from "@/types/shared";
 import * as S from "./style";
 import { ChangeEvent } from "react";
+import { LoginUserInfo } from "@/types/shared";
 
 interface Props {
   userInfo: LoginUserInfo | null;

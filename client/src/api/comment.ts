@@ -5,22 +5,18 @@ interface CommentProps {
   commentId?: number;
   qPath: boolean;
 }
-interface UpdateProps extends CommentProps {
-  updateValue: string;
+interface ValueProps extends CommentProps {
+  value: string;
 }
 
-interface CreateProps extends CommentProps {
-  commentValue: string;
-}
-
-export const updateComment = async (props: UpdateProps) => {
-  const { id, commentId, qPath, updateValue } = props;
+export const updateComment = async (props: ValueProps) => {
+  const { id, commentId, qPath, value } = props;
   const response = await authFetcher.patch(
     qPath
       ? `/questions/${id}/comments/${commentId}`
       : `/products/${id}/comments/${commentId}`,
     {
-      content: updateValue,
+      content: value,
     }
   );
 
@@ -38,12 +34,12 @@ export const deleteComment = async (props: CommentProps) => {
   return response;
 };
 
-export const createComment = async (props: CreateProps) => {
-  const { id, qPath, commentValue } = props;
+export const createComment = async (props: ValueProps) => {
+  const { id, qPath, value } = props;
   const response = await authFetcher.post(
     qPath ? `/questions/${id}/comments` : `/products/${id}/comments`,
     {
-      content: commentValue,
+      content: value,
     }
   );
 
