@@ -1,20 +1,17 @@
 import useInput from "../../hooks/useInput";
-import axios from "axios";
 import * as S from "./style";
 import elapsedTime from "../../utils/elapsedTime";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { BASE_URL } from "@/constants/constants";
+import { useLocation, useParams } from "react-router-dom";
 import {
   LoginUserInfo,
   ProductCommentTypes,
   QnACommentTypes,
 } from "@/types/shared";
 import { useEffect, useState, useRef } from "react";
-import { getToken } from "@/utils/token";
 import { useRecoilValue } from "recoil";
 import { userInfoSelector } from "@/recoil/selector";
 import CustomConfirm from "@/utils/customConfirm";
-import { deleteComment, updateComment } from "@/api/comment";
+import { createComment, deleteComment, updateComment } from "@/api/comment";
 
 interface CommentProps {
   comments: QnACommentTypes[] | ProductCommentTypes[] | any;
@@ -32,7 +29,6 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   const [selectedId, setSelectedId] = useState<number>(-1);
   const [isOpenConfirm, setIsOpenConfirm] = useState(false);
 
-  const [authorization, refresh] = getToken();
   const { questionId, productsID } = useParams();
   const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
 
@@ -99,30 +95,27 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
     }
   };
 
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  // 댓글 작성 API
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (commentValue === "") {
       alert("내용을 입력해주세요.");
       return;
     }
 
     try {
-      axios
-        .post(
-          qPath
-            ? BASE_URL + `/questions/${questionId}/comments`
-            : BASE_URL + `/products/${productsID}/comments`,
-          { content: commentValue },
-          {
-            headers: {
-              Authorization: `${authorization}`,
-              Refresh: `${refresh}`,
-            },
-          }
-        )
-        .then(setComplete(true));
-
-      reset && reset();
+      const id = qPath ? questionId : productsID;
+      const props = {
+        id,
+        qPath,
+        commentValue,
+      };
+      const { data, status } = await createComment(props);
+      if (data && status === 200) {
+        setComplete(true);
+        reset && reset();
+      }
     } catch (e) {
       console.error("failed submit!", e);
     }
