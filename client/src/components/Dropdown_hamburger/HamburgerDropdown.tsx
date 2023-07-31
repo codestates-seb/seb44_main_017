@@ -46,7 +46,7 @@ const HamburgerDropdown = ({
       title: "상품 보기",
       role: ["admin", "user"],
     },
-    { url: "/collecton", imgSrc: clothes, title: "수거 요청", role: ["user"] },
+    { url: "/collection", imgSrc: clothes, title: "수거 요청", role: ["user"] },
     {
       url: "/notice",
       imgSrc: notice,
