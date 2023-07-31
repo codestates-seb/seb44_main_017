@@ -1,6 +1,4 @@
-import defaultImage from "/images/cat.jpg";
 import * as S from "./style";
-import * as H from "../Header/styled";
 import Logout from "../../assets/icons/Logout";
 import product from "../../assets/product.svg";
 import notice from "../../assets/notice.svg";
@@ -16,10 +14,10 @@ import Backdrop from "./Backdrop";
 import LoginModal from "../Modal_login/LoginModal";
 import SignupModal from "../Modal_signup/SignupModal";
 import { delCookie } from "@/utils/token";
-import { IMG_URL } from "@/constants/constants";
 import { LoginUserInfo } from "@/types/shared";
 import { useRecoilValue } from "recoil";
 import { userInfoState } from "@/recoil/atom";
+import Profile from "./Profile";
 
 interface Props {
   isOpen: boolean;
@@ -68,7 +66,6 @@ const HamburgerDropdown = ({
       return () => window.removeEventListener("mousedown", handleClickOutside);
     }
   }, [isOpen]);
-
   return (
     <>
       {createPortal(
@@ -81,41 +78,12 @@ const HamburgerDropdown = ({
             <SignupModal closeModal={() => setSignupModalOpen(false)} />
           )}
           <S.SideBar isOpen={isOpen} ref={barRef}>
-            <S.Profile>
-              {!userInfo ? (
-                <>
-                  <div className="auth_btn">
-                    <H.LoginBtn
-                      onClick={() => {
-                        setLoginModalOpen(true);
-                        setIsOpen(false);
-                      }}
-                    >
-                      LOGIN
-                    </H.LoginBtn>
-                    <H.SignupBtn
-                      onClick={() => {
-                        setSignupModalOpen(true);
-                        setIsOpen(false);
-                      }}
-                    >
-                      SIGN UP
-                    </H.SignupBtn>
-                  </div>
-                </>
-              ) : (
-                <>
-                  {userInfo.profile ? (
-                    <img src={IMG_URL + "/" + userInfo.profile} />
-                  ) : (
-                    <img src={defaultImage} />
-                  )}
-
-                  <div className="profile_name">{userInfo?.name} 님</div>
-                  <div></div>
-                </>
-              )}
-            </S.Profile>
+            <Profile
+              userInfo={userInfo}
+              setIsOpen={setIsOpen}
+              setLoginModalOpen={setLoginModalOpen}
+              setSignupModalOpen={setSignupModalOpen}
+            />
             {userInfo && (
               <>
                 <S.MenuBox>
