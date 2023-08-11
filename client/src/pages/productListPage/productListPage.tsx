@@ -214,6 +214,11 @@ export const ProductListPage = () => {
         <S.ProductsBox>
           <S.ArrowLeftIcon onClick={handlePrev} />
           <S.ProductsCarousel>
+            {!recommendData.length ? (
+              <S.NoneProduct>상품 정보가 없습니다.</S.NoneProduct>
+            ) : (
+              <></>
+            )}
             {recommendData.map((recommendData) => (
               <S.Product
                 ref={ref}
@@ -267,6 +272,11 @@ export const ProductListPage = () => {
         </S.SelectBar>
       )}
       <S.ProductsContainer>
+        {!data.length ? (
+          <S.NoneProduct>상품 정보가 없습니다.</S.NoneProduct>
+        ) : (
+          <></>
+        )}
         {isSearch
           ? searchData.map((data) => (
               <S.Product>
