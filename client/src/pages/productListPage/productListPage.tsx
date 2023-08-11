@@ -67,7 +67,12 @@ export const ProductListPage = () => {
   const getRecommendProducts = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/products?page=1&size=20&sort="newest"&issell=false`
+        `${BASE_URL}/products?page=1&size=20&sort="newest"&issell=false`,
+        {
+          headers: {
+            "ngrok-skip-browser-warning": true,
+          },
+        }
       );
       const data = response.data.data;
       setRecommendData(data);
@@ -79,7 +84,12 @@ export const ProductListPage = () => {
   const getProducts = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/products?page=${page}&size=${size}&sort=${value}&issell=false`
+        `${BASE_URL}/products?page=${page}&size=${size}&sort=${value}&issell=false`,
+        {
+          headers: {
+            "ngrok-skip-browser-warning": true,
+          },
+        }
       );
       const data = response.data.data;
       let filteredData = [];
@@ -133,6 +143,7 @@ export const ProductListPage = () => {
     { name: "상의", value: "top" },
     { name: "하의", value: "bottom" },
     { name: "아우터", value: "outer" },
+    { name: "신발", value: "shoes" },
     { name: "기타", value: "etc" },
   ];
 
@@ -203,7 +214,12 @@ export const ProductListPage = () => {
         <S.ProductsBox>
           <S.ArrowLeftIcon onClick={handlePrev} />
           <S.ProductsCarousel>
-            {recommendData.map(recommendData => (
+            {!recommendData.length ? (
+              <S.NoneProduct>상품 정보가 없습니다.</S.NoneProduct>
+            ) : (
+              <></>
+            )}
+            {recommendData.map((recommendData) => (
               <S.Product
                 ref={ref}
                 style={{ transform: `translateX(${translate}px)` }}
@@ -231,7 +247,7 @@ export const ProductListPage = () => {
         />
       </S.SearchBox>
       <S.CategoryBar>
-        {categories.map(category => (
+        {categories.map((category) => (
           <CategoryButton
             onClick={handleBtnCategory}
             btnSelect={btnCategory === category.name}
@@ -256,8 +272,13 @@ export const ProductListPage = () => {
         </S.SelectBar>
       )}
       <S.ProductsContainer>
+        {!data.length ? (
+          <S.NoneProduct>상품 정보가 없습니다.</S.NoneProduct>
+        ) : (
+          <></>
+        )}
         {isSearch
-          ? searchData.map(data => (
+          ? searchData.map((data) => (
               <S.Product>
                 <ProductItem
                   url={`${IMG_URL}/${data.image_link}`}
@@ -269,7 +290,7 @@ export const ProductListPage = () => {
                 ></ProductItem>
               </S.Product>
             ))
-          : data.map(data => (
+          : data.map((data) => (
               <S.Product>
                 <ProductItem
                   url={`${IMG_URL}/${data.imageLink}`}
