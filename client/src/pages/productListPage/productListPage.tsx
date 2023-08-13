@@ -215,7 +215,7 @@ export const ProductListPage = () => {
           <S.ArrowLeftIcon onClick={handlePrev} />
           <S.ProductsCarousel>
             {!recommendData.length ? (
-              <S.NoneProduct>상품 정보가 없습니다.</S.NoneProduct>
+              <S.EmptyProduct>상품 정보가 없습니다.</S.EmptyProduct>
             ) : (
               <></>
             )}
@@ -273,7 +273,7 @@ export const ProductListPage = () => {
       )}
       <S.ProductsContainer>
         {!data.length ? (
-          <S.NoneProduct>상품 정보가 없습니다.</S.NoneProduct>
+          <S.EmptyProduct>상품 정보가 없습니다.</S.EmptyProduct>
         ) : (
           <></>
         )}

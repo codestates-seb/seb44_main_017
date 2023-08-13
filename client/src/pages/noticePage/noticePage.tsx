@@ -5,8 +5,8 @@ import * as S from "@/pages/noticePage/style";
 import { BASE_URL } from "@/constants/constants";
 import SelectBox from "@/components/SelectBox/SelectBox";
 import NotifyItem from "@/components/Item_notify/NotifyItem";
-import CustomPagination from "@/components/Pagination/CustomPagination";
 import SubTitleBar from "@/components/SubTItleBar/SubTitleBar";
+import CustomPagination from "@/components/Pagination/CustomPagination";
 
 type ItemType = {
   title: string;
@@ -100,7 +100,7 @@ export const NoticePage = () => {
           />
         </S.SelectBar>
         <S.NoticeContainer>
-          {data.map(data => (
+          {data.map((data) => (
             <S.NoticeBox>
               <NotifyItem
                 boardId={data.boardId}
@@ -112,6 +112,11 @@ export const NoticePage = () => {
               />
             </S.NoticeBox>
           ))}
+          {!data.length ? (
+            <S.EmptyNotice>등록된 공지사항이 없습니다.</S.EmptyNotice>
+          ) : (
+            <></>
+          )}
         </S.NoticeContainer>
         <S.PaginationBar>
           <CustomPagination

@@ -22,15 +22,12 @@ export const NoticeContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   @media (max-width: 767px) {
-    margin-bottom: 16px;
     max-width: 336px;
   }
   @media (min-width: 768px) and (max-width: 1023px) {
-    margin-bottom: 32px;
     max-width: 512px;
   }
   @media (min-width: 1024px) {
-    margin-bottom: 60px;
     max-width: 1024px;
   }
 `;
@@ -55,4 +52,32 @@ export const SelectBar = styled.div`
 export const PaginationBar = styled.div`
   display: flex;
   justify-content: center;
+  @media (max-width: 767px) {
+    margin-top: 16px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    margin-top: 32px;
+  }
+  @media (min-width: 1024px) {
+    margin-top: 60px;
+  }
+`;
+export const EmptyNotice = styled.p`
+  height: 30vh;
+  color: var(--color-gray200);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  border: solid 1px;
+  border-radius: 16px;
+  @media (max-width: 767px) {
+    width: 336px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 512px;
+  }
+  @media (min-width: 1024px) {
+    width: 1024px;
+  }
 `;
