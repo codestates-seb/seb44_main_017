@@ -32,7 +32,12 @@ export const NoticePage = () => {
   const getNotice = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}/notify/board?page=${page}&size=${size}&sort=${value}`
+        `${BASE_URL}/notify/board?page=${page}&size=${size}&sort=${value}`,
+        {
+          headers: {
+            "ngrok-skip-browser-warning": true,
+          },
+        }
       );
       const data = response.data.data;
       const now = new Date();
