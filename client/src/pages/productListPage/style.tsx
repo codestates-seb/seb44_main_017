@@ -171,3 +171,25 @@ export const SearchIcon = styled(FiSearch)`
   position: absolute;
   right: 8px;
 `;
+export const EmptyProduct = styled.p`
+  height: 30vh;
+  color: var(--color-gray200);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  border: solid 1px;
+  border-radius: 16px;
+  @media (max-width: 479px) {
+    width: 342px;
+  }
+  @media (min-width: 480px) and (max-width: 767px) {
+    width: 468px;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    width: 612px;
+  }
+  @media (min-width: 1024px) {
+    width: 1100px;
+  }
+`;
