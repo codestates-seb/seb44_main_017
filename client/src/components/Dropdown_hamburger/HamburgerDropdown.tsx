@@ -123,6 +123,7 @@ const HamburgerDropdown = ({
                       )
                     ).map(menu => (
                       <SidebarMenu
+                        key={`menu_${menu.title}`}
                         url={menu.url}
                         imgSrc={menu.imgSrc}
                         title={menu.title}
