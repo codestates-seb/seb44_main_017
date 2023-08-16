@@ -1,11 +1,9 @@
-import { BASE_URL } from "@/constants/constants";
 import { QnaTypes } from "@/types/shared";
-import axios from "axios";
 import { useState, useEffect } from "react";
-import { getToken } from "@/utils/token";
 import QnaListComponent from "@/components/Qna_list/qnaListComponent";
 import SubTitleBar from "@/components/SubTItleBar/SubTitleBar";
 import styled from "styled-components";
+import { getList } from "@/api/qna";
 
 const QnaListPage = () => {
   const PAGE_LIMIT = 7;
@@ -16,20 +14,13 @@ const QnaListPage = () => {
   const [totalPage, setTotalPage] = useState(0);
   const title = "질문 받아요";
 
-  const [authorization, refresh] = getToken();
-
   const getQnaList = async () => {
     try {
-      const { data, status } = await axios.get(
-        BASE_URL +
-          `/questions/board?page=${page}&size=${PAGE_LIMIT}&sort=${sortOption}`,
-        {
-          headers: {
-            Authorization: `${authorization}`,
-            Refresh: `${refresh}`,
-          },
-        }
-      );
+      const { data, status } = await getList({
+        page,
+        size: PAGE_LIMIT,
+        sortValue: sortOption,
+      });
 
       if (data && status === 200) {
         setTotalPage(Math.ceil(data.pageInfo.totalElements / PAGE_LIMIT));

@@ -1,7 +1,7 @@
 import { BASE_URL } from "@/constants/constants";
 import { authFetcher } from ".";
 
-interface RequestProps {
+export interface RequestProps {
   page: number;
   size: number;
   sortValue: string;
