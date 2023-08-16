@@ -2,14 +2,13 @@ import MypageHeader from "@/components/Mypage_header/MypageHeader";
 import SelectBox from "@/components/SelectBox/SelectBox";
 import * as S from "./style";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { BASE_URL, IMG_URL } from "@/constants/constants";
-import { getToken } from "@/utils/token";
+import { IMG_URL } from "@/constants/constants";
 import { CartItemTypes, LoginUserInfo } from "@/types/shared";
 import ProductItem from "@/components/Item_product/ProductItem";
 import { useRecoilValue } from "recoil";
 import { userInfoSelector } from "@/recoil/selector";
 import CustomPagination from "@/components/Pagination/CustomPagination";
+import { getCollectedProducts, getPurchasedProducts } from "./../../api/mypage";
 
 const MyproductsPage = () => {
   const PAGE_LIMIT = 24;
@@ -31,20 +30,13 @@ const MyproductsPage = () => {
   const [totalPage, setTotalPage] = useState(0);
   const [isPurchase, setIsPurchase] = useState(false);
 
-  const [authorization, refresh] = getToken();
-
   const getPurchaseProducts = async () => {
     try {
-      const { data, status } = await axios.get(
-        BASE_URL +
-          `/orderproducts/buybucket?page=${page}&size=${PAGE_LIMIT}&sort=${sortValue}`,
-        {
-          headers: {
-            Authorization: authorization,
-            Refresh: refresh,
-          },
-        }
-      );
+      const { data, status } = await getPurchasedProducts({
+        page,
+        size: PAGE_LIMIT,
+        sortValue,
+      });
 
       if (data && status === 200) {
         setPurchaseData(data.data);
@@ -57,16 +49,11 @@ const MyproductsPage = () => {
 
   const getMyProducts = async () => {
     try {
-      const { data, status } = await axios.get(
-        BASE_URL +
-          `/members/${statusValue}?page=${page}&size=${PAGE_LIMIT}&sort=${statusValue}`,
-        {
-          headers: {
-            Authorization: authorization,
-            Refresh: refresh,
-          },
-        }
-      );
+      const { data, status } = await getCollectedProducts({
+        page,
+        size: PAGE_LIMIT,
+        sortValue: statusValue,
+      });
 
       if (data && status === 200) {
         setProductData(data.data);
