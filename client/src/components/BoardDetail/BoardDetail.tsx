@@ -6,11 +6,11 @@ import ViewCount from "@/assets/icons/ViewCount";
 import SpeedDialCustom from "../SpeedDialCustom/SpeedDialCustom";
 
 interface BoardDetailTypes {
-  title: string;
-  name?: string;
-  viewCount: number | string;
-  createdAt: string;
-  content: string;
+  title: string | undefined;
+  name?: string | undefined;
+  viewCount: number | string | undefined;
+  createdAt: string | undefined;
+  content: string | undefined;
 }
 
 /**

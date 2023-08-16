@@ -1,59 +1,26 @@
 import BoardDetail from "@/components/BoardDetail/BoardDetail";
-import { BASE_URL } from "@/constants/constants";
-import axios from "axios";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { QnACommentTypes, QnaTypes } from "@/types/shared";
+import { LoginUserInfo, QnACommentTypes, QnaTypes } from "@/types/shared";
 import Comment from "@/components/Comment/Comment";
-import { getToken } from "@/utils/token";
-
-const initialValue: QnaTypes = {
-  questionId: "",
-  title: "",
-  content: "",
-  createAt: "",
-  modifyAt: "",
-  view: "",
-  writer: {
-    memberId: "",
-    name: "",
-  },
-  qcomments: [
-    {
-      commentId: "",
-      content: "",
-      createAt: "",
-      modifyAt: "",
-      writer: {
-        adminId: "",
-        name: "",
-      },
-    },
-  ],
-};
+import { getDetail } from "@/api/qna";
+import { useRecoilValue } from "recoil";
+import { userInfoSelector } from "@/recoil/selector";
 
 const QnaDetailPage = () => {
   const { questionId } = useParams();
-  const [qnaData, setQnaData] = useState<QnaTypes>(initialValue);
+  const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
+  const [qnaData, setQnaData] = useState<QnaTypes>();
   const [commentData, setCommentData] = useState<QnACommentTypes[]>([]);
   const [complete, setComplete] = useState(false);
 
-  const [authorization, refresh] = getToken();
-
   const getDetailData = async () => {
     try {
-      const { data, status } = await axios.get(
-        BASE_URL + `/questions/${questionId}`,
-        {
-          headers: authorization
-            ? {
-                Authorization: `${authorization}`,
-                Refresh: `${refresh}`,
-              }
-            : {},
-        }
-      );
+      const { data, status } = await getDetail({
+        questionId,
+        userInfo: userInfo || undefined,
+      });
 
       if (data && status === 200) {
         setQnaData(data);
@@ -72,11 +39,11 @@ const QnaDetailPage = () => {
   return (
     <>
       <BoardDetail
-        title={qnaData.title}
-        name={qnaData.writer?.name}
-        viewCount={qnaData.view}
-        createdAt={qnaData.createAt.slice(0, 10)}
-        content={qnaData.content}
+        title={qnaData?.title}
+        name={qnaData?.writer?.name}
+        viewCount={qnaData?.view}
+        createdAt={qnaData?.createAt.slice(0, 10)}
+        content={qnaData?.content}
       />
       <div style={{ paddingTop: "36px" }}>
         <Comment comments={commentData} setComplete={setComplete} />
