@@ -26,3 +26,12 @@ export const getPurchasedProducts = async (props: RequestProps) => {
 
   return response;
 };
+
+export const getMyQnaList = async (props: RequestProps) => {
+  const { page, size, sortValue } = props;
+  const response = await authFetcher.get(
+    BASE_URL + `/members/getqna?page=${page}&size=${size}&sort=${sortValue}`
+  );
+
+  return response;
+};
