@@ -103,8 +103,8 @@ export interface LoginUserInfo extends UserInfoTypes {
 export interface PostCodeTypes {
   postnum: string;
   address: string;
-  reciver: string;
-  reciverphone: string;
+  reciver: string | undefined;
+  reciverphone: string | undefined;
   pointspend: number;
   productlist: string;
 }
