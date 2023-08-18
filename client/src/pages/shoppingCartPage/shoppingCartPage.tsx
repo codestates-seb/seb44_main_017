@@ -8,11 +8,11 @@ import { cartItemState } from "@/recoil/atom";
 import axios from "axios";
 import { getToken } from "@/utils/token";
 import PointIcon from "@/assets/icons/PointIcon";
-import Postcode from "@/components/Postcode/Postcode";
 import { userInfoSelector } from "@/recoil/selector";
 import useInput from "@/hooks/useInput";
 import { useNavigate } from "react-router-dom";
 import CartItemList from "./cartItemList";
+import AddressInfo from "./addressInfo";
 
 const ShoppingCartPage = () => {
   const navigate = useNavigate();
@@ -35,11 +35,6 @@ const ShoppingCartPage = () => {
   let paymentList = ",";
 
   const [authorization, refresh] = getToken();
-  const [isOpenPostPopup, setIsOpenPostcode] = useState(false);
-
-  const handlePostCode = () => {
-    setIsOpenPostcode(!isOpenPostPopup);
-  };
 
   const getCartItems = () => {
     axios
@@ -144,26 +139,7 @@ const ShoppingCartPage = () => {
             setCheckedItems={setCheckedItems}
           />
           <S.InfoContainer>
-            <div>
-              <S.AddressInfo>
-                <h3>배송지 정보</h3>
-                <div className="post_address">
-                  {postCode.address === "" ? (
-                    <span>주소를 등록해주세요.</span>
-                  ) : (
-                    <span>
-                      {postCode.address} ({postCode.postnum})
-                    </span>
-                  )}
-                </div>
-                <div className="postcode_btn">
-                  <button onClick={handlePostCode}>배송지 입력</button>
-                  {isOpenPostPopup && (
-                    <Postcode postCode={postCode} setPostCode={setPostCode} />
-                  )}
-                </div>
-              </S.AddressInfo>
-            </div>
+            <AddressInfo postCode={postCode} setPostCode={setPostCode} />
 
             <S.OrderInfoBox>
               <S.OrderInfo>
