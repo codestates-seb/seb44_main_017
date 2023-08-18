@@ -1,21 +1,22 @@
-import MypageHeader from "@/components/Mypage_header/MypageHeader";
-import { CartItemTypes, LoginUserInfo, PostCodeTypes } from "@/types/shared";
-import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
 import * as S from "./style";
-import { cartItemState } from "@/recoil/atom";
-import PointIcon from "@/assets/icons/PointIcon";
-import { userInfoSelector } from "@/recoil/selector";
-import useInput from "@/hooks/useInput";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import useInput from "@/hooks/useInput";
+import { cartItemState } from "@/recoil/atom";
+import { userInfoSelector } from "@/recoil/selector";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { CartItemTypes, LoginUserInfo, PostCodeTypes } from "@/types/shared";
+import { getCartItemList, orderCheckedCartItems } from "@/api/cart";
+import MypageHeader from "@/components/Mypage_header/MypageHeader";
 import CartItemList from "./cartItemList";
 import AddressInfo from "./addressInfo";
-import { getCartItemList, orderCheckedCartItems } from "@/api/cart";
+import OrderInfo from "./orderInfo";
 
 const ShoppingCartPage = () => {
   const navigate = useNavigate();
   const userInfo = useRecoilValue<LoginUserInfo | null>(userInfoSelector);
   const [total, setTotal] = useState({ price: 0, quantity: 0 });
+  const [paymentList, setPaymentList] = useState(",");
   const [spendPoints, pointChangeHandler] = useInput(0);
   const [postCode, setPostCode] = useState<PostCodeTypes>({
     postnum: "",
@@ -30,7 +31,6 @@ const ShoppingCartPage = () => {
   const [checkedItems, setCheckedItems] = useState<number[]>(
     cartItems.map(item => item.productId)
   );
-  let paymentList = ",";
 
   const getCartItems = async () => {
     const { data, status } = await getCartItemList();
@@ -67,7 +67,7 @@ const ShoppingCartPage = () => {
           }
         }
       }
-      paymentList = ",";
+      setPaymentList(",");
     }
   };
 
@@ -81,8 +81,7 @@ const ShoppingCartPage = () => {
           unCheckedList.push(idList[i]);
         }
       }
-
-      paymentList = unCheckedList.toString();
+      setPaymentList(unCheckedList.toString());
     }
     orderItems();
   };
@@ -123,60 +122,13 @@ const ShoppingCartPage = () => {
           />
           <S.InfoContainer>
             <AddressInfo postCode={postCode} setPostCode={setPostCode} />
-
             <S.OrderInfoBox>
-              <S.OrderInfo>
-                <h3>주문 내역</h3>
-                <div>
-                  <S.OrderInfoElement>
-                    <div className="order_info">
-                      <span>상품 개수</span>
-                      <span>{total.quantity}개</span>
-                    </div>
-                    <div className="order_info">
-                      <span>주문 금액</span>
-
-                      <span>{total.price.toLocaleString()} 원</span>
-                    </div>
-
-                    <div className="order_info">
-                      <span>차감 포인트</span>
-                      <S.PointInput
-                        type="number"
-                        value={Number(spendPoints)}
-                        onChange={pointChangeHandler}
-                      />
-                    </div>
-                    <S.RemainPoint
-                      className="order_info"
-                      total={Number(userInfo?.money) - Number(spendPoints)}
-                    >
-                      <span>남은 포인트</span>
-                      <div className="point_icon_price">
-                        {Number(userInfo?.money) - Number(spendPoints) < 0 ? (
-                          <PointIcon color={"#d84747"} />
-                        ) : (
-                          <PointIcon color={"#2b475c"} />
-                        )}
-                        <span className="item_price">
-                          {(
-                            Number(userInfo?.money) - Number(spendPoints)
-                          ).toLocaleString()}
-                        </span>
-                      </div>
-                    </S.RemainPoint>
-                  </S.OrderInfoElement>
-                  <S.OrderInfoSum>
-                    <div className="order_info">
-                      <div className="order_price">결제 예정 금액</div>
-                      <div>
-                        {(total.price - Number(spendPoints)).toLocaleString()}{" "}
-                        원
-                      </div>
-                    </div>
-                  </S.OrderInfoSum>
-                </div>
-              </S.OrderInfo>
+              <OrderInfo
+                total={total}
+                spendPoints={spendPoints}
+                pointChangeHandler={pointChangeHandler}
+                userInfo={userInfo}
+              />
               <div className="order_btn">
                 <button onClick={checkedItemsOrderHandler}>주문하기</button>
               </div>
