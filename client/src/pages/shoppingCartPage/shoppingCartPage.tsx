@@ -1,18 +1,16 @@
 import MypageHeader from "@/components/Mypage_header/MypageHeader";
-import { BASE_URL } from "@/constants/constants";
 import { CartItemTypes, LoginUserInfo, PostCodeTypes } from "@/types/shared";
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import * as S from "./style";
 import { cartItemState } from "@/recoil/atom";
-import axios from "axios";
-import { getToken } from "@/utils/token";
 import PointIcon from "@/assets/icons/PointIcon";
 import { userInfoSelector } from "@/recoil/selector";
 import useInput from "@/hooks/useInput";
 import { useNavigate } from "react-router-dom";
 import CartItemList from "./cartItemList";
 import AddressInfo from "./addressInfo";
+import { getCartItemList, orderCheckedCartItems } from "@/api/cart";
 
 const ShoppingCartPage = () => {
   const navigate = useNavigate();
@@ -34,17 +32,11 @@ const ShoppingCartPage = () => {
   );
   let paymentList = ",";
 
-  const [authorization, refresh] = getToken();
-
-  const getCartItems = () => {
-    axios
-      .get(BASE_URL + "/orderproducts/bucket?page=1&size=100&sort=newest", {
-        headers: {
-          Authorization: authorization,
-          Refresh: refresh,
-        },
-      })
-      .then(res => setCartItems(res.data.data));
+  const getCartItems = async () => {
+    const { data, status } = await getCartItemList();
+    if (data && status === 200) {
+      setCartItems(data.data);
+    }
   };
 
   const orderItems = async () => {
@@ -52,23 +44,14 @@ const ShoppingCartPage = () => {
       alert("주소를 입력해 주세요.");
     } else {
       try {
-        const { data, status } = await axios.post(
-          BASE_URL + "/kakaoPaybucket",
-          {
-            postnum: postCode.postnum,
-            address: postCode.address,
-            reciver: userInfo?.name,
-            reciverphone: userInfo?.phone,
-            pointspend: spendPoints,
-            productlist: paymentList,
-          },
-          {
-            headers: {
-              Authorization: authorization,
-              Refresh: refresh,
-            },
-          }
-        );
+        const { data, status } = await orderCheckedCartItems({
+          postnum: postCode.postnum,
+          address: postCode.address,
+          reciver: userInfo?.name,
+          reciverphone: userInfo?.phone,
+          pointspend: spendPoints,
+          productlist: paymentList,
+        });
 
         if ((data && status === 200) || 201) {
           window.open(data);
