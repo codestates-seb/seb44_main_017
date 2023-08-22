@@ -2,6 +2,8 @@ package com.main.project.ProductTest;
 
 
 import com.google.gson.Gson;
+import com.main.project.admin.entity.Admin;
+import com.main.project.admin.service.AdminService;
 import com.main.project.member.entity.RefreshToken;
 import com.main.project.product.controller.dto.ProductDto;
 import com.main.project.product.entity.Product;
@@ -31,8 +33,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-//@SpringBootTest
-//@AutoConfigureMockMvc
+@SpringBootTest
+@AutoConfigureMockMvc
 public class ProductControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -43,12 +45,15 @@ public class ProductControllerTest {
     @MockBean
     private ProductService productService;
 
+    @MockBean
+    private AdminService adminService;
+
     @Autowired
     private ProductMapper mapper;
 
     private static String path = "/products";
 
-//    @Test
+    @Test
     public void postProductTest() throws Exception{
         // given
         Long memberId = 1L;
@@ -61,29 +66,83 @@ public class ProductControllerTest {
 
         given(productService
                 .createProduct(Mockito.any(Product.class), Mockito.anyLong()))
-                ;
+                .willReturn(product);
 
         String content = gson.toJson(postDto);
 
         // when
-        String mockRT = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJtZW1iZXIiLCJzdWIiOiJ1c2VyMEBnbWFpbC5jb20iLCJpYXQiOjE2ODk5MjYwMjYsImV4cCI6MTY4OTk1MTIyNn0.DlZ2H-ZhBloHSsBXrIbz_HzlKHrWs1dtXuqoWF4rDX4";
+        String mockRT = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImFkbWluMEBnbWFpbC5jb20iLCJpYXQiOjE2OTAxNzc2MTEsImV4cCI6MTY5MDIwMjgxMX0.mLYZuG_lNJlpXCiZ33cM7JmgEg3I6ACixkwsMb3Kxt8";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Refresh", mockRT);
 
         ResultActions actions = mockMvc
                 .perform(
                         post(path)
-                                .header("Refresh", mockRT)
+                                .headers(headers)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
                                 .accept(MediaType.APPLICATION_JSON)
                 );
 
         // then
-
-//        actions.andExpect(status().isCreated());
+        actions.andExpect(status().isCreated());
     }
 
-//    @Test
+    // Can get products as list
+    @Test
+    public void getProductsTest(){
+        // TODO : TEST implementation
+
+    }
+
+    @Test
     public void getProductTest(){
+        // TODO : TEST implementation
 
     }
+
+
+    @Test
+    public void patchProductTest(){
+        // TODO : TEST implementation
+
+    }
+
+    @Test
+    public void deleteProductTest(){
+        // TODO : TEST implementation
+
+    }
+
+    @Test
+    public void productdeny() {
+        // TODO : TEST implementation
+
+    }
+
+    @Test
+    public void productdenypatch() {
+        // TODO : TEST implementation
+
+    }
+
+    @Test
+    public void postProductlist() {
+        // TODO : TEST implementation
+
+    }
+
+    @Test
+    public void updateSellingStatus() {
+        // TODO : TEST implementation
+
+    }
+
+    @Test
+    public void postProductLike() {
+        // TODO : TEST implementation
+
+    }
+
 }

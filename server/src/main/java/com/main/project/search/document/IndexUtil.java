@@ -1,3 +1,5 @@
+/*
+
 package com.main.project.search.document;
 
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
@@ -12,3 +14,5 @@ public class IndexUtil{
         return IndexCoordinates.of(indexName);
     }
 }
+
+ */

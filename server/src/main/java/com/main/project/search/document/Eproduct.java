@@ -1,3 +1,4 @@
+/*
 package com.main.project.search.document;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -33,3 +34,6 @@ public class Eproduct {
 
 
 }
+
+
+ */

@@ -9,10 +9,5 @@ import java.util.Optional;
 
 public interface ProductLikeCountRepository extends JpaRepository<ProductLikeCount, Long> {
     boolean existsByProduct(Product product);
-
-    Optional<ProductLikeCount> findByProduct(Product product);
-
     Optional<ProductLikeCount> findByProductProductId(Long productId);
-
-    Integer getLikeCountByProductProductId(Long productId);
 }

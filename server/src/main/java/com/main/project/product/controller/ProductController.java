@@ -162,9 +162,7 @@ public class ProductController {
         Optional<RefreshToken> refreshToken = refreshTokenService.findRefreshTokenOptional(tokenstr);
 
         Product product = productService.findProduct(productId);
-
         ProductDto.ResponseWithComments response;
-
         response = productService.getResponseWithComments(productId, refreshToken, product);
 
 

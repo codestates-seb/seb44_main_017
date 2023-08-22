@@ -75,9 +75,9 @@ mail:
   address:
     admin: admin@gmail.com
 
-elasticsearch:
-  host: mainproject.es.ap-northeast-2.aws.elastic-cloud.com
-  user-key: ${Elastic_key}
+#elasticsearch:
+#  host: mainproject.es.ap-northeast-2.aws.elastic-cloud.com
+#  user-key: ${Elastic_key}
 
 jwt:
   admin-key: ${Admin_key}

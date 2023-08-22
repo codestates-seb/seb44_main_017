@@ -1,3 +1,5 @@
+/*
+
 package com.main.project.search.config;
 
 import com.amazonaws.ClientConfiguration;
@@ -18,7 +20,7 @@ import java.util.Base64;
 public class ElasticsearchConfig {
 
     @Value("${elasticsearch.host}")
-    
+
     private String elasticHost;
 
     @Value("${elasticsearch.user-key}")
@@ -38,3 +40,5 @@ public class ElasticsearchConfig {
 
 
 }
+
+ */

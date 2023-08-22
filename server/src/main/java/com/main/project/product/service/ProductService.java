@@ -19,8 +19,8 @@ import com.main.project.product.repository.ProductQueryRepository;
 import com.main.project.product.repository.ProductRepository;
 import com.main.project.productComment.ProductComment;
 import com.main.project.productComment.repository.ProductCommentRepository;
-import com.main.project.search.document.Eproduct;
-import com.main.project.search.service.EproductService;
+//import com.main.project.search.document.Eproduct;
+//import com.main.project.search.service.EproductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -47,13 +47,15 @@ public class ProductService {
     private final ProductLikeCountService productLikeCountService;
     private final ProductLikeCountRepository productLikeCountRepository;
 
-    private final EproductService eproductService;
+//    private final EproductService eproductService;
 
     private final ProductMapper mapper;
 
     public ProductService(ProductRepository productRepository, ProductQueryRepository productQueryRepository, MemberService memberService, ProductCommentRepository productCommentRepository
             , AdminService adminService, ProductdenyService productdenyService, AwsS3Service awsS3Service
-            , ProductLikeCountService productLikeCountService, ProductLikeCountRepository productLikeCountRepository, ProductMapper mapper, EproductService eproductService) {
+            , ProductLikeCountService productLikeCountService, ProductLikeCountRepository productLikeCountRepository, ProductMapper mapper
+//            , EproductService eproductService
+    ) {
         this.productRepository = productRepository;
         this.productQueryRepository = productQueryRepository;
         this.memberService = memberService;
@@ -64,7 +66,7 @@ public class ProductService {
         this.productLikeCountService = productLikeCountService;
         this.productLikeCountRepository = productLikeCountRepository;
         this.mapper = mapper;
-        this.eproductService = eproductService;
+//        this.eproductService = eproductService;
     }
 
     public Page<Product> findProducts(int page, int size) {

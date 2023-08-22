@@ -1,3 +1,5 @@
+/*
+
 package com.main.project.search.repository;
 
 import com.main.project.search.document.Eproduct;
@@ -20,3 +22,6 @@ public interface BaseElasticSearchRepository<T> {
     boolean deleteIndex(IndexCoordinates indexNameWrapper);
 
 }
+
+
+ */
