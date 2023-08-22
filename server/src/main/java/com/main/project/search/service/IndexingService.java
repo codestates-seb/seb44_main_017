@@ -1,3 +1,4 @@
+/*
 package com.main.project.search.service;
 
 import com.main.project.product.entity.Product;
@@ -52,3 +53,5 @@ public class IndexingService {
 
     }
 }
+
+ */

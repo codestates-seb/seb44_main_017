@@ -64,13 +64,6 @@ public class ProductControllerTest {
         Product product = mapper.productPostDtoToProduct(postDto);
         product.setProductId(1L);
 
-        Admin admin = new Admin();
-        admin.setAdminId(1L);
-        admin.setEmail("admin@example.com");
-        admin.setPassword("1234");
-        adminService.createAdmin(admin);
-
-
         given(productService
                 .createProduct(Mockito.any(Product.class), Mockito.anyLong()))
                 .willReturn(product);
@@ -93,12 +86,63 @@ public class ProductControllerTest {
                 );
 
         // then
-
         actions.andExpect(status().isCreated());
+    }
+
+    // Can get products as list
+    @Test
+    public void getProductsTest(){
+        // TODO : TEST implementation
+
     }
 
     @Test
     public void getProductTest(){
+        // TODO : TEST implementation
 
     }
+
+
+    @Test
+    public void patchProductTest(){
+        // TODO : TEST implementation
+
+    }
+
+    @Test
+    public void deleteProductTest(){
+        // TODO : TEST implementation
+
+    }
+
+    @Test
+    public void productdeny() {
+        // TODO : TEST implementation
+
+    }
+
+    @Test
+    public void productdenypatch() {
+        // TODO : TEST implementation
+
+    }
+
+    @Test
+    public void postProductlist() {
+        // TODO : TEST implementation
+
+    }
+
+    @Test
+    public void updateSellingStatus() {
+        // TODO : TEST implementation
+
+    }
+
+    @Test
+    public void postProductLike() {
+        // TODO : TEST implementation
+
+    }
+
 }

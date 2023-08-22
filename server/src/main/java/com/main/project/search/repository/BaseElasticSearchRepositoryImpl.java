@@ -1,3 +1,5 @@
+/*
+
 package com.main.project.search.repository;
 
 import lombok.RequiredArgsConstructor;
@@ -50,3 +52,6 @@ public class BaseElasticSearchRepositoryImpl<T> implements BaseElasticSearchRepo
         return indexOperations.delete();
     }
 }
+
+
+ */

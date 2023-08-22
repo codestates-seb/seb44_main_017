@@ -26,8 +26,8 @@ import com.main.project.product.entity.Product;
 import com.main.project.product.mapper.ProductMapper;
 import com.main.project.product.repository.ProductRepository;
 import com.main.project.product.service.ProductService;
-import com.main.project.search.document.Eproduct;
-import com.main.project.search.service.EproductService;
+//import com.main.project.search.document.Eproduct;
+//import com.main.project.search.service.EproductService;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.java.Log;
@@ -56,7 +56,7 @@ public class KakaoController {
     private final OrderproductRepository orderproductRepository;
     private final OrderproductService orderproductService;
     private final MemberRepository memberRepository;
-    private final EproductService eproductService;
+//    private final EproductService eproductService;
     private final ProductMapper productMapper;
     private final SseService sseService;
 
