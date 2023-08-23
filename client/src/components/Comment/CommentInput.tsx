@@ -1,17 +1,16 @@
 import * as S from "./style";
-import { ChangeEvent } from "react";
 import { LoginUserInfo } from "@/types/shared";
 
 interface Props {
   userInfo: LoginUserInfo | null;
   qPath: boolean;
   submitHandler: (e: React.FormEvent<HTMLFormElement>) => void;
-  changeHandler: (e: ChangeEvent<HTMLInputElement> | any) => void;
-  commentValue: string;
+  commentRef: React.RefObject<HTMLInputElement>;
 }
 
 const CommentInput = (props: Props) => {
-  const { userInfo, qPath, submitHandler, changeHandler, commentValue } = props;
+  const { userInfo, qPath, submitHandler, commentRef } = props;
+
   return (
     <>
       {/**
@@ -23,8 +22,7 @@ const CommentInput = (props: Props) => {
         <S.InputLayout onSubmit={submitHandler}>
           <input
             type="text"
-            onChange={changeHandler}
-            value={commentValue}
+            ref={commentRef}
             placeholder="댓글을 작성해주세요."
           />
           <button>댓글 쓰기</button>

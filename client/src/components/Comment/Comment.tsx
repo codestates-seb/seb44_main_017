@@ -1,4 +1,3 @@
-import useInput from "../../hooks/useInput";
 import * as S from "./style";
 import { useLocation, useParams } from "react-router-dom";
 import {
@@ -6,7 +5,7 @@ import {
   ProductCommentTypes,
   QnACommentTypes,
 } from "@/types/shared";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import { userInfoSelector } from "@/recoil/selector";
 import CustomConfirm from "@/utils/customConfirm";
@@ -23,7 +22,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   const location = useLocation();
   const qPath = location.pathname.startsWith("/questions");
 
-  const [commentValue, changeHandler, reset] = useInput("");
+  const commentRef = useRef<HTMLInputElement>(null);
   const [selectedId, setSelectedId] = useState<number>(-1);
   const [isOpenConfirm, setIsOpenConfirm] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -74,7 +73,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (commentValue === "") {
+    if (commentRef.current!.value === "") {
       alert("내용을 입력해주세요.");
       return;
     }
@@ -84,12 +83,12 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
       const props = {
         id,
         qPath,
-        value: commentValue,
+        value: commentRef.current!.value,
       };
       const { status } = await createComment(props);
       if (status === 201) {
         setComplete(true);
-        reset && reset();
+        commentRef.current!.value = "";
       }
     } catch (e) {
       console.error("failed submit!", e);
@@ -102,8 +101,7 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
         userInfo={userInfo}
         qPath={qPath}
         submitHandler={submitHandler}
-        changeHandler={changeHandler}
-        commentValue={commentValue}
+        commentRef={commentRef}
       />
       <Comments
         comments={comments}
