@@ -86,8 +86,8 @@ const Comment = ({ comments, setComplete }: CommentProps) => {
         qPath,
         value: commentValue,
       };
-      const { data, status } = await createComment(props);
-      if (data && status === 200) {
+      const { status } = await createComment(props);
+      if (status === 201) {
         setComplete(true);
         reset && reset();
       }
