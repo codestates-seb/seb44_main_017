@@ -14,7 +14,7 @@ export const Container = styled.div`
   z-index: 999;
 `;
 
-export const Content = styled.div`
+export const Content = styled.form`
   width: 360px;
   padding: 36px 0px;
   background-color: rgba(247, 247, 247, 0.7);
