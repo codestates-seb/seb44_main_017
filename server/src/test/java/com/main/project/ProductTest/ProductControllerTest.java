@@ -91,8 +91,24 @@ public class ProductControllerTest {
 
     // Can get products as list
     @Test
-    public void getProductsTest(){
+    public void getProductsTest() throws Exception{
         // TODO : TEST implementation
+
+        // given & when
+        String mockRT = "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiIsInN1YiI6ImFkbWluMEBnbWFpbC5jb20iLCJpYXQiOjE2OTAxNzc2MTEsImV4cCI6MTY5MDIwMjgxMX0.mLYZuG_lNJlpXCiZ33cM7JmgEg3I6ACixkwsMb3Kxt8";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Refresh", mockRT);
+
+        ResultActions actions = mockMvc
+                .perform(
+                        get(path)
+                                .headers(headers)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON)
+                );
+
+        // then
 
     }
 
@@ -116,6 +132,18 @@ public class ProductControllerTest {
     }
 
     @Test
+    public void updateSellingStatus() {
+        // TODO : TEST implementation
+
+    }
+
+    @Test
+    public void postProductLike() {
+        // TODO : TEST implementation
+
+    }
+
+    @Test
     public void productdeny() {
         // TODO : TEST implementation
 
@@ -129,18 +157,6 @@ public class ProductControllerTest {
 
     @Test
     public void postProductlist() {
-        // TODO : TEST implementation
-
-    }
-
-    @Test
-    public void updateSellingStatus() {
-        // TODO : TEST implementation
-
-    }
-
-    @Test
-    public void postProductLike() {
         // TODO : TEST implementation
 
     }
